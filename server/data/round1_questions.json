@@ -41,11 +41,11 @@
       "badPrompt": "Make an advertisement for a college fest.",
       "context": "An upcoming 3-day inter-college technical and cultural festival.",
       "missingElements": [
-        "Target audience demographics (age, interest)",
-        "Tone and brand personality",
-        "Platform format (video script, Instagram reel, poster copy, radio spot)",
-        "Key attractions and call to action (registration link, dates)",
-        "Constraints (duration, character count, output structure)"
+        "Target audience demographics (age, student interests)",
+        "Tone and brand personality (youthful, energetic, cyber)",
+        "Platform format (video script, Instagram reel, poster copy)",
+        "Key attractions and call to action (registration dates, website)",
+        "Constraints (duration, character count, scene directions)"
       ],
       "difficulty": 1
     },
@@ -56,10 +56,38 @@
       "badPrompt": "Write a story about an AI taking over a coffee shop.",
       "context": "A sci-fi comedy short narrative.",
       "missingElements": [
-        "Main characters & protagonist perspective",
-        "Pacing and narrative arc (conflict, climax, resolution)",
-        "Humor style and dialogue format",
-        "Word limit and formatting specifications"
+        "Main characters & protagonist perspective (barista vs robotic manager)",
+        "Pacing and narrative arc (inciting incident, climax, humorous resolution)",
+        "Humor style and dialogue formatting",
+        "Word limit and scene formatting specifications"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_003",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a social media video about plastic pollution.",
+      "context": "A viral public-awareness campaign for Gen Z audiences on Instagram and TikTok.",
+      "missingElements": [
+        "Hook within the first 3 seconds to prevent drop-off",
+        "Visual storytelling scene transitions and camera angles",
+        "BGM and sound design cues",
+        "Actionable consumer lifestyle change CTA"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_004",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a sci-fi movie trailer voiceover.",
+      "context": "A dramatic theatrical trailer for a post-apocalyptic solar flare survival thriller.",
+      "missingElements": [
+        "Pacing milestones (0-15s Tease, 15-45s Escalation, 45-60s Climax)",
+        "Cinematic SFX and orchestral cue markers [BASS DROP, GLITCH]",
+        "Deep, gravelly narrator voice persona guidelines",
+        "Final title card lockup and release date reveal"
       ],
       "difficulty": 1
     },
@@ -68,13 +96,13 @@
       "genre": "B",
       "genreName": "BUSINESS",
       "badPrompt": "Sell this product.",
-      "context": "A premium noise-cancelling smart headphone designed for developers & remote workers.",
+      "context": "A premium noise-cancelling smart headphone designed for software developers & remote workers.",
       "missingElements": [
         "Product details and unique selling proposition (USP)",
-        "Ideal customer profile and pain points",
-        "Marketing framework (AIDA, PAS, Feature-Benefit)",
+        "Ideal customer profile (ICP) and acoustic pain points",
+        "Marketing copywriting framework (AIDA or PAS)",
         "Pricing tier, objection handling, and conversion CTA",
-        "Delivery format (landing page copy, cold email, sales pitch deck)"
+        "Delivery format (landing page copy, cold email, sales deck)"
       ],
       "difficulty": 1
     },
@@ -85,10 +113,38 @@
       "badPrompt": "Write a launch strategy for an app.",
       "context": "A peer-to-peer campus ride-sharing and carpool app.",
       "missingElements": [
-        "Target geography and rollout phases (Beta vs Public)",
+        "Target geography and rollout phases (Closed Beta vs Campus Blitz)",
         "User acquisition channels (guerrilla marketing, campus ambassadors)",
-        "Budget constraints and timeline breakdown",
-        "Key performance indicators (KPIs) and conversion goals"
+        "Budget constraints and 30-day timeline breakdown",
+        "Key performance indicators (CAC, LTV, Daily Active Riders)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_003",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an email to win back churning customers.",
+      "context": "A B2B SaaS analytics platform addressing canceled pro-tier accounts.",
+      "missingElements": [
+        "Customer segmentation (usage drop vs pricing friction)",
+        "Empathetic, non-defensive executive tone",
+        "Specific value-reinforcement and feature update highlights",
+        "Tailored discount/extension incentive with a frictionless 1-click reactivation link"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_004",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a pitch deck script for investors.",
+      "context": "An early-stage climate-tech startup seeking $1.5M Seed funding for solar recycling tech.",
+      "missingElements": [
+        "Standard 10-slide venture narrative structure (Problem, TAM, Solution, Unit Economics, Moat)",
+        "Explicit financial traction metrics and IP patents",
+        "Direct competitor matrix with unfair advantage",
+        "Specific capital allocation breakdown (R&D vs Commercialization)"
       ],
       "difficulty": 1
     },
@@ -112,12 +168,40 @@
       "genre": "C",
       "genreName": "DATA / ANALYSIS",
       "badPrompt": "Compare these two electric cars.",
-      "context": "Comparing Tesla Model 3 and Hyundai Ioniq 5 for fleet purchase.",
+      "context": "Comparing Tesla Model 3 and Hyundai Ioniq 5 for corporate fleet procurement.",
       "missingElements": [
         "Comparison criteria (battery efficiency, TCO, maintenance, charging curve)",
         "Evaluation methodology and scoring weightage",
         "Structured comparison matrix/table",
-        "Executive recommendation with ROI justification"
+        "Executive recommendation with 5-year ROI justification"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_003",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize this hospital patient readmission data.",
+      "context": "A 12-month post-operative dataset across 5,000 patients to identify high-risk re-admissions.",
+      "missingElements": [
+        "Demographic and comorbidity risk-stratification parameters",
+        "Statistical correlation methods (odds ratios, p-values)",
+        "Structured clinical findings table with confidence intervals",
+        "Operational triage protocol recommendations for nursing staff"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_004",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Find fraud patterns in credit card transactions.",
+      "context": "A synthetic dataset of 100,000 transactions with anomalous cross-border micropayments.",
+      "missingElements": [
+        "Fraud detection heuristic rules (velocity checks, IP geolocation mismatches, amount thresholds)",
+        "False-positive vs false-negative tolerance thresholds",
+        "Incident severity classification schema (Low, Medium, Critical)",
+        "Structured markdown alert schema with recommended block/flag actions"
       ],
       "difficulty": 1
     },
@@ -126,11 +210,11 @@
       "genre": "D",
       "genreName": "REAL-WORLD / PROBLEM SOLVING",
       "badPrompt": "Plan a college event.",
-      "context": "Organizing a 24-hour hackathon with 500 participants on a tight budget.",
+      "context": "Organizing a 24-hour national hackathon with 500 participants on a tight budget.",
       "missingElements": [
         "Event scope, theme, and timeline breakdown (T-minus milestones)",
-        "Budget limits, sponsorship strategy, and volunteer allocation",
-        "Risk mitigation & contingency plans (power outage, food, WiFi failure)",
+        "Budget limits, sponsorship deliverables, and volunteer shifts",
+        "Risk mitigation & contingency plans (power outage, food catering, WiFi failure)",
         "Judging criteria and participant deliverables",
         "Structured master operational schedule"
       ],
@@ -143,10 +227,38 @@
       "badPrompt": "Fix the campus parking problem.",
       "context": "Severe vehicle congestion and lack of two-wheeler slots during morning peak hours.",
       "missingElements": [
-        "Stakeholder analysis (students, faculty, administration)",
-        "Short-term fixes vs long-term infrastructural solutions",
-        "Enforcement and incentive mechanisms (digital passes, zoning)",
-        "Phased implementation roadmap and measurable success metrics"
+        "Stakeholder analysis (students, faculty, administrative staff)",
+        "Short-term operational fixes vs long-term infrastructural solutions",
+        "Enforcement and incentive mechanisms (digital passes, carpool zoning)",
+        "Phased implementation roadmap and measurable congestion KPIs"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_003",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Reduce cafeteria food waste by 50%.",
+      "context": "A university campus dining hall generating 300kg of organic food waste daily.",
+      "missingElements": [
+        "Supply chain & portioning audit methodology",
+        "Surplus redistribution protocols with local food banks/shelters",
+        "On-campus composting and bio-gas conversion feasibility metrics",
+        "Student incentive programs and measurable weekly audit targets"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_004",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Set up a student mental health peer-support network.",
+      "context": "Creating a confidential, student-led psychological wellness initiative on campus.",
+      "missingElements": [
+        "Volunteer screening and psychological first-aid training framework",
+        "Confidentiality safeguards and data privacy protocols",
+        "Emergency escalation pathways to licensed clinical professionals",
+        "Awareness outreach strategy to destigmatize help-seeking"
       ],
       "difficulty": 1
     }

@@ -201,9 +201,36 @@ export class StateManager {
           evaluation: null,
           finalRank: null,
           isWinner: false
+        },
+
+        // Interactive AI Sandbox Quota
+        sandbox: {
+          r1RunsLeft: 5,
+          r2RunsLeft: 4,
+          r3RunsLeft: 4,
+          totalRunsUsed: 0
         }
       });
     });
+  }
+
+  useSandboxCredit(teamId, round = 1) {
+    const team = this.teams.get(teamId);
+    if (!team) throw new Error("Team not found");
+    if (!team.sandbox) {
+      team.sandbox = { r1RunsLeft: 5, r2RunsLeft: 4, r3RunsLeft: 4, totalRunsUsed: 0 };
+    }
+    const key = round === 1 ? 'r1RunsLeft' : round === 2 ? 'r2RunsLeft' : 'r3RunsLeft';
+    if (typeof team.sandbox[key] !== 'number') {
+      team.sandbox[key] = round === 1 ? 5 : 4;
+    }
+    if (team.sandbox[key] <= 0) {
+      throw new Error(`Sandbox test limit reached for Round ${round} (${round === 1 ? 5 : 4} runs max).`);
+    }
+    team.sandbox[key]--;
+    team.sandbox.totalRunsUsed = (team.sandbox.totalRunsUsed || 0) + 1;
+    this.saveSnapshot();
+    return team.sandbox[key];
   }
 
   // --- Socket Registration ---
@@ -819,7 +846,9 @@ export class StateManager {
         // Round 2
         round2: team.round2,
         // Round 3
-        round3: team.round3
+        round3: team.round3,
+        // Interactive AI Sandbox
+        sandbox: team.sandbox || { r1RunsLeft: 5, r2RunsLeft: 4, r3RunsLeft: 4, totalRunsUsed: 0 }
       },
       roundState: {
         round: this.roundState.round,

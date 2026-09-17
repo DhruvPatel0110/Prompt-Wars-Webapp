@@ -101,6 +101,118 @@
           "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
           "impactField": "budget",
           "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+        },
+        {
+          "bombId": "bomb_006_monsoon_flood",
+          "headline": "🚨 MONSOON FLOODING: 40% OF SERVICE AREA WATERLOGGED!",
+          "description": "Unseasonal severe monsoons have flooded main university arterial roads, raising water-damage battery fears.",
+          "impactField": "safety",
+          "directive": "Implement water-ingress safety certifications, launch complimentary rain-gear add-ons, and dynamic flood-safe routing."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_003",
+      "title": "10-Minute Dark-Store Quick Commerce Expansion",
+      "category": "High-Velocity Logistics & Unit Economics",
+      "difficulty": 3,
+      "scenario": {
+        "context": "A venture-funded quick-commerce platform is expanding into a dense metro quadrant by deploying 6 automated micro-fulfillment dark stores targeting high basket-size households.",
+        "metrics": {
+          "targetDailyOrders": "5,000 Orders/Day within 60 Days",
+          "darkStoresDeployed": "6 Micro-Hubs (1.8km delivery radius each)",
+          "marketingAndIncentiveBudget": "₹1,50,000 Total",
+          "riderFleetSize": "80 Dedicated Gig Drivers",
+          "averageOrderValue": "₹420",
+          "customerAcquisitionCost": "Target under ₹90 per user",
+          "deliveryTimePromise": "Strictly 10–12 Minutes"
+        },
+        "requiredPillars": [
+          "1. Hyperlocal Demographic Mapping & High-AOV Category Mix",
+          "2. 10-Minute Dark Store Picking & Packing Assembly SLA",
+          "3. First-Order Viral Acquisition Hook & Referral Mechanics",
+          "4. Rider Dispatch Optimization & Safety-First Route Protocols",
+          "5. Granular ₹1,50,000 Budget Allocation & Burn Schedule",
+          "6. 60-Day Phased Scale Roadmap (Alpha -> Hub Rollout -> Scale)",
+          "7. Gamified Customer Retention & Free-Delivery Subscription Tiers",
+          "8. Unit Economics (Contribution Margin per Order) Scorecard",
+          "9. Extreme Rush Hour & Inventory Stockout Contingency Plan",
+          "10. 90-Day Breakeven & Dark-Store EBITDA Projections"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_007_union_strike",
+          "headline": "🚨 FLEET STRIKE: 70% OF GIG RIDERS WALK OUT!",
+          "description": "Rider union announces sudden protest over fuel surge, halting 56 out of 80 delivery riders across all hubs!",
+          "impactField": "operations",
+          "directive": "Introduce micro-zone customer self-pickup curbside lockers with 25% instant discounts and optimize remaining riders on clustered drop routes."
+        },
+        {
+          "bombId": "bomb_008_cold_storage_outage",
+          "headline": "🚨 COLD-CHAIN DISASTER: 3 DARK STORES LOSE POWER!",
+          "description": "Transformer blowout destroys refrigeration across 3 key dark stores, threatening ₹60,000 in perishable inventory.",
+          "impactField": "inventory",
+          "directive": "Launch a flash 2-hour 'Zero-Waste Megadeal' clearance blitz to liquidate perishables immediately while rerouting dry orders."
+        },
+        {
+          "bombId": "bomb_009_predatory_pricing",
+          "headline": "🚨 COMPETITOR ATTACK: RIVAL LAUNCHES 60% CASHBACK!",
+          "description": "A well-funded rival launches an aggressive 60% cashback blitz in your exact service zones.",
+          "impactField": "competition",
+          "directive": "Pivot from price wars to superior product exclusivity (fresh artisan bakery, localized specialty items) and guaranteed sub-10 minute reliability."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_004",
+      "title": "FinTech Student Micro-Credit Neo-Bank Launch",
+      "category": "FinTech, Regulatory Compliance & Growth",
+      "difficulty": 3,
+      "scenario": {
+        "context": "A digital neo-bank is launching a zero-annual-fee micro-credit wallet designed specifically for college students with zero credit history, utilizing alternative campus transaction scores.",
+        "metrics": {
+          "targetActiveWallets": "10,000 Verified Accounts in 45 Days",
+          "initialCreditLimit": "₹2,000 Instant Revolving Line",
+          "marketingBudget": "₹75,000",
+          "interestRateModel": "0% for 30 Days, 1.5% monthly rollover",
+          "underwritingModel": "Alternative GPA & Canteen transaction score",
+          "regulatoryRequirement": "Mandatory digital KYC & RBI lending guidelines"
+        },
+        "requiredPillars": [
+          "1. Responsible Financial Brand Persona & Financial Literacy Framing",
+          "2. Campus Brand Ambassador Network & Society Sponsorships",
+          "3. Frictionless Digital Onboarding & KYC Experience Design",
+          "4. Alternative Underwriting & Default Risk Mitigation Rules",
+          "5. Granular ₹75,000 Growth Budget Allocation Matrix",
+          "6. 45-Day Phased Launch Gantt (Closed Beta -> Multi-Campus Blitz)",
+          "7. Gamified Credit-Score Building & Timely-Repayment Rewards",
+          "8. Unit Economics (CAC, Repayment Velocity, NPA Rate) Scorecard",
+          "9. Delinquency Management & Ethical Recovery Safeguards",
+          "10. 12-Month Neo-Bank Expansion & Merchant Ecosystem Roadmap"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_010_regulatory_freeze",
+          "headline": "🚨 REGULATORY MANDATE: PHYSICAL BIOMETRIC KYC REQUIRED!",
+          "description": "Central banking regulator issues sudden guideline mandating in-person biometric verification for all student credit lines, breaking 1-click digital KYC!",
+          "impactField": "compliance",
+          "directive": "Deploy authorized student ambassador KYC kiosks at campus libraries and partner with campus bookstores for instant in-person verification perks."
+        },
+        {
+          "bombId": "bomb_011_default_surge",
+          "headline": "🚨 DEFAULT SURGE: EARLY DELINQUENCY HITS 18%!",
+          "description": "Beta cohort reveals unacceptably high 18% 30-day default rates, threatening institutional credit underwriting lines.",
+          "impactField": "risk",
+          "directive": "Tighten initial limits to ₹500 unlockable dynamically with each on-time payment, and introduce squad social-collateral accountability groups."
+        },
+        {
+          "bombId": "bomb_012_campus_ban",
+          "headline": "🚨 CAMPUS ACCESS BLOCKED: AUTHORITIES BAN BOOTHS!",
+          "description": "College deans ban all external commercial promotional booths and physical flyer distributions on campus grounds.",
+          "impactField": "marketing",
+          "directive": "Shift 100% of marketing to student developer hackathon sponsorships, online Discord coding bounties, and inter-college gaming tournaments."
         }
       ]
     }

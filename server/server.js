@@ -9,6 +9,7 @@ import { StateManager } from './stateManager.js';
 import { evaluateSubmission, evaluateBatchWithConcurrency } from './evaluator.js';
 import { evaluateRound2Challenge1, evaluateRound2Challenge2 } from './evaluatorRound2.js';
 import { evaluateRound3Submission } from './evaluatorRound3.js';
+import { runPromptSandbox } from './sandboxSimulator.js';
 
 dotenv.config();
 
@@ -78,6 +79,50 @@ app.get('/api/export/csv', (req, res) => {
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename=prompt_wars_championship_results.csv');
   res.send(csv);
+});
+
+app.post('/api/sandbox/run', async (req, res) => {
+  try {
+    const { teamId, round = 1, challengeType = 'prompt', promptText = '', testInput = '' } = req.body;
+    const team = stateManager.teams.get(teamId);
+    if (!team) {
+      return res.status(404).json({ success: false, error: 'Team not found' });
+    }
+
+    const rNum = Number(round) || 1;
+    let contextData = {};
+    if (rNum === 1) {
+      contextData = {
+        genreName: team.assignedGenre?.name,
+        badPrompt: team.assignedQuestion?.badPrompt,
+        title: team.assignedQuestion?.context
+      };
+    } else if (rNum === 2) {
+      contextData = challengeType === 'image'
+        ? (stateManager.round2State.activeImageChallenge || {})
+        : (stateManager.round2State.activeReportChallenge || {});
+    } else if (rNum === 3) {
+      contextData = team.round3?.assignedCase || stateManager.round3Data.cases?.[0] || {};
+    }
+
+    const runsRemaining = stateManager.useSandboxCredit(teamId, rNum);
+    const result = await runPromptSandbox({
+      round: rNum,
+      challengeType,
+      promptText,
+      testInput,
+      contextData,
+      teamName: team.name
+    });
+
+    syncTeamClient(teamId);
+    return res.json({
+      ...result,
+      runsRemaining
+    });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err.message });
+  }
 });
 
 // Broadcast Helpers
@@ -249,6 +294,53 @@ io.on('connection', (socket) => {
       syncAdminClients();
       syncProjectorClients();
       callback?.({ success: true, submittedAt: team.round3.submittedAt });
+    } catch (err) {
+      callback?.({ success: false, error: err.message });
+    }
+  });
+
+  // ==========================================
+  // INTERACTIVE PROMPT SANDBOX ENGINE
+  // ==========================================
+
+  socket.on('team:sandbox_run', async ({ teamId, round = 1, challengeType = 'prompt', promptText = '', testInput = '' }, callback) => {
+    try {
+      const team = stateManager.teams.get(teamId);
+      if (!team) {
+        return callback?.({ success: false, error: 'Team not found' });
+      }
+
+      const rNum = Number(round) || 1;
+      let contextData = {};
+      if (rNum === 1) {
+        contextData = {
+          genreName: team.assignedGenre?.name,
+          badPrompt: team.assignedQuestion?.badPrompt,
+          title: team.assignedQuestion?.context
+        };
+      } else if (rNum === 2) {
+        contextData = challengeType === 'image'
+          ? (stateManager.round2State.activeImageChallenge || {})
+          : (stateManager.round2State.activeReportChallenge || {});
+      } else if (rNum === 3) {
+        contextData = team.round3?.assignedCase || stateManager.round3Data.cases?.[0] || {};
+      }
+
+      const runsRemaining = stateManager.useSandboxCredit(teamId, rNum);
+      const result = await runPromptSandbox({
+        round: rNum,
+        challengeType,
+        promptText,
+        testInput,
+        contextData,
+        teamName: team.name
+      });
+
+      syncTeamClient(teamId);
+      callback?.({
+        ...result,
+        runsRemaining
+      });
     } catch (err) {
       callback?.({ success: false, error: err.message });
     }

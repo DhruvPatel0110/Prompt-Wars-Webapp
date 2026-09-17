@@ -52,6 +52,54 @@
           "subject": "Microscopic quantum neuromorphic AI processor die and motherboard circuitry",
           "style": "High-end commercial tech macro photography, studio lighting, shallow depth of field"
         }
+      },
+      {
+        "id": "r2_img_003",
+        "type": "image",
+        "challengeNumber": 1,
+        "title": "Cyberpunk Autonomous Police Recon Drone",
+        "description": "A low-angle cinematic street-level shot in a rain-soaked Neo-Tokyo cyberpunk alley at night, featuring a hovering quad-rotor tactical police drone with glowing red optical sensors, volumetric searchlights cutting through dense neon smog.",
+        "difficulty": 2,
+        "aspectRatio": "16:9",
+        "targetVisualPrompt": "Cinematic low-angle night photography in a rain-slicked cyberpunk alley. In the foreground, a menacing matte-black tactical autonomous police quadcopter drone hovers at eye level. Glowing crimson optical sensor eye and high-intensity volumetric cyan searchlight cutting through dense rain and atmospheric neon steam. Wet asphalt reflecting vibrant pink and turquoise kanji neon signs. Blade Runner 2049 aesthetic, anamorphic lens flare, shallow depth of field, f/1.4, photorealistic 8k octane render.",
+        "keyElements": [
+          "Low-angle eye-level perspective of a hovering tactical drone",
+          "Rain-slicked alley with wet asphalt reflections",
+          "Glowing crimson sensor eye and volumetric cyan searchlight beams",
+          "Vibrant pink, purple, and turquoise neon signage in the background",
+          "Blade Runner 2049 cinematic noir lighting with anamorphic lens flares"
+        ],
+        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='neonRain' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#050510'/><stop offset='50%' stop-color='#100926'/><stop offset='100%' stop-color='#0a1525'/></linearGradient><filter id='redGlow'><feGaussianBlur stdDeviation='10' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='800' height='450' fill='url(#neonRain)'/><line x1='100' y1='50' x2='80' y2='400' stroke='#ff007f' stroke-width='6' opacity='0.6'/><line x1='720' y1='30' x2='700' y2='380' stroke='#00f0ff' stroke-width='8' opacity='0.5'/><polygon points='300,180 500,180 540,240 260,240' fill='#111827' stroke='#374151' stroke-width='3'/><circle cx='400' cy='210' r='24' fill='#ff0044' filter='url(#redGlow)'/><circle cx='400' cy='210' r='10' fill='#ffffff'/><polygon points='400,225 150,450 650,450' fill='#00f0ff' opacity='0.15'/><text x='40' y='430' fill='#ff0055' font-family='monospace' font-size='12' letter-spacing='2'>[TARGET 03 : CYBER RECON DRONE // RAIN ALLEY]</text></svg>",
+        "evaluationCriteria": {
+          "composition": "Low-angle eye-level hovering drone framing, wet reflection leading lines",
+          "colors": "Noir shadow palette with intense neon pink, cyan, and glowing crimson red",
+          "subject": "Matte black tactical police drone with searchlight in rain-drenched alley",
+          "style": "Cinematic sci-fi noir, anamorphic lens flare, atmospheric rain particles"
+        }
+      },
+      {
+        "id": "r2_img_004",
+        "type": "image",
+        "challengeNumber": 1,
+        "title": "Bio-Luminescent Deep Sea Hydrothermal Research Habitat",
+        "description": "An underwater deep-sea photographic concept of a modular titanium oceanic research base stationed on the abyssal seafloor near volcanic hydrothermal vents, illuminated by glowing blue bio-luminescent coral reefs and submarine floodlights.",
+        "difficulty": 2,
+        "aspectRatio": "16:9",
+        "targetVisualPrompt": "National Geographic style deep-sea underwater photograph of an oceanic abyssal research station at 4,000 meters depth. Geodesic titanium habitat domes with glowing warm interior amber portholes anchored into rocky basalt seafloor beside smoking black-smoker hydrothermal vents. Surrounding deep-water coral glows with vivid electric cyan and neon violet bioluminescence. External yellow submersible ROVs inspect undersea cabling with powerful xenon spotlights. Clear underwater volumetric caustics, marine snow particles, ultra-crisp National Geographic 8k quality.",
+        "keyElements": [
+          "Deep ocean abyss setting with hydrothermal black-smoker vents",
+          "Geodesic titanium habitat domes with glowing amber windows",
+          "Bioluminescent cyan and violet deep-sea coral glow",
+          "Submersible ROV inspection craft with xenon floodlights",
+          "Underwater volumetric caustics and marine snow particles"
+        ],
+        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='abyssGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#010814'/><stop offset='60%' stop-color='#021c38'/><stop offset='100%' stop-color='#00050d'/></linearGradient><radialGradient id='domeGlow' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='#ffe066'/><stop offset='60%' stop-color='#ff8800'/><stop offset='100%' stop-color='#000000'/></radialGradient></defs><rect width='800' height='450' fill='url(#abyssGrad)'/><ellipse cx='400' cy='320' rx='140' ry='90' fill='#0f2b48' stroke='#00ffcc' stroke-width='2'/><circle cx='400' cy='310' r='30' fill='url(#domeGlow)'/><ellipse cx='220' cy='350' rx='80' ry='50' fill='#081e33' stroke='#00f0ff' stroke-width='1.5'/><ellipse cx='580' cy='350' rx='80' ry='50' fill='#081e33' stroke='#00f0ff' stroke-width='1.5'/><path d='M100 450 L140 280 L180 450 Z' fill='#050c18'/><text x='40' y='430' fill='#00ffcc' font-family='monospace' font-size='12' letter-spacing='2'>[TARGET 04 : ABYSSAL HABITAT // BIOLUMINESCENT REEF]</text></svg>",
+        "evaluationCriteria": {
+          "composition": "Abyssal underwater floor layout with central research dome and secondary modules",
+          "colors": "Deep oceanic midnight blue, glowing amber interiors, bioluminescent cyan",
+          "subject": "Deep-sea titanium research station and robotic submersibles near hydrothermal vents",
+          "style": "Photorealistic National Geographic deep-sea documentary quality with volumetric caustics"
+        }
       }
     ],
     "report": [
@@ -69,6 +117,54 @@
           "content": "Specific financial figures ($48.6M ARR, 82.4% YoY, COGS, EBITDA, NRR)",
           "format": "Crisp markdown tables, currency delimiters, percentages, bolded subtotals",
           "insights": "Strategic analysis of GPU cluster optimization, CAC compression, expansion plans"
+        }
+      },
+      {
+        "id": "r2_rep_002",
+        "type": "report",
+        "challengeNumber": 2,
+        "title": "Cloud Infrastructure SOC-2 Security & Penetration Vulnerability Audit",
+        "difficulty": 2,
+        "reportSummary": "A rigorous cybersecurity penetration testing and compliance audit of an AWS/Kubernetes multi-tenant cloud banking environment identifying CVSS vulnerabilities, blast radius analysis, and remediation SLAs.",
+        "targetReportMarkdown": "# CLOUD INFRASTRUCTURE SECURITY & PENETRATION AUDIT (SOC-2 TYPE II)\n**Target Environment:** FinCore Multi-Tenant Kubernetes Banking Cloud | **Severity Scope:** CVSS v3.1 Standards\n\n---\n\n## 1. Executive Security Posture\nOver a 14-day red-team penetration assessment, FinCore exhibited strong edge perimeter defenses but revealed **two critical privilege escalation vectors** within container sidecar service meshes and IAM role assumptions.\n\n```\nSecurity Vulnerability Summary Scorecard:\n• Total Findings Identified: 18 (2 Critical | 5 High | 7 Medium | 4 Low)\n• Mean Time to Detect (MTTD): 4.2 Minutes\n• Mean Time to Remediate (MTTR): 18.6 Hours (Target: <24.0 Hours)\n• Zero-Trust Compliance Index: 91.4%\n```\n\n---\n\n## 2. Threat & Vulnerability Severity Matrix\n\n| Finding ID | Vulnerability Category | Affected Component | CVSS Score | Severity Level | Exploitation Vector | Remediation SLA |\n| :--- | :--- | :--- | :---: | :---: | :--- | :---: |\n| **SEC-001** | IAM Role Privilege Escalation | Vault K8s Sidecar | **9.8** | 🚨 **CRITICAL** | Over-permissioned wildcard `s3:*` token | **24 Hours** |\n| **SEC-002** | Unauthenticated SSRF | Webhook Dispatcher | **9.1** | 🚨 **CRITICAL** | Metadata service endpoint query `169.254` | **24 Hours** |\n| **SEC-003** | Stored XSS in Audit Logs | Admin Portal UI | **7.5** | ⚠️ **HIGH** | Unsanitized user-agent header injection | **72 Hours** |\n| **SEC-004** | Outdated OpenSSL Library | Core Banking API Pods | **7.2** | ⚠️ **HIGH** | Known memory leak buffer overflow | **72 Hours** |\n| **SEC-005** | Loose CORS Policy Header | Customer Auth Gateway | **5.4** | 🟡 **MEDIUM** | Wildcard origin reflection on staging API | **7 Days** |\n\n---\n\n## 3. Blast Radius & Attack Path Analysis\n1. **Lateral Pod Hopping:** Compromising SEC-001 enables malicious root actors to assume administrative AWS IAM roles, exposing read access to 4.2M customer PII records in S3 cold storage.\n2. **Kubelet Escape:** Zero container breakout was achieved due to enforced AppArmor profiles and read-only root filesystems.\n\n---\n\n## 4. Remediation Directives & Compliance Sign-Off\n- **Immediate Patch:** Enforce least-privilege IAM scoping with explicit ARN boundaries by T+24h.\n- **Network Policies:** Implement Calico egress blocking to `169.254.169.254` across all worker nodes.",
+        "targetReportPrompt": "Act as a Principal Cybersecurity Penetration Tester and Cloud Security Architect. Generate a formal SOC-2 Type II Technical Vulnerability Audit Report for a multi-tenant cloud banking platform. The report must contain: 1) Executive Security Posture with MTTD, MTTR, and compliance indices; 2) A detailed Markdown Vulnerability Table featuring Finding ID, Category, Affected Component, CVSS score (0.0-10.0), Severity (Critical/High/Medium), and Remediation SLA; 3) Blast Radius and Lateral Movement Attack Path Analysis; 4) Mandatory Architectural Remediation Directives.",
+        "evaluationCriteria": {
+          "structure": "Executive security posture, CVSS vulnerability table, attack path analysis, remediation directives",
+          "content": "Specific CVSS scores (9.8, 9.1, 7.5), finding IDs, MTTR, K8s component names",
+          "format": "Crisp markdown table with severity badges, alert icons, and technical parameters",
+          "insights": "In-depth analysis of IAM privilege escalation, lateral blast radius, and network egress rules"
+        }
+      },
+      {
+        "id": "r2_rep_003",
+        "type": "report",
+        "challengeNumber": 2,
+        "title": "Global Supply Chain Resilience & Ocean Freight Margin Audit",
+        "difficulty": 2,
+        "reportSummary": "An international freight logistics and supply chain risk report assessing container demurrage costs, Suez canal transit delays, on-time delivery rates, and nearshoring ROI.",
+        "targetReportMarkdown": "# GLOBAL MARITIME SUPPLY CHAIN AUDIT & MARGIN ANALYSIS: Q3–Q4\n**Operator:** TransPacific Ocean Logistics Consortium | **Scope:** Asia–North America Trade Lanes\n\n---\n\n## 1. Executive Logistical Briefing\nDuring the second half of the operating year, maritime shipping lanes experienced a **23.4% rise in spot container rates** due to geopolitical canal diversions. Despite route expansions, Fleet Capacity Utilization reached **94.8%**, yielding a net operating margin of **16.2%**.\n\n```\nOperational Logistics KPI Matrix:\n• On-Time In-Full (OTIF) Delivery: 81.6% (Industry Benchmark: 76.0%)\n• Average Vessel Dwell Time: 4.6 Days per Port Call\n• Carbon Intensity Indicator (CII): Grade B (4.2g CO2/ton-mile)\n• Demurrage & Detention Penalties: $1.42M (-32% vs Previous Quarter)\n```\n\n---\n\n## 2. Trade Route Efficiency & Cost Matrix\n\n| Trade Corridor | TEU Volume | Avg Transit Days | Spot Rate (40ft) | Bunker Fuel Cost | Port Dwell Time | Operating Margin |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Shanghai ➔ Los Angeles** | 142,000 | 14.8 Days | $4,850 | $1,120 | 3.8 Days | **+21.4%** |\n| **Shenzhen ➔ Rotterdam** | 118,500 | 28.4 Days | $6,200 | $1,840 | 5.4 Days | **+14.8%** |\n| **Singapore ➔ Hamburg** | 94,200 | 26.2 Days | $5,950 | $1,710 | 4.9 Days | **+15.3%** |\n| **Busan ➔ Long Beach** | 86,400 | 13.2 Days | $4,600 | $1,050 | 3.2 Days | **+24.1%** |\n| **CONSOLIDATED TOTAL** | **441,100** | **20.6 Days** | **$5,400 (Avg)** | **$1,430** | **4.3 Days** | **+18.9%** |\n\n---\n\n## 3. Nearshoring Feasibility & Strategic Recommendations\n- **Mexico Corridor Expansion:** Shifting 15% of Tier-2 component manufacturing to Monterrey reduces transit cycle from 15 days to **48 hours by rail**.\n- **Dual Sourcing Hedging:** Maintain 30% contract volume on fixed 12-month index-linked rate agreements to hedge against spot price volatility.",
+        "targetReportPrompt": "Act as a Chief Logistics Officer at a Global Ocean Shipping Enterprise. Generate an executive Supply Chain Efficiency and Margin Audit Report. Include: 1) Executive logistical summary with OTIF rate, vessel dwell time, and CII index; 2) A detailed 5-column Markdown shipping corridor table detailing TEU Volume, Transit Days, Spot Rates ($), Bunker Fuel Costs, and Operating Margins; 3) Nearshoring ROI and dual-sourcing strategic risk mitigations.",
+        "evaluationCriteria": {
+          "structure": "Executive briefing, trade route matrix table, nearshoring and dual-sourcing roadmap",
+          "content": "Specific TEU numbers (142k, 118.5k), spot rates ($4,850), transit days, OTIF percentages",
+          "format": "Markdown financial and operational logistics tables with bold totals",
+          "insights": "Strategic analysis of rail nearshoring to Monterrey vs maritime spot rate volatility"
+        }
+      },
+      {
+        "id": "r2_rep_004",
+        "type": "report",
+        "challengeNumber": 2,
+        "title": "HealthTech AI Clinical Trial Diagnostic Efficacy Report",
+        "difficulty": 2,
+        "reportSummary": "A double-blind clinical trial validation report assessing deep-learning diagnostic sensitivity, specificity, false-positive tradeoffs, and FDA 510(k) clearance metrics across 12,000 patient pathology scans.",
+        "targetReportMarkdown": "# CLINICAL TRIAL VALIDATION AUDIT: AI RADIOLOGY DIAGNOSTIC ENGINE\n**Device:** NeuroScan AI v3.4 | **Trial Phase:** Phase III Multi-Center Double-Blind Study (N=12,400)\n\n---\n\n## 1. Executive Diagnostic Performance\nAcross 12,400 thoracic CT scans reviewed by both certified radiologists and NeuroScan AI v3.4, the algorithm demonstrated a **98.4% Area Under Curve (AUC-ROC)** for early-stage pulmonary nodule detection, outperforming general radiologist baseline by **+6.2% sensitivity**.\n\n```\nClinical Performance Scorecard:\n• Sensitivity (True Positive Rate): 97.2% (95% CI: 96.4%–98.0%)\n• Specificity (True Negative Rate): 94.8% (95% CI: 93.9%–95.6%)\n• Positive Predictive Value (PPV): 89.6%\n• Negative Predictive Value (NPV): 98.7%\n• Mean Inference Latency: 1.42 Seconds per Multi-Slice Volume\n```\n\n---\n\n## 2. Multi-Center Cohort Diagnostic Matrix\n\n| Clinical Trial Site | Patient Cohort (N) | Modality | Ground Truth Positive | AI True Positive | False Positives | False Negatives | Sensitivity |\n| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n| **Mayo Clinic Hub** | 3,800 | 64-Slice High-Res CT | 420 | 412 | 28 | 8 | **98.1%** |\n| **Johns Hopkins** | 3,200 | Dual-Energy Low-Dose | 360 | 348 | 24 | 12 | **96.7%** |\n| **Stanford Health** | 2,900 | 128-Slice Volumetric | 310 | 303 | 19 | 7 | **97.7%** |\n| **Mass General** | 2,500 | Standard Helical CT | 280 | 270 | 22 | 10 | **96.4%** |\n| **TOTAL POOL** | **12,400** | **Multi-Center** | **1,370** | **1,333** | **93** | **37** | **97.3%** |\n\n---\n\n## 3. Regulatory & Clinical Safety Clearance\n- **FDA 510(k) Equivalence:** Satisfies Substantial Equivalence thresholds under predicate device K210892.\n- **Radiologist Workflow Acceleration:** Triaging scans with automated AI pre-segmentation reduced clinical diagnostic turnaround time by **41.2%**.",
+        "targetReportPrompt": "Act as a Lead Medical AI Clinical Trial Director and Regulatory Specialist. Write an official Clinical Validation Audit Report for an AI-assisted pathology and radiology detection device. The report must contain: 1) Executive diagnostic performance with AUC-ROC (98.4%), Sensitivity, Specificity, PPV, NPV, and 95% Confidence Intervals; 2) A comprehensive Multi-Center Cohort Markdown Table comparing patient volume, True/False positives/negatives, and sensitivity per trial hospital; 3) FDA 510(k) regulatory clearance analysis and radiologist workflow acceleration metrics.",
+        "evaluationCriteria": {
+          "structure": "Executive diagnostic performance, multi-center cohort table, regulatory FDA 510(k) compliance",
+          "content": "Precise clinical figures (AUC 98.4%, 97.2% Sensitivity, 94.8% Specificity, N=12,400, hospital names)",
+          "format": "Clinical audit markdown tables with confidence intervals and statistical metrics",
+          "insights": "Analysis of FDA predicate equivalence and radiologist triage turnaround reduction"
         }
       }
     ]
