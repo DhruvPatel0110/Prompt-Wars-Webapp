@@ -1,0 +1,197 @@
+{
+  "version": "0.1.0",
+  "updatedAt": "2026-09-17T13:47:27.179Z",
+  "brainState": {
+    "projectName": "prompt-wars",
+    "architecture": "React + Express",
+    "overallHealth": 100,
+    "filesCount": 36,
+    "facts": [
+      {
+        "id": "fact-arch",
+        "content": "Architecture: React + Express",
+        "sources": [
+          "package configs"
+        ],
+        "confidence": 0.95,
+        "lastVerified": "2026-09-17T13:47:19.048Z"
+      },
+      {
+        "id": "fact-files",
+        "content": "Workspace contains 36 indexed source files.",
+        "sources": [
+          "workspace filesystem"
+        ],
+        "confidence": 1,
+        "lastVerified": "2026-09-17T13:47:19.048Z"
+      },
+      {
+        "id": "fact-deps",
+        "content": "Dependencies include canvas-confetti, clsx, cors, dotenv, express, lucide-react.",
+        "sources": [
+          "package config"
+        ],
+        "confidence": 0.98,
+        "lastVerified": "2026-09-17T13:47:19.048Z"
+      }
+    ],
+    "decisions": [],
+    "risks": [],
+    "staleKnowledge": [],
+    "lastScanned": "2026-09-17T13:47:19.048Z"
+  },
+  "cards": {
+    "PROMPT_WARS_ROUND_1.md": {
+      "target": "PROMPT_WARS_ROUND_1.md",
+      "purpose": "Source module: imports 0 local dependencies.",
+      "relatedComponents": [],
+      "recentChanges": [],
+      "decisions": [],
+      "knownRisks": [
+        {
+          "id": "risk-no-tests",
+          "severity": "medium",
+          "description": "No automated tests detected for this component.",
+          "affectedComponents": [
+            "PROMPT_WARS_ROUND_1.md"
+          ],
+          "mitigation": "Add unit tests to safeguard against regressions prior to refactoring."
+        }
+      ],
+      "staleWarnings": [],
+      "confidence": {
+        "overall": 66,
+        "freshnessScore": 100,
+        "provenanceCount": 1,
+        "churnFactor": 0.1,
+        "explanation": "Confidence of 66%: lacks dedicated automated test coverage."
+      },
+      "evidence": [
+        {
+          "type": "file",
+          "location": "PROMPT_WARS_ROUND_1.md",
+          "snippet": "Source module with 0 dependencies and 0 dependents"
+        }
+      ],
+      "tests": [],
+      "symbols": [],
+      "failedAttempts": [],
+      "generatedAt": "2026-09-17T05:54:06.283Z"
+    },
+    ".nivora\\cache.json": {
+      "target": ".nivora/cache.json",
+      "purpose": "Provides caching and persistence for cache.",
+      "relatedComponents": [],
+      "recentChanges": [],
+      "decisions": [],
+      "knownRisks": [
+        {
+          "id": "risk-no-tests",
+          "severity": "medium",
+          "description": "No automated tests detected for this component.",
+          "affectedComponents": [
+            ".nivora/cache.json"
+          ],
+          "mitigation": "Add unit tests to safeguard against regressions prior to refactoring."
+        }
+      ],
+      "staleWarnings": [],
+      "confidence": {
+        "overall": 66,
+        "freshnessScore": 100,
+        "provenanceCount": 1,
+        "churnFactor": 0.1,
+        "explanation": "Confidence of 66%: lacks dedicated automated test coverage."
+      },
+      "evidence": [
+        {
+          "type": "file",
+          "location": ".nivora/cache.json",
+          "snippet": "Source module with 0 dependencies and 0 dependents"
+        }
+      ],
+      "tests": [],
+      "symbols": [],
+      "failedAttempts": [],
+      "generatedAt": "2026-09-17T13:47:20.597Z"
+    },
+    "src\\components\\HostRound2Control.jsx": {
+      "target": "src/components/HostRound2Control.jsx",
+      "purpose": "Source module: imports 1 local dependencies.",
+      "relatedComponents": [],
+      "recentChanges": [],
+      "decisions": [],
+      "knownRisks": [
+        {
+          "id": "risk-no-tests",
+          "severity": "medium",
+          "description": "No automated tests detected for this component.",
+          "affectedComponents": [
+            "src/components/HostRound2Control.jsx"
+          ],
+          "mitigation": "Add unit tests to safeguard against regressions prior to refactoring."
+        }
+      ],
+      "staleWarnings": [],
+      "confidence": {
+        "overall": 66,
+        "freshnessScore": 100,
+        "provenanceCount": 1,
+        "churnFactor": 0.1,
+        "explanation": "Confidence of 66%: lacks dedicated automated test coverage."
+      },
+      "evidence": [
+        {
+          "type": "file",
+          "location": "src/components/HostRound2Control.jsx",
+          "snippet": "Source module with 1 dependencies and 0 dependents"
+        }
+      ],
+      "tests": [],
+      "symbols": [
+        {
+          "name": "HostRound2Control",
+          "kind": "function",
+          "line": 9
+        },
+        {
+          "name": "handleUnlock",
+          "kind": "function",
+          "line": 26
+        },
+        {
+          "name": "handleLock",
+          "kind": "function",
+          "line": 27
+        },
+        {
+          "name": "handleStartTimer",
+          "kind": "function",
+          "line": 28
+        },
+        {
+          "name": "handlePauseTimer",
+          "kind": "function",
+          "line": 29
+        },
+        {
+          "name": "handleResetTimer",
+          "kind": "function",
+          "line": 30
+        },
+        {
+          "name": "handleEvaluateAll",
+          "kind": "function",
+          "line": 33
+        },
+        {
+          "name": "handleAdvance",
+          "kind": "function",
+          "line": 42
+        }
+      ],
+      "failedAttempts": [],
+      "generatedAt": "2026-09-17T13:47:27.179Z"
+    }
+  }
+}

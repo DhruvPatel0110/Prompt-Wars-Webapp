@@ -6,6 +6,8 @@
  */
 
 import { io } from 'socket.io-client';
+import { spawn } from 'child_process';
+import net from 'net';
 
 const SERVER_URL = 'http://localhost:3001';
 const NUM_CLIENTS = 70;
@@ -14,7 +16,34 @@ async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+async function isPortOpen(port) {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    socket.setTimeout(500);
+    socket.on('connect', () => {
+      socket.destroy();
+      resolve(true);
+    });
+    socket.on('timeout', () => {
+      socket.destroy();
+      resolve(false);
+    });
+    socket.on('error', () => {
+      resolve(false);
+    });
+    socket.connect(port, '127.0.0.1');
+  });
+}
+
 async function runConcurrencyTest() {
+  let serverProcess = null;
+  const running = await isPortOpen(3001);
+  if (!running) {
+    console.log('⚡ Launching tournament backend for test suite...');
+    serverProcess = spawn('node', ['server/server.js'], { stdio: 'ignore' });
+    await sleep(1500);
+  }
+
   console.log(`\n======================================================`);
   console.log(`🚀 STARTING HIGH CONCURRENCY STRESS TEST: ${NUM_CLIENTS} CLIENTS`);
   console.log(`======================================================\n`);
@@ -53,9 +82,11 @@ async function runConcurrencyTest() {
     adminVerdictReceived = true;
   });
 
-  // Unlock round
+  // Reset event & unlock round
+  adminSocket.emit('admin:reset_event');
+  await sleep(300);
   adminSocket.emit('admin:unlock_round');
-  console.log(`🔓 [Host Admin] Unlocked Round 1`);
+  console.log(`🔓 [Host Admin] Reset Event & Unlocked Round 1`);
   await sleep(300);
 
   // 2. Connect 70 Student Clients in parallel
@@ -251,10 +282,13 @@ async function runConcurrencyTest() {
   // Cleanup
   clients.forEach(c => c.socket.disconnect());
   adminSocket.disconnect();
+  if (serverProcess) {
+    serverProcess.kill();
+  }
   process.exit(allPassed ? 0 : 1);
 }
 
 runConcurrencyTest().catch(err => {
-  console.error("Test failed:", err);
+  console.error('Fatal error in stress test:', err);
   process.exit(1);
 });

@@ -6,7 +6,9 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { StateManager } from './stateManager.js';
-import { evaluateSubmission } from './evaluator.js';
+import { evaluateSubmission, evaluateBatchWithConcurrency } from './evaluator.js';
+import { evaluateRound2Challenge1, evaluateRound2Challenge2 } from './evaluatorRound2.js';
+import { evaluateRound3Submission } from './evaluatorRound3.js';
 
 dotenv.config();
 
@@ -35,7 +37,14 @@ app.use(express.json({ limit: '10mb' }));
 // --- REST Endpoints ---
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', time: Date.now(), round: stateManager.roundState.round });
+  res.json({
+    status: 'ok',
+    time: Date.now(),
+    activeRound: stateManager.activeRound,
+    r1Status: stateManager.roundState.status,
+    r2Status: stateManager.round2State.status,
+    r3Status: stateManager.round3State.status
+  });
 });
 
 app.get('/api/teams', (req, res) => {
@@ -43,31 +52,35 @@ app.get('/api/teams', (req, res) => {
     id: t.id,
     name: t.name,
     connected: t.connected,
-    submissionStatus: t.submissionStatus
+    submissionStatus: t.submissionStatus,
+    r1Qualified: t.isQualified,
+    r2Qualified: t.round2.isQualified,
+    r3Rank: t.round3.finalRank
   }));
   res.json({ teams });
 });
 
 app.get('/api/export/csv', (req, res) => {
   const teams = stateManager.getLeaderboard();
-  let csv = "Rank,Team ID,Team Name,Status,Genre,Bad Prompt,Submitted Prompt,Clarity (5),Context (4),Constraints (4),Format (3),Creativity (4),Total Score (20),Timer Used (s),Verdict,Reasoning\n";
+  let csv = "Rank,Team ID,Team Name,R1 Status,R1 Score (20),R2 C1 Score (20),R2 C2 Score (20),R2 Total (40),R3 Total (50),Tournament Final Verdict\n";
 
   teams.forEach(t => {
-    const e = t.evaluation || {};
-    const verdict = t.isQualified ? "QUALIFIED FOR ROUND 2" : (t.isEliminated ? "ELIMINATED" : "PENDING");
-    const cleanBad = (t.assignedQuestion?.badPrompt || "").replace(/"/g, '""');
-    const cleanSub = (t.submittedPrompt || "").replace(/"/g, '""');
-    const cleanReasoning = (e.reasoning || "").replace(/"/g, '""');
+    const r1Score = t.evaluation?.total_score ?? '-';
+    const r2C1 = t.round2?.c1_evaluation?.total_score ?? '-';
+    const r2C2 = t.round2?.c2_evaluation?.total_score ?? '-';
+    const r2Total = t.round2?.totalScore || '-';
+    const r3Total = t.round3?.evaluation?.total_score ?? '-';
+    const verdict = t.round3?.finalRank ? `Rank #${t.round3.finalRank}` : (t.round2?.isQualified ? "Round 3 Finalist" : (t.isQualified ? "Round 2 Qualified" : "Round 1 Participant"));
 
-    csv += `"${t.rank || '-'}","${t.id}","${t.name}","${t.submissionStatus}","${t.assignedGenre?.name || '-'}","${cleanBad}","${cleanSub}",${e.clarity_score ?? '-'},${e.context_score ?? '-'},${e.constraints_score ?? '-'},${e.format_score ?? '-'},${e.creativity_score ?? '-'},${e.total_score ?? '-'},${t.timerUsedSeconds || '-'},"${verdict}","${cleanReasoning}"\n`;
+    csv += `"${t.rank || '-'}","${t.id}","${t.name}","${t.submissionStatus}",${r1Score},${r2C1},${r2C2},${r2Total},${r3Total},"${verdict}"\n`;
   });
 
   res.setHeader('Content-Type', 'text/csv');
-  res.setHeader('Content-Disposition', 'attachment; filename=prompt_wars_round1_results.csv');
+  res.setHeader('Content-Disposition', 'attachment; filename=prompt_wars_championship_results.csv');
   res.send(csv);
 });
 
-// Broadcast Helper
+// Broadcast Helpers
 function broadcastToAll(event, payload) {
   io.emit(event, payload);
 }
@@ -112,29 +125,37 @@ function syncProjectorClients() {
 // Global 1-Second Authoritative Server Tick
 setInterval(() => {
   const didTick = stateManager.tickTimer();
-  if (didTick || stateManager.roundState.timerRunning) {
+  if (didTick || stateManager.roundState.timerRunning || stateManager.round2State.timerRunning || stateManager.round3State.timerRunning || stateManager.round3State.bombRunning) {
     broadcastToAll('timer:tick', {
-      timerRemaining: stateManager.roundState.timerRemaining,
-      timerRunning: stateManager.roundState.timerRunning,
-      timerEndsAt: stateManager.roundState.timerEndsAt,
-      status: stateManager.roundState.status,
-      isLocked: stateManager.roundState.isLocked
+      activeRound: stateManager.activeRound,
+      round1: {
+        timerRemaining: stateManager.roundState.timerRemaining,
+        timerRunning: stateManager.roundState.timerRunning,
+        status: stateManager.roundState.status,
+        isLocked: stateManager.roundState.isLocked
+      },
+      round2: {
+        timerRemaining: stateManager.round2State.timerRemaining,
+        timerRunning: stateManager.round2State.timerRunning,
+        status: stateManager.round2State.status,
+        isLocked: stateManager.round2State.isLocked
+      },
+      round3: {
+        timerRemaining: stateManager.round3State.timerRemaining,
+        timerRunning: stateManager.round3State.timerRunning,
+        bombTimerRemaining: stateManager.round3State.bombTimerRemaining,
+        bombRunning: stateManager.round3State.bombRunning,
+        phase: stateManager.round3State.phase,
+        status: stateManager.round3State.status,
+        isLocked: stateManager.round3State.isLocked
+      }
     });
-  }
-
-  // If timer reached zero and round finished
-  if (stateManager.roundState.timerRemaining === 0 && stateManager.roundState.status === 'EVALUATING') {
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
   }
 }, 1000);
 
 // --- Socket.IO Real-time Connection Engine ---
 
 io.on('connection', (socket) => {
-  console.log(`[Socket] Connected: ${socket.id}`);
-
   // 1. Team Authentication & Connect
   socket.on('team:join', ({ teamId, pin }, callback) => {
     const team = stateManager.teams.get(teamId);
@@ -148,55 +169,95 @@ io.on('connection', (socket) => {
     stateManager.registerTeamSocket(teamId, socket.id);
     socket.join(`team:${teamId}`);
     
-    console.log(`[Team Joined] ${team.name} (${teamId})`);
-    
     const teamView = stateManager.getTeamView(teamId);
     callback?.({ success: true, teamView });
     
-    // Notify host of updated team connection status
     syncAdminClients();
     syncProjectorClients();
   });
 
-  // 2. Team Wheel Spin Action
+  // ==========================================
+  // ROUND 1 TEAM EVENTS
+  // ==========================================
+
   socket.on('team:spin', ({ teamId }, callback) => {
     try {
       const team = stateManager.performSpin(teamId);
-      const teamView = stateManager.getTeamView(teamId);
-      
-      socket.emit('team:state_sync', teamView);
+      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
       syncAdminClients();
-      
       callback?.({ success: true, spinResult: team.spinResult, assignedGenre: team.assignedGenre, question: team.assignedQuestion });
     } catch (err) {
       callback?.({ success: false, error: err.message });
     }
   });
 
-  // 3. Team Draft Autosave
   socket.on('team:draft_update', ({ teamId, draftText }) => {
     stateManager.saveDraft(teamId, draftText);
-    // Debounced host sync could be done, or direct update
     broadcastToAdmins('admin:team_draft_update', { teamId, length: (draftText || "").length });
   });
 
-  // 4. Team Submission
   socket.on('team:submit', ({ teamId, improvedPrompt }, callback) => {
     try {
       const team = stateManager.submitPrompt(teamId, improvedPrompt);
-      const teamView = stateManager.getTeamView(teamId);
-      
-      socket.emit('team:state_sync', teamView);
+      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
       syncAdminClients();
       syncProjectorClients();
-
       callback?.({ success: true, submittedAt: team.submittedAt });
     } catch (err) {
       callback?.({ success: false, error: err.message });
     }
   });
 
-  // 5. Admin Authentication & Actions
+  // ==========================================
+  // ROUND 2 TEAM EVENTS (REVERSE ENGINEERING)
+  // ==========================================
+
+  socket.on('team:round2_draft_update', ({ teamId, challengeType, draftText }) => {
+    stateManager.saveRound2Draft(teamId, challengeType, draftText);
+    broadcastToAdmins('admin:r2_draft_update', { teamId, challengeType, length: (draftText || "").length });
+  });
+
+  socket.on('team:round2_submit', ({ teamId, challengeType, promptText }, callback) => {
+    try {
+      const team = stateManager.submitRound2(teamId, challengeType, promptText);
+      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
+      syncAdminClients();
+      syncProjectorClients();
+      callback?.({ success: true, status: team.round2.status });
+    } catch (err) {
+      callback?.({ success: false, error: err.message });
+    }
+  });
+
+  // ==========================================
+  // ROUND 3 TEAM EVENTS (MASTER PROMPT & BOMB)
+  // ==========================================
+
+  socket.on('team:round3_master_draft', ({ teamId, draftText }) => {
+    stateManager.saveRound3MasterDraft(teamId, draftText);
+    broadcastToAdmins('admin:r3_draft_update', { teamId, length: (draftText || "").length });
+  });
+
+  socket.on('team:round3_bomb_draft', ({ teamId, adaptedText }) => {
+    stateManager.saveRound3BombDraft(teamId, adaptedText);
+  });
+
+  socket.on('team:round3_submit', ({ teamId, adaptedPrompt }, callback) => {
+    try {
+      const team = stateManager.submitRound3(teamId, adaptedPrompt);
+      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
+      syncAdminClients();
+      syncProjectorClients();
+      callback?.({ success: true, submittedAt: team.round3.submittedAt });
+    } catch (err) {
+      callback?.({ success: false, error: err.message });
+    }
+  });
+
+  // ==========================================
+  // HOST ADMIN EVENTS & CONTROLS
+  // ==========================================
+
   socket.on('admin:join', ({ adminPin }, callback) => {
     if (adminPin !== ADMIN_PIN) {
       return callback?.({ success: false, error: 'Unauthorized: Invalid Admin PIN' });
@@ -206,6 +267,14 @@ io.on('connection', (socket) => {
     callback?.({ success: true, hostView: stateManager.getHostView() });
   });
 
+  socket.on('admin:set_active_round', ({ round }) => {
+    stateManager.activeRound = Number(round) || 1;
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+  });
+
+  // Round 1 Admin Controls
   socket.on('admin:unlock_round', () => {
     stateManager.unlockRound();
     syncAllTeamClients();
@@ -225,35 +294,24 @@ io.on('connection', (socket) => {
   socket.on('admin:start_timer', () => {
     stateManager.startTimer();
     syncAdminClients();
-    broadcastToAll('timer:state', stateManager.roundState);
   });
 
   socket.on('admin:pause_timer', () => {
     stateManager.pauseTimer();
     syncAdminClients();
-    broadcastToAll('timer:state', stateManager.roundState);
   });
 
   socket.on('admin:reset_timer', ({ durationSeconds }) => {
     stateManager.resetTimer(durationSeconds || 600);
     syncAdminClients();
     syncProjectorClients();
-    broadcastToAll('timer:state', stateManager.roundState);
   });
 
   socket.on('admin:add_time', ({ seconds }) => {
     stateManager.addTime(seconds || 60);
     syncAdminClients();
-    broadcastToAll('timer:state', stateManager.roundState);
   });
 
-  socket.on('admin:set_elimination_percentage', ({ percentage }) => {
-    stateManager.roundState.eliminationPercentage = Number(percentage) || 50;
-    stateManager.computeLeaderboard();
-    syncAdminClients();
-  });
-
-  // Batch AI Evaluation
   socket.on('admin:evaluate_all', async (data, callback) => {
     const teamsToEvaluate = Array.from(stateManager.teams.values()).filter(
       t => (t.submittedPrompt && t.submissionStatus === 'submitted') || t.submissionStatus === 'drafting' || t.draftPrompt
@@ -269,30 +327,29 @@ io.on('connection', (socket) => {
 
     callback?.({ success: true, total: teamsToEvaluate.length });
 
-    const evaluations = {};
-    let completed = 0;
+    const items = teamsToEvaluate.map(team => ({
+      id: team.id,
+      name: team.name,
+      badPrompt: team.assignedQuestion?.badPrompt || "Make an advertisement.",
+      genreName: team.assignedGenre?.name || "CREATIVE",
+      improvedPrompt: team.submittedPrompt || team.draftPrompt || ""
+    }));
 
-    for (const team of teamsToEvaluate) {
-      const promptToEvaluate = team.submittedPrompt || team.draftPrompt;
-      try {
-        const evalResult = await evaluateSubmission({
-          badPrompt: team.assignedQuestion?.badPrompt || "Make an advertisement.",
-          genreName: team.assignedGenre?.name || "CREATIVE",
-          improvedPrompt: promptToEvaluate,
-          teamName: team.name
+    const evaluations = await evaluateBatchWithConcurrency(
+      items,
+      async (item) => {
+        return await evaluateSubmission({
+          badPrompt: item.badPrompt,
+          genreName: item.genreName,
+          improvedPrompt: item.improvedPrompt,
+          teamName: item.name
         });
-        evaluations[team.id] = evalResult;
-      } catch (err) {
-        console.error(`Evaluation failed for ${team.name}:`, err);
+      },
+      10,
+      ({ completed, total, currentTeam }) => {
+        broadcastToAdmins('admin:eval_progress', { completed, total, currentTeam });
       }
-
-      completed++;
-      broadcastToAdmins('admin:eval_progress', {
-        completed,
-        total: teamsToEvaluate.length,
-        currentTeam: team.name
-      });
-    }
+    );
 
     stateManager.setEvaluationResults(evaluations);
     syncAdminClients();
@@ -302,9 +359,7 @@ io.on('connection', (socket) => {
   socket.on('admin:set_manual_score', ({ teamId, criteriaKey, score }) => {
     const updatedTeam = stateManager.setManualScore(teamId, criteriaKey, score);
     syncAdminClients();
-    if (updatedTeam) {
-      syncTeamClient(teamId);
-    }
+    if (updatedTeam) syncTeamClient(teamId);
   });
 
   socket.on('admin:advance_round', () => {
@@ -312,8 +367,6 @@ io.on('connection', (socket) => {
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
-
-    // Broadcast instant verdicts to all clients
     broadcastToAll('round:verdict', {
       round: 1,
       advanceTriggered: true,
@@ -328,6 +381,175 @@ io.on('connection', (socket) => {
     });
   });
 
+  // Round 2 Admin Controls
+  socket.on('admin:unlock_round2', () => {
+    stateManager.unlockRound2();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('round2:unlocked', { round: 2, duration: stateManager.round2State.timerDuration });
+  });
+
+  socket.on('admin:lock_round2', () => {
+    stateManager.lockRound2();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+  });
+
+  socket.on('admin:start_round2_timer', () => {
+    stateManager.startRound2Timer();
+    syncAdminClients();
+  });
+
+  socket.on('admin:pause_round2_timer', () => {
+    stateManager.pauseRound2Timer();
+    syncAdminClients();
+  });
+
+  socket.on('admin:reset_round2_timer', ({ durationSeconds }) => {
+    stateManager.resetRound2Timer(durationSeconds || 900);
+    syncAdminClients();
+  });
+
+  socket.on('admin:evaluate_round2', async (data, callback) => {
+    const teamsInR2 = Array.from(stateManager.teams.values()).filter(t => t.isQualified);
+    if (teamsInR2.length === 0) {
+      return callback?.({ success: false, error: 'No qualified teams for Round 2.' });
+    }
+
+    stateManager.round2State.status = 'EVALUATING';
+    syncAdminClients();
+    syncProjectorClients();
+    callback?.({ success: true, total: teamsInR2.length });
+
+    const targetImg = stateManager.round2State.activeImageChallenge;
+    const targetRep = stateManager.round2State.activeReportChallenge;
+
+    const evaluations = {};
+    let completed = 0;
+
+    for (const team of teamsInR2) {
+      const c1Prompt = team.round2.c1_submittedPrompt || team.round2.c1_draft || "Studio render of target image";
+      const c2Prompt = team.round2.c2_submittedPrompt || team.round2.c2_draft || "Detailed financial report";
+
+      const [c1Eval, c2Eval] = await Promise.all([
+        evaluateRound2Challenge1({ targetImage: targetImg, studentPrompt: c1Prompt, teamName: team.name }),
+        evaluateRound2Challenge2({ targetReport: targetRep, studentPrompt: c2Prompt, teamName: team.name })
+      ]);
+
+      evaluations[team.id] = { c1_eval: c1Eval, c2_eval: c2Eval };
+      completed++;
+      broadcastToAdmins('admin:r2_eval_progress', { completed, total: teamsInR2.length, currentTeam: team.name });
+    }
+
+    stateManager.setRound2EvaluationResults(evaluations);
+    syncAdminClients();
+    syncProjectorClients();
+  });
+
+  socket.on('admin:advance_round2', () => {
+    stateManager.advanceRound2();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('round2:verdict', {
+      round: 2,
+      advanceTriggered: true,
+      leaderboard: stateManager.getRound2Leaderboard().map(t => ({
+        rank: t.round2.rank,
+        teamId: t.id,
+        teamName: t.name,
+        totalScore: t.round2.totalScore,
+        isQualified: t.round2.isQualified,
+        isEliminated: t.round2.isEliminated
+      }))
+    });
+  });
+
+  // Round 3 Admin Controls
+  socket.on('admin:unlock_round3', () => {
+    stateManager.unlockRound3();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('round3:unlocked', { round: 3, duration: stateManager.round3State.timerDuration });
+  });
+
+  socket.on('admin:lock_round3', () => {
+    stateManager.lockRound3();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+  });
+
+  socket.on('admin:start_round3_timer', () => {
+    stateManager.startRound3Timer();
+    syncAdminClients();
+  });
+
+  socket.on('admin:pause_round3_timer', () => {
+    stateManager.pauseRound3Timer();
+    syncAdminClients();
+  });
+
+  socket.on('admin:detonate_bomb', () => {
+    stateManager.detonateFinalBomb();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('round3:bomb_detonated', {
+      durationSeconds: 30,
+      detonatedAt: Date.now()
+    });
+  });
+
+  socket.on('admin:evaluate_round3', async (data, callback) => {
+    const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    if (teamsInR3.length === 0) {
+      return callback?.({ success: false, error: 'No qualified teams for Round 3.' });
+    }
+
+    stateManager.round3State.status = 'EVALUATING';
+    syncAdminClients();
+    syncProjectorClients();
+    callback?.({ success: true, total: teamsInR3.length });
+
+    const evaluations = {};
+    let completed = 0;
+
+    for (const team of teamsInR3) {
+      const caseItem = team.round3.assignedCase || stateManager.round3Data.cases[0];
+      const bombItem = team.round3.assignedBomb || caseItem.bombs[0];
+      const mPrompt = team.round3.masterPrompt || team.round3.masterDraft || "Master Strategic Blueprint";
+      const aPrompt = team.round3.adaptedPrompt || team.round3.adaptedDraft || mPrompt;
+
+      const evalRes = await evaluateRound3Submission({
+        caseData: caseItem,
+        bombData: bombItem,
+        masterPrompt: mPrompt,
+        adaptedPrompt: aPrompt,
+        teamName: team.name
+      });
+
+      evaluations[team.id] = evalRes;
+      completed++;
+      broadcastToAdmins('admin:r3_eval_progress', { completed, total: teamsInR3.length, currentTeam: team.name });
+    }
+
+    stateManager.setRound3EvaluationResults(evaluations);
+    syncAdminClients();
+    syncProjectorClients();
+  });
+
+  socket.on('admin:reveal_podium', () => {
+    const winners = stateManager.revealPodium();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('round3:podium_revealed', winners);
+  });
+
   socket.on('admin:reset_event', () => {
     stateManager.resetAll();
     syncAllTeamClients();
@@ -335,7 +557,7 @@ io.on('connection', (socket) => {
     syncProjectorClients();
   });
 
-  // 6. Projector View Connect
+  // Projector Connect
   socket.on('projector:join', (data, callback) => {
     stateManager.registerProjector(socket.id);
     socket.join('projector_room');
@@ -346,12 +568,11 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const disconnectedTeam = stateManager.unregisterSocket(socket.id);
     if (disconnectedTeam) {
-      console.log(`[Team Disconnected] ${disconnectedTeam.name} (${disconnectedTeam.id})`);
       syncAdminClients();
     }
   });
 });
 
 httpServer.listen(PORT, '0.0.0.0', () => {
-  console.log(`⚡ PROMPT WARS High-Concurrency Server running on http://localhost:${PORT}`);
+  console.log(`⚡ PROMPT WARS 3-Round Tournament Server running on http://localhost:${PORT}`);
 });

@@ -1,0 +1,76 @@
+{
+  "round": 2,
+  "roundName": "PROMPT REVERSE ENGINEERING",
+  "tagline": "SEE THE OUTPUT. BUILD THE PROMPT.",
+  "durationSeconds": 900,
+  "challenges": {
+    "image": [
+      {
+        "id": "r2_img_001",
+        "type": "image",
+        "challengeNumber": 1,
+        "title": "Solarpunk Neo-Metropolis 2077",
+        "description": "A high-altitude panoramic architectural concept art showing a futuristic eco-city blending vertical forest skyscrapers, solar-glass transit rails, lush sky-bridges, and flying electric air-taxis at golden hour sunset with warm neon lighting.",
+        "difficulty": 2,
+        "aspectRatio": "16:9",
+        "targetVisualPrompt": "Ultra-detailed futuristic solarpunk metropolis at golden hour sunset. Cinematic wide-angle perspective of towering glass and carbon-fiber sky-towers covered in lush cascading rooftop gardens, vertical greenery, and glowing solar-paneled spirals. Hyperloop glass tubes and sleek electric VTOL flying taxis crisscross between soaring skybridges. Warm sunset lighting reflects across curved holographic billboards and crystalline bio-domes. Masterpiece architectural rendering in Unreal Engine 5, octane render, 8k resolution, crisp photorealistic textures, volumetric sunset god-rays.",
+        "keyElements": [
+          "Solarpunk futuristic architectural style with vertical hanging gardens",
+          "Golden hour sunset atmosphere with warm orange and purple sky glow",
+          "Sleek flying electric air-taxis and transparent hyperloop sky-tubes",
+          "Ultra-wide cinematic angle with high depth of field",
+          "Holographic signage and crystalline bio-domes with volumetric lighting"
+        ],
+        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='skyGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#0a0826'/><stop offset='40%' stop-color='#3b1443'/><stop offset='75%' stop-color='#e65c00'/><stop offset='100%' stop-color='#ffd269'/></linearGradient><linearGradient id='bldg1' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#0f172a'/><stop offset='100%' stop-color='#1e293b'/></linearGradient><linearGradient id='bldg2' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00f0ff'/><stop offset='100%' stop-color='#004466'/></linearGradient><linearGradient id='greenery' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00ff88'/><stop offset='100%' stop-color='#006633'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feGaussianBlur stdDeviation='8' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='800' height='450' fill='url(#skyGrad)'/><circle cx='400' cy='320' r='140' fill='#ff8800' opacity='0.7' filter='url(#glow)'/><circle cx='400' cy='320' r='100' fill='#ffe680' opacity='0.9'/><path d='M0 450 L120 220 L180 220 L240 450 Z' fill='url(#bldg1)'/><rect x='130' y='230' width='40' height='190' fill='#00f0ff' opacity='0.3'/><rect x='80' y='270' width='20' height='60' fill='url(#greenery)' rx='5'/><rect x='110' y='320' width='30' height='40' fill='url(#greenery)' rx='5'/><path d='M260 450 L340 120 L420 120 L480 450 Z' fill='#0a0f1d'/><rect x='355' y='140' width='50' height='290' fill='url(#bldg2)' opacity='0.4'/><path d='M330 180 Q390 160 450 180 L440 195 Q390 175 340 195 Z' fill='url(#greenery)'/><path d='M320 260 Q390 240 460 260 L450 275 Q390 255 330 275 Z' fill='url(#greenery)'/><path d='M500 450 L560 170 L620 170 L680 450 Z' fill='url(#bldg1)'/><rect x='570' y='190' width='40' height='230' fill='#ff007f' opacity='0.3'/><path d='M550 230 Q600 215 650 230' stroke='url(#greenery)' stroke-width='12' fill='none'/><path d='M100 300 Q400 240 700 320' stroke='#00f0ff' stroke-width='4' fill='none' opacity='0.8' filter='url(#glow)'/><path d='M120 340 Q400 380 680 280' stroke='#ff007f' stroke-width='3' fill='none' opacity='0.7' filter='url(#glow)'/><polygon points='220,160 260,170 230,175' fill='#00f0ff' filter='url(#glow)'/><line x1='210' y1='168' x2='180' y2='168' stroke='#00f0ff' stroke-width='2' opacity='0.8'/><polygon points='580,120 620,130 590,135' fill='#ffd700' filter='url(#glow)'/><line x1='570' y1='128' x2='540' y2='128' stroke='#ffd700' stroke-width='2' opacity='0.8'/><rect x='0' y='420' width='800' height='30' fill='#050811'/><text x='30' y='438' fill='#00f0ff' font-family='monospace' font-size='11' letter-spacing='2'>[TARGET 01 : SOLARPUNK METROPOLIS // GOLDEN HOUR CINEMATIC]</text></svg>",
+        "evaluationCriteria": {
+          "composition": "Visual hierarchy, wide-angle panoramic city skyline, soaring towers, skybridges",
+          "colors": "Golden hour sunset palette (orange, amber, purple sky, cyan/neon highlights)",
+          "subject": "Solarpunk futuristic eco-city with vertical hanging gardens and flying air-taxis",
+          "style": "Cinematic photorealistic 3D render, volumetric lighting, Unreal Engine 5 aesthetic"
+        }
+      },
+      {
+        "id": "r2_img_002",
+        "type": "image",
+        "challengeNumber": 1,
+        "title": "Quantum Neuromorphic Processor Core",
+        "description": "A macro close-up product photograph of a next-generation quantum computing microchip with glowing photonic superconducting circuitry, crystal sapphire substrate, laser optical waveguides, and frosted titanium heat sinks.",
+        "difficulty": 2,
+        "aspectRatio": "1:1",
+        "targetVisualPrompt": "Studio macro photography of an advanced quantum neuromorphic AI processor die. Center square microchip glowing with intricate microscopic blue and emerald photonic circuit traces, superconducting gold wire bonds, and crystalline sapphire substrate. Mounted on a matte obsidian motherboard with laser-etched circuitry. High-tech studio rim lighting, crisp 100mm macro lens focus, shallow depth of field, metallic specular reflections, ISO 100, 8k commercial tech hardware catalog quality.",
+        "keyElements": [
+          "Extreme macro studio close-up of a square quantum microchip core",
+          "Glowing blue and emerald optical photonic circuit pathways",
+          "Gold superconducting wire bonds on obsidian dark substrate",
+          "Shallow depth of field with sharp focal plane and smooth bokeh",
+          "Premium commercial hardware product photography aesthetic"
+        ],
+        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600' width='100%' height='100%'><defs><radialGradient id='coreGlow' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='#00ffcc'/><stop offset='50%' stop-color='#0077aa'/><stop offset='100%' stop-color='#050b18'/></radialGradient><filter id='bloom'><feGaussianBlur stdDeviation='6' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='600' height='600' fill='#030712'/><rect x='100' y='100' width='400' height='400' rx='24' fill='#0b1329' stroke='#1e293b' stroke-width='4'/><rect x='170' y='170' width='260' height='260' rx='16' fill='url(#coreGlow)' stroke='#00f0ff' stroke-width='3' filter='url(#bloom)'/><rect x='220' y='220' width='160' height='160' fill='#06101e' stroke='#ffd700' stroke-width='2'/><path d='M220 250 L180 250 M220 300 L175 300 M220 350 L180 350' stroke='#ffd700' stroke-width='3'/><path d='M380 250 L420 250 M380 300 L425 300 M380 350 L420 350' stroke='#ffd700' stroke-width='3'/><path d='M250 220 L250 180 M300 220 L300 175 M350 220 L350 180' stroke='#ffd700' stroke-width='3'/><path d='M250 380 L250 420 M300 380 L300 425 M350 380 L350 420' stroke='#ffd700' stroke-width='3'/><path d='M240 240 L360 360 M240 360 L360 240 M300 240 L300 360 M240 300 L360 300' stroke='#00ffcc' stroke-width='1.5' opacity='0.7'/><circle cx='300' cy='300' r='30' fill='#00f0ff' opacity='0.4' filter='url(#bloom)'/><circle cx='300' cy='300' r='12' fill='#ffffff'/><text x='180' y='150' fill='#94a3b8' font-family='monospace' font-size='12' letter-spacing='3'>QUANTUM CORE // X-9000</text></svg>",
+        "evaluationCriteria": {
+          "composition": "Centered macro square product composition, tight crop, focal isolation",
+          "colors": "Obsidian black, electric cyan, emerald green, superconducting gold",
+          "subject": "Microscopic quantum neuromorphic AI processor die and motherboard circuitry",
+          "style": "High-end commercial tech macro photography, studio lighting, shallow depth of field"
+        }
+      }
+    ],
+    "report": [
+      {
+        "id": "r2_rep_001",
+        "type": "report",
+        "challengeNumber": 2,
+        "title": "FY 2025-26 Comprehensive Enterprise SaaS Performance & Financial Report",
+        "difficulty": 2,
+        "reportSummary": "A 12-month financial and operating metric analysis for a high-growth AI Developer Cloud platform detailing ARR, MRR, Gross Margins, CAC payback, Customer Churn, and EBITDA breakdown across 4 quarters.",
+        "targetReportMarkdown": "# EXECUTIVE FINANCIAL & OPERATIONAL AUDIT: FY 2025–2026\n**Entity:** CloudMatrix AI Inc. | **Reporting Currency:** USD ($) in Thousands\n\n---\n\n## 1. Executive Performance Summary\nDuring FY 2025–2026, CloudMatrix AI achieved an Annual Recurring Revenue (ARR) milestone of **$48.6M**, reflecting **82.4% year-over-year expansion**. Gross Margin strengthened from 71.2% in Q1 to **79.8% in Q4** driven by optimized GPU inference cluster utilization.\n\n```\nKey Annual KPI Scorecard:\n• Ending ARR: $48,620,000 (Target: $44,000,000 | +10.5% vs Plan)\n• Net Revenue Retention (NRR): 134.2%\n• Blended CAC Payback Period: 8.4 Months\n• Rule of 40 Index: 54.8 (Growth 82.4% - FCF Margin 27.6%)\n```\n\n---\n\n## 2. Quarterly Financial Matrix (USD in '000s)\n\n| Quarter | Gross Revenue | Infrastructure COGS | Gross Profit | S&M Expenses | R&D Investment | G&A Overhead | Adjusted EBITDA | Operating Margin |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Q1 (Apr-Jun)** | $8,450 | $2,430 | $6,020 (71.2%) | $3,120 | $2,840 | $980 | **-$920** | -10.9% |\n| **Q2 (Jul-Sep)** | $10,890 | $2,720 | $8,170 (75.0%) | $3,650 | $3,100 | $1,050 | **+$370** | +3.4% |\n| **Q3 (Oct-Dec)** | $13,420 | $2,980 | $10,440 (77.8%) | $4,200 | $3,350 | $1,180 | **+$1,710** | +12.7% |\n| **Q4 (Jan-Mar)** | $15,860 | $3,200 | $12,660 (79.8%) | $4,850 | $3,620 | $1,290 | **+$2,900** | +18.3% |\n| **FY TOTAL** | **$48,620** | **$11,330** | **$37,290 (76.7%)** | **$15,820** | **$12,910** | **$4,500** | **+$4,060** | **+8.4%** |\n\n---\n\n## 3. Unit Economics & Customer Cohort Trends\n- **Enterprise Tier Expansion:** Enterprise customers with >$100k ACV expanded from 42 to **118 accounts**.\n- **CAC Efficiency:** Customer Acquisition Cost decreased from $14,200 in Q1 to **$11,800 in Q4** due to viral developer bottom-up adoption.\n- **Inference Cost Compression:** Unit cost per 1M LLM tokens generated reduced by **46.8%** following tensor quantization deployment.\n\n---\n\n## 4. Strategic Outlook & Capital Allocation for FY 2026–27\n1. **Compute Infrastructure:** Allocate $8.5M in Capex to secure dedicated 256-node H200 GPU clusters.\n2. **International Expansion:** Initiate EMEA enterprise sales hub with target ARR contribution of $6.0M by Q3.\n3. **Free Cash Flow:** Target sustainable +20% FCF margin while preserving >65% top-line growth.",
+        "targetReportPrompt": "Act as a Chief Financial Officer at a Tier-1 Venture-Backed AI SaaS company. Generate a detailed, publication-ready Executive Financial and Operational Audit Report for FY 2025-2026. The report must include: 1) Executive Performance Summary with ARR ($48.6M), 82.4% YoY growth, NRR (134.2%), and Rule of 40 score; 2) A 4-quarter structured markdown financial table breaking down Gross Revenue, Infrastructure COGS, Gross Profit with margin %, Sales & Marketing, R&D, G&A, and Adjusted EBITDA; 3) Granular Unit Economics section covering Enterprise ACV, CAC trends, and inference cost reduction; 4) Strategic capital allocation roadmap for next financial year. Use precise financial syntax and markdown formatting.",
+        "evaluationCriteria": {
+          "structure": "Executive summary, 4-quarter financial breakdown table, unit economics, strategic outlook",
+          "content": "Specific financial figures ($48.6M ARR, 82.4% YoY, COGS, EBITDA, NRR)",
+          "format": "Crisp markdown tables, currency delimiters, percentages, bolded subtotals",
+          "insights": "Strategic analysis of GPU cluster optimization, CAC compression, expansion plans"
+        }
+      }
+    ]
+  }
+}

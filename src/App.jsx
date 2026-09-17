@@ -1,34 +1,77 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { LoginPage } from './pages/LoginPage';
+import { AdminLoginPage } from './pages/AdminLoginPage';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { HostDashboard } from './pages/HostDashboard';
-import { ProjectorView } from './pages/ProjectorView';
 
 export function App() {
-  const { user, loginProjector } = useAuth();
+  const { teamUser, adminUser } = useAuth();
 
-  // Support direct URL query parameters for fast auditorium setup (e.g. ?view=projector)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const view = params.get('view');
-    if (view === 'projector' && (!user || user.role !== 'projector')) {
-      loginProjector();
+  // Determine current route: 'student' (default on /) or 'admin' (on /admin, /host, #/admin, or ?admin=true)
+  const getInitialRoute = () => {
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const search = window.location.search.toLowerCase();
+
+    if (
+      path === '/admin' || 
+      path === '/host' || 
+      hash === '#/admin' || 
+      hash === '#/host' || 
+      search.includes('admin') || 
+      search.includes('host')
+    ) {
+      return 'admin';
     }
-  }, [user, loginProjector]);
+    return 'student';
+  };
 
-  if (user?.role === 'projector') {
-    return <ProjectorView />;
-  }
+  const [currentRoute, setCurrentRoute] = useState(getInitialRoute);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentRoute(getInitialRoute());
+    };
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
+  }, []);
+
+  const navigateTo = (route) => {
+    setCurrentRoute(route);
+    if (route === 'admin') {
+      window.history.pushState({}, '', '/admin');
+    } else {
+      window.history.pushState({}, '', '/');
+    }
+  };
+
+  const isAdminRoute = currentRoute === 'admin';
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-gray-100 flex flex-col font-sans">
-      <Navbar />
+    <div className="min-h-screen bg-[#070a13] text-gray-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+      <Navbar isAdminRoute={isAdminRoute} onNavigate={navigateTo} />
       <main className="flex-1">
-        {!user && <LoginPage />}
-        {user?.role === 'team' && <StudentDashboard />}
-        {user?.role === 'admin' && <HostDashboard />}
+        {isAdminRoute ? (
+          // Admin / Host Portal
+          adminUser ? (
+            <HostDashboard />
+          ) : (
+            <AdminLoginPage onSwitchToStudent={() => navigateTo('student')} />
+          )
+        ) : (
+          // Student Team Portal
+          teamUser ? (
+            <StudentDashboard />
+          ) : (
+            <LoginPage onSwitchToAdmin={() => navigateTo('admin')} />
+          )
+        )}
       </main>
     </div>
   );

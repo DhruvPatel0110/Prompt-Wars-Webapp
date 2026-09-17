@@ -4,18 +4,130 @@
  */
 
 export async function evaluateSubmission({ badPrompt, genreName, improvedPrompt, teamName }) {
-  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
-
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       return await evaluateWithAnthropic({ badPrompt, genreName, improvedPrompt, teamName });
     } catch (err) {
-      console.warn(`[Evaluator] Anthropic API failed (${err.message}). Falling back to heuristic engine.`);
+      console.warn(`[Evaluator] Anthropic API failed (${err.message}). Falling back.`);
+    }
+  }
+
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      return await evaluateWithGemini({ badPrompt, genreName, improvedPrompt, teamName });
+    } catch (err) {
+      console.warn(`[Evaluator] Gemini API failed (${err.message}). Falling back.`);
+    }
+  }
+
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      return await evaluateWithOpenAI({ badPrompt, genreName, improvedPrompt, teamName });
+    } catch (err) {
+      console.warn(`[Evaluator] OpenAI API failed (${err.message}). Falling back.`);
     }
   }
 
   // Fallback to sophisticated heuristic & rubric analyzer
   return evaluateWithHeuristics({ badPrompt, genreName, improvedPrompt });
+}
+
+async function evaluateWithGemini({ badPrompt, genreName, improvedPrompt }) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  const prompt = `You are an expert prompt engineering evaluator for the PROMPT WARS championship.
+A team has improved the following weak/bad prompt:
+
+BAD PROMPT: "${badPrompt}"
+GENRE: "${genreName}"
+
+IMPROVED PROMPT (by team):
+"${improvedPrompt}"
+
+Evaluate this improved prompt strictly on the following 5 criteria (Total 20 points):
+1. Clarity and Specificity (0-5 pts): Is the prompt clear, explicit, and unambiguous?
+2. Context and Role Definition (0-4 pts): Does it define a persona/role and rich context?
+3. Constraints and Instructions (0-4 pts): Are guidelines, negative constraints, and parameters well-defined?
+4. Expected Output Format (0-3 pts): Does it clearly specify the structure, tone, or format of the output?
+5. Creativity and Effectiveness (0-4 pts): Does it provide a massive improvement over the bad prompt?
+
+Respond ONLY with a valid JSON object matching this exact schema:
+{
+  "clarity_score": <number 0-5>,
+  "context_score": <number 0-4>,
+  "constraints_score": <number 0-4>,
+  "format_score": <number 0-3>,
+  "creativity_score": <number 0-4>,
+  "total_score": <number 0-20>,
+  "reasoning": "<string constructive feedback on strengths and weaknesses>",
+  "strengths": ["<string>", "<string>"],
+  "improvements": ["<string>"]
+}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.2
+      }
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Gemini HTTP ${response.status}: ${await response.text()}`);
+  }
+
+  const data = await response.json();
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+  return JSON.parse(rawText);
+}
+
+async function evaluateWithOpenAI({ badPrompt, genreName, improvedPrompt }) {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      response_format: { type: "json_object" },
+      temperature: 0.2,
+      messages: [
+        {
+          role: "system",
+          content: "You are an expert prompt engineering adjudicator. Output valid JSON only."
+        },
+        {
+          role: "user",
+          content: `Evaluate this improved prompt for PROMPT WARS:
+BAD PROMPT: "${badPrompt}"
+GENRE: "${genreName}"
+IMPROVED PROMPT: "${improvedPrompt}"
+
+Criteria (20 pts):
+1. clarity_score (0-5)
+2. context_score (0-4)
+3. constraints_score (0-4)
+4. format_score (0-3)
+5. creativity_score (0-4)
+total_score (0-20), reasoning, strengths (array), improvements (array)`
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI HTTP ${response.status}: ${await response.text()}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content || "{}";
+  return JSON.parse(content);
 }
 
 async function evaluateWithAnthropic({ badPrompt, genreName, improvedPrompt }) {
@@ -73,6 +185,47 @@ Respond ONLY with a valid JSON object matching this exact schema:
     return JSON.parse(jsonMatch[0]);
   }
   throw new Error("Invalid JSON response from Anthropic");
+}
+
+/**
+ * Concurrent Worker Pool for Batch Evaluations
+ * Evaluates multiple teams concurrently with a worker concurrency limit (default: 10 workers)
+ */
+export async function evaluateBatchWithConcurrency(items, evaluatorFn, concurrency = 10, onProgress = null) {
+  const results = {};
+  let completed = 0;
+  let index = 0;
+
+  async function worker() {
+    while (index < items.length) {
+      const currentItem = items[index++];
+      try {
+        const result = await evaluatorFn(currentItem);
+        results[currentItem.id] = result;
+      } catch (err) {
+        console.error(`Evaluation failed for item ${currentItem.id}:`, err);
+        // Heuristic fallback for resilience
+        results[currentItem.id] = evaluateWithHeuristics({
+          badPrompt: currentItem.badPrompt || "Weak prompt",
+          genreName: currentItem.genreName || "CREATIVE",
+          improvedPrompt: currentItem.improvedPrompt || ""
+        });
+      }
+      completed++;
+      if (onProgress) {
+        onProgress({
+          completed,
+          total: items.length,
+          currentTeam: currentItem.name || currentItem.id,
+          result: results[currentItem.id]
+        });
+      }
+    }
+  }
+
+  const workers = Array.from({ length: Math.min(concurrency, items.length) }, () => worker());
+  await Promise.all(workers);
+  return results;
 }
 
 /**

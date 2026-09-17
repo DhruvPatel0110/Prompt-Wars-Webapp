@@ -5,9 +5,20 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const { socket, isConnected } = useSocket();
-  const [user, setUser] = useState(() => {
+
+  // Distinct sessions for Team and Admin to prevent collisions
+  const [teamUser, setTeamUser] = useState(() => {
     try {
-      const saved = localStorage.getItem('prompt_wars_session');
+      const saved = localStorage.getItem('prompt_wars_team_session');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [adminUser, setAdminUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('prompt_wars_admin_session');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
@@ -15,28 +26,28 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [authError, setAuthError] = useState(null);
+  const [adminAuthError, setAdminAuthError] = useState(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // Auto re-join on reconnect
   useEffect(() => {
-    if (socket && isConnected && user) {
-      if (user.role === 'team') {
-        socket.emit('team:join', { teamId: user.teamId, pin: user.pin }, (res) => {
+    if (socket && isConnected) {
+      if (teamUser) {
+        socket.emit('team:join', { teamId: teamUser.teamId, pin: teamUser.pin }, (res) => {
           if (!res?.success) {
             console.warn('Auto-reconnect failed for team:', res?.error);
           }
         });
-      } else if (user.role === 'admin') {
-        socket.emit('admin:join', { adminPin: user.adminPin }, (res) => {
+      }
+      if (adminUser) {
+        socket.emit('admin:join', { adminPin: adminUser.adminPin }, (res) => {
           if (!res?.success) {
             console.warn('Auto-reconnect failed for admin:', res?.error);
           }
         });
-      } else if (user.role === 'projector') {
-        socket.emit('projector:join', {}, () => {});
       }
     }
-  }, [socket, isConnected, user]);
+  }, [socket, isConnected, teamUser, adminUser]);
 
   const loginTeam = async (teamId, pin) => {
     setIsAuthenticating(true);
@@ -59,8 +70,8 @@ export const AuthProvider = ({ children }) => {
             teamName: res.teamView.team.name,
             pin
           };
-          setUser(session);
-          localStorage.setItem('prompt_wars_session', JSON.stringify(session));
+          setTeamUser(session);
+          localStorage.setItem('prompt_wars_team_session', JSON.stringify(session));
           resolve(true);
         } else {
           setAuthError(res?.error || 'Authentication failed');
@@ -72,12 +83,12 @@ export const AuthProvider = ({ children }) => {
 
   const loginAdmin = async (adminPin) => {
     setIsAuthenticating(true);
-    setAuthError(null);
+    setAdminAuthError(null);
 
     return new Promise((resolve) => {
       if (!socket || !isConnected) {
         setIsAuthenticating(false);
-        setAuthError('Server is not connected.');
+        setAdminAuthError('Server is not connected.');
         resolve(false);
         return;
       }
@@ -89,41 +100,41 @@ export const AuthProvider = ({ children }) => {
             role: 'admin',
             adminPin
           };
-          setUser(session);
-          localStorage.setItem('prompt_wars_session', JSON.stringify(session));
+          setAdminUser(session);
+          localStorage.setItem('prompt_wars_admin_session', JSON.stringify(session));
           resolve(true);
         } else {
-          setAuthError(res?.error || 'Invalid Admin PIN');
+          setAdminAuthError(res?.error || 'Invalid Admin PIN');
           resolve(false);
         }
       });
     });
   };
 
-  const loginProjector = () => {
-    const session = { role: 'projector' };
-    setUser(session);
-    localStorage.setItem('prompt_wars_session', JSON.stringify(session));
-    if (socket && isConnected) {
-      socket.emit('projector:join', {}, () => {});
-    }
+  const logoutTeam = () => {
+    setTeamUser(null);
+    localStorage.removeItem('prompt_wars_team_session');
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('prompt_wars_session');
+  const logoutAdmin = () => {
+    setAdminUser(null);
+    localStorage.removeItem('prompt_wars_admin_session');
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        teamUser,
+        adminUser,
+        user: teamUser, // default backwards compatibility
         authError,
+        adminAuthError,
         isAuthenticating,
         loginTeam,
         loginAdmin,
-        loginProjector,
-        logout
+        logoutTeam,
+        logoutAdmin,
+        logout: logoutTeam
       }}
     >
       {children}

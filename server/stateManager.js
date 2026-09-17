@@ -7,14 +7,21 @@ const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, 'data');
 const QUESTIONS_FILE = path.join(DATA_DIR, 'round1_questions.json');
+const ROUND2_FILE = path.join(DATA_DIR, 'round2_challenges.json');
+const ROUND3_FILE = path.join(DATA_DIR, 'round3_cases.json');
 const TEAMS_FILE = path.join(DATA_DIR, 'teams_roster.json');
 const SNAPSHOT_FILE = path.join(DATA_DIR, 'game_state_snapshot.json');
 
 export class StateManager {
   constructor() {
     this.questionsData = this.loadJSON(QUESTIONS_FILE, { genres: {}, questions: [] });
+    this.round2Data = this.loadJSON(ROUND2_FILE, { challenges: { image: [], report: [] } });
+    this.round3Data = this.loadJSON(ROUND3_FILE, { cases: [] });
     this.teamsRoster = this.loadJSON(TEAMS_FILE, []);
-    
+
+    this.activeRound = 1;
+
+    // Round 1 State
     this.roundState = {
       round: 1,
       roundName: "PROMPT MAKEOVER",
@@ -28,6 +35,45 @@ export class StateManager {
       timerEndsAt: null,
       eliminationPercentage: 50,
       advanceTriggered: false
+    };
+
+    // Round 2 State
+    this.round2State = {
+      round: 2,
+      roundName: "PROMPT REVERSE ENGINEERING",
+      tagline: "SEE THE OUTPUT. BUILD THE PROMPT.",
+      isLocked: true,
+      status: 'LOCKED', // 'LOCKED' | 'ACTIVE' | 'EVALUATING' | 'EVALUATED' | 'ADVANCED'
+      timerDuration: 900,
+      timerRemaining: 900,
+      timerRunning: false,
+      timerStartedAt: null,
+      timerEndsAt: null,
+      eliminationPercentage: 50,
+      advanceTriggered: false,
+      activeImageChallenge: this.round2Data.challenges?.image?.[0] || null,
+      activeReportChallenge: this.round2Data.challenges?.report?.[0] || null
+    };
+
+    // Round 3 State
+    this.round3State = {
+      round: 3,
+      roundName: "FINAL PROMPT BATTLE",
+      tagline: "BUILD. ADAPT. SURVIVE.",
+      isLocked: true,
+      status: 'LOCKED', // 'LOCKED' | 'ACTIVE' | 'BOMB_DETONATED' | 'EVALUATING' | 'COMPLETED'
+      phase: 'master_draft', // 'master_draft' | 'bomb_detonated' | 'round_ended' | 'evaluating' | 'completed'
+      timerDuration: 900,
+      timerRemaining: 900,
+      timerRunning: false,
+      timerStartedAt: null,
+      timerEndsAt: null,
+      bombDurationSeconds: 30,
+      bombTimerRemaining: 30,
+      bombRunning: false,
+      bombDetonatedAt: null,
+      advanceTriggered: false,
+      podiumRevealed: false
     };
 
     this.teams = new Map();
@@ -53,7 +99,10 @@ export class StateManager {
   saveSnapshot() {
     try {
       const data = {
+        activeRound: this.activeRound,
         roundState: this.roundState,
+        round2State: this.round2State,
+        round3State: this.round3State,
         teams: Array.from(this.teams.values())
       };
       fs.writeFileSync(SNAPSHOT_FILE, JSON.stringify(data, null, 2), 'utf8');
@@ -66,13 +115,15 @@ export class StateManager {
     if (fs.existsSync(SNAPSHOT_FILE)) {
       try {
         const data = JSON.parse(fs.readFileSync(SNAPSHOT_FILE, 'utf8'));
+        if (data.activeRound) this.activeRound = data.activeRound;
         if (data.roundState) {
-          // Merge round state but reset active running timers on server startup for safety
-          this.roundState = {
-            ...this.roundState,
-            ...data.roundState,
-            timerRunning: false
-          };
+          this.roundState = { ...this.roundState, ...data.roundState, timerRunning: false };
+        }
+        if (data.round2State) {
+          this.round2State = { ...this.round2State, ...data.round2State, timerRunning: false };
+        }
+        if (data.round3State) {
+          this.round3State = { ...this.round3State, ...data.round3State, timerRunning: false, bombRunning: false };
         }
         if (Array.isArray(data.teams)) {
           data.teams.forEach(t => {
@@ -103,6 +154,8 @@ export class StateManager {
         connected: false,
         socketId: null,
         lastSeen: Date.now(),
+        
+        // Round 1 Fields
         spinResult: null,
         assignedGenre: null,
         assignedQuestion: null,
@@ -115,12 +168,45 @@ export class StateManager {
         evaluation: null,
         isEliminated: false,
         isQualified: false,
-        rank: null
+        rank: null,
+
+        // Round 2 Fields
+        round2: {
+          status: 'idle', // 'idle' | 'drafting' | 'c1_submitted' | 'c2_submitted' | 'both_submitted' | 'evaluated'
+          c1_draft: "",
+          c1_submittedPrompt: null,
+          c1_submittedAt: null,
+          c1_evaluation: null,
+          c2_draft: "",
+          c2_submittedPrompt: null,
+          c2_submittedAt: null,
+          c2_evaluation: null,
+          totalScore: 0,
+          isQualified: false,
+          isEliminated: false,
+          rank: null
+        },
+
+        // Round 3 Fields
+        round3: {
+          status: 'idle', // 'idle' | 'drafting' | 'bomb_active' | 'submitted' | 'evaluating' | 'evaluated'
+          assignedCase: null,
+          assignedBomb: null,
+          masterDraft: "",
+          masterPrompt: null,
+          adaptedDraft: "",
+          adaptedPrompt: null,
+          submittedAt: null,
+          timeTakenSeconds: null,
+          evaluation: null,
+          finalRank: null,
+          isWinner: false
+        }
       });
     });
   }
 
-  // --- Socket Connections ---
+  // --- Socket Registration ---
 
   registerTeamSocket(teamId, socketId) {
     const team = this.teams.get(teamId);
@@ -154,13 +240,15 @@ export class StateManager {
     this.projectorSockets.add(socketId);
   }
 
-  // --- Team Actions ---
+  // ==========================================
+  // ROUND 1 LOGIC
+  // ==========================================
 
   performSpin(teamId, requestedGenre = null) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
     if (this.roundState.isLocked) throw new Error("Round is locked by host");
-    if (team.spinResult) return team; // Already spun
+    if (team.spinResult) return team;
 
     const genresKeys = ['A', 'B', 'C', 'D'];
     const genreKey = requestedGenre && genresKeys.includes(requestedGenre)
@@ -168,8 +256,6 @@ export class StateManager {
       : genresKeys[Math.floor(Math.random() * genresKeys.length)];
 
     const genreInfo = this.questionsData.genres[genreKey];
-    
-    // Pick question for this genre
     const candidates = (this.questionsData.questions || []).filter(q => q.genre === genreKey);
     const chosenQuestion = candidates.length > 0 
       ? candidates[Math.floor(Math.random() * candidates.length)]
@@ -193,9 +279,7 @@ export class StateManager {
   saveDraft(teamId, draftText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-    if (team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated') {
-      return team; // Cannot edit after submit
-    }
+    if (team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated') return team;
     team.draftPrompt = (draftText || "").slice(0, 2500);
     return team;
   }
@@ -211,12 +295,7 @@ export class StateManager {
     }
 
     const text = (improvedPrompt || team.draftPrompt || "").trim();
-    if (text.length < 50) {
-      throw new Error("Prompt must be at least 50 characters.");
-    }
-    if (text.length > 2500) {
-      throw new Error("Prompt exceeds maximum 2500 characters.");
-    }
+    if (text.length < 50) throw new Error("Prompt must be at least 50 characters.");
 
     const elapsed = this.roundState.timerDuration - this.roundState.timerRemaining;
     team.submittedPrompt = text;
@@ -228,8 +307,6 @@ export class StateManager {
     this.saveSnapshot();
     return team;
   }
-
-  // --- Host Control Actions ---
 
   unlockRound() {
     this.roundState.isLocked = false;
@@ -284,21 +361,7 @@ export class StateManager {
     return this.roundState;
   }
 
-  tickTimer() {
-    if (this.roundState.timerRunning && this.roundState.timerRemaining > 0) {
-      this.roundState.timerRemaining -= 1;
-      if (this.roundState.timerRemaining <= 0) {
-        this.roundState.timerRemaining = 0;
-        this.roundState.timerRunning = false;
-        this.roundState.status = 'EVALUATING';
-      }
-      return true;
-    }
-    return false;
-  }
-
   setEvaluationResults(teamEvaluations) {
-    // teamEvaluations: { [teamId]: evaluationObject }
     Object.entries(teamEvaluations).forEach(([teamId, evalResult]) => {
       const team = this.teams.get(teamId);
       if (team) {
@@ -317,23 +380,12 @@ export class StateManager {
     if (!team) return null;
     if (!team.evaluation) {
       team.evaluation = {
-        clarity_score: 0,
-        context_score: 0,
-        constraints_score: 0,
-        format_score: 0,
-        creativity_score: 0,
-        total_score: 0,
-        reasoning: "Manually adjusted by Host",
-        strengths: [],
-        improvements: []
+        clarity_score: 0, context_score: 0, constraints_score: 0,
+        format_score: 0, creativity_score: 0, total_score: 0,
+        reasoning: "Manually adjusted by Host"
       };
     }
-    if (criteriaKey in team.evaluation) {
-      team.evaluation[criteriaKey] = Number(score);
-    } else if (criteriaKey === 'total_score') {
-      team.evaluation.total_score = Number(score);
-    }
-
+    team.evaluation[criteriaKey] = Number(score);
     team.evaluation.total_score = 
       (team.evaluation.clarity_score || 0) +
       (team.evaluation.context_score || 0) +
@@ -348,8 +400,6 @@ export class StateManager {
 
   computeLeaderboard() {
     const teamsList = Array.from(this.teams.values());
-    
-    // Sort primarily by score desc, secondarily by speed (timerUsedSeconds asc)
     teamsList.sort((a, b) => {
       const scoreA = a.evaluation?.total_score ?? -1;
       const scoreB = b.evaluation?.total_score ?? -1;
@@ -378,14 +428,496 @@ export class StateManager {
     this.computeLeaderboard();
     this.roundState.status = 'ADVANCED';
     this.roundState.advanceTriggered = true;
+    this.activeRound = 2;
     this.saveSnapshot();
+    return { roundState: this.roundState, leaderboard: this.getLeaderboard() };
+  }
+
+  // ==========================================
+  // ROUND 2 LOGIC (PROMPT REVERSE ENGINEERING)
+  // ==========================================
+
+  unlockRound2() {
+    this.activeRound = 2;
+    this.round2State.isLocked = false;
+    this.round2State.status = 'ACTIVE';
+    this.startRound2Timer();
+    this.saveSnapshot();
+    return this.round2State;
+  }
+
+  lockRound2() {
+    this.round2State.isLocked = true;
+    this.round2State.status = 'LOCKED';
+    this.pauseRound2Timer();
+    this.saveSnapshot();
+    return this.round2State;
+  }
+
+  startRound2Timer() {
+    if (!this.round2State.timerRunning) {
+      this.round2State.timerRunning = true;
+      this.round2State.timerStartedAt = Date.now();
+      this.round2State.timerEndsAt = Date.now() + (this.round2State.timerRemaining * 1000);
+    }
+    return this.round2State;
+  }
+
+  pauseRound2Timer() {
+    if (this.round2State.timerRunning) {
+      this.round2State.timerRunning = false;
+      this.round2State.timerStartedAt = null;
+      this.round2State.timerEndsAt = null;
+    }
+    return this.round2State;
+  }
+
+  resetRound2Timer(durationSeconds = 900) {
+    this.round2State.timerDuration = durationSeconds;
+    this.round2State.timerRemaining = durationSeconds;
+    this.round2State.timerRunning = false;
+    this.round2State.timerStartedAt = null;
+    this.round2State.timerEndsAt = null;
+    this.saveSnapshot();
+    return this.round2State;
+  }
+
+  saveRound2Draft(teamId, challengeType, draftText) {
+    const team = this.teams.get(teamId);
+    if (!team) return null;
+    if (challengeType === 'image') {
+      team.round2.c1_draft = (draftText || "").slice(0, 2500);
+    } else {
+      team.round2.c2_draft = (draftText || "").slice(0, 2500);
+    }
+    if (team.round2.status === 'idle') team.round2.status = 'drafting';
+    return team;
+  }
+
+  submitRound2(teamId, challengeType, promptText) {
+    const team = this.teams.get(teamId);
+    if (!team) throw new Error("Team not found");
+    if (this.round2State.isLocked && this.round2State.status !== 'ACTIVE') {
+      throw new Error("Round 2 is currently locked.");
+    }
+
+    const text = (promptText || "").trim();
+    if (text.length < 30) throw new Error("Prompt must be at least 30 characters.");
+
+    if (challengeType === 'image') {
+      team.round2.c1_submittedPrompt = text;
+      team.round2.c1_submittedAt = Date.now();
+      team.round2.status = team.round2.c2_submittedPrompt ? 'both_submitted' : 'c1_submitted';
+    } else {
+      team.round2.c2_submittedPrompt = text;
+      team.round2.c2_submittedAt = Date.now();
+      team.round2.status = team.round2.c1_submittedPrompt ? 'both_submitted' : 'c2_submitted';
+    }
+
+    this.saveSnapshot();
+    return team;
+  }
+
+  setRound2EvaluationResults(evaluations) {
+    // evaluations: { [teamId]: { c1_eval, c2_eval, totalScore } }
+    Object.entries(evaluations).forEach(([teamId, data]) => {
+      const team = this.teams.get(teamId);
+      if (team) {
+        team.round2.c1_evaluation = data.c1_eval;
+        team.round2.c2_evaluation = data.c2_eval;
+        team.round2.totalScore = (data.c1_eval?.total_score || 0) + (data.c2_eval?.total_score || 0);
+        team.round2.status = 'evaluated';
+      }
+    });
+
+    this.round2State.status = 'EVALUATED';
+    this.computeRound2Leaderboard();
+    this.saveSnapshot();
+  }
+
+  computeRound2Leaderboard() {
+    const qualifiedTeamsFromR1 = Array.from(this.teams.values()).filter(t => t.isQualified);
+    qualifiedTeamsFromR1.sort((a, b) => (b.round2.totalScore || 0) - (a.round2.totalScore || 0));
+
+    const totalInR2 = qualifiedTeamsFromR1.length || 1;
+    const qualifyCount = Math.max(1, Math.ceil(totalInR2 * ((100 - this.round2State.eliminationPercentage) / 100)));
+
+    qualifiedTeamsFromR1.forEach((team, idx) => {
+      team.round2.rank = idx + 1;
+      if (idx < qualifyCount && (team.round2.totalScore > 0 || team.round2.c1_submittedPrompt || team.round2.c2_submittedPrompt)) {
+        team.round2.isQualified = true;
+        team.round2.isEliminated = false;
+      } else {
+        team.round2.isQualified = false;
+        team.round2.isEliminated = true;
+      }
+    });
+
+    return qualifiedTeamsFromR1;
+  }
+
+  advanceRound2() {
+    this.computeRound2Leaderboard();
+    this.round2State.status = 'ADVANCED';
+    this.round2State.advanceTriggered = true;
+    this.activeRound = 3;
+    this.allotRound3Cases();
+    this.saveSnapshot();
+    return { round2State: this.round2State, leaderboard: this.getRound2Leaderboard() };
+  }
+
+  getRound2Leaderboard() {
+    const list = Array.from(this.teams.values()).filter(t => t.isQualified);
+    list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
+    return list;
+  }
+
+  // ==========================================
+  // ROUND 3 LOGIC (FINAL PROMPT BATTLE & BOMB)
+  // ==========================================
+
+  allotRound3Cases() {
+    const r3Teams = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const availableCases = this.round3Data.cases || [];
+
+    r3Teams.forEach((team, idx) => {
+      const caseItem = availableCases[idx % availableCases.length] || availableCases[0];
+      const bombs = caseItem?.bombs || [];
+      const bombItem = bombs[idx % bombs.length] || bombs[0];
+
+      team.round3.assignedCase = caseItem;
+      team.round3.assignedBomb = bombItem;
+      team.round3.status = 'drafting';
+    });
+
+    this.saveSnapshot();
+  }
+
+  unlockRound3() {
+    this.activeRound = 3;
+    this.round3State.isLocked = false;
+    this.round3State.status = 'ACTIVE';
+    this.round3State.phase = 'master_draft';
+    this.startRound3Timer();
+    this.allotRound3Cases();
+    this.saveSnapshot();
+    return this.round3State;
+  }
+
+  lockRound3() {
+    this.round3State.isLocked = true;
+    this.round3State.status = 'LOCKED';
+    this.pauseRound3Timer();
+    this.saveSnapshot();
+    return this.round3State;
+  }
+
+  startRound3Timer() {
+    if (!this.round3State.timerRunning) {
+      this.round3State.timerRunning = true;
+      this.round3State.timerStartedAt = Date.now();
+      this.round3State.timerEndsAt = Date.now() + (this.round3State.timerRemaining * 1000);
+    }
+    return this.round3State;
+  }
+
+  pauseRound3Timer() {
+    if (this.round3State.timerRunning) {
+      this.round3State.timerRunning = false;
+      this.round3State.timerStartedAt = null;
+      this.round3State.timerEndsAt = null;
+    }
+    return this.round3State;
+  }
+
+  saveRound3MasterDraft(teamId, draftText) {
+    const team = this.teams.get(teamId);
+    if (!team) return null;
+    team.round3.masterDraft = (draftText || "").slice(0, 4500);
+    return team;
+  }
+
+  detonateFinalBomb() {
+    this.round3State.phase = 'bomb_detonated';
+    this.round3State.status = 'BOMB_DETONATED';
+    this.round3State.bombRunning = true;
+    this.round3State.bombTimerRemaining = 30;
+    this.round3State.bombDetonatedAt = Date.now();
+
+    // Initialize adapted drafts with current master draft for all teams
+    for (const team of this.teams.values()) {
+      if (team.round3.assignedCase) {
+        team.round3.masterPrompt = team.round3.masterDraft || "Master Strategy Draft";
+        team.round3.adaptedDraft = team.round3.masterPrompt;
+        team.round3.status = 'bomb_active';
+      }
+    }
+
+    this.saveSnapshot();
+    return this.round3State;
+  }
+
+  saveRound3BombDraft(teamId, adaptedText) {
+    const team = this.teams.get(teamId);
+    if (!team) return null;
+    team.round3.adaptedDraft = (adaptedText || "").slice(0, 4500);
+    return team;
+  }
+
+  submitRound3(teamId, adaptedPrompt) {
+    const team = this.teams.get(teamId);
+    if (!team) throw new Error("Team not found");
+
+    const text = (adaptedPrompt || team.round3.adaptedDraft || team.round3.masterDraft || "").trim();
+    team.round3.adaptedPrompt = text;
+    team.round3.submittedAt = Date.now();
+    team.round3.status = 'submitted';
+
+    this.saveSnapshot();
+    return team;
+  }
+
+  setRound3EvaluationResults(evaluations) {
+    // evaluations: { [teamId]: evalResult }
+    Object.entries(evaluations).forEach(([teamId, evalResult]) => {
+      const team = this.teams.get(teamId);
+      if (team) {
+        team.round3.evaluation = evalResult;
+        team.round3.status = 'evaluated';
+      }
+    });
+
+    this.round3State.status = 'COMPLETED';
+    this.round3State.phase = 'completed';
+    this.computeRound3Leaderboard();
+    this.saveSnapshot();
+  }
+
+  computeRound3Leaderboard() {
+    const r3Teams = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    r3Teams.sort((a, b) => {
+      const scoreA = a.round3.evaluation?.total_score ?? -1;
+      const scoreB = b.round3.evaluation?.total_score ?? -1;
+      return scoreB - scoreA;
+    });
+
+    r3Teams.forEach((team, idx) => {
+      team.round3.finalRank = idx + 1;
+      team.round3.isWinner = idx < 3;
+    });
+
+    return r3Teams;
+  }
+
+  revealPodium() {
+    this.round3State.podiumRevealed = true;
+    this.saveSnapshot();
+    return this.getPodiumWinners();
+  }
+
+  getPodiumWinners() {
+    const r3Leaderboard = this.getRound3Leaderboard();
     return {
-      roundState: this.roundState,
-      leaderboard: this.getLeaderboard()
+      first: r3Leaderboard[0] || null,
+      second: r3Leaderboard[1] || null,
+      third: r3Leaderboard[2] || null,
+      fullStandings: r3Leaderboard
     };
   }
 
+  getRound3Leaderboard() {
+    const list = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    list.sort((a, b) => (a.round3.finalRank || 999) - (b.round3.finalRank || 999));
+    return list;
+  }
+
+  // --- Authoritative Tick ---
+  tickTimer() {
+    let didChange = false;
+
+    // Round 1
+    if (this.roundState.timerRunning && this.roundState.timerRemaining > 0) {
+      this.roundState.timerRemaining -= 1;
+      if (this.roundState.timerRemaining <= 0) {
+        this.roundState.timerRemaining = 0;
+        this.roundState.timerRunning = false;
+        this.roundState.status = 'EVALUATING';
+      }
+      didChange = true;
+    }
+
+    // Round 2
+    if (this.round2State.timerRunning && this.round2State.timerRemaining > 0) {
+      this.round2State.timerRemaining -= 1;
+      if (this.round2State.timerRemaining <= 0) {
+        this.round2State.timerRemaining = 0;
+        this.round2State.timerRunning = false;
+        this.round2State.status = 'EVALUATING';
+      }
+      didChange = true;
+    }
+
+    // Round 3 Main Timer
+    if (this.round3State.timerRunning && this.round3State.timerRemaining > 0) {
+      this.round3State.timerRemaining -= 1;
+      // Auto trigger bomb at 30 seconds if not already detonated
+      if (this.round3State.timerRemaining === 30 && this.round3State.phase === 'master_draft') {
+        this.detonateFinalBomb();
+      }
+      if (this.round3State.timerRemaining <= 0) {
+        this.round3State.timerRemaining = 0;
+        this.round3State.timerRunning = false;
+      }
+      didChange = true;
+    }
+
+    // Round 3 Bomb 30-Second Countdown
+    if (this.round3State.bombRunning && this.round3State.bombTimerRemaining > 0) {
+      this.round3State.bombTimerRemaining -= 1;
+      if (this.round3State.bombTimerRemaining <= 0) {
+        this.round3State.bombTimerRemaining = 0;
+        this.round3State.bombRunning = false;
+        this.round3State.phase = 'round_ended';
+        // Auto-commit all drafts
+        for (const team of this.teams.values()) {
+          if (team.round3.status === 'bomb_active') {
+            this.submitRound3(team.id, team.round3.adaptedDraft || team.round3.masterDraft);
+          }
+        }
+      }
+      didChange = true;
+    }
+
+    return didChange;
+  }
+
+  // --- Multi-View Payloads ---
+
+  getTeamView(teamId) {
+    const team = this.teams.get(teamId);
+    if (!team) return null;
+
+    return {
+      activeRound: this.activeRound,
+      team: {
+        id: team.id,
+        name: team.name,
+        // Round 1
+        spinResult: team.spinResult,
+        assignedGenre: team.assignedGenre,
+        assignedQuestion: team.assignedQuestion,
+        draftPrompt: team.draftPrompt,
+        submittedPrompt: team.submittedPrompt,
+        submittedAt: team.submittedAt,
+        timerUsedSeconds: team.timerUsedSeconds,
+        editCount: team.editCount,
+        submissionStatus: team.submissionStatus,
+        evaluation: this.roundState.advanceTriggered ? team.evaluation : null,
+        isQualified: this.roundState.advanceTriggered ? team.isQualified : null,
+        isEliminated: this.roundState.advanceTriggered ? team.isEliminated : null,
+        rank: this.roundState.advanceTriggered ? team.rank : null,
+        // Round 2
+        round2: team.round2,
+        // Round 3
+        round3: team.round3
+      },
+      roundState: {
+        round: this.roundState.round,
+        roundName: this.roundState.roundName,
+        tagline: this.roundState.tagline,
+        isLocked: this.roundState.isLocked,
+        status: this.roundState.status,
+        timerDuration: this.roundState.timerDuration,
+        timerRemaining: this.roundState.timerRemaining,
+        timerRunning: this.roundState.timerRunning,
+        advanceTriggered: this.roundState.advanceTriggered
+      },
+      round2State: {
+        round: this.round2State.round,
+        roundName: this.round2State.roundName,
+        tagline: this.round2State.tagline,
+        isLocked: this.round2State.isLocked,
+        status: this.round2State.status,
+        timerDuration: this.round2State.timerDuration,
+        timerRemaining: this.round2State.timerRemaining,
+        timerRunning: this.round2State.timerRunning,
+        advanceTriggered: this.round2State.advanceTriggered,
+        activeImageChallenge: this.round2State.activeImageChallenge,
+        activeReportChallenge: this.round2State.activeReportChallenge
+      },
+      round3State: {
+        round: this.round3State.round,
+        roundName: this.round3State.roundName,
+        tagline: this.round3State.tagline,
+        isLocked: this.round3State.isLocked,
+        status: this.round3State.status,
+        phase: this.round3State.phase,
+        timerDuration: this.round3State.timerDuration,
+        timerRemaining: this.round3State.timerRemaining,
+        timerRunning: this.round3State.timerRunning,
+        bombTimerRemaining: this.round3State.bombTimerRemaining,
+        bombRunning: this.round3State.bombRunning,
+        podiumRevealed: this.round3State.podiumRevealed
+      },
+      genres: this.questionsData.genres
+    };
+  }
+
+  getHostView() {
+    const teamsList = Array.from(this.teams.values());
+    const connectedCount = teamsList.filter(t => t.connected).length;
+    const r1Submitted = teamsList.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length;
+    const r2Submitted = teamsList.filter(t => t.round2.status === 'both_submitted' || t.round2.status === 'evaluated').length;
+    const r3Submitted = teamsList.filter(t => t.round3.status === 'submitted' || t.round3.status === 'evaluated').length;
+
+    return {
+      activeRound: this.activeRound,
+      roundState: this.roundState,
+      round2State: this.round2State,
+      round3State: this.round3State,
+      stats: {
+        totalTeams: teamsList.length,
+        connectedCount,
+        r1Submitted,
+        r2Submitted,
+        r3Submitted
+      },
+      teams: teamsList,
+      questions: this.questionsData.questions,
+      genres: this.questionsData.genres,
+      round2Challenges: this.round2Data.challenges,
+      round3Cases: this.round3Data.cases,
+      podiumWinners: this.round3State.podiumRevealed ? this.getPodiumWinners() : null
+    };
+  }
+
+  getProjectorView() {
+    const teamsList = Array.from(this.teams.values());
+    const connectedCount = teamsList.filter(t => t.connected).length;
+
+    return {
+      activeRound: this.activeRound,
+      roundState: this.roundState,
+      round2State: this.round2State,
+      round3State: this.round3State,
+      stats: {
+        totalTeams: teamsList.length,
+        connectedCount
+      },
+      r1Leaderboard: this.roundState.advanceTriggered ? this.getLeaderboard().slice(0, 15) : [],
+      r2Leaderboard: this.round2State.advanceTriggered ? this.getRound2Leaderboard().slice(0, 15) : [],
+      r3Podium: this.round3State.podiumRevealed ? this.getPodiumWinners() : null
+    };
+  }
+
+  getLeaderboard() {
+    const list = Array.from(this.teams.values());
+    list.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+    return list;
+  }
+
   resetAll() {
+    this.activeRound = 1;
     this.roundState = {
       round: 1,
       roundName: "PROMPT MAKEOVER",
@@ -400,90 +932,44 @@ export class StateManager {
       eliminationPercentage: 50,
       advanceTriggered: false
     };
+    this.round2State = {
+      round: 2,
+      roundName: "PROMPT REVERSE ENGINEERING",
+      tagline: "SEE THE OUTPUT. BUILD THE PROMPT.",
+      isLocked: true,
+      status: 'LOCKED',
+      timerDuration: 900,
+      timerRemaining: 900,
+      timerRunning: false,
+      timerStartedAt: null,
+      timerEndsAt: null,
+      eliminationPercentage: 50,
+      advanceTriggered: false,
+      activeImageChallenge: this.round2Data.challenges?.image?.[0] || null,
+      activeReportChallenge: this.round2Data.challenges?.report?.[0] || null
+    };
+    this.round3State = {
+      round: 3,
+      roundName: "FINAL PROMPT BATTLE",
+      tagline: "BUILD. ADAPT. SURVIVE.",
+      isLocked: true,
+      status: 'LOCKED',
+      phase: 'master_draft',
+      timerDuration: 900,
+      timerRemaining: 900,
+      timerRunning: false,
+      timerStartedAt: null,
+      timerEndsAt: null,
+      bombDurationSeconds: 30,
+      bombTimerRemaining: 30,
+      bombRunning: false,
+      bombDetonatedAt: null,
+      advanceTriggered: false,
+      podiumRevealed: false
+    };
 
     this.teams.clear();
     this.initTeams();
     this.saveSnapshot();
-  }
-
-  // --- Views & Payloads ---
-
-  getTeamView(teamId) {
-    const team = this.teams.get(teamId);
-    if (!team) return null;
-    return {
-      team: {
-        id: team.id,
-        name: team.name,
-        spinResult: team.spinResult,
-        assignedGenre: team.assignedGenre,
-        assignedQuestion: team.assignedQuestion,
-        draftPrompt: team.draftPrompt,
-        submittedPrompt: team.submittedPrompt,
-        submittedAt: team.submittedAt,
-        timerUsedSeconds: team.timerUsedSeconds,
-        editCount: team.editCount,
-        submissionStatus: team.submissionStatus,
-        evaluation: this.roundState.advanceTriggered ? team.evaluation : null,
-        isQualified: this.roundState.advanceTriggered ? team.isQualified : null,
-        isEliminated: this.roundState.advanceTriggered ? team.isEliminated : null,
-        rank: this.roundState.advanceTriggered ? team.rank : null
-      },
-      roundState: {
-        round: this.roundState.round,
-        roundName: this.roundState.roundName,
-        tagline: this.roundState.tagline,
-        isLocked: this.roundState.isLocked,
-        status: this.roundState.status,
-        timerDuration: this.roundState.timerDuration,
-        timerRemaining: this.roundState.timerRemaining,
-        timerRunning: this.roundState.timerRunning,
-        timerEndsAt: this.roundState.timerEndsAt,
-        advanceTriggered: this.roundState.advanceTriggered
-      },
-      genres: this.questionsData.genres
-    };
-  }
-
-  getHostView() {
-    const teamsList = Array.from(this.teams.values());
-    const submittedCount = teamsList.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length;
-    const connectedCount = teamsList.filter(t => t.connected).length;
-    const draftingCount = teamsList.filter(t => t.submissionStatus === 'drafting').length;
-
-    return {
-      roundState: this.roundState,
-      stats: {
-        totalTeams: teamsList.length,
-        connectedCount,
-        draftingCount,
-        submittedCount
-      },
-      teams: teamsList,
-      questions: this.questionsData.questions,
-      genres: this.questionsData.genres
-    };
-  }
-
-  getProjectorView() {
-    const teamsList = Array.from(this.teams.values());
-    const submittedCount = teamsList.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length;
-    const connectedCount = teamsList.filter(t => t.connected).length;
-
-    return {
-      roundState: this.roundState,
-      stats: {
-        totalTeams: teamsList.length,
-        connectedCount,
-        submittedCount
-      },
-      leaderboard: this.roundState.advanceTriggered ? this.getLeaderboard().slice(0, 15) : []
-    };
-  }
-
-  getLeaderboard() {
-    const list = Array.from(this.teams.values());
-    list.sort((a, b) => (a.rank || 999) - (b.rank || 999));
-    return list;
   }
 }

@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:all": "node server/devRunner.js",
     "server": "node server/server.js",
     "start": "node server/server.js",
     "build": "vite build",
     "preview": "vite preview",
-    "test:concurrency": "node server/testConcurrency.js"
+    "test:concurrency": "node server/testConcurrency.js",
+    "test:tournament": "node server/testMultiRoundConcurrency.js"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.5",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "vite": "^6.2.0"

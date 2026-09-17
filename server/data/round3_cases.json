@@ -1,0 +1,108 @@
+{
+  "round": 3,
+  "roundName": "FINAL PROMPT BATTLE",
+  "tagline": "BUILD. ADAPT. SURVIVE.",
+  "durationSeconds": 900,
+  "bombDurationSeconds": 30,
+  "cases": [
+    {
+      "id": "r3_case_001",
+      "title": "National Tech Fest Participation & Growth Crisis",
+      "category": "Growth & Event Operations Strategy",
+      "difficulty": 3,
+      "scenario": {
+        "context": "A premier engineering university is organizing its annual flagship 3-day tech symposium in exactly 30 days. The festival faces severe participation risk and low early buzz.",
+        "metrics": {
+          "expectedAuditoriumCapacity": "1,000 Students",
+          "previousYearAttendance": "350 Students (Under capacity)",
+          "targetAttendanceGoal": "800+ Registered Attendees",
+          "marketingBudget": "₹15,000 Total",
+          "promotionPeriodDays": "30 Days",
+          "activeStudentVolunteers": "20 Core Members",
+          "socialMediaEngagement": "Under 2% Click-Through Rate",
+          "marketConstraint": "Two rival college fests overlap on the exact same weekend."
+        },
+        "requiredPillars": [
+          "1. Target Audience Segmentation & High-Conversion Student Personas",
+          "2. Zero-Cost & Low-Cost Guerrilla Marketing Strategy",
+          "3. High-Conversion Content, Reel & Discord Viral Campaign Plan",
+          "4. Campus Ambassador Network & Referral Incentive Mechanics",
+          "5. Granular INR Budget Allocation Matrix with Contingency Buffer",
+          "6. 30-Day Day-by-Day Milestone Gantt Roadmap (Tease -> Blitz -> Conversion -> Last-mile)",
+          "7. Gamified Student Engagement Funnel & Exclusive Ticket Unlock Perks",
+          "8. Measurable Conversion Funnel KPIs & Stage Benchmarks",
+          "9. High-Stakes Risk Mitigation & Crisis Management Matrix",
+          "10. Projected ROI, Revenue Model & Attendance Conversion Projections"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_001_budget_slash",
+          "headline": "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+          "description": "The student council treasury just froze funds! Your total marketing budget is slashed from ₹15,000 down to ₹3,000. All paid ads and print banners are immediately revoked.",
+          "impactField": "budget",
+          "directive": "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+        },
+        {
+          "bombId": "bomb_002_time_crunch",
+          "headline": "🚨 SCHEDULE EMERGENCY: 30 DAYS ➔ 15 DAYS!",
+          "description": "Due to university semester exam rescheduling, the festival date has been moved forward by 15 days! You only have 15 days remaining.",
+          "impactField": "timeline",
+          "directive": "Compress all rollout phases into an immediate 15-day blitz, prioritizing high-velocity flash campaigns over slow awareness funnels."
+        },
+        {
+          "bombId": "bomb_003_audience_pivot",
+          "headline": "🚨 DEMOGRAPHIC PIVOT: EXPAND TO INDUSTRY & ALUMNI!",
+          "description": "University trustees mandate opening the flagship competitions to working junior software developers and tech alumni, not just undergraduates.",
+          "impactField": "audience",
+          "directive": "Pivot brand tone, prize incentives, networking value proposition, and communication channels toward working engineers and alumni."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_002",
+      "title": "Hyperlocal EV Fleet Subscription Launch Crisis",
+      "category": "Product Launch & Operations Strategy",
+      "difficulty": 3,
+      "scenario": {
+        "context": "A green-mobility startup is launching a peer-to-peer electric two-wheeler subscription service in a tier-2 college town with severe range anxiety and skeptical consumers.",
+        "metrics": {
+          "fleetSize": "120 Smart Electric Scooters",
+          "chargingHubs": "8 Automated Battery Swap Stations",
+          "targetMonthlySubscribers": "500 Active Riders in 30 Days",
+          "launchBudget": "₹50,000 Marketing & Ops Reserve",
+          "timelineWeeks": "4 Weeks to Launch",
+          "competitorPricing": "15% cheaper legacy petrol rentals"
+        },
+        "requiredPillars": [
+          "1. Brand Positioning & Overcoming Consumer Range Anxiety",
+          "2. Hyperlocal Campus & Tech Park Activation Blitz",
+          "3. Tiered Subscription Pricing & Security Deposit Mechanics",
+          "4. Battery Swap Network SLA & Fleet Operations Protocol",
+          "5. Granular Launch Budget Allocation Matrix",
+          "6. 4-Week Phased Rollout Roadmap & T-Minus Checklist",
+          "7. Referral Loops & Gamified Clean-Kilometer Rewards",
+          "8. Unit Economics (CAC, LTV, Fleet Utilization Rate) KPIs",
+          "9. Emergency Vehicle Breakdown & Power Contingency SLA",
+          "10. 90-Day Expansion & Investor Milestone Projections"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_004_grid_failure",
+          "headline": "🚨 POWER GRID HALT: 6 OUT OF 8 HUBS BLOCKED!",
+          "description": "Municipal electrical permit delays have halted 6 out of your 8 planned swap hubs! You must launch with only 2 operational hubs.",
+          "impactField": "operations",
+          "directive": "Deploy mobile battery swap vans, restructure delivery geofences, and launch rapid on-demand swap dispatch protocols."
+        },
+        {
+          "bombId": "bomb_005_budget_cut",
+          "headline": "🚨 CAPITAL CRUNCH: ₹50,000 ➔ ₹10,000!",
+          "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
+          "impactField": "budget",
+          "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+        }
+      ]
+    }
+  ]
+}

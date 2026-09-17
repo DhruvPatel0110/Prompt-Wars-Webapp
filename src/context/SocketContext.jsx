@@ -46,7 +46,20 @@ export const SocketProvider = ({ children }) => {
     });
 
     newSocket.on('timer:tick', (timerData) => {
-      setServerTimer(timerData);
+      const activeR = timerData.activeRound || 1;
+      const activeRoundTimer = activeR === 3 ? timerData.round3 : activeR === 2 ? timerData.round2 : timerData.round1;
+      
+      setServerTimer({
+        activeRound: activeR,
+        timerRemaining: activeRoundTimer?.timerRemaining ?? timerData.timerRemaining ?? 600,
+        timerRunning: activeRoundTimer?.timerRunning ?? timerData.timerRunning ?? false,
+        timerEndsAt: activeRoundTimer?.timerEndsAt ?? timerData.timerEndsAt ?? null,
+        status: activeRoundTimer?.status ?? timerData.status ?? 'LOCKED',
+        isLocked: activeRoundTimer?.isLocked ?? timerData.isLocked ?? true,
+        bombTimerRemaining: timerData.round3?.bombTimerRemaining ?? 30,
+        bombRunning: timerData.round3?.bombRunning ?? false,
+        phase: timerData.round3?.phase ?? 'master_draft'
+      });
     });
 
     newSocket.on('timer:state', (roundState) => {
