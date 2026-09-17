@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #070a13;
+  --bg-card: #0d1424;
+  --bg-card-hover: #121c32;
+  --border-cyber: #1f2b48;
+  --neon-cyan: #00f0ff;
+  --neon-pink: #ff007f;
+  --neon-purple: #8a2be2;
+  --neon-green: #00ff88;
+  --neon-amber: #ffb800;
+  --neon-red: #ff3366;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(138, 43, 226, 0.05) 0%, transparent 40%),
+    linear-gradient(rgba(7, 10, 19, 0.95), rgba(7, 10, 19, 0.98)),
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(31, 43, 72, 0.15) 40px, rgba(31, 43, 72, 0.15) 41px);
+}
+
+/* Futuristic Esports Typography */
+.font-display {
+  font-family: 'Rajdhani', 'Orbitron', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Glassmorphism & Cyber Cards */
+.cyber-card {
+  background: rgba(13, 20, 36, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(31, 43, 72, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  opacity: 0.6;
+}
+
+.cyber-card-glow-cyan {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+}
+
+.cyber-card-glow-pink {
+  border-color: rgba(255, 0, 127, 0.4);
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.15);
+}
+
+.cyber-card-glow-green {
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
+}
+
+.cyber-card-glow-amber {
+  border-color: rgba(255, 184, 0, 0.4);
+  box-shadow: 0 0 25px rgba(255, 184, 0, 0.15);
+}
+
+/* Glowing Neon Text */
+.neon-text-cyan {
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.neon-text-pink {
+  color: #ff007f;
+  text-shadow: 0 0 10px rgba(255, 0, 127, 0.6), 0 0 20px rgba(255, 0, 127, 0.3);
+}
+
+.neon-text-green {
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6), 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.neon-text-amber {
+  color: #ffb800;
+  text-shadow: 0 0 10px rgba(255, 184, 0, 0.6), 0 0 20px rgba(255, 184, 0, 0.3);
+}
+
+/* Custom Cyber Button */
+.cyber-btn {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.cyber-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.1) 25%,
+    transparent 30%
+  );
+  transform: rotate(30deg);
+  transition: transform 0.6s;
+  pointer-events: none;
+}
+
+.cyber-btn:hover::after {
+  transform: rotate(30deg) translate(50%, 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070a13;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2b48;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* Pulse Keyframes */
+@keyframes cyberPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.85;
+  }
+}
+
+.animate-cyber-pulse {
+  animation: cyberPulse 2s infinite ease-in-out;
+}
+
+/* Scanline Effect */
+.scanline {
+  position: relative;
+}
+
+.scanline::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.3;
+}

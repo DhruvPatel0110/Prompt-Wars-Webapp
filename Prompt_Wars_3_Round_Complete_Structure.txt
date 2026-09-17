@@ -1,0 +1,970 @@
+PROMPT WARS 3-ROUND COMPETITION – COMPLETE EVENT ROUND STRUCTURE
+
+============================================================ EVENT
+CONCEPT ============================================================
+
+PROMPT WARS is a competitive, team-based AI prompting event in which
+participants progressively move from basic prompt engineering to
+reverse-engineering AI-generated outputs and finally to solving a large
+real-world case study under time pressure.
+
+The competition is designed around one central idea:
+
+    "Don't just use AI. Learn how to control the output."
+
+The three rounds test three different abilities:
+
+ROUND 1 – PROMPT MAKEOVER Can you transform a weak instruction into a
+precise, powerful prompt?
+
+ROUND 2 – PROMPT REVERSE ENGINEERING Can you look at an existing
+AI-generated output and figure out the prompt that could have produced
+it?
+
+ROUND 3 – FINAL PROMPT BATTLE Can you build a complete solution and
+adapt it instantly when the rules suddenly change?
+
+============================================================ PARTICIPANT
+FLOW ============================================================
+
+Approximate starting participants: 100
+
+Suggested team structure: - 3–4 students per team - Approximately 25–33
+teams depending on final registration
+
+ELIMINATION STRUCTURE:
+
+ROUND 1 Approx. 100 participants | | 50% eliminated v ROUND 2 Approx.
+50% of original participants | | 50% of Round 2 participants eliminated
+v ROUND 3 Approx. 25% of original participants | | Final evaluation v
+TOP 3 WINNING TEAMS
+
+IMPORTANT: The exact number of teams retained can be adjusted depending
+on the number of registered teams. Elimination should be based primarily
+on score/rank rather than arbitrary selection.
+
+============================================================ ROUND 1 –
+PROMPT MAKEOVER “SPIN. UNLOCK. REWRITE.”
+============================================================
+
+PURPOSE
+
+Round 1 is the entry-level but highly competitive prompt engineering
+round.
+
+Participants are first given a category through a spin/unlock system.
+After the category is selected, they receive a bad or poorly written
+prompt belonging to that category.
+
+Their task is to transform the bad prompt into a strong, specific and
+effective prompt.
+
+The final prompt is evaluated and scored.
+
+The weakest 50% of teams/participants are eliminated.
+
+  ----------------------------------
+  ROUND 1 – STEP 1: SPIN TO UNLOCK
+  ----------------------------------
+
+A spinner/wheel is displayed.
+
+The wheel contains four category slots:
+
+A B C D
+
+A team comes forward or is selected to spin.
+
+The result of the spin determines which category/genre group they will
+receive.
+
+The category should feel random so that participants cannot simply
+prepare one fixed type of prompt beforehand.
+
+Example:
+
+    TEAM 7
+       |
+       v
+    SPIN WHEEL
+       |
+       v
+      "C"
+       |
+       v
+    CATEGORY C
+       |
+       v
+    GENRE SELECTED
+       |
+       v
+    BAD PROMPT GIVEN
+
+  ------------------------------------
+  ROUND 1 – STEP 2: FOUR MAIN GENRES
+  ------------------------------------
+
+The four main genres should be broad enough to create variety while
+still being understandable to undergraduate participants.
+
+Suggested four main genres:
+
+A – CREATIVE Examples: - Storytelling - Advertisement - Social media
+content - Script writing - Poster/campaign concepts
+
+B – BUSINESS Examples: - Marketing - Product launch - Business
+strategy - Customer communication - Brand promotion
+
+C – DATA / ANALYSIS Examples: - Reports - Tables - Financial summaries -
+Data interpretation - Comparison and insights
+
+D – REAL-WORLD / PROBLEM SOLVING Examples: - College problems - Event
+planning - Productivity - Education - Public-awareness campaigns
+
+NOTE: The four genres can be renamed to match the final event branding.
+The important part is that the spin determines the genre and the genre
+determines the bad prompt.
+
+  ------------------------------
+  ROUND 1 – STEP 3: BAD PROMPT
+  ------------------------------
+
+Once the genre is unlocked, the team receives a deliberately weak
+prompt.
+
+The bad prompt should be:
+
+-   Vague
+-   Missing context
+-   Missing audience
+-   Missing constraints
+-   Missing output format
+-   Open to multiple interpretations
+
+The purpose is NOT to make the task impossible.
+
+The purpose is to give participants enough room to demonstrate how well
+they understand prompt engineering.
+
+EXAMPLE 1 – CREATIVE
+
+BAD PROMPT:
+
+    "Make an advertisement for a college fest."
+
+EXPECTED PARTICIPANT APPROACH:
+
+Participants should identify that the prompt does not specify:
+
+-   Target audience
+-   Tone
+-   Platform
+-   Length
+-   Event details
+-   Key message
+-   Call to action
+-   Desired format
+
+A possible improved prompt:
+
+    "Act as a college marketing strategist. Create a 30-second
+    promotional advertisement for an inter-college technology fest
+    aimed at undergraduate students aged 18–22. Use an energetic,
+    youthful and slightly humorous tone. Include a memorable tagline,
+    three key attractions of the fest and a clear call to action.
+    Present the result as a short video script with scene directions
+    and dialogue."
+
+EXAMPLE 2 – BUSINESS
+
+BAD PROMPT:
+
+    "Sell this product."
+
+EXAMPLE 3 – DATA / ANALYSIS
+
+BAD PROMPT:
+
+    "Analyze this sales data."
+
+EXAMPLE 4 – REAL-WORLD / PROBLEM SOLVING
+
+BAD PROMPT:
+
+    "Plan a college event."
+
+The organizers should prepare multiple bad prompts in advance so that
+different teams can receive different challenges.
+
+  ----------------------------
+  ROUND 1 – PARTICIPANT TASK
+  ----------------------------
+
+The team must:
+
+1.  Read the assigned category.
+2.  Understand the bad prompt.
+3.  Identify what information is missing.
+4.  Construct a substantially better prompt.
+5.  Submit the final prompt before the deadline.
+
+The participants are NOT required to produce the final answer
+themselves.
+
+The focus of this round is:
+
+    BAD PROMPT -> GOOD PROMPT
+
+  --------------------------
+  ROUND 1 – SUGGESTED TIME
+  --------------------------
+
+Total: approximately 8–10 minutes per challenge.
+
+Suggested structure:
+
+1–2 minutes: Understand the challenge.
+
+5–6 minutes: Construct and refine the prompt.
+
+1–2 minutes: Final submission and checking.
+
+A shorter time limit can be used if the number of teams is high.
+
+  -------------------
+  ROUND 1 – SCORING
+  -------------------
+
+Suggested total: 20 points.
+
+1.  Clarity and specificity – 5 points
+2.  Context and role definition – 4 points
+3.  Constraints/instructions – 4 points
+4.  Expected output format – 3 points
+5.  Creativity and effectiveness – 4 points
+
+TOTAL – 20 points
+
+ALTERNATIVE: The organizers can actually run the submitted prompt
+through the same AI model and award part of the score based on the
+resulting output.
+
+For example:
+
+Prompt quality – 15 points Result/output quality – 5 points
+
+This makes the round more practical and reduces the possibility of
+participants receiving high scores merely for writing complicated
+prompts.
+
+  -----------------------
+  ROUND 1 – ELIMINATION
+  -----------------------
+
+After all teams have submitted:
+
+1.  Calculate the score of every team.
+2.  Rank teams by total score.
+3.  Retain approximately the top 50%.
+4.  Eliminate the remaining teams.
+
+The surviving teams proceed to ROUND 2.
+
+For example:
+
+100 participants -> 50 participants survive
+
+============================================================ ROUND 2 –
+PROMPT REVERSE ENGINEERING “SEE THE OUTPUT. BUILD THE PROMPT.”
+============================================================
+
+PURPOSE
+
+Round 2 completely changes the direction of the competition.
+
+In Round 1:
+
+    PROMPT -> AI -> OUTPUT
+
+In Round 2:
+
+    OUTPUT -> ??? -> PROMPT
+
+Participants are shown ready-made outputs.
+
+They must study the output and create a prompt that could generate
+something as close as possible to that output.
+
+There are TWO separate challenges.
+
+  -----------------------
+  ROUND 2 – CHALLENGE 1
+  GENERATED IMAGE
+  -----------------------
+
+Participants are shown a ready-made AI-generated image.
+
+The image should be related to a product, scheme, campaign or commercial
+concept.
+
+Examples:
+
+-   A government/public-awareness scheme poster
+-   A new product advertisement
+-   A college campaign
+-   A sustainability campaign
+-   A financial-awareness poster
+-   A fictional product launch
+-   A social-awareness campaign
+
+EXAMPLE IMAGE BRIEF:
+
+An AI-generated promotional poster showing a fictional student
+scholarship scheme, with students, a modern educational background, a
+large scheme title, supporting text, a call-to-action section and
+specific visual styling.
+
+IMPORTANT: Participants receive ONLY the finished image.
+
+They do NOT receive the original prompt.
+
+  --------------------------
+  ROUND 2 – TASK FOR IMAGE
+  --------------------------
+
+Participants must write a prompt that would generate the displayed image
+as accurately as possible.
+
+They should think about:
+
+-   Subject
+-   Composition
+-   Objects
+-   People
+-   Positioning
+-   Background
+-   Typography/text
+-   Color/style
+-   Lighting
+-   Mood
+-   Camera/view
+-   Layout
+-   Aspect ratio
+-   Intended purpose
+
+The objective is:
+
+    "RECREATE THE OUTPUT THROUGH PROMPTING."
+
+  -------------------------
+  ROUND 2 – IMAGE EXAMPLE
+  -------------------------
+
+READY-MADE OUTPUT:
+
+A promotional poster for a fictional student scholarship scheme.
+
+The image contains: - Two college students - A university-style
+background - A large title - A scholarship amount - Supporting
+information - A registration call-to-action - Clean modern design -
+Portrait poster layout
+
+PARTICIPANT’S JOB:
+
+Write the prompt that would generate this visual.
+
+They are NOT judged on whether their prompt sounds complicated.
+
+They are judged on whether the prompt accurately captures the important
+visual characteristics of the target.
+
+  ---------------------------------
+  ROUND 2 – CHALLENGE 2
+  FINANCIAL YEAR / MONTHLY REPORT
+  ---------------------------------
+
+Participants are shown a ready-made financial report.
+
+The report is divided month-by-month across a financial year.
+
+For example:
+
+    APRIL
+    MAY
+    JUNE
+    JULY
+    ...
+    MARCH
+
+The report may contain:
+
+-   Monthly sales
+-   Monthly expenses
+-   Profit/loss
+-   Totals
+-   Financial-year summary
+-   Tables
+-   Categories
+-   Numerical values
+-   Growth or comparison information
+
+The exact numbers should be prepared by the organizers in advance.
+
+  -------------------------------------
+  ROUND 2 – TASK FOR FINANCIAL REPORT
+  -------------------------------------
+
+Participants must create a prompt that would generate the displayed
+financial report.
+
+The prompt should specify the necessary:
+
+-   Financial year
+-   Month structure
+-   Sales values
+-   Expense values
+-   Categories
+-   Calculations
+-   Table structure
+-   Totals
+-   Formatting
+-   Summary
+-   Required output type
+
+The challenge is essentially:
+
+    GIVEN REPORT -> REVERSE ENGINEER -> ORIGINAL-STYLE PROMPT
+
+  --------------------------------
+  ROUND 2 – TWO SEPARATE PROMPTS
+  --------------------------------
+
+There should be TWO separate submission windows.
+
+WINDOW 1: IMAGE REVERSE ENGINEERING
+
+Participants study the image and submit one prompt.
+
+WINDOW 2: FINANCIAL REPORT REVERSE ENGINEERING
+
+Participants study the financial report and submit a second prompt.
+
+The two prompts are scored separately and then combined.
+
+  ----------------------------
+  ROUND 2 – IF TIME IS SHORT
+  ----------------------------
+
+If the organizers have limited time, participants may be asked to
+attempt ONLY ONE of the two challenges.
+
+The organizers can either:
+
+OPTION A: Give every team the same challenge.
+
+OR
+
+OPTION B: Randomly assign one challenge to each team.
+
+If only one challenge is used, scoring should be normalized so that
+teams attempting the image and teams attempting the financial report are
+evaluated using equivalent scoring standards.
+
+  -------------------
+  ROUND 2 – SCORING
+  -------------------
+
+The key word for this round is:
+
+    ACCURACY
+
+Suggested total: 30 points.
+
+IMAGE PROMPT – 15 points
+
+1.  Subject/object accuracy – 3
+2.  Layout/composition – 3
+3.  Style/visual details – 3
+4.  Text/content requirements – 3
+5.  Overall similarity – 3
+
+FINANCIAL REPORT PROMPT – 15 points
+
+1.  Correct financial-year structure – 3
+2.  Monthly data accuracy – 3
+3.  Sales/expense details – 3
+4.  Table/calculation structure – 3
+5.  Overall output similarity – 3
+
+TOTAL – 30
+
+  ---------------------------------------
+  ROUND 2 – IMPORTANT JUDGING PRINCIPLE
+  ---------------------------------------
+
+Participants should NOT receive high marks simply for writing a long
+prompt.
+
+A 150-word prompt that generates an inaccurate result should score lower
+than a concise prompt that reproduces the target accurately.
+
+The question for judges should be:
+
+    "How closely does the generated result match the target output?"
+
+  --------------------------
+  ROUND 2 – SUGGESTED FLOW
+  --------------------------
+
+STEP 1: Display the ready-made image.
+
+STEP 2: Give participants a fixed time to study it.
+
+STEP 3: Open the IMAGE PROMPT submission window.
+
+STEP 4: Collect prompts.
+
+STEP 5: Display the financial report.
+
+STEP 6: Give participants time to study it.
+
+STEP 7: Open the FINANCIAL REPORT PROMPT submission window.
+
+STEP 8: Run/evaluate the prompts.
+
+STEP 9: Calculate total scores.
+
+STEP 10: Rank all teams.
+
+STEP 11: Eliminate approximately 50% of the remaining teams.
+
+EXAMPLE:
+
+50 participants -> 25 participants survive
+
+============================================================ ROUND 3 –
+FINAL PROMPT BATTLE “BUILD. ADAPT. SURVIVE.”
+============================================================
+
+PURPOSE
+
+This is the final and most important round.
+
+The remaining teams are given a large, realistic case study.
+
+Unlike Round 1, participants are not merely improving a sentence.
+
+Unlike Round 2, they are not reverse-engineering an existing output.
+
+They must use AI prompting to create a complete solution.
+
+  --------------------------
+  ROUND 3 – THE CASE STUDY
+  --------------------------
+
+The case study should be large enough to require:
+
+-   Understanding
+-   Planning
+-   Analysis
+-   Creativity
+-   Prompt engineering
+-   Output structuring
+-   Decision-making
+
+The case should contain multiple constraints.
+
+EXAMPLE CASE STUDY:
+
+    COLLEGE EVENT PARTICIPATION CRISIS
+
+    A college is organizing a major student festival in 30 days.
+
+    Current situation:
+
+    - Expected capacity: 1,000 students
+    - Previous participation: 350 students
+    - Target participation: 800 students
+    - Marketing budget: Rs. 15,000
+    - Promotion period: 30 days
+    - Student volunteers: 20
+    - Social media engagement is low
+    - Competing college events are happening during the same period
+
+    The organizers want a complete strategy to increase participation.
+
+    Your team must develop an AI-assisted plan covering:
+
+    1. Target audience
+    2. Marketing strategy
+    3. Content strategy
+    4. Event promotion
+    5. Budget allocation
+    6. Timeline
+    7. Student engagement
+    8. Measurement/KPIs
+    9. Risk management
+    10. Expected outcomes
+
+The actual case study can be changed according to the event theme.
+
+  ----------------------------
+  ROUND 3 – PARTICIPANT TASK
+  ----------------------------
+
+Teams must construct a MASTER PROMPT.
+
+The master prompt should instruct AI to produce a complete solution to
+the case.
+
+The team should consider:
+
+-   AI role/persona
+-   Case context
+-   Objective
+-   Target audience
+-   Constraints
+-   Required tasks
+-   Data
+-   Assumptions
+-   Output format
+-   Evaluation criteria
+-   Priorities
+-   Desired level of detail
+
+The aim is:
+
+    CASE STUDY
+         |
+         v
+    MASTER PROMPT
+         |
+         v
+    AI OUTPUT
+         |
+         v
+    COMPLETE SOLUTION
+
+  ---------------------
+  ROUND 3 – THE CLOCK
+  ---------------------
+
+Give the teams a fixed amount of time.
+
+Suggested:
+
+    15–20 minutes
+
+The time should be long enough to understand the case and build a strong
+prompt, but short enough to create pressure.
+
+Suggested timeline:
+
+0–5 minutes: Read and understand the case.
+
+5–12 minutes: Build the master prompt.
+
+12–17 minutes: Test/refine the prompt.
+
+Final minutes: Prepare the final submission.
+
+============================================================ THE FINAL
+BOMB ============================================================
+
+This is the signature feature of the final round.
+
+JUST BEFORE THE ORIGINAL TIME LIMIT ENDS, the organizers announce:
+
+    "NEW INFORMATION."
+
+A sudden change is introduced into the case.
+
+The teams now have approximately 30 SECONDS to modify their prompt.
+
+They cannot rebuild their entire solution from scratch.
+
+They must rapidly identify what needs to change and adapt their prompt.
+
+EXAMPLE BOMB #1:
+
+    BUDGET CUT!
+
+    Your original budget of Rs. 15,000 has suddenly been reduced
+    to Rs. 5,000.
+
+    ADAPT YOUR PROMPT.
+
+EXAMPLE BOMB #2:
+
+    AUDIENCE CHANGE!
+
+    Your target audience has changed from college students to
+    parents and guardians.
+
+    ADAPT YOUR PROMPT.
+
+EXAMPLE BOMB #3:
+
+    PLATFORM BAN!
+
+    Social media promotion is no longer permitted.
+
+    ADAPT YOUR PROMPT.
+
+EXAMPLE BOMB #4:
+
+    TIME CRISIS!
+
+    The event has been moved forward by 15 days.
+
+    ADAPT YOUR PROMPT.
+
+EXAMPLE BOMB #5:
+
+    RESOURCE LOSS!
+
+    Half of your volunteers are no longer available.
+
+    ADAPT YOUR PROMPT.
+
+  -----------------
+  FINAL BOMB RULE
+  -----------------
+
+The bomb should NOT introduce an entirely unrelated problem.
+
+It should modify one important condition of the original case.
+
+This ensures that the challenge tests:
+
+    ADAPTABILITY
+
+rather than simply rewarding teams that can type quickly.
+
+  ----------------------------------
+  ROUND 3 – 30-SECOND FINAL WINDOW
+  ----------------------------------
+
+Once the bomb is announced:
+
+    30 SECONDS
+
+Teams must:
+
+1.  Understand the new condition.
+2.  Identify the affected part of their prompt.
+3.  Modify the prompt.
+4.  Submit the final version.
+
+No major rewriting should be allowed after the 30-second window closes.
+
+============================================================ ROUND 3 –
+FINAL EVALUATION
+============================================================
+
+Suggested total: 50 points.
+
+MASTER PROMPT – 30 POINTS
+
+1.  Understanding of case – 5
+2.  Context and objective – 5
+3.  Instructions and constraints – 5
+4.  Structure/output requirements – 5
+5.  Creativity and strategic thinking – 5
+6.  Prompt effectiveness – 5
+
+FINAL BOMB RESPONSE – 20 POINTS
+
+1.  Correct adaptation to new condition – 5
+2.  Speed and precision – 5
+3.  Preservation of original objective – 5
+4.  Quality of final AI output – 5
+
+TOTAL – 50
+
+============================================================ FINAL TOP 3
+SELECTION ============================================================
+
+The final round should be judged using the final submitted prompt and
+the resulting AI output.
+
+The highest-scoring three teams are declared:
+
+    TOP 3 WINNING TEAMS
+
+Suggested final result:
+
+    1st Place – PROMPT WARS CHAMPION
+    2nd Place – RUNNER-UP
+    3rd Place – SECOND RUNNER-UP
+
+The organizers can decide whether the final three are ranked purely
+through the final-round score or through a combination of Round 3
+performance and previous-round performance.
+
+RECOMMENDED: Use Round 3 as the dominant factor because it is the final
+and most comprehensive test.
+
+============================================================ COMPLETE
+EVENT SUMMARY
+============================================================
+
+ROUND 1 PROMPT MAKEOVER “SPIN. UNLOCK. REWRITE.”
+
+INPUT: A random genre + bad prompt
+
+TASK: Turn the bad prompt into a powerful prompt.
+
+SKILL TESTED: Basic prompt engineering
+
+APPROXIMATE SURVIVAL: 50%
+
+                ↓
+
+ROUND 2 PROMPT REVERSE ENGINEERING “SEE THE OUTPUT. BUILD THE PROMPT.”
+
+INPUT: 1. Ready-made AI-generated image 2. Ready-made monthly
+financial-year report
+
+TASK: Write prompts capable of generating the displayed outputs.
+
+SKILL TESTED: Observation + reverse engineering + accuracy
+
+APPROXIMATE SURVIVAL: 50% of Round 2 participants
+
+                ↓
+
+ROUND 3 FINAL PROMPT BATTLE “BUILD. ADAPT. SURVIVE.”
+
+INPUT: Large real-world case study
+
+TASK: Create a master prompt that generates a complete solution.
+
+FINAL TWIST: A sudden “bomb” changes one major condition approximately
+30 seconds before the deadline.
+
+TASK AFTER BOMB: Rapidly modify the prompt and generate the adapted
+solution.
+
+SKILL TESTED: Advanced prompt engineering + strategic thinking +
+adaptability under extreme time pressure
+
+FINAL RESULT: TOP 3 TEAMS
+
+============================================================ EVENT
+PHILOSOPHY ============================================================
+
+The three rounds should deliberately increase in difficulty.
+
+ROUND 1: Participants are told what is wrong.
+
+    BAD PROMPT
+         |
+         v
+    FIX THE PROMPT
+
+ROUND 2: Participants are given only the result.
+
+    OUTPUT
+       |
+       v
+    FIGURE OUT THE PROMPT
+
+ROUND 3: Participants are given a complex problem.
+
+    PROBLEM
+       |
+       v
+    DESIGN THE PROMPT
+       |
+       v
+    GENERATE SOLUTION
+       |
+       v
+    SURVIVE THE BOMB
+
+This creates a clear progression:
+
+    ROUND 1 = CREATE
+    ROUND 2 = REVERSE ENGINEER
+    ROUND 3 = ADAPT
+
+The final message of PROMPT WARS becomes:
+
+    "Anyone can ask AI a question.
+     The real skill is knowing how to ask the right question."
+
+============================================================ ORGANIZER
+CHECKLIST ============================================================
+
+BEFORE THE EVENT:
+
+[ ] Finalize team size [ ] Confirm participant count [ ] Prepare Round 1
+spinner [ ] Define four main genres [ ] Prepare multiple bad prompts [ ]
+Prepare Round 1 scoring sheets [ ] Prepare target AI-generated image for
+Round 2 [ ] Prepare target financial report for Round 2 [ ] Prepare
+Round 2 scoring rubric [ ] Prepare large Round 3 case study [ ] Prepare
+3–5 possible final bombs [ ] Decide exact 30-second mechanism [ ] Decide
+AI model/platform to be used [ ] Test every prompt/output before the
+event [ ] Prepare timers [ ] Prepare submission method [ ] Prepare
+leaderboard/ranking sheet [ ] Prepare tie-breaker rules [ ] Prepare
+certificates/prizes
+
+============================================================ TIE-BREAKER
+RULE ============================================================
+
+If two or more teams have the same score at an elimination boundary, use
+a short tie-breaker.
+
+Suggested tie-breaker:
+
+Give teams ONE bad prompt and only 60 seconds.
+
+They submit a single improved prompt.
+
+Judges evaluate prompt effectiveness.
+
+The higher-scoring prompt advances.
+
+============================================================ IMPORTANT
+FAIRNESS RULES
+============================================================
+
+1.  All teams in the same round should receive challenges of comparable
+    difficulty.
+
+2.  The same AI model/version should be used for comparable evaluations.
+
+3.  Participants should know the time limit before the round begins.
+
+4.  The final bomb should be announced simultaneously to all teams.
+
+5.  Judges should use a predefined scoring rubric.
+
+6.  Prompt length alone should never determine the score.
+
+7.  In Round 2, accuracy/similarity to the target output should be the
+    primary consideration.
+
+8.  In Round 3, judges should evaluate both the original strategy and
+    the team’s ability to adapt to the bomb.
+
+9.  Organizers should test all target outputs before the event.
+
+10. A clear tie-breaker should be established before the competition
+    begins.
+
+============================================================ ONE-LINE
+DESCRIPTIONS FOR EVENT HOSTING
+============================================================
+
+ROUND 1: “Spin your genre, face a terrible prompt, and turn it into
+something AI can actually understand.”
+
+ROUND 2: “We show you the answer. You figure out the question.”
+
+ROUND 3: “Build the perfect AI strategy. Then, when you think you’re
+safe, we change the rules.”
+
+============================================================ END OF
+DOCUMENT ============================================================

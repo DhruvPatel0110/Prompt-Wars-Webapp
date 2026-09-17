@@ -1,0 +1,154 @@
+{
+  "round": 1,
+  "roundName": "PROMPT MAKEOVER",
+  "tagline": "SPIN. UNLOCK. REWRITE.",
+  "durationSeconds": 600,
+  "genres": {
+    "A": {
+      "name": "CREATIVE",
+      "category": "Storytelling, Ads & Content",
+      "description": "Storytelling, Advertisement, Social media viral content, Video scripts, Poster/campaign concepts",
+      "color": "#ff007f",
+      "badge": "CREATIVE ARTS"
+    },
+    "B": {
+      "name": "BUSINESS",
+      "category": "Marketing & Strategy",
+      "description": "Marketing, Product launch, Business strategy, Customer communication, Brand promotion",
+      "color": "#00f0ff",
+      "badge": "COMMERCIAL"
+    },
+    "C": {
+      "name": "DATA / ANALYSIS",
+      "category": "Reports, Metrics & Finance",
+      "description": "Reports, Tables, Financial summaries, Data interpretation, Comparison and insights",
+      "color": "#8a2be2",
+      "badge": "ANALYTICS"
+    },
+    "D": {
+      "name": "REAL-WORLD / PROBLEM SOLVING",
+      "category": "Operations, Campus & Crisis",
+      "description": "College problems, Event planning, Productivity, Education, Public-awareness campaigns",
+      "color": "#00ff88",
+      "badge": "PROBLEM SOLVER"
+    }
+  },
+  "questions": [
+    {
+      "id": "r1_a_001",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Make an advertisement for a college fest.",
+      "context": "An upcoming 3-day inter-college technical and cultural festival.",
+      "missingElements": [
+        "Target audience demographics (age, interest)",
+        "Tone and brand personality",
+        "Platform format (video script, Instagram reel, poster copy, radio spot)",
+        "Key attractions and call to action (registration link, dates)",
+        "Constraints (duration, character count, output structure)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_002",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a story about an AI taking over a coffee shop.",
+      "context": "A sci-fi comedy short narrative.",
+      "missingElements": [
+        "Main characters & protagonist perspective",
+        "Pacing and narrative arc (conflict, climax, resolution)",
+        "Humor style and dialogue format",
+        "Word limit and formatting specifications"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_001",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Sell this product.",
+      "context": "A premium noise-cancelling smart headphone designed for developers & remote workers.",
+      "missingElements": [
+        "Product details and unique selling proposition (USP)",
+        "Ideal customer profile and pain points",
+        "Marketing framework (AIDA, PAS, Feature-Benefit)",
+        "Pricing tier, objection handling, and conversion CTA",
+        "Delivery format (landing page copy, cold email, sales pitch deck)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_002",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a launch strategy for an app.",
+      "context": "A peer-to-peer campus ride-sharing and carpool app.",
+      "missingElements": [
+        "Target geography and rollout phases (Beta vs Public)",
+        "User acquisition channels (guerrilla marketing, campus ambassadors)",
+        "Budget constraints and timeline breakdown",
+        "Key performance indicators (KPIs) and conversion goals"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_001",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze this sales data.",
+      "context": "Quarterly e-commerce revenue figures across 4 regions with sudden Q3 drop.",
+      "missingElements": [
+        "Specific analytical goals (anomaly detection, MoM growth, profit margins)",
+        "Required statistical metrics and calculations",
+        "Output format (markdown summary table, executive bullet points, chart recommendations)",
+        "Target audience (board of directors vs operational managers)",
+        "Actionable recommendations based on insights"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_002",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Compare these two electric cars.",
+      "context": "Comparing Tesla Model 3 and Hyundai Ioniq 5 for fleet purchase.",
+      "missingElements": [
+        "Comparison criteria (battery efficiency, TCO, maintenance, charging curve)",
+        "Evaluation methodology and scoring weightage",
+        "Structured comparison matrix/table",
+        "Executive recommendation with ROI justification"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_001",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Plan a college event.",
+      "context": "Organizing a 24-hour hackathon with 500 participants on a tight budget.",
+      "missingElements": [
+        "Event scope, theme, and timeline breakdown (T-minus milestones)",
+        "Budget limits, sponsorship strategy, and volunteer allocation",
+        "Risk mitigation & contingency plans (power outage, food, WiFi failure)",
+        "Judging criteria and participant deliverables",
+        "Structured master operational schedule"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_002",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Fix the campus parking problem.",
+      "context": "Severe vehicle congestion and lack of two-wheeler slots during morning peak hours.",
+      "missingElements": [
+        "Stakeholder analysis (students, faculty, administration)",
+        "Short-term fixes vs long-term infrastructural solutions",
+        "Enforcement and incentive mechanisms (digital passes, zoning)",
+        "Phased implementation roadmap and measurable success metrics"
+      ],
+      "difficulty": 1
+    }
+  ]
+}
