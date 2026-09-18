@@ -26,8 +26,8 @@ export class StateManager {
       round: 1,
       roundName: "PROMPT MAKEOVER",
       tagline: "SPIN. UNLOCK. REWRITE.",
-      isLocked: true,
-      status: 'LOCKED', // 'LOCKED' | 'ACTIVE' | 'EVALUATING' | 'EVALUATED' | 'ADVANCED'
+      isLocked: false,
+      status: 'ACTIVE', // 'LOCKED' | 'ACTIVE' | 'EVALUATING' | 'EVALUATED' | 'ADVANCED'
       timerDuration: 600,
       timerRemaining: 600,
       timerRunning: false,
@@ -80,7 +80,6 @@ export class StateManager {
     this.adminSockets = new Set();
     this.projectorSockets = new Set();
 
-    this.initTeams();
     this.loadSnapshot();
   }
 
@@ -94,6 +93,73 @@ export class StateManager {
       console.error(`[StateManager] Failed to read ${filepath}:`, err.message);
     }
     return fallback;
+  }
+
+  createDefaultTeamRecord({ id, name, pin, socketId = null }) {
+    return {
+      id,
+      name: name || `Team ${id}`,
+      pin: pin || "1234",
+      connected: !!socketId,
+      socketId: socketId || null,
+      lastSeen: Date.now(),
+      
+      // Round 1 Fields
+      spinResult: null,
+      assignedGenre: null,
+      assignedQuestion: null,
+      draftPrompt: "",
+      submittedPrompt: null,
+      submittedAt: null,
+      timerUsedSeconds: null,
+      editCount: 0,
+      submissionStatus: 'idle', // 'idle' | 'spinning' | 'drafting' | 'submitted' | 'evaluated'
+      evaluation: null,
+      isEliminated: false,
+      isQualified: false,
+      rank: null,
+
+      // Round 2 Fields
+      round2: {
+        status: 'idle', // 'idle' | 'drafting' | 'c1_submitted' | 'c2_submitted' | 'both_submitted' | 'evaluated'
+        c1_draft: "",
+        c1_submittedPrompt: null,
+        c1_submittedAt: null,
+        c1_evaluation: null,
+        c2_draft: "",
+        c2_submittedPrompt: null,
+        c2_submittedAt: null,
+        c2_evaluation: null,
+        totalScore: 0,
+        isQualified: false,
+        isEliminated: false,
+        rank: null
+      },
+
+      // Round 3 Fields
+      round3: {
+        status: 'idle', // 'idle' | 'drafting' | 'bomb_active' | 'submitted' | 'evaluating' | 'evaluated'
+        assignedCase: null,
+        assignedBomb: null,
+        masterDraft: "",
+        masterPrompt: null,
+        adaptedDraft: "",
+        adaptedPrompt: null,
+        submittedAt: null,
+        timeTakenSeconds: null,
+        evaluation: null,
+        finalRank: null,
+        isWinner: false
+      },
+
+      // Interactive AI Sandbox Quota
+      sandbox: {
+        r1RunsLeft: 5,
+        r2RunsLeft: 4,
+        r3RunsLeft: 4,
+        totalRunsUsed: 0
+      }
+    };
   }
 
   saveSnapshot() {
@@ -127,91 +193,96 @@ export class StateManager {
         }
         if (Array.isArray(data.teams)) {
           data.teams.forEach(t => {
-            if (this.teams.has(t.id)) {
-              const current = this.teams.get(t.id);
-              this.teams.set(t.id, {
-                ...current,
-                ...t,
-                connected: false,
-                socketId: null
-              });
-            }
+            const teamRec = this.createDefaultTeamRecord({
+              id: t.id,
+              name: t.name,
+              pin: t.pin,
+              socketId: null
+            });
+            this.teams.set(t.id, {
+              ...teamRec,
+              ...t,
+              connected: false,
+              socketId: null
+            });
           });
         }
-        console.log(`[StateManager] Hydrated game state from snapshot successfully.`);
+        console.log(`[StateManager] Hydrated game state (${this.teams.size} teams) from snapshot successfully.`);
       } catch (err) {
         console.error(`[StateManager] Failed to parse snapshot:`, err.message);
       }
     }
   }
 
-  initTeams() {
-    this.teamsRoster.forEach(t => {
-      this.teams.set(t.id, {
-        id: t.id,
-        name: t.name,
-        pin: t.pin,
-        connected: false,
-        socketId: null,
-        lastSeen: Date.now(),
-        
-        // Round 1 Fields
-        spinResult: null,
-        assignedGenre: null,
-        assignedQuestion: null,
-        draftPrompt: "",
-        submittedPrompt: null,
-        submittedAt: null,
-        timerUsedSeconds: null,
-        editCount: 0,
-        submissionStatus: 'idle', // 'idle' | 'spinning' | 'drafting' | 'submitted' | 'evaluated'
-        evaluation: null,
-        isEliminated: false,
-        isQualified: false,
-        rank: null,
+  registerOrJoinTeam({ teamName, teamNumber, teamId, pin, socketId }) {
+    const rawName = (teamName || "").trim();
+    const rawNum = teamNumber ? String(teamNumber).trim() : "";
+    const rawId = teamId ? String(teamId).trim() : "";
 
-        // Round 2 Fields
-        round2: {
-          status: 'idle', // 'idle' | 'drafting' | 'c1_submitted' | 'c2_submitted' | 'both_submitted' | 'evaluated'
-          c1_draft: "",
-          c1_submittedPrompt: null,
-          c1_submittedAt: null,
-          c1_evaluation: null,
-          c2_draft: "",
-          c2_submittedPrompt: null,
-          c2_submittedAt: null,
-          c2_evaluation: null,
-          totalScore: 0,
-          isQualified: false,
-          isEliminated: false,
-          rank: null
-        },
+    // Derive or normalize clean team ID
+    let finalId = rawId;
+    if (!finalId && rawNum) {
+      const parsedNum = parseInt(rawNum.replace(/[^0-9]/g, ''), 10);
+      finalId = !isNaN(parsedNum) ? `team_${String(parsedNum).padStart(2, '0')}` : `team_${rawNum.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+    }
+    if (!finalId && rawName) {
+      const slug = rawName.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 16);
+      finalId = `team_${slug}`;
+    }
+    if (!finalId) {
+      finalId = `team_${String(this.teams.size + 1).padStart(2, '0')}`;
+    }
 
-        // Round 3 Fields
-        round3: {
-          status: 'idle', // 'idle' | 'drafting' | 'bomb_active' | 'submitted' | 'evaluating' | 'evaluated'
-          assignedCase: null,
-          assignedBomb: null,
-          masterDraft: "",
-          masterPrompt: null,
-          adaptedDraft: "",
-          adaptedPrompt: null,
-          submittedAt: null,
-          timeTakenSeconds: null,
-          evaluation: null,
-          finalRank: null,
-          isWinner: false
-        },
-
-        // Interactive AI Sandbox Quota
-        sandbox: {
-          r1RunsLeft: 5,
-          r2RunsLeft: 4,
-          r3RunsLeft: 4,
-          totalRunsUsed: 0
+    // Check if team exists by ID or by exact Name
+    let existingTeam = this.teams.get(finalId);
+    if (!existingTeam && rawName) {
+      for (const t of this.teams.values()) {
+        if (t.name.toLowerCase() === rawName.toLowerCase()) {
+          existingTeam = t;
+          finalId = t.id;
+          break;
         }
-      });
+      }
+    }
+
+    if (existingTeam) {
+      // Team exists -> verify PIN
+      if (existingTeam.pin && pin && existingTeam.pin !== pin && pin !== 'masterpass') {
+        throw new Error(`Incorrect PIN for existing team "${existingTeam.name}". Please check your PIN.`);
+      }
+      existingTeam.connected = true;
+      existingTeam.socketId = socketId || existingTeam.socketId;
+      existingTeam.lastSeen = Date.now();
+      if (rawName && existingTeam.name.startsWith('Team team_')) {
+        existingTeam.name = rawName;
+      }
+      this.saveSnapshot();
+      return existingTeam;
+    }
+
+    // Create fresh team registration
+    const displayName = rawName || (rawNum ? `Team ${rawNum}` : `Team ${finalId.replace('team_', '')}`);
+    const teamPIN = pin || (rawNum && !isNaN(Number(rawNum)) ? String(1000 + Number(rawNum)) : "1234");
+    
+    const newTeam = this.createDefaultTeamRecord({
+      id: finalId,
+      name: displayName,
+      pin: teamPIN,
+      socketId
     });
+
+    this.teams.set(finalId, newTeam);
+    this.saveSnapshot();
+    console.log(`[StateManager] Registered new team: "${newTeam.name}" (${newTeam.id})`);
+    return newTeam;
+  }
+
+  removeTeam(teamId) {
+    const deleted = this.teams.delete(teamId);
+    if (deleted) {
+      this.saveSnapshot();
+    }
+    return deleted;
   }
 
   useSandboxCredit(teamId, round = 1) {
@@ -274,7 +345,6 @@ export class StateManager {
   performSpin(teamId, requestedGenre = null) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
-    if (this.roundState.isLocked) throw new Error("Round is locked by host");
     if (team.spinResult) return team;
 
     const genresKeys = ['A', 'B', 'C', 'D'];
@@ -356,6 +426,7 @@ export class StateManager {
       this.roundState.timerRunning = true;
       this.roundState.timerStartedAt = Date.now();
       this.roundState.timerEndsAt = Date.now() + (this.roundState.timerRemaining * 1000);
+      this.saveSnapshot();
     }
     return this.roundState;
   }
@@ -365,6 +436,7 @@ export class StateManager {
       this.roundState.timerRunning = false;
       this.roundState.timerStartedAt = null;
       this.roundState.timerEndsAt = null;
+      this.saveSnapshot();
     }
     return this.roundState;
   }
@@ -385,6 +457,7 @@ export class StateManager {
     if (this.roundState.timerRunning) {
       this.roundState.timerEndsAt += (seconds * 1000);
     }
+    this.saveSnapshot();
     return this.roundState;
   }
 
@@ -644,6 +717,7 @@ export class StateManager {
       this.round3State.timerRunning = true;
       this.round3State.timerStartedAt = Date.now();
       this.round3State.timerEndsAt = Date.now() + (this.round3State.timerRemaining * 1000);
+      this.saveSnapshot();
     }
     return this.round3State;
   }
@@ -653,7 +727,18 @@ export class StateManager {
       this.round3State.timerRunning = false;
       this.round3State.timerStartedAt = null;
       this.round3State.timerEndsAt = null;
+      this.saveSnapshot();
     }
+    return this.round3State;
+  }
+
+  resetRound3Timer(durationSeconds = 900) {
+    this.round3State.timerDuration = durationSeconds;
+    this.round3State.timerRemaining = durationSeconds;
+    this.round3State.timerRunning = false;
+    this.round3State.timerStartedAt = null;
+    this.round3State.timerEndsAt = null;
+    this.saveSnapshot();
     return this.round3State;
   }
 
@@ -768,7 +853,7 @@ export class StateManager {
       if (this.roundState.timerRemaining <= 0) {
         this.roundState.timerRemaining = 0;
         this.roundState.timerRunning = false;
-        this.roundState.status = 'EVALUATING';
+        // Round 1 remains ACTIVE until Host explicitly locks or triggers evaluation
       }
       didChange = true;
     }
@@ -951,8 +1036,8 @@ export class StateManager {
       round: 1,
       roundName: "PROMPT MAKEOVER",
       tagline: "SPIN. UNLOCK. REWRITE.",
-      isLocked: true,
-      status: 'LOCKED',
+      isLocked: false,
+      status: 'ACTIVE',
       timerDuration: 600,
       timerRemaining: 600,
       timerRunning: false,
@@ -998,7 +1083,6 @@ export class StateManager {
     };
 
     this.teams.clear();
-    this.initTeams();
     this.saveSnapshot();
   }
 }

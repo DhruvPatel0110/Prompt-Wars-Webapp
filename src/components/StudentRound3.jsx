@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
-import { 
-  Flame, Zap, AlertTriangle, Clock, Send, Sparkles, Trophy, 
-  CheckCircle2, FileText, Check, Copy, ArrowRight, ShieldAlert, 
+import {
+  Flame, Zap, AlertTriangle, Clock, Send, Sparkles, Trophy,
+  CheckCircle2, FileText, Check, Copy, ArrowRight, ShieldAlert,
   Sliders, Award, RefreshCw, Layers, CheckSquare, Square,
   HelpCircle, Compass, Target, Activity, Wand2, FlaskConical
 } from 'lucide-react';
@@ -294,11 +294,10 @@ export const StudentRound3 = ({ team, round3State }) => {
                       <div
                         key={idx}
                         onClick={() => togglePillar(idx)}
-                        className={`p-2 rounded-lg text-xs font-mono flex items-start gap-2 cursor-pointer transition-all border ${
-                          isChecked
+                        className={`p-2 rounded-lg text-xs font-mono flex items-start gap-2 cursor-pointer transition-all border ${isChecked
                             ? 'bg-amber-500/10 border-amber-500/40 text-amber-200'
                             : 'bg-white/[0.02] border-white/[0.04] text-gray-400 hover:text-gray-200'
-                        }`}
+                          }`}
                       >
                         {isChecked ? (
                           <CheckSquare className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
@@ -412,13 +411,12 @@ export const StudentRound3 = ({ team, round3State }) => {
               <button
                 onClick={handleSubmitFinal}
                 disabled={isSubmitting || isSubmitted || round3State?.isLocked}
-                className={`cyber-btn px-8 py-3.5 rounded-xl font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 ${
-                  isSubmitted
+                className={`cyber-btn px-8 py-3.5 rounded-xl font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 ${isSubmitted
                     ? 'bg-emerald-950 border border-emerald-500/50 text-emerald-300 cursor-not-allowed'
                     : isBombPhase
-                    ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-[0_0_25px_rgba(255,0,0,0.5)]'
-                    : 'bg-gradient-to-r from-amber-500 to-orange-600 text-black shadow-[0_0_25px_rgba(255,184,0,0.4)]'
-                }`}
+                      ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-[0_0_25px_rgba(255,0,0,0.5)]'
+                      : 'bg-gradient-to-r from-amber-500 to-orange-600 text-black shadow-[0_0_25px_rgba(255,184,0,0.4)]'
+                  }`}
               >
                 <Send className="w-4 h-4" />
                 <span>{isSubmitted ? 'SEALED & SUBMITTED' : isBombPhase ? 'SUBMIT ADAPTED BLUEPRINT' : 'SUBMIT MASTER STRATEGY'}</span>

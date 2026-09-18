@@ -7,7 +7,7 @@ import {
 import { useSocket } from '../context/SocketContext';
 
 export const HostRound2Control = () => {
-  const { socket, hostState } = useSocket();
+  const { socket, hostState, serverTimer } = useSocket();
 
   const [search, setSearch] = useState('');
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -16,7 +16,15 @@ export const HostRound2Control = () => {
 
   const round2State = hostState?.round2State || {};
   const teams = (hostState?.teams || []).filter(t => t.isQualified);
-  const isLocked = round2State.isLocked;
+  const isR2Running = serverTimer?.round2?.timerRunning ?? round2State.timerRunning ?? false;
+  const isLocked = serverTimer?.round2?.isLocked ?? round2State.isLocked ?? true;
+  const r2TimerRemaining = serverTimer?.round2?.timerRemaining ?? round2State.timerRemaining ?? 900;
+
+  const formatTime = (secs) => {
+    const m = Math.floor(Math.max(0, secs) / 60);
+    const s = Math.max(0, secs) % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
 
   const bothCount = teams.filter(t => t.round2?.c1_submittedPrompt && t.round2?.c2_submittedPrompt).length;
   const c1Count = teams.filter(t => t.round2?.c1_submittedPrompt).length;
@@ -27,7 +35,7 @@ export const HostRound2Control = () => {
   const handleLock = () => socket?.emit('admin:lock_round2');
   const handleStartTimer = () => socket?.emit('admin:start_round2_timer');
   const handlePauseTimer = () => socket?.emit('admin:pause_round2_timer');
-  const handleResetTimer = () => socket?.emit('admin:reset_round2_timer', { durationSeconds: 900 });
+  const handleResetTimer = (secs = 900) => socket?.emit('admin:reset_round2_timer', { durationSeconds: secs });
 
   // Evaluation Trigger
   const handleEvaluateAll = () => {
@@ -70,48 +78,68 @@ export const HostRound2Control = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
+            <div className="px-3 py-1.5 rounded-xl bg-black/60 border border-purple-500/40 flex items-center gap-2">
+              <span className="font-mono font-black text-xl text-purple-300">
+                {formatTime(r2TimerRemaining)}
+              </span>
+              {isR2Running ? (
+                <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold animate-pulse">
+                  ● RUNNING
+                </span>
+              ) : !isLocked ? (
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-bold">
+                  ⏸ PAUSED
+                </span>
+              ) : (
+                <span className="px-1.5 py-0.2 rounded-full bg-gray-800 text-gray-400 border border-gray-700 text-[9px] font-bold">
+                  🔒 LOCKED
+                </span>
+              )}
+            </div>
+
             {isLocked ? (
               <button
                 onClick={handleUnlock}
-                className="cyber-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-black font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(0,255,136,0.4)]"
+                className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-black font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,255,136,0.4)]"
               >
-                <Unlock className="w-4 h-4" />
-                <span>UNLOCK ROUND 2</span>
+                <Unlock className="w-3.5 h-3.5" />
+                <span>UNLOCK R2</span>
               </button>
             ) : (
               <button
                 onClick={handleLock}
-                className="cyber-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(255,51,102,0.4)]"
+                className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(255,51,102,0.4)]"
               >
-                <Lock className="w-4 h-4" />
-                <span>LOCK ROUND 2</span>
+                <Lock className="w-3.5 h-3.5" />
+                <span>LOCK R2</span>
               </button>
             )}
 
-            {round2State.timerRunning ? (
+            {isR2Running ? (
               <button
                 onClick={handlePauseTimer}
-                className="px-4 py-2.5 rounded-xl bg-amber-950/40 border border-amber-500/40 text-amber-300 text-sm font-semibold flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl bg-amber-950/40 border border-amber-500/40 text-amber-300 text-xs font-semibold flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,184,0,0.2)]"
               >
-                <Pause className="w-4 h-4" />
+                <Pause className="w-3.5 h-3.5" />
                 <span>Pause</span>
               </button>
             ) : (
               <button
                 onClick={handleStartTimer}
-                className="px-4 py-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 text-sm font-semibold flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 text-xs font-semibold flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.2)]"
               >
-                <Play className="w-4 h-4" />
-                <span>Start Timer</span>
+                <Play className="w-3.5 h-3.5" />
+                <span>Start</span>
               </button>
             )}
 
             <button
-              onClick={handleResetTimer}
-              className="px-3.5 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-gray-400 hover:text-white text-xs font-mono"
+              onClick={() => handleResetTimer(900)}
+              className="px-3 py-2 rounded-xl bg-[#070a13] border border-[#1f2b48] text-gray-400 hover:text-white text-xs font-mono flex items-center gap-1"
               title="Reset 15m Timer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
+              <span>15m</span>
             </button>
           </div>
         </div>

@@ -133,7 +133,7 @@ export const StudentDashboard = () => {
   // ----------------------------------------------------
   // SCREEN: GRAND FINALE PODIUM (Tournament Winner Reveal)
   // ----------------------------------------------------
-  if (teamState?.round3State?.podiumRevealed && !selectedRoundTab) {
+  if (activeRound === 3 && teamState?.round3State?.podiumRevealed && !selectedRoundTab) {
     return (
       <div className="space-y-4">
         <div className="max-w-6xl mx-auto px-4 pt-4 flex justify-between items-center">
@@ -246,55 +246,12 @@ export const StudentDashboard = () => {
   // ----------------------------------------------------
   const isLocked = serverTimer.isLocked || teamState?.roundState?.isLocked;
   const isSubmitted = team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated';
-  const hasSpun = !!team.spinResult;
+  const hasSpun = !!team.spinResult || hasRevealedGenre;
   const charCount = localDraft.length;
   const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
-  const canSubmit = charCount >= 50 && !isSubmitted && !isLocked && serverTimer.timerRemaining > 0;
+  const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-  // 1. LOCKED LOBBY SCREEN
-  if (isLocked && !hasSpun && !isSubmitted) {
-    return (
-      <div>
-        {renderRoundSwitcher()}
-        <div className="min-h-[calc(100vh-8rem)] max-w-5xl mx-auto px-4 sm:px-6 py-10 flex flex-col items-center justify-center text-center">
-          <div className="w-20 h-20 rounded-3xl glass-panel border-cyan-500/40 flex items-center justify-center mb-6 shadow-[0_0_35px_rgba(0,240,255,0.25)] animate-cyber-pulse">
-            <Lock className="w-10 h-10 text-cyan-400" />
-          </div>
-
-          <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs uppercase tracking-widest mb-3">
-            ARENA INITIALIZING
-          </span>
-
-          <h1 className="font-display font-black text-4xl sm:text-5xl text-white tracking-wider max-w-2xl">
-            ROUND 1: PROMPT MAKEOVER
-          </h1>
-          <p className="text-gray-300 font-sans text-base max-w-xl mt-3 leading-relaxed">
-            Welcome <span className="text-cyan-400 font-bold">{user?.teamName || user?.teamId}</span>. The arena is currently locked. The countdown will begin as soon as the Host unlocks Round 1.
-          </p>
-
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl text-left">
-            <div className="glass-panel p-5 rounded-2xl">
-              <div className="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 font-display font-bold flex items-center justify-center text-base mb-3">1</div>
-              <h3 className="font-display font-bold text-lg text-white">SPIN TO UNLOCK</h3>
-              <p className="text-gray-400 text-xs mt-1 leading-relaxed">Spin the wheel to receive your assigned genre category.</p>
-            </div>
-            <div className="glass-panel p-5 rounded-2xl">
-              <div className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 font-display font-bold flex items-center justify-center text-base mb-3">2</div>
-              <h3 className="font-display font-bold text-lg text-white">ANALYZE DEFECTS</h3>
-              <p className="text-gray-400 text-xs mt-1 leading-relaxed">Inspect the weak prompt. Identify missing persona, context, and format.</p>
-            </div>
-            <div className="glass-panel p-5 rounded-2xl">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-display font-bold flex items-center justify-center text-base mb-3">3</div>
-              <h3 className="font-display font-bold text-lg text-white">REWRITE & SUBMIT</h3>
-              <p className="text-gray-400 text-xs mt-1 leading-relaxed">Craft a powerhouse master prompt. Score in the top 50% to advance!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 2. SPIN WHEEL SCREEN
+  // 1. SPIN WHEEL SCREEN (Immediately accessible on entrance)
   if (!hasSpun && !isSubmitted) {
     return (
       <div>
@@ -302,13 +259,13 @@ export const StudentDashboard = () => {
         <div className="min-h-[calc(100vh-8rem)] max-w-4xl mx-auto px-4 py-8 flex flex-col items-center justify-center animate-fade-in">
           <div className="text-center mb-6">
             <span className="px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30 font-mono text-xs uppercase tracking-wider">
-              PHASE 1 • RANDOMIZED SECTOR ALLOTMENT
+              ROUND 1 • RANDOMIZED GENRE SECTOR ALLOTMENT
             </span>
             <h2 className="font-display font-black text-3xl sm:text-4xl text-white mt-2 tracking-wider">
               SPIN TO REVEAL YOUR GENRE
             </h2>
             <p className="text-gray-400 text-sm mt-1 max-w-md mx-auto">
-              Click the wheel to spin. Your category will determine the defective prompt you must reconstruct.
+              Click the wheel to spin. Your sector will assign the defective prompt you must reconstruct.
             </p>
           </div>
           <WheelSpinner onSpinEnd={handleSpinEnd} />
@@ -472,7 +429,7 @@ export const StudentDashboard = () => {
 
         {/* 2-Column Makeover Studio */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          {/* Left Column (5/12): Defective Prompt Brief & Defect Inspector */}
+          {/* Left Column (5/12): Defective Prompt Brief & Target Scenario */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             <div className="glass-panel p-6 rounded-2xl border-red-500/30 flex-1 flex flex-col justify-between">
               <div>
@@ -492,33 +449,30 @@ export const StudentDashboard = () => {
                   "{question.badPrompt}"
                 </div>
 
+                {/* Target Scenario & Desired Output Context */}
                 <div className="mt-5 pt-4 border-t border-white/[0.08]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
-                      Critical Missing Elements:
+                  <div className="flex items-center gap-2 mb-2">
+                    <Compass className="w-4 h-4 text-cyan-400" />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-300 font-bold">
+                      Target Scenario & Deliverable:
                     </h4>
                   </div>
-                  <ul className="space-y-2 text-xs text-gray-300">
-                    {(question.missingElements || []).map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
-                        <span className="text-red-400 font-bold">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="p-3.5 rounded-xl bg-cyan-950/20 border border-cyan-500/30 text-xs text-gray-200 leading-relaxed font-sans">
+                    {question.context}
+                  </div>
                 </div>
               </div>
 
-              {/* Rubric Reminder Box */}
+              {/* Rubric Criteria Box */}
               <div className="mt-5 p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/20 text-xs text-cyan-200">
                 <div className="flex items-center gap-1.5 font-bold mb-1">
                   <Lightbulb className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>20-Point AI Scoring Criteria:</span>
+                  <span>20-Point AI Adjudication Framework:</span>
                 </div>
-                <div className="text-[11px] text-gray-400 space-y-0.5">
-                  <div>• Clarity & Specificity (5 pts) • Persona/Role (4 pts)</div>
-                  <div>• Constraints & Rules (4 pts) • Output Schema (3 pts) • Creativity (4 pts)</div>
+                <div className="text-[11px] text-gray-400 space-y-0.5 font-mono">
+                  <div>• Clarity & Specificity (5 pts) • Persona & Role (4 pts)</div>
+                  <div>• Constraints & Guardrails (4 pts) • Output Structure (3 pts)</div>
+                  <div>• Creativity & Quality (4 pts)</div>
                 </div>
               </div>
             </div>

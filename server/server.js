@@ -167,56 +167,67 @@ function syncProjectorClients() {
   broadcastToProjectors('projector:state_sync', projView);
 }
 
+function broadcastTimerState() {
+  broadcastToAll('timer:tick', {
+    activeRound: stateManager.activeRound,
+    round1: {
+      timerRemaining: stateManager.roundState.timerRemaining,
+      timerRunning: stateManager.roundState.timerRunning,
+      status: stateManager.roundState.status,
+      isLocked: stateManager.roundState.isLocked
+    },
+    round2: {
+      timerRemaining: stateManager.round2State.timerRemaining,
+      timerRunning: stateManager.round2State.timerRunning,
+      status: stateManager.round2State.status,
+      isLocked: stateManager.round2State.isLocked
+    },
+    round3: {
+      timerRemaining: stateManager.round3State.timerRemaining,
+      timerRunning: stateManager.round3State.timerRunning,
+      bombTimerRemaining: stateManager.round3State.bombTimerRemaining,
+      bombRunning: stateManager.round3State.bombRunning,
+      phase: stateManager.round3State.phase,
+      status: stateManager.round3State.status,
+      isLocked: stateManager.round3State.isLocked
+    }
+  });
+  syncAdminClients();
+}
+
 // Global 1-Second Authoritative Server Tick
 setInterval(() => {
   const didTick = stateManager.tickTimer();
-  if (didTick || stateManager.roundState.timerRunning || stateManager.round2State.timerRunning || stateManager.round3State.timerRunning || stateManager.round3State.bombRunning) {
-    broadcastToAll('timer:tick', {
-      activeRound: stateManager.activeRound,
-      round1: {
-        timerRemaining: stateManager.roundState.timerRemaining,
-        timerRunning: stateManager.roundState.timerRunning,
-        status: stateManager.roundState.status,
-        isLocked: stateManager.roundState.isLocked
-      },
-      round2: {
-        timerRemaining: stateManager.round2State.timerRemaining,
-        timerRunning: stateManager.round2State.timerRunning,
-        status: stateManager.round2State.status,
-        isLocked: stateManager.round2State.isLocked
-      },
-      round3: {
-        timerRemaining: stateManager.round3State.timerRemaining,
-        timerRunning: stateManager.round3State.timerRunning,
-        bombTimerRemaining: stateManager.round3State.bombTimerRemaining,
-        bombRunning: stateManager.round3State.bombRunning,
-        phase: stateManager.round3State.phase,
-        status: stateManager.round3State.status,
-        isLocked: stateManager.round3State.isLocked
-      }
-    });
-  }
+  broadcastTimerState();
 }, 1000);
 
 // --- Socket.IO Real-time Connection Engine ---
 
 io.on('connection', (socket) => {
-  // 1. Team Authentication & Connect
-  socket.on('team:join', ({ teamId, pin }, callback) => {
-    const team = stateManager.teams.get(teamId);
-    if (!team) {
-      return callback?.({ success: false, error: 'Invalid Team ID' });
+  // 1. Team Authentication & Dynamic Registration / Reconnect
+  socket.on('team:join', ({ teamName, teamNumber, teamId, pin }, callback) => {
+    try {
+      const team = stateManager.registerOrJoinTeam({
+        teamName,
+        teamNumber,
+        teamId,
+        pin,
+        socketId: socket.id
+      });
+      socket.join(`team:${team.id}`);
+      
+      const teamView = stateManager.getTeamView(team.id);
+      callback?.({ success: true, teamView });
+      
+      syncAdminClients();
+      syncProjectorClients();
+    } catch (err) {
+      callback?.({ success: false, error: err.message });
     }
-    if (team.pin !== pin && pin !== 'masterpass') {
-      return callback?.({ success: false, error: 'Incorrect Team PIN' });
-    }
+  });
 
-    stateManager.registerTeamSocket(teamId, socket.id);
-    socket.join(`team:${teamId}`);
-    
-    const teamView = stateManager.getTeamView(teamId);
-    callback?.({ success: true, teamView });
-    
+  socket.on('admin:remove_team', ({ teamId }) => {
+    stateManager.removeTeam(teamId);
     syncAdminClients();
     syncProjectorClients();
   });
@@ -369,39 +380,34 @@ io.on('connection', (socket) => {
   // Round 1 Admin Controls
   socket.on('admin:unlock_round', () => {
     stateManager.unlockRound();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round:unlocked', { round: 1, duration: stateManager.roundState.timerDuration });
   });
 
   socket.on('admin:lock_round', () => {
     stateManager.lockRound();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round:locked', { round: 1 });
   });
 
   socket.on('admin:start_timer', () => {
     stateManager.startTimer();
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:pause_timer', () => {
     stateManager.pauseTimer();
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:reset_timer', ({ durationSeconds }) => {
     stateManager.resetTimer(durationSeconds || 600);
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:add_time', ({ seconds }) => {
     stateManager.addTime(seconds || 60);
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:evaluate_all', async (data, callback) => {
@@ -414,8 +420,7 @@ io.on('connection', (socket) => {
     }
 
     stateManager.roundState.status = 'EVALUATING';
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
 
     callback?.({ success: true, total: teamsToEvaluate.length });
 
@@ -444,8 +449,7 @@ io.on('connection', (socket) => {
     );
 
     stateManager.setEvaluationResults(evaluations);
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:set_manual_score', ({ teamId, criteriaKey, score }) => {
@@ -456,9 +460,7 @@ io.on('connection', (socket) => {
 
   socket.on('admin:advance_round', () => {
     stateManager.advanceRound();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round:verdict', {
       round: 1,
       advanceTriggered: true,
@@ -476,32 +478,28 @@ io.on('connection', (socket) => {
   // Round 2 Admin Controls
   socket.on('admin:unlock_round2', () => {
     stateManager.unlockRound2();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round2:unlocked', { round: 2, duration: stateManager.round2State.timerDuration });
   });
 
   socket.on('admin:lock_round2', () => {
     stateManager.lockRound2();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:start_round2_timer', () => {
     stateManager.startRound2Timer();
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:pause_round2_timer', () => {
     stateManager.pauseRound2Timer();
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:reset_round2_timer', ({ durationSeconds }) => {
     stateManager.resetRound2Timer(durationSeconds || 900);
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:evaluate_round2', async (data, callback) => {
@@ -562,34 +560,33 @@ io.on('connection', (socket) => {
   // Round 3 Admin Controls
   socket.on('admin:unlock_round3', () => {
     stateManager.unlockRound3();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round3:unlocked', { round: 3, duration: stateManager.round3State.timerDuration });
   });
 
   socket.on('admin:lock_round3', () => {
     stateManager.lockRound3();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:start_round3_timer', () => {
     stateManager.startRound3Timer();
-    syncAdminClients();
+    broadcastTimerState();
   });
 
   socket.on('admin:pause_round3_timer', () => {
     stateManager.pauseRound3Timer();
-    syncAdminClients();
+    broadcastTimerState();
+  });
+
+  socket.on('admin:reset_round3_timer', ({ durationSeconds }) => {
+    stateManager.resetRound3Timer(durationSeconds || 900);
+    broadcastTimerState();
   });
 
   socket.on('admin:detonate_bomb', () => {
     stateManager.detonateFinalBomb();
-    syncAllTeamClients();
-    syncAdminClients();
-    syncProjectorClients();
+    broadcastTimerState();
     broadcastToAll('round3:bomb_detonated', {
       durationSeconds: 30,
       detonatedAt: Date.now()

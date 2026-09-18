@@ -23,8 +23,13 @@ export const SocketProvider = ({ children }) => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    // Connect to server (proxied by Vite or direct window host)
-    const newSocket = io(window.location.origin, {
+    // Connect directly to backend port 3001 in dev or window.location.origin in prod
+    const isDev = window.location.port === '5173' || window.location.port === '3000';
+    const serverUrl = isDev
+      ? `${window.location.protocol}//${window.location.hostname}:3001`
+      : window.location.origin;
+
+    const newSocket = io(serverUrl, {
       reconnection: true,
       reconnectionAttempts: Infinity,
       reconnectionDelay: 1000,

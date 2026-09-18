@@ -33,7 +33,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (socket && isConnected) {
       if (teamUser) {
-        socket.emit('team:join', { teamId: teamUser.teamId, pin: teamUser.pin }, (res) => {
+        socket.emit('team:join', { 
+          teamId: teamUser.teamId, 
+          teamName: teamUser.teamName, 
+          teamNumber: teamUser.teamNumber, 
+          pin: teamUser.pin 
+        }, (res) => {
           if (!res?.success) {
             console.warn('Auto-reconnect failed for team:', res?.error);
           }
@@ -49,9 +54,17 @@ export const AuthProvider = ({ children }) => {
     }
   }, [socket, isConnected, teamUser, adminUser]);
 
-  const loginTeam = async (teamId, pin) => {
+  const loginTeam = async (params, secondaryPin) => {
     setIsAuthenticating(true);
     setAuthError(null);
+
+    // Support both loginTeam({ teamName, teamNumber, pin }) and loginTeam(teamId, pin)
+    let payload = {};
+    if (typeof params === 'object' && params !== null) {
+      payload = params;
+    } else {
+      payload = { teamId: params, pin: secondaryPin };
+    }
 
     return new Promise((resolve) => {
       if (!socket || !isConnected) {
@@ -61,14 +74,16 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      socket.emit('team:join', { teamId, pin }, (res) => {
+      socket.emit('team:join', payload, (res) => {
         setIsAuthenticating(false);
-        if (res?.success) {
+        if (res?.success && res.teamView?.team) {
+          const registeredTeam = res.teamView.team;
           const session = {
             role: 'team',
-            teamId,
-            teamName: res.teamView.team.name,
-            pin
+            teamId: registeredTeam.id,
+            teamName: registeredTeam.name,
+            teamNumber: payload.teamNumber || registeredTeam.id.replace('team_', ''),
+            pin: payload.pin
           };
           setTeamUser(session);
           localStorage.setItem('prompt_wars_team_session', JSON.stringify(session));

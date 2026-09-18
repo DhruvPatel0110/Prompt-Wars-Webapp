@@ -11,7 +11,7 @@ import { HostRound3Control } from '../components/HostRound3Control';
 import { GrandFinalePodium } from '../components/GrandFinalePodium';
 
 export const HostDashboard = () => {
-  const { socket, hostState, evalProgress } = useSocket();
+  const { socket, hostState, serverTimer, evalProgress } = useSocket();
 
   const [activeMainTab, setActiveMainTab] = useState('round1'); // 'round1' | 'round2' | 'round3' | 'podium'
   const [activeR1SubTab, setActiveR1SubTab] = useState('radar'); // 'radar' | 'leaderboard'
@@ -30,12 +30,22 @@ export const HostDashboard = () => {
     r3Submitted: teams.filter(t => t.round3?.status === 'submitted' || t.round3?.status === 'evaluated').length
   };
 
+  const isR1Running = serverTimer?.timerRunning ?? state?.timerRunning ?? false;
+  const isR1Locked = serverTimer?.isLocked ?? state?.isLocked ?? true;
+  const r1TimerRemaining = serverTimer?.timerRemaining ?? state?.timerRemaining ?? 600;
+
+  const formatTime = (secs) => {
+    const m = Math.floor(Math.max(0, secs) / 60);
+    const s = Math.max(0, secs) % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
+
   // Timer & Round Controls for Round 1
   const handleUnlockRound = () => socket?.emit('admin:unlock_round');
   const handleLockRound = () => socket?.emit('admin:lock_round');
   const handleStartTimer = () => socket?.emit('admin:start_timer');
   const handlePauseTimer = () => socket?.emit('admin:pause_timer');
-  const handleResetTimer = () => socket?.emit('admin:reset_timer', { durationSeconds: 600 });
+  const handleResetTimer = (secs = 600) => socket?.emit('admin:reset_timer', { durationSeconds: secs });
   const handleAddTime = (seconds = 60) => socket?.emit('admin:add_time', { seconds });
 
   // Evaluation Trigger for Round 1
@@ -158,156 +168,217 @@ export const HostDashboard = () => {
       {/* ---------------------------------------------------- */}
       {activeMainTab === 'round1' && (
         <div className="space-y-6">
-          {/* Sub-nav & Round 1 Action Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[#1f2b48] pb-4">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveR1SubTab('radar')}
-                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
-                  activeR1SubTab === 'radar'
-                    ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                    : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
-                }`}
-              >
-                <Users className="w-4 h-4" />
-                70-TEAM RADAR MATRIX
-              </button>
+          {/* Dedicated Live Timer & Global Action Bar */}
+          <div className="glass-panel p-4 sm:p-5 rounded-2xl border-cyan-500/40 bg-gradient-to-r from-[#0d1424] via-cyan-950/20 to-[#0d1424] flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 shadow-[0_0_30px_rgba(0,240,255,0.15)]">
+            {/* Live Timer Display Widget */}
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-black/60 border border-cyan-500/40 shadow-inner flex items-center gap-3">
+                <div>
+                  <div className="text-[10px] font-mono uppercase text-gray-400 flex items-center gap-1.5">
+                    <span>ROUND 1 TIMER</span>
+                    {isR1Running ? (
+                      <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold animate-pulse">
+                        ● RUNNING
+                      </span>
+                    ) : !isR1Locked ? (
+                      <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-bold">
+                        ⏸ PAUSED
+                      </span>
+                    ) : (
+                      <span className="px-1.5 py-0.2 rounded-full bg-gray-800 text-gray-400 border border-gray-700 text-[9px] font-bold">
+                        🔒 LOCKED
+                      </span>
+                    )}
+                  </div>
+                  <div className={`font-mono font-black text-3xl sm:text-4xl tracking-wider ${
+                    isR1Running ? 'text-cyan-300 drop-shadow-[0_0_12px_rgba(0,240,255,0.6)]' : isR1Locked ? 'text-gray-500' : 'text-amber-300'
+                  }`}>
+                    {formatTime(r1TimerRemaining)}
+                  </div>
+                </div>
+              </div>
 
-              <button
-                onClick={() => setActiveR1SubTab('leaderboard')}
-                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
-                  activeR1SubTab === 'leaderboard'
-                    ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
-                    : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
-                }`}
-              >
-                <Trophy className="w-4 h-4" />
-                ROUND 1 LEADERBOARD
-              </button>
+              {/* Timer Control Buttons */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                {isR1Running ? (
+                  <button
+                    onClick={handlePauseTimer}
+                    className="px-3.5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(255,184,0,0.25)]"
+                  >
+                    <Pause className="w-4 h-4 fill-current" />
+                    <span>PAUSE</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleStartTimer}
+                    className="px-3.5 py-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(0,240,255,0.25)]"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                    <span>START / RESUME</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => handleResetTimer(600)}
+                  className="px-3 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-gray-300 hover:text-white text-xs font-mono flex items-center gap-1 transition-colors"
+                  title="Reset timer to 10 minutes"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>10m</span>
+                </button>
+
+                <button
+                  onClick={() => handleAddTime(60)}
+                  className="px-3 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-gray-300 hover:text-white text-xs font-mono flex items-center gap-1 transition-colors"
+                  title="Add 60 seconds"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>+1m</span>
+                </button>
+              </div>
             </div>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              {state.isLocked ? (
+            {/* Tournament Stage Progression Actions */}
+            <div className="flex flex-wrap items-center gap-2">
+              {isR1Locked ? (
                 <button
                   onClick={handleUnlockRound}
-                  className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-black font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5"
+                  className="cyber-btn px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-black font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,255,136,0.3)]"
                 >
-                  <Unlock className="w-3.5 h-3.5" />
-                  <span>UNLOCK R1</span>
+                  <Unlock className="w-4 h-4" />
+                  <span>UNLOCK ROUND 1</span>
                 </button>
               ) : (
                 <button
                   onClick={handleLockRound}
-                  className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5"
+                  className="cyber-btn px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,0,0,0.3)]"
                 >
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>LOCK R1</span>
-                </button>
-              )}
-
-              {state.timerRunning ? (
-                <button
-                  onClick={handlePauseTimer}
-                  className="px-3.5 py-2 rounded-xl bg-amber-950/40 border border-amber-500/40 text-amber-300 text-xs font-semibold flex items-center gap-1"
-                >
-                  <Pause className="w-3.5 h-3.5" />
-                  <span>Pause</span>
-                </button>
-              ) : (
-                <button
-                  onClick={handleStartTimer}
-                  className="px-3.5 py-2 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 text-xs font-semibold flex items-center gap-1"
-                >
-                  <Play className="w-3.5 h-3.5" />
-                  <span>Start</span>
+                  <Lock className="w-4 h-4" />
+                  <span>LOCK ROUND 1</span>
                 </button>
               )}
 
               <button
                 onClick={handleEvaluateAll}
                 disabled={isEvaluating}
-                className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5"
+                className="cyber-btn px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(138,43,226,0.4)]"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-4 h-4" />
                 <span>{isEvaluating ? 'EVALUATING...' : 'BATCH EVALUATE'}</span>
               </button>
 
               <button
                 onClick={() => setShowAdvanceConfirm(true)}
-                className="cyber-btn px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-display font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,255,136,0.4)]"
+                className="cyber-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-display font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_25px_rgba(0,255,136,0.5)]"
               >
-                <Zap className="w-3.5 h-3.5" />
+                <Zap className="w-4 h-4" />
                 <span>ADVANCE TO R2</span>
               </button>
             </div>
           </div>
 
+          {/* Sub-nav Tab Selector */}
+          <div className="flex items-center gap-2 border-b border-[#1f2b48] pb-3">
+            <button
+              onClick={() => setActiveR1SubTab('radar')}
+              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
+                activeR1SubTab === 'radar'
+                  ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                  : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>LIVE TEAMS MATRIX ({teams.length})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveR1SubTab('leaderboard')}
+              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
+                activeR1SubTab === 'leaderboard'
+                  ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
+                  : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
+              }`}
+            >
+              <Trophy className="w-4 h-4" />
+              <span>ROUND 1 LEADERBOARD</span>
+            </button>
+          </div>
+
           {/* Radar View */}
           {activeR1SubTab === 'radar' && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2.5">
-                {teams.map((t) => {
-                  const isSub = t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated';
-                  const isDraft = t.submissionStatus === 'drafting';
-                  const isConn = t.connected;
+              {teams.length === 0 ? (
+                <div className="p-12 text-center rounded-2xl bg-[#0d1424]/40 border border-[#1f2b48] text-gray-400">
+                  <Users className="w-12 h-12 mx-auto mb-3 text-cyan-400/60 animate-pulse" />
+                  <div className="text-base font-display font-bold text-white mb-1">No Teams Registered Yet</div>
+                  <p className="text-xs text-gray-400 font-sans max-w-md mx-auto">
+                    When student participants enter their Team Name on the login page, they will automatically appear here live in real-time.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 gap-2.5">
+                  {teams.map((t) => {
+                    const isSub = t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated';
+                    const isDraft = t.submissionStatus === 'drafting';
+                    const isConn = t.connected;
 
-                  let borderCol = "border-[#1f2b48]";
-                  let bgCol = "bg-[#0d1424]/60";
-                  let badge = "OFFLINE";
-                  let badgeColor = "text-gray-500";
+                    let borderCol = "border-[#1f2b48]";
+                    let bgCol = "bg-[#0d1424]/60";
+                    let badge = "OFFLINE";
+                    let badgeColor = "text-gray-500";
 
-                  if (isSub) {
-                    borderCol = "border-cyan-500/50 shadow-[0_0_10px_rgba(0,240,255,0.15)]";
-                    bgCol = "bg-cyan-950/20";
-                    badge = "SUBMITTED";
-                    badgeColor = "text-cyan-400";
-                  } else if (isDraft) {
-                    borderCol = "border-amber-500/40";
-                    bgCol = "bg-amber-950/20";
-                    badge = "DRAFTING";
-                    badgeColor = "text-amber-400";
-                  } else if (isConn) {
-                    borderCol = "border-emerald-500/40";
-                    bgCol = "bg-emerald-950/20";
-                    badge = "ONLINE";
-                    badgeColor = "text-emerald-400";
-                  }
+                    if (isSub) {
+                      borderCol = "border-cyan-500/50 shadow-[0_0_10px_rgba(0,240,255,0.15)]";
+                      bgCol = "bg-cyan-950/20";
+                      badge = "SUBMITTED";
+                      badgeColor = "text-cyan-400";
+                    } else if (isDraft) {
+                      borderCol = "border-amber-500/40";
+                      bgCol = "bg-amber-950/20";
+                      badge = "DRAFTING";
+                      badgeColor = "text-amber-400";
+                    } else if (isConn) {
+                      borderCol = "border-emerald-500/40";
+                      bgCol = "bg-emerald-950/20";
+                      badge = "ONLINE";
+                      badgeColor = "text-emerald-400";
+                    }
 
-                  return (
-                    <div
-                      key={t.id}
-                      onClick={() => setSelectedTeam(t)}
-                      className={`p-2.5 rounded-xl border ${borderCol} ${bgCol} cursor-pointer hover:scale-[1.03] transition-all flex flex-col justify-between h-24 select-none`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono font-bold text-xs text-white">
-                          {t.id.replace('team_', '#')}
-                        </span>
-                        {t.spinResult ? (
-                          <span
-                            className="text-[10px] font-bold px-1.5 rounded"
-                            style={{ backgroundColor: `${t.assignedGenre?.color || '#00f0ff'}33`, color: t.assignedGenre?.color || '#00f0ff' }}
-                          >
-                            {t.spinResult}
+                    return (
+                      <div
+                        key={t.id}
+                        onClick={() => setSelectedTeam(t)}
+                        className={`p-2.5 rounded-xl border ${borderCol} ${bgCol} cursor-pointer hover:scale-[1.03] transition-all flex flex-col justify-between h-24 select-none`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono font-bold text-xs text-white">
+                            {t.id.replace('team_', '#')}
                           </span>
-                        ) : (
-                          <span className="w-1.5 h-1.5 rounded-full bg-gray-600" />
-                        )}
-                      </div>
+                          {t.spinResult ? (
+                            <span
+                              className="text-[10px] font-bold px-1.5 rounded"
+                              style={{ backgroundColor: `${t.assignedGenre?.color || '#00f0ff'}33`, color: t.assignedGenre?.color || '#00f0ff' }}
+                            >
+                              {t.spinResult}
+                            </span>
+                          ) : (
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-600" />
+                          )}
+                        </div>
 
-                      <div className="text-[11px] font-medium text-gray-300 truncate" title={t.name}>
-                        {t.name.split('-')[1] || t.name}
-                      </div>
+                        <div className="text-[11px] font-medium text-gray-300 truncate" title={t.name}>
+                          {t.name}
+                        </div>
 
-                      <div className="flex items-center justify-between text-[10px] font-mono pt-1 border-t border-[#1f2b48]/60">
-                        <span className={`font-semibold ${badgeColor}`}>{badge}</span>
-                        {t.evaluation && <span className="text-white font-bold">{t.evaluation.total_score}p</span>}
+                        <div className="flex items-center justify-between text-[10px] font-mono pt-1 border-t border-[#1f2b48]/60">
+                          <span className={`font-semibold ${badgeColor}`}>{badge}</span>
+                          {t.evaluation && <span className="text-white font-bold">{t.evaluation.total_score}p</span>}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
 
@@ -376,14 +447,27 @@ export const HostDashboard = () => {
             <div className="flex items-center justify-between border-b border-[#1f2b48] pb-4 mb-4">
               <div>
                 <h3 className="font-display font-bold text-2xl text-white">{selectedTeam.name}</h3>
-                <p className="text-xs text-cyan-400 font-mono">{selectedTeam.id} • Status: {selectedTeam.submissionStatus}</p>
+                <p className="text-xs text-cyan-400 font-mono">{selectedTeam.id} • PIN: {selectedTeam.pin || '1234'} • Status: {selectedTeam.submissionStatus}</p>
               </div>
-              <button
-                onClick={() => setSelectedTeam(null)}
-                className="text-gray-400 hover:text-white text-xl font-bold px-3 py-1 rounded-lg bg-[#070a13] border border-[#1f2b48]"
-              >
-                ✕
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    if (confirm(`Remove "${selectedTeam.name}" from the tournament?`)) {
+                      socket?.emit('admin:remove_team', { teamId: selectedTeam.id });
+                      setSelectedTeam(null);
+                    }
+                  }}
+                  className="text-red-400 hover:text-red-300 text-xs font-mono px-3 py-1.5 rounded-lg bg-red-950/40 border border-red-500/30"
+                >
+                  Remove Team
+                </button>
+                <button
+                  onClick={() => setSelectedTeam(null)}
+                  className="text-gray-400 hover:text-white text-xl font-bold px-3 py-1 rounded-lg bg-[#070a13] border border-[#1f2b48]"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">

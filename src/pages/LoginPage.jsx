@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, Lock, ChevronRight, AlertCircle, Shield } from 'lucide-react';
+import { Zap, Lock, ChevronRight, AlertCircle, Shield, Users, Hash, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 
@@ -7,29 +7,27 @@ export const LoginPage = ({ onSwitchToAdmin }) => {
   const { loginTeam, authError, isAuthenticating } = useAuth();
   const { isConnected, latency } = useSocket();
 
-  const [selectedTeamId, setSelectedTeamId] = useState('team_01');
-  const [teamPin, setTeamPin] = useState('1001');
-
-  // Auto-fill PIN helper when changing team dropdown
-  const handleTeamChange = (e) => {
-    const val = e.target.value;
-    setSelectedTeamId(val);
-    const num = parseInt(val.replace('team_', ''), 10);
-    if (!isNaN(num)) {
-      setTeamPin(String(1000 + num));
-    }
-  };
+  const [teamName, setTeamName] = useState('');
+  const [teamNumber, setTeamNumber] = useState('');
+  const [teamPin, setTeamPin] = useState('');
 
   const handleTeamSubmit = async (e) => {
     e.preventDefault();
-    await loginTeam(selectedTeamId, teamPin);
-  };
+    const cleanName = teamName.trim();
+    const cleanNum = teamNumber.trim();
+    const cleanPin = teamPin.trim() || '1234';
 
-  // Generate 70 team options
-  const teamOptions = Array.from({ length: 70 }, (_, i) => {
-    const id = `team_${String(i + 1).padStart(2, '0')}`;
-    return { id, label: `Team ${String(i + 1).padStart(2, '0')}` };
-  });
+    if (!cleanName && !cleanNum) {
+      alert('Please enter your Team Name or Team Number.');
+      return;
+    }
+
+    await loginTeam({
+      teamName: cleanName,
+      teamNumber: cleanNum,
+      pin: cleanPin
+    });
+  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
@@ -56,8 +54,15 @@ export const LoginPage = ({ onSwitchToAdmin }) => {
           </div>
         </div>
 
-        {/* Team Auth Card */}
-        <div className="cyber-card rounded-2xl p-6 sm:p-8">
+        {/* Team Auth & Dynamic Registration Card */}
+        <div className="cyber-card rounded-2xl p-6 sm:p-8 border-cyan-500/40">
+          <div className="flex items-center gap-2 mb-6 pb-3 border-b border-[#1f2b48]">
+            <Sparkles className="w-4 h-4 text-cyan-400" />
+            <span className="font-display font-bold text-sm tracking-wider text-white uppercase">
+              Team Registration / Login
+            </span>
+          </div>
+
           {authError && (
             <div className="mb-5 p-3 rounded-lg bg-red-950/40 border border-red-500/40 text-red-300 text-xs font-mono flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
@@ -67,48 +72,68 @@ export const LoginPage = ({ onSwitchToAdmin }) => {
 
           <form onSubmit={handleTeamSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-1.5">
-                Select Your Team:
-              </label>
-              <select
-                value={selectedTeamId}
-                onChange={handleTeamChange}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-white font-mono focus:outline-none focus:border-cyan-500/50"
-              >
-                {teamOptions.map((t) => (
-                  <option key={t.id} value={t.id} className="bg-[#070a13]">
-                    {t.label} ({t.id})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-1.5">
-                Team Access PIN:
+              <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 mb-1.5">
+                Team Name:
               </label>
               <div className="relative">
                 <input
-                  type="password"
-                  placeholder="Enter 4-digit PIN"
-                  value={teamPin}
-                  onChange={(e) => setTeamPin(e.target.value)}
+                  type="text"
+                  placeholder="e.g. Prompt Wizards, Neural Ninjas"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
                   required
-                  className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-white font-mono tracking-widest focus:outline-none focus:border-cyan-500/50"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-white font-sans focus:outline-none focus:border-cyan-500/50"
                 />
-                <Lock className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
+                <Users className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-cyan-400" />
               </div>
-              <p className="text-[11px] text-gray-500 mt-1 font-mono">
-                Default PIN for {selectedTeamId}: <span className="text-cyan-400 font-bold">{1000 + parseInt(selectedTeamId.replace('team_', ''), 10)}</span>
-              </p>
             </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 mb-1.5">
+                  Team / Table #:
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="e.g. 01, 12, T-5"
+                    value={teamNumber}
+                    onChange={(e) => setTeamNumber(e.target.value)}
+                    required
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-white font-mono focus:outline-none focus:border-cyan-500/50"
+                  />
+                  <Hash className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-purple-400" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 mb-1.5">
+                  Access PIN:
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="4-digit PIN"
+                    value={teamPin}
+                    onChange={(e) => setTeamPin(e.target.value)}
+                    required
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-white font-mono tracking-widest focus:outline-none focus:border-cyan-500/50"
+                  />
+                  <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                </div>
+              </div>
+            </div>
+
+            <p className="text-[11px] text-gray-400 font-sans pt-1">
+              Entering the arena registers your team live in the Host Dashboard. Keep your PIN to reconnect if you refresh.
+            </p>
 
             <button
               type="submit"
               disabled={isAuthenticating || !isConnected}
-              className="cyber-btn w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-display font-bold text-base uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.4)] disabled:opacity-50"
+              className="cyber-btn w-full mt-4 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-display font-bold text-base uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.4)] disabled:opacity-50"
             >
-              <span>{isAuthenticating ? 'AUTHENTICATING...' : 'ENTER TOURNAMENT ARENA'}</span>
+              <span>{isAuthenticating ? 'ENTERING ARENA...' : 'ENTER TOURNAMENT ARENA'}</span>
               <ChevronRight className="w-5 h-5" />
             </button>
           </form>
