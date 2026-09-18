@@ -1,0 +1,360 @@
+{
+  "genre": "A",
+  "genreName": "CREATIVE",
+  "description": "Storytelling, Advertisement, Social media viral content, Video scripts, Poster/campaign concepts",
+  "badge": "CREATIVE ARTS",
+  "color": "#ff007f",
+  "questions": [
+    {
+      "id": "r1_a_001",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write an ad for our college fest.",
+      "context": "An upcoming 3-day inter-college technical and cultural festival.",
+      "missingElements": [
+        "Target audience demographics (age, student interests)",
+        "Tone and brand personality (youthful, energetic, cyberpunk)",
+        "Platform format (video script, Instagram reel, poster copy)",
+        "Key attractions and call to action (dates, website, registration link)",
+        "Constraints (duration, character limit, scene directions)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_002",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a story about an AI taking over a coffee shop.",
+      "context": "A sci-fi comedy short narrative.",
+      "missingElements": [
+        "Main characters & protagonist perspective (barista vs robotic manager)",
+        "Pacing and narrative arc (inciting incident, climax, humorous resolution)",
+        "Humor style and dialogue formatting",
+        "Word limit and scene formatting specifications"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_003",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a social media video about plastic pollution.",
+      "context": "A viral public-awareness campaign for Gen Z audiences on Instagram and TikTok.",
+      "missingElements": [
+        "Hook within the first 3 seconds to prevent drop-off",
+        "Visual storytelling scene transitions and camera angles",
+        "BGM and sound design cues",
+        "Actionable consumer lifestyle change CTA"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_004",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a sci-fi movie trailer voiceover.",
+      "context": "A dramatic theatrical trailer for a post-apocalyptic solar flare survival thriller.",
+      "missingElements": [
+        "Pacing milestones (0-15s Tease, 15-45s Escalation, 45-60s Climax)",
+        "Cinematic SFX and orchestral cue markers [BASS DROP, GLITCH]",
+        "Deep, gravelly narrator voice persona guidelines",
+        "Final title card lockup and release date reveal"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_005",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Design an Instagram carousel for a new fitness sneaker.",
+      "context": "A product reveal campaign for an ultra-lightweight running shoe made from recycled ocean plastics.",
+      "missingElements": [
+        "5-to-7 slide breakdown with slide-by-slide visual layout",
+        "Catchy headline copy per slide with hook & retention strategy",
+        "Visual aesthetic direction (color palette, photography style, typography)",
+        "Clear swipe CTA and conversion link in bio trigger"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_006",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a funny script for a commercial about bad WiFi.",
+      "context": "A 30-second TV & YouTube pre-roll ad promoting high-speed fiber internet.",
+      "missingElements": [
+        "Two contrasting characters experiencing high-stakes video call embarrassment",
+        "Specific audio/visual gag cues and timing breakdown (0-10s, 10-20s, 20-30s)",
+        "Brand tagline integration and visual logo outro",
+        "Relatable work-from-home or gaming crisis scenario"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_007",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a poem about space exploration.",
+      "context": "A commemorative spoken-word piece for an interstellar rover landing on an exoplanet.",
+      "missingElements": [
+        "Poetic form and rhythm (free verse vs rhymed meter, cadence)",
+        "Emotional tone (wonder, existential isolation, human triumph)",
+        "Specific cosmic imagery (nebulae, gravitational waves, telemetry signals)",
+        "Length constraints (stanzas, lines, spoken duration)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_008",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Make a podcast intro for a true crime show.",
+      "context": "An atmospheric opening audio sequence for an investigative podcast focusing on unsolved cyber heists.",
+      "missingElements": [
+        "Host persona, tone, and pacing (suspenseful, measured, gritty)",
+        "Sound effects cues (typing clicks, dial-up static, ominous cello drone)",
+        "Episode tease hook and thematic signature tagline",
+        "Show credits and sponsor mention placement"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_009",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a rap battle between Isaac Newton and Albert Einstein.",
+      "context": "An educational entertainment YouTube video script in the style of Epic Rap Battles.",
+      "missingElements": [
+        "Rhyme scheme, bar count per verse, and beat tempo (BPM)",
+        "Scientific references and witty historical disses (calculus, relativity, apples)",
+        "Stage presence directions and beat switch transitions",
+        "Scoring / closing punchline challenge for the audience"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_010",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a hero backstory for a cyberpunk video game.",
+      "context": "Character bio and origin vignette for an augmented street medic turned hacker.",
+      "missingElements": [
+        "Core internal motivation, fatal flaw, and unique cybernetic ability",
+        "Dystopian worldbuilding context (megacorporation antagonist, neon slums)",
+        "Inciting tragic incident that caused them to go rogue",
+        "Formatting (Character Sheet: Stats, Lore, Dialogue sample)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_011",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a tagline and slogan for a luxury chocolate brand.",
+      "context": "Rebranding an artisanal Swiss dark chocolate company emphasizing ethical single-origin cocoa.",
+      "missingElements": [
+        "Target consumer demographic (gourmet foodies, luxury gifting)",
+        "Tone and brand personality (sophisticated, sensual, sustainable)",
+        "Variations (short 3-word punchy slogan vs evocative packaging copy)",
+        "Competitor differentiation from mass-market brands"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_012",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a comic book scene where two superheroes argue.",
+      "context": "A 4-page comic script depicting ideological conflict between a vigilante tech-detective and a cosmic protector.",
+      "missingElements": [
+        "Page-by-page and panel-by-panel script breakdown (Panel 1, Panel 2...)",
+        "Visual descriptions for artist (angles, lighting, facial expressions)",
+        "Dialogue bubbles, captions, and SFX lettering instructions",
+        "Escalating philosophical tension before a plot-interrupting crisis"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_013",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a catchy jingle for an electric toothbrush.",
+      "context": "A 15-second radio and Spotify audio ad featuring an ultra-sonic smart toothbrush with gum tracking.",
+      "missingElements": [
+        "Musical genre, tempo, and vocal style (upbeat pop, rhythmic chant)",
+        "Key product benefit highlights (30-day battery, plaque removal, sonic speed)",
+        "Audio cues and sound effects (sparkle ping, whirring buzz)",
+        "Memorable rhyming hook with brand name repetition"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_014",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a spooky campfire story for teenagers.",
+      "context": "A suspenseful urban legend narrative set in an abandoned smart-house in the woods.",
+      "missingElements": [
+        "Foreshadowing, rising dread, and auditory sensory details",
+        "Pacing instructions for the storyteller (pauses, whispered lines)",
+        "Unexpected twist ending rather than generic monster tropes",
+        "Target length and reading duration (3-4 minutes)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_015",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write an elevator pitch script for a fantasy novel.",
+      "context": "A 60-second verbal pitch to literary agents for a high-fantasy heist novel.",
+      "missingElements": [
+        "Logline formula (Protagonist + Inciting Incident + Stakes + Unique Hook)",
+        "Comp titles ('Ocean\\'s Eleven meets Mistborn')",
+        "Target market, reader demographic, and world magic system USP",
+        "Clear call to action for manuscript submission"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_016",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a viral TikTok video concept for a book launch.",
+      "context": "A BookTok video promoting an enemies-to-lovers dark academia thriller.",
+      "missingElements": [
+        "Trending audio suggestion, on-screen text hook (POV format)",
+        "Fast-paced visual aesthetic moodboard (candles, old library, rainy window)",
+        "Curiosity gap question in caption to drive comments and shares",
+        "Video duration (12-15 seconds) and hashtags"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_017",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a monologue for a villain who thinks they are doing good.",
+      "context": "A theatrical monologue for a rogue geneticist eliminating human fear to prevent wars.",
+      "missingElements": [
+        "Philosophical justification, internal anguish, and cold rational logic",
+        "Stage movement, vocal dynamics (whisper to crescendo), and breathing marks",
+        "Props interaction and dramatic lighting cues",
+        "Target length (60-90 seconds) and character objective"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_018",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write copy for a billboard on a busy highway.",
+      "context": "Outdoor advertising for a sleep-tracker smartwatch targeting stressed commuter drivers.",
+      "missingElements": [
+        "Maximum 7-word headline constraint for 60mph visibility",
+        "High-contrast visual layout description and typography hierarchy",
+        "Emotional trigger (fatigue awareness vs energy boost)",
+        "Simple, memorable URL or QR code placement directive"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_019",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a quest briefing for an RPG game.",
+      "context": "An in-game dialogue dialogue quest given by a mysterious tavern bartender in a steampunk city.",
+      "missingElements": [
+        "NPC voice dialect and personality quirks",
+        "Clear quest objectives, optional bonus conditions, and danger warnings",
+        "Branching dialogue choices (Aggressive, Inquisitive, Greedy)",
+        "Explicit reward breakdown (Gold, XP, Steampunk grappling hook)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_020",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a launch email for a designer clothing drop.",
+      "context": "An exclusive VIP streetwear capsule collection with only 100 numbered pieces.",
+      "missingElements": [
+        "Subject line with high FOMO and urgency trigger",
+        "Visual design layout (hero image, product showcase, scarcity counter)",
+        "Brand voice (minimalist, rebellious, premium)",
+        "Direct checkout CTA button and drop unlock countdown timer"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_021",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a children's story about a dragon who loves baking.",
+      "context": "An illustrated bedtime picture book for children aged 4-7.",
+      "missingElements": [
+        "Rhythmic and alliterative language suitable for reading aloud",
+        "Page-by-page layout (Spread 1 to Spread 12) with illustration descriptions",
+        "Relatable moral lesson on embracing unusual passions and sharing",
+        "Gentle, cozy vocabulary and wholesome conflict resolution"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_022",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a speech for a college graduation valedictorian.",
+      "context": "A 5-minute commencement speech for a graduating class entering the AI and remote-work era.",
+      "missingElements": [
+        "Speech structure (Humorous opening hook, shared memory, poignant challenge, visionary call to action)",
+        "Delivery cadence markers ([PAUSE FOR LAUGHTER], [EMPHASIZE])",
+        "Universal emotional themes balancing resilience with optimism",
+        "Memorable closing punchline"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_023",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create an immersive worldbuilding guide for a floating island city.",
+      "context": "Setting guide for an aerial fantasy realm powered by gravity crystals.",
+      "missingElements": [
+        "Structured lore categories (Geography, Architecture, Economy, Social Classes, Defense)",
+        "Sensory environmental details (wind currents, altitude sickness, sky-docking)",
+        "Central cultural conflict and resource scarcity point",
+        "Markdown formatting with bulleted dossier structure"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_024",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a menu description for a futuristic cyberpunk restaurant.",
+      "context": "A high-end dining menu in Neo-Tokyo featuring synthetic gastronomy and neon molecular drinks.",
+      "missingElements": [
+        "3 distinct course categories (Synth-Appetizers, Quantum Mains, Cyber-Cocktails)",
+        "Sensory culinary adjectives blended with sci-fi ingredients (hydro-grown kelp, bioluminescent caviar)",
+        "Atmospheric menu styling and price format (in Cyber-Credits ₵)",
+        "Humorous warning disclaimers for cybernetic-enhanced diners"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_025",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a movie scene where a detective realizes who the killer is.",
+      "context": "A tense neo-noir thriller climax in a rain-soaked archive room.",
+      "missingElements": [
+        "Industry standard screenplay formatting (SCENE HEADING, ACTION, CHARACTER, PARENTHETICAL, DIALOGUE)",
+        "Visual clue discovery trigger and internal epiphany realization cues",
+        "Camera choreography (extreme close-up on eyes, rack focus to door)",
+        "Pacing tension build leading to an immediate life-or-death cliffhanger"
+      ],
+      "difficulty": 1
+    }
+  ]
+}

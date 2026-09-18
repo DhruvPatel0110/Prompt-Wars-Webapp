@@ -1,0 +1,360 @@
+{
+  "genre": "C",
+  "genreName": "DATA / ANALYSIS",
+  "description": "Reports, Tables, Financial summaries, Data interpretation, Comparison and insights",
+  "badge": "ANALYTICS",
+  "color": "#8a2be2",
+  "questions": [
+    {
+      "id": "r1_c_001",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze these sales numbers.",
+      "context": "Quarterly e-commerce revenue figures across 4 regions with sudden Q3 drop.",
+      "missingElements": [
+        "Specific analytical goals (anomaly detection, MoM growth, profit margins)",
+        "Required statistical metrics and calculations (variance, churn correlation, CAGR)",
+        "Output format (markdown summary table, executive bullet points, chart recommendations)",
+        "Target audience (board of directors vs operational managers)",
+        "Actionable recommendations based on insights"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_002",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Compare these two electric cars.",
+      "context": "Comparing Tesla Model 3 and Hyundai Ioniq 5 for corporate fleet procurement.",
+      "missingElements": [
+        "Comparison criteria (battery efficiency, TCO, maintenance, charging curve, resale value)",
+        "Evaluation methodology and scoring weightage (1-10 rating matrix)",
+        "Structured comparison matrix/table with data points",
+        "Executive recommendation with 5-year fleet ROI justification"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_003",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize this hospital patient readmission data.",
+      "context": "A 12-month post-operative dataset across 5,000 patients to identify high-risk re-admissions.",
+      "missingElements": [
+        "Demographic and comorbidity risk-stratification parameters",
+        "Statistical correlation methods (odds ratios, p-values, 30-day readmission rates)",
+        "Structured clinical findings table with confidence intervals",
+        "Operational triage protocol recommendations for nursing staff"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_004",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Find fraud patterns in credit card transactions.",
+      "context": "A synthetic dataset of 100,000 transactions with anomalous cross-border micropayments.",
+      "missingElements": [
+        "Fraud detection heuristic rules (velocity checks, IP geolocation mismatches, amount thresholds)",
+        "False-positive vs false-negative tolerance thresholds",
+        "Incident severity classification schema (Low, Medium, Critical)",
+        "Structured markdown alert schema with recommended block/flag actions"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_005",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our website traffic drop.",
+      "context": "A media publisher experiencing a 40% sudden plunge in organic search visitors over 3 weeks.",
+      "missingElements": [
+        "Traffic dimension breakdowns (Organic vs Direct vs Referral, Device type, Geo-regions)",
+        "Technical SEO diagnostic factors (Google algorithm update, crawl errors, broken canonical tags, core web vitals)",
+        "Top-page vs sitewide impact comparative table",
+        "Step-by-step engineering and editorial recovery action plan"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_006",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate this marketing campaign dataset.",
+      "context": "Multi-channel advertising campaign data across Meta, Google Ads, TikTok, and LinkedIn.",
+      "missingElements": [
+        "Key performance metric formulas (CAC, ROAS, CPC, Click-To-Conversion Rate per channel)",
+        "Channel-by-channel performance benchmark comparison table",
+        "Attribution model methodology (First-touch vs Linear vs Data-driven multi-touch)",
+        "Budget reallocation matrix for the upcoming quarter"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_007",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze customer support ticket sentiment.",
+      "context": "A dataset of 10,000 resolved customer support tickets following a major mobile app update.",
+      "missingElements": [
+        "Sentiment scoring methodology (Positive/Neutral/Negative classification with confidence score)",
+        "Categorical root-cause clustering (Bug reports, UI confusion, Billing disputes, Feature requests)",
+        "Customer churn risk score correlation with resolution time (First Response Time vs CSAT)",
+        "Prioritized top-5 engineering bug fix backlog table"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_008",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Predict employee turnover from HR survey data.",
+      "context": "An annual internal employee pulse survey covering 2,000 corporate staff across 6 departments.",
+      "missingElements": [
+        "Attrition risk feature indicators (eNPS, overtime hours, manager approval ratings, tenure, compensation benchmark)",
+        "Departmental heat-map table with flight-risk severity ratings",
+        "Statistical significance markers and leading retention warning signs",
+        "HR retention intervention playbook for high-risk talent cohorts"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_009",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Perform a financial ratio analysis on this company balance sheet.",
+      "context": "Annual audited balance sheets and income statements for a public manufacturing company across 3 years.",
+      "missingElements": [
+        "Standard financial ratio categories (Liquidity: Current/Quick ratio; Solvency: Debt-to-Equity; Profitability: ROE, ROIC; Efficiency: Asset Turnover)",
+        "Year-over-Year trend table with industry benchmark comparisons",
+        "Working capital and cash flow health diagnostic summary",
+        "Credit risk rating assessment and debt restructuring insights"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_010",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our SaaS product churn cohorts.",
+      "context": "Monthly subscription cohort retention data spanning 24 months across SMB and Enterprise tiers.",
+      "missingElements": [
+        "Cohort retention triangle / heat matrix structure (Month 0 to Month 12 retention %)",
+        "Net Revenue Retention (NRR) vs Gross Logo Churn calculations",
+        "Feature adoption correlation with long-term account survival",
+        "Actionable onboarding milestones to bridge the 'Day 30' cliff"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_011",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Forecast inventory demand for Black Friday.",
+      "context": "3-year historical retail sales data and lead times for 50 SKU categories ahead of peak holiday season.",
+      "missingElements": [
+        "Time-series forecasting parameters (Seasonal lift, Trend smoothing, Safety stock buffer percentages)",
+        "Supply chain lead-time constraint modeling (Stockout probability vs Overstock holding cost)",
+        "SKU prioritization breakdown (ABC Analysis: Fast-movers vs Slow-movers)",
+        "Recommended re-order quantities table with target order placement deadlines"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_012",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze A/B test results for our checkout page.",
+      "context": "A 14-day split test of 50,000 visitors testing 1-step checkout vs 3-step checkout.",
+      "missingElements": [
+        "Statistical significance test parameters (p-value, 95% Confidence Interval, Sample size power calculation)",
+        "Primary conversion metric vs secondary metrics (Cart abandonment rate, Average Order Value, Payment failure rate)",
+        "Device segmentation table (Mobile browser vs Desktop conversion differences)",
+        "Definitive ship/rollback decision recommendation with revenue projection"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_013",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize user survey feedback on our new feature.",
+      "context": "Qualitative feedback responses from 500 beta testers evaluating an AI voice transcription tool.",
+      "missingElements": [
+        "Thematic coding analysis (Accuracy complaints, UI speed, Export formatting requests)",
+        "Frequency count and Net Promoter Score (NPS) breakdown per user persona",
+        "Direct verbatim representative quote highlights organized by theme",
+        "Product roadmap prioritization matrix (High Effort/High Impact vs Quick Wins)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_014",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze warehouse delivery delay data.",
+      "context": "Fleet delivery GPS logs across 10 fulfillment hubs showing chronic 2-day delivery SLA breaches.",
+      "missingElements": [
+        "Bottleneck root-cause breakdown (Pick-and-pack latency, Last-mile courier transit, Weather anomalies)",
+        "Hub-by-hub performance comparison ranking table (On-time delivery % vs SLA breach rate)",
+        "Peak traffic hour delay correlation",
+        "Optimization recommendations (Dynamic route dispatching, localized micro-fulfillment hubs)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_015",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Interpret our server crash logs and latency spikes.",
+      "context": "API gateway error logs and database query latency metrics during a flash sale peak.",
+      "missingElements": [
+        "Error status code distribution breakdown (HTTP 500, 502, 504 timeouts)",
+        "Database slow query identification (Unindexed table scans, connection pool exhaustion)",
+        "Infrastructure resource saturation timeline (CPU %, RAM memory leak, IOPS ceiling)",
+        "Step-by-step auto-scaling and Redis caching architecture fix recommendations"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_016",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Benchmark our SaaS pricing against competitors.",
+      "context": "Pricing tier data from 8 leading competitors in the AI code-generation market.",
+      "missingElements": [
+        "Value metric unit comparison (Seat-based, Token-based, API call volume tiers)",
+        "Feature comparison matrix across Starter, Pro, and Enterprise tiers",
+        "Price-to-feature positioning perceptual map / scatter table",
+        "Strategic price positioning recommendation for optimal market penetration"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_017",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our company carbon footprint audit.",
+      "context": "Scope 1, Scope 2, and Scope 3 greenhouse gas emissions data across corporate offices and data centers.",
+      "missingElements": [
+        "Standard ESG emission category breakdown (Direct fuel, Purchased electricity, Supply chain logistics) in MT CO2e",
+        "Per-employee and per-dollar revenue carbon intensity ratios",
+        "Comparison against industry net-zero target milestones",
+        "Prioritized top-4 decarbonization initiatives with estimated emission reduction potential"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_018",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate hospital emergency room wait-time data.",
+      "context": "Quarterly patient triage logs in an urban hospital showing average triage wait times exceeding 4 hours.",
+      "missingElements": [
+        "Acuity triage level breakdown (ESI Level 1-5 patient volume and door-to-doctor time)",
+        "Time-of-day and day-of-week surge bottleneck identification table",
+        "Bed utilization and physician staffing ratio correlations",
+        "Lean healthcare triage protocol optimizations to reduce median wait time by 35%"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_019",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze mobile app uninstalls.",
+      "context": "Telemetry event logs showing 60% of users uninstalling a fintech budget tracker within 72 hours of download.",
+      "missingElements": [
+        "Friction point event drop-off funnel (Bank account link failure, Mandatory phone OTP, Empty dashboard state)",
+        "Device and OS version crash correlation breakdown",
+        "Time-to-first-value (Aha! Moment) latency analysis",
+        "Redesigned onboarding UX recommendations with expected retention lift"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_020",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Find correlations in student exam performance data.",
+      "context": "Standardized test scores for 3,000 university students correlated with lecture attendance and LMS activity.",
+      "missingElements": [
+        "Statistical correlation coefficients (Pearson r values, regression coefficient R²)",
+        "Multivariate analysis controlling for prior GPA and study hour logs",
+        "Visual markdown data table showing attendance bands (<50%, 50-75%, >75%) vs passing rates",
+        "Academic intervention triggers for at-risk students"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_021",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize real estate housing price trends.",
+      "context": "5-year property sales transaction records across 8 metropolitan neighborhoods.",
+      "missingElements": [
+        "Price per square foot median trends and YoY percentage changes",
+        "Inventory absorption rate (Months of supply) and days on market (DOM)",
+        "Mortgage interest rate sensitivity impact analysis",
+        "Neighborhood investment ranking table with cap rate yields"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_022",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze employee salary equity data.",
+      "context": "Internal compensation audit across 1,500 employees across gender, tenure, and department bands.",
+      "missingElements": [
+        "Comp-ratio analysis adjusted for role level, years of experience, and performance rating",
+        "Statistical pay gap identification table with significance indicators",
+        "Compliance benchmarking with international equal pay legal standards",
+        "Budget remediation formula to correct identified disparities"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_023",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate our call center agent performance metrics.",
+      "context": "Monthly telephony logs for 80 customer support agents handling technical troubleshooting calls.",
+      "missingElements": [
+        "Key operational metrics matrix (Average Handle Time, First Contact Resolution %, Customer Satisfaction CSAT, Transfer Rate)",
+        "Top-quartile vs bottom-quartile agent behavioral comparison table",
+        "Call volume spike distribution across shift timings",
+        "Targeted training coaching interventions and gamified incentive model"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_024",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze hotel booking cancellations.",
+      "context": "Online travel agency booking dataset with a 38% cancellation rate ahead of holiday weekends.",
+      "missingElements": [
+        "Lead-time booking cancellation curve (Cancellations at 30 days vs 48 hours before check-in)",
+        "Channel-specific cancellation rate comparison (Direct website vs Booking.com vs Expedia)",
+        "Price elasticity and free-cancellation policy impact",
+        "Dynamic deposit and non-refundable discount revenue management strategy"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_025",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Perform a customer lifetime value (LTV) segmentation analysis.",
+      "context": "Historical purchasing behavior across 50,000 customers of a subscription coffee e-commerce club.",
+      "missingElements": [
+        "RFM (Recency, Frequency, Monetary) segmentation matrix with customer cohort tiers (Champions, Loyalists, At-Risk, Lost)",
+        "Average LTV calculation formulas per segment (ARPU x Gross Margin / Churn Rate)",
+        "LTV:CAC ratio evaluation by acquisition channel",
+        "Customized upsell and retention marketing campaigns for high-value cohorts"
+      ],
+      "difficulty": 1
+    }
+  ]
+}

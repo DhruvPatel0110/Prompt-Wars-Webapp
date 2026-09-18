@@ -1,0 +1,361 @@
+{
+  "genre": "B",
+  "genreName": "BUSINESS",
+  "description": "Marketing, Product launch, Business strategy, Customer communication, Brand promotion",
+  "badge": "COMMERCIAL",
+  "color": "#00f0ff",
+  "questions": [
+    {
+      "id": "r1_b_001",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can a company increase sales?",
+      "context": "A direct-to-consumer organic skincare brand experiencing slowing quarterly revenue growth.",
+      "missingElements": [
+        "Business model & unit economics (AOV, customer acquisition cost, repeat purchase rate)",
+        "Specific growth channels (omnichannel retail, influencer affiliate loops, email upsells)",
+        "Budget constraints, timeline milestones, and expected revenue targets",
+        "Structured strategic framework (e.g., Ansoff Matrix, Pirate Funnel AAARRR)",
+        "Output format (executive memo with prioritized action items)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_002",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Sell this product.",
+      "context": "A premium noise-cancelling smart headphone designed for software developers & remote workers.",
+      "missingElements": [
+        "Product details and unique selling proposition (USP)",
+        "Ideal customer profile (ICP) and acoustic pain points",
+        "Marketing copywriting framework (AIDA or PAS)",
+        "Pricing tier, objection handling, and conversion CTA",
+        "Delivery format (landing page copy, cold email, sales deck)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_003",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a launch strategy for an app.",
+      "context": "A peer-to-peer campus ride-sharing and carpool app.",
+      "missingElements": [
+        "Target geography and rollout phases (Closed Beta vs Campus Blitz)",
+        "User acquisition channels (guerrilla marketing, campus ambassadors)",
+        "Budget constraints and 30-day timeline breakdown",
+        "Key performance indicators (CAC, LTV, Daily Active Riders)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_004",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an email to win back churning customers.",
+      "context": "A B2B SaaS analytics platform addressing canceled pro-tier accounts.",
+      "missingElements": [
+        "Customer segmentation (usage drop vs pricing friction)",
+        "Empathetic, non-defensive executive tone",
+        "Specific value-reinforcement and feature update highlights",
+        "Tailored discount/extension incentive with a frictionless 1-click reactivation link"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_005",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a pitch deck script for investors.",
+      "context": "An early-stage climate-tech startup seeking $1.5M Seed funding for solar recycling tech.",
+      "missingElements": [
+        "Standard 10-slide venture narrative structure (Problem, TAM, Solution, Unit Economics, Moat)",
+        "Explicit financial traction metrics and IP patents",
+        "Direct competitor matrix with unfair advantage",
+        "Specific capital allocation breakdown (R&D vs Commercialization)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_006",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How should we price our new subscription service?",
+      "context": "An AI-powered video editing tool transitioning from free beta to paid monetization tiers.",
+      "missingElements": [
+        "Pricing strategy model (Freemium, Usage-based, Value-based tiers: Starter/Pro/Enterprise)",
+        "Feature gating matrix (export resolution, cloud rendering minutes, team seats)",
+        "Competitor price benchmarking and willingness-to-pay elasticity",
+        "Annual vs monthly billing discount incentives"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_007",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a partnership proposal to a major brand.",
+      "context": "A student esports tournament platform proposing co-branding to a global gaming beverage company.",
+      "missingElements": [
+        "Mutual value proposition and audience alignment metrics (Gen Z gamer reach, stream impressions)",
+        "Tiered sponsorship packages (Title Sponsor, Official Energy Partner) with deliverables",
+        "Activation ideas (custom branded tournaments, influencer shoutouts, booth space)",
+        "Investment pricing and clear meeting scheduling call to action"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_008",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a go-to-market plan for an electric delivery bike.",
+      "context": "B2B commercial launch targeting last-mile grocery delivery fleets in tier-1 metro cities.",
+      "missingElements": [
+        "B2B buyer persona (Fleet Managers, Logistics Heads, Unit Franchisees)",
+        "Total Cost of Ownership (TCO) comparison against petrol scooters",
+        "Direct sales & pilot trial deployment strategy",
+        "After-sales battery swapping SLA and servicing guarantees"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_009",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a crisis communication response for a data leak.",
+      "context": "A fintech digital wallet app acknowledging an unauthorized database exposure affecting 50,000 users.",
+      "missingElements": [
+        "Official executive transparency tone (no legalistic obfuscation)",
+        "Clear disclosure of what was exposed vs what remained encrypted (passwords/funds safe)",
+        "Immediate remedial actions taken (patch deployment, law enforcement notification)",
+        "User action steps (2FA reset, free credit monitoring helpline)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_010",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How do we hire top software engineers on a startup budget?",
+      "context": "A seed-funded AI startup competing with big tech compensation in a tight engineering talent market.",
+      "missingElements": [
+        "Employee Value Proposition (EVP) focusing on equity upside, autonomy, and rapid tech stack ownership",
+        "Alternative sourcing channels (open-source contributors, hackathons, niche Discord communities)",
+        "Streamlined, respectful technical interview workflow (take-home vs pair programming)",
+        "Non-monetary perks (fully remote, asynchronous culture, learning stipends)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_011",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a cold outreach message to prospective clients on LinkedIn.",
+      "context": "A cybersecurity consultancy reaching out to CISOs of mid-market healthcare providers.",
+      "missingElements": [
+        "Hyper-personalized opening hook referencing recent industry compliance mandates (HIPAA audit)",
+        "Clear pain-point trigger (ransomware vulnerabilities in legacy hospital portals)",
+        "Zero-obligation low-friction offer (Free 15-minute attack surface vulnerability scan)",
+        "Concise length under 100 words with polite sign-off"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_012",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Conduct a SWOT analysis for a boutique coffee chain.",
+      "context": "A regional 10-store specialty coffee roaster considering expansion into airport terminals.",
+      "missingElements": [
+        "Structured 2x2 SWOT grid format with 4-5 high-signal bullet points per quadrant",
+        "Specific external factors (airport foot traffic, high concession fees, drive-thru competition)",
+        "Internal capabilities (direct-trade bean supply chain vs limited capital reserves)",
+        "Synthesis section with SO, ST, WO, WT actionable strategic plays"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_013",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an executive summary for our annual business review.",
+      "context": "A cloud logistics SaaS summarizing fiscal year performance for board stakeholders.",
+      "missingElements": [
+        "Key top-line financial metrics (ARR growth, Net Revenue Retention, Gross Margin, Burn Multiple)",
+        "Major product milestones shipped and enterprise client logo acquisitions",
+        "Macro headwinds, competitive threats, and operational bottlenecks encountered",
+        "3 strategic north-star bets for the upcoming fiscal year"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_014",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can we expand our brand internationally?",
+      "context": "A direct-to-consumer Indian organic tea brand entering the UK and European retail market.",
+      "missingElements": [
+        "Market entry mode evaluation (Direct export, E-commerce cross-border, Local distributor joint venture)",
+        "Regulatory & certification compliance (EU Organic, Fairtrade import duties, packaging regulations)",
+        "Localization strategy (flavour preferences, premium gifting packaging adaptation)",
+        "Phased 12-month budget and milestone roadmap"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_015",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Design a customer loyalty reward program.",
+      "context": "A fast-casual healthy salad bowl restaurant chain with 25 physical outlets.",
+      "missingElements": [
+        "Program structure (Tiered status vs Points-per-dollar vs Subscription VIP club)",
+        "Reward catalog economics (high perceived value with low marginal cost food perks)",
+        "Gamification & retention triggers (streak bonuses, birthday surprises, double-point Tuesdays)",
+        "Mobile app integration and pos cashier frictionless onboarding mechanism"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_016",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a script for firing an agency for poor performance.",
+      "context": "A VP of Marketing terminating a digital performance ad agency due to missed ROAS targets over 3 quarters.",
+      "missingElements": [
+        "Professional, firm, and legally sound executive tone",
+        "Documented chronological performance discrepancies against agreed SLA contract terms",
+        "Smooth transition and asset handover timeline (ad accounts, creative assets, remaining invoices)",
+        "Clear 30-day formal termination date"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_017",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a competitor battlecard for sales reps.",
+      "context": "A modern project management tool competing directly against legacy Jira in enterprise sales deals.",
+      "missingElements": [
+        "Quick-reference battlecard structure (Competitor Strengths, Weaknesses, Landmines to Lay)",
+        "Objection-handling soundbites for common buyer hesitations ('Jira is already integrated')",
+        "Feature-by-feature side-by-side differentiation table (Speed, UI simplicity, AI auto-summaries)",
+        "Pricing & total cost of ownership knockout argument"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_018",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can a retail store deal with showrooming?",
+      "context": "A brick-and-mortar consumer electronics store where shoppers test gear in person but buy cheaper on Amazon.",
+      "missingElements": [
+        "In-store unique value creation (instant price matching, extended in-house warranty, trade-in bonus)",
+        "Staff training to pivot showroomers into consultative experience-based buyers",
+        "Bundling strategies (free setup, local repair guarantees, exclusive distributor package deals)",
+        "Omnichannel retail app integration with exclusive in-store checkout discounts"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_019",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a performance improvement plan for an underperforming employee.",
+      "context": "A constructive PIP for an account executive missing quarterly sales quotas for two consecutive periods.",
+      "missingElements": [
+        "Empathetic, clear, and objective HR-compliant documentation",
+        "Specific quantitative activity & output benchmarks (Outreach calls/week, Demo completion rate, Closed revenue)",
+        "Support resources provided (weekly 1-on-1 coaching, pitch training, shadowing top performers)",
+        "30/60/90-day review cadence and explicit success criteria"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_020",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an RFP for selecting a new cloud vendor.",
+      "context": "An enterprise financial institution seeking Request For Proposal bids for multi-cloud infrastructure migration.",
+      "missingElements": [
+        "Technical scope of work (compute workloads, latency SLAs, zero-trust security standards, DR redundancy)",
+        "Vendor qualification criteria and compliance mandates (SOC2 Type II, ISO 27001, GDPR)",
+        "Pricing model breakdown (reserved instances, egress cost caps, support tiers)",
+        "Submission timeline, scoring rubric, and procurement evaluation phases"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_021",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a viral referral program for a fintech app.",
+      "context": "A student neo-banking app wanting to acquire 100,000 university users with zero ad spend.",
+      "missingElements": [
+        "Double-sided viral incentive mechanics (Give ₹100, Get ₹100 upon first campus debit transaction)",
+        "Gamified milestone unlocks (Unlock custom metal card at 5 successful friends invited)",
+        "Anti-fraud and identity verification verification safeguards (Aadhaar/PAN KYC check before reward disbursement)",
+        "Frictionless sharing flow (WhatsApp deep-links, instant QR code campus tap)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_022",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How to pivot a failing restaurant into a cloud kitchen?",
+      "context": "A high-rent sit-down dining venue with plummeting foot traffic restructuring into a multi-brand virtual kitchen.",
+      "missingElements": [
+        "Operational transition roadmap (kitchen line reconfiguration, packaging optimization for 30-minute delivery transit)",
+        "Multi-brand menu matrix (Biryani brand + Burger brand running on same kitchen inventory)",
+        "Aggregator negotiation & optimization strategy (Zomato/Swiggy ad bidding, commission margins)",
+        "Cost restructuring model (Front-of-house staff reallocation, rent renegotiation)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_023",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a franchise expansion agreement proposal.",
+      "context": "A successful bubble tea brand pitching franchise opportunities to regional master franchise investors.",
+      "missingElements": [
+        "Franchise fee structure (Initial franchise fee, 5% ongoing royalty, 2% national marketing fund)",
+        "Unit economics snapshot (Average payback period, EBITDA margin, capex per store)",
+        "Franchisor support package (Site selection, standard operating procedure manual, centralized syrup supply chain)",
+        "Territory exclusivity conditions and minimum store rollout schedule"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_024",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How to handle a sudden supplier price hike?",
+      "context": "A manufacturing company facing an unexpected 25% price increase on key raw metal components.",
+      "missingElements": [
+        "Strategic negotiation playbook (Volume commitment leverage, contract clause review, payment term extension)",
+        "Alternative supplier qualification & dual-sourcing framework",
+        "Internal value engineering (Component redesign, scrap reduction)",
+        "Selective customer price pass-through strategy without triggering churn"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_025",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an all-hands speech announcing a company pivot.",
+      "context": "A CEO delivering a 10-minute town hall announcing a shift from custom software services to a standardized AI product.",
+      "missingElements": [
+        "Visionary narrative framing (Honoring past achievements while explaining urgency of market shift)",
+        "Addressing employee anxiety (Job role transitions, upskilling programs, transparent runway updates)",
+        "Clear 90-day company-wide operational priorities and milestone expectations",
+        "Q&A session handling guidelines and inspiring closing call to action"
+      ],
+      "difficulty": 1
+    }
+  ]
+}

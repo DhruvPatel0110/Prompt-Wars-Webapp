@@ -1,0 +1,361 @@
+{
+  "genre": "D",
+  "genreName": "REAL-WORLD / PROBLEM SOLVING",
+  "description": "College problems, Event planning, Productivity, Education, Public-awareness campaigns",
+  "badge": "PROBLEM SOLVER",
+  "color": "#00ff88",
+  "questions": [
+    {
+      "id": "r1_d_001",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Students aren't attending college events. What should we do?",
+      "context": "A university student council facing low attendance (<15%) across cultural and technical campus events.",
+      "missingElements": [
+        "Root cause diagnostic analysis (Timing clashes with exams, lack of incentives, poor promotion channels)",
+        "Target audience segmentation (Hostelers vs Day scholars, Undergrads vs Postgrads)",
+        "Low-cost engagement and gamification mechanics (Attendance perks, academic credit, food vouchers)",
+        "Multi-channel outreach plan (WhatsApp Class Reps, Instagram Reels, Department Ambassadors)",
+        "Structured 4-week execution roadmap with measurable attendance target KPIs"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_002",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Plan a college event.",
+      "context": "Organizing a 24-hour national hackathon with 500 participants on a tight budget.",
+      "missingElements": [
+        "Event scope, theme, and timeline breakdown (T-minus milestones)",
+        "Budget limits, sponsorship deliverables, and volunteer shifts",
+        "Risk mitigation & contingency plans (power outage, food catering, WiFi failure)",
+        "Judging criteria and participant deliverables",
+        "Structured master operational schedule"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_003",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Fix the campus parking problem.",
+      "context": "Severe vehicle congestion and lack of two-wheeler slots during morning peak hours.",
+      "missingElements": [
+        "Stakeholder analysis (students, faculty, administrative staff)",
+        "Short-term operational fixes vs long-term infrastructural solutions",
+        "Enforcement and incentive mechanisms (digital passes, carpool zoning)",
+        "Phased implementation roadmap and measurable congestion KPIs"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_004",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Reduce cafeteria food waste by 50%.",
+      "context": "A university campus dining hall generating 300kg of organic food waste daily.",
+      "missingElements": [
+        "Supply chain & portioning audit methodology",
+        "Surplus redistribution protocols with local food banks/shelters",
+        "On-campus composting and bio-gas conversion feasibility metrics",
+        "Student incentive programs and measurable weekly audit targets"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_005",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Set up a student mental health peer-support network.",
+      "context": "Creating a confidential, student-led psychological wellness initiative on campus.",
+      "missingElements": [
+        "Volunteer screening and psychological first-aid training framework",
+        "Confidentiality safeguards and data privacy protocols",
+        "Emergency escalation pathways to licensed clinical professionals",
+        "Awareness outreach strategy to destigmatize help-seeking"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_006",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to stop students from using AI to cheat on assignments?",
+      "context": "A university academic council balancing academic integrity with constructive AI literacy.",
+      "missingElements": [
+        "Redesigned assessment methodologies (Oral defenses, process-based portfolios, in-class practicals)",
+        "Clear institutional AI usage policy guidelines (Permitted brainstorming vs prohibited plagiarism)",
+        "Faculty training on AI-assisted rubric grading and detection limitations",
+        "Student honor code covenant and positive AI adoption incentives"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_007",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve campus hostel internet connectivity on a budget.",
+      "context": "Hostels with 1,200 residents suffering bandwidth choking and dead zones during evening hours.",
+      "missingElements": [
+        "Network traffic management & Quality of Service (QoS) bandwidth allocation rules (Prioritizing academic domains)",
+        "Low-cost mesh WiFi extender deployment map and channel interference optimization",
+        "Peak-hour bandwidth quota policies and fair usage thresholds",
+        "Student IT volunteer maintenance roster and ticketing system"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_008",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a campus e-waste recycling drive.",
+      "context": "A student club collecting discarded laptops, phones, cables, and circuit boards across campus.",
+      "missingElements": [
+        "Logistical drop-off station network across academic blocks and hostels",
+        "Certified e-waste recycling vendor partnership & safe data destruction guarantees",
+        "Gamified collection incentives (Department leaderboard prizes, coupon rewards)",
+        "Public awareness campaign highlighting heavy-metal toxicity risks"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_009",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How can our college club get corporate sponsorships?",
+      "context": "A robotics club seeking ₹2,00,000 in industry funding for building an autonomous Mars rover prototype.",
+      "missingElements": [
+        "Structured corporate pitch dossier (Title Sponsor, Hardware Partner, Lab Mentorship tiers)",
+        "Tangible sponsor ROI deliverables (Direct student hiring access, brand logo on rover, tech workshop branding)",
+        "Target corporate outreach list (Automotive companies, robotics firms, tech conglomerates)",
+        "Cold email outreach scripts and executive meeting pitch structure"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_010",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Make our college campus 100% single-use plastic free.",
+      "context": "An environmental green council eliminating plastic water bottles, straws, and cutlery across all food courts.",
+      "missingElements": [
+        "Sustainable alternative supply chain sourcing (Biodegradable areca nut plates, steel water refill kiosks)",
+        "Vendor contract compliance transition period and micro-subsidy model",
+        "Student buy-in campaign ('BYOB: Bring Your Own Bottle' discounts)",
+        "Enforcement policy and campus audit verification milestones"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_011",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Design an alumni mentorship program for career guidance.",
+      "context": "Connecting 500 final-year engineering students with working industry alumni mentors.",
+      "missingElements": [
+        "Mentor-mentee matching criteria and algorithm factors (Domain interest, tech stack, career aspirations)",
+        "Structured 8-week curriculum guide (Resume review, mock interviews, portfolio audit, networking tips)",
+        "Platform & communication protocols (Slack/Discord community guidelines, monthly check-in tracking)",
+        "Program feedback mechanisms and annual alumni recognition awards"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_012",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to handle a sudden power failure during a major live event?",
+      "context": "An emergency contingency protocol for a 2,000-person auditorium concert during an unexpected blackout.",
+      "missingElements": [
+        "Immediate emergency response checklist (Emergency lighting, backup generator transfer SLA < 60s)",
+        "Crowd control & evacuation safety procedures (Stage manager announcements, illuminated exit guides)",
+        "Audio/visual equipment surge protection protocols",
+        "Roles and responsibilities table for stage crew, security, and volunteers"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_013",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve student attendance in morning 8 AM classes.",
+      "context": "Academic departments reporting average 8 AM class attendance under 45%.",
+      "missingElements": [
+        "Behavioral science & nudge theory incentives (Interactive morning quizzes with bonus points)",
+        "Curriculum redesign (Flipping classroom lectures into hands-on group lab activities)",
+        "Campus logistics optimizations (Hostel breakfast timing alignment, morning shuttle frequency)",
+        "Student-faculty dialogue and schedule rebalancing proposals"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_014",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Organize a city-wide blood donation camp at college.",
+      "context": "A student Red Cross society aiming to collect 500 units of blood in a single day.",
+      "missingElements": [
+        "Certified hospital blood bank partnership & medical supervision requirements",
+        "Pre-screening health safety checklist (Hemoglobin tests, donor eligibility guidelines, resting area)",
+        "Hour-by-hour appointment slot booking system to prevent overcrowding",
+        "Donor care package (Refreshments, donor certificate, digital blood card)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_015",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to prevent cyberbullying on anonymous campus confession pages?",
+      "context": "Unmoderated Instagram confession pages spreading defamatory rumors and toxic harassment among students.",
+      "missingElements": [
+        "Digital safety reporting & escalation protocol for victims",
+        "Collaboration with student leaders and page administrators for strict moderation guidelines",
+        "Campus legal and cybercell awareness workshops",
+        "Anonymous peer-counseling support and positive social media culture campaigns"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_016",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a peer-to-peer textbook and notes exchange library.",
+      "context": "Students spending excessive money each semester on physical reference books and study materials.",
+      "missingElements": [
+        "Digital inventory cataloging system (QR code scanning, book condition grading: Like New/Good/Fair)",
+        "Lending & return deposit policy to prevent lost books",
+        "Physical drop-box and pickup logistics inside central library",
+        "Crowdsourced verified topper-notes upload platform with upvoting"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_017",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to resolve a toxic team conflict in a semester capstone project?",
+      "context": "A 4-person senior engineering team where 1 member is doing zero work and 2 members are fighting over leadership.",
+      "missingElements": [
+        "Objective contribution audit framework (GitHub commit logs, task board assignments)",
+        "Constructive mediation facilitation script for faculty advisors",
+        "Workload re-allocation agreement with written milestone sign-offs",
+        "Individual grading grading rubric based on peer evaluations"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_018",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Set up a campus stray animal welfare and vaccination program.",
+      "context": "A growing population of campus dogs leading to student safety complaints and animal welfare concerns.",
+      "missingElements": [
+        "Animal NGO and certified veterinarian partnership for ABC (Animal Birth Control) and anti-rabies vaccination",
+        "Designated feeding zones away from main academic footpaths",
+        "Student volunteer feeding and health monitoring roster",
+        "Campus community awareness and dog-bite prevention safety education"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_019",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Design a high-impact campus anti-ragging awareness campaign.",
+      "context": "Welcoming 1,500 incoming first-year students to foster a safe, inclusive, zero-tolerance environment.",
+      "missingElements": [
+        "24x7 anonymous emergency SOS helpline & physical complaint box locations",
+        "Senior-junior icebreaking mentorship orientation workshops",
+        "Legal penal consequences infographic posters and digital orientation modules",
+        "Faculty flying squad patrol schedule in hostels and cafeteria zones"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_020",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to manage long queues at the college printing station before exams?",
+      "context": "Chaotic 45-minute lines at the campus photocopy center on assignment submission mornings.",
+      "missingElements": [
+        "Cloud-print submission portal (Students upload PDF, pay online via UPI, pick up via token #)",
+        "Self-service automated printing kiosk deployment feasibility",
+        "Off-peak printing discounts to spread morning demand",
+        "Department-level digital assignment submission policy mandates"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_021",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a student internship placement preparation bootcamp.",
+      "context": "A 4-week crash course preparing 300 non-CS students for tech and consulting campus placements.",
+      "missingElements": [
+        "Week-by-week curriculum (Aptitude tests, Data structures & algorithms, System design, Case interviews)",
+        "Daily practice schedule with timed mock assessments",
+        "Alumni resume review clinics and live behavioral interview simulations",
+        "Placement readiness tracking dashboard and performance scoring"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_022",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Reduce electricity wastage across college lecture halls.",
+      "context": "Lights, fans, and ACs left running in empty classrooms costing the institution ₹50,000 in wasted power monthly.",
+      "missingElements": [
+        "Low-cost IoT motion sensor and timer deployment schedule",
+        "Classroom energy-warden student volunteer responsibility system",
+        "Departmental energy conservation competition with saved-cost grant rewards",
+        "Facility management end-of-day automated power cutoff checklist"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_023",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to organize an emergency relief collection drive for flood victims?",
+      "context": "A student union mobilizing emergency supplies (ration kits, blankets, medicines) following regional flood devastation.",
+      "missingElements": [
+        "Prioritized essential supply checklist verified with disaster management authorities",
+        "Campus collection hubs, sorting protocols, and waterproof packaging logistics",
+        "Direct transport & delivery coordination with on-ground rescue personnel",
+        "Transparent donation accounting ledger and live community updates"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_024",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve the quality and hygiene of campus drinking water dispensers.",
+      "context": "Student complaints regarding water purifier filter maintenance and irregular temperature control.",
+      "missingElements": [
+        "Weekly water quality testing protocol (TDS levels, microbial testing, pH balance audit)",
+        "Preventive maintenance calendar with public QR code service log tags on each cooler",
+        "Student escalation channel for immediate filter replacement requests",
+        "Sanitation schedule for dispenser nozzles and drainage trays"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_025",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a sustainable startup incubation cell for student entrepreneurs.",
+      "context": "Setting up a campus incubator to help student teams convert final-year projects into commercial startups.",
+      "missingElements": [
+        "Seed grant application & pitch evaluation framework",
+        "Legal, patent IP, and company incorporation mentorship support",
+        "Co-working space access rules and shared lab equipment booking system",
+        "Annual Demo Day investor showcase with angel investors and VC partners"
+      ],
+      "difficulty": 1
+    }
+  ]
+}

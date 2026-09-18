@@ -38,14 +38,14 @@
       "id": "r1_a_001",
       "genre": "A",
       "genreName": "CREATIVE",
-      "badPrompt": "Make an advertisement for a college fest.",
+      "badPrompt": "Write an ad for our college fest.",
       "context": "An upcoming 3-day inter-college technical and cultural festival.",
       "missingElements": [
         "Target audience demographics (age, student interests)",
-        "Tone and brand personality (youthful, energetic, cyber)",
+        "Tone and brand personality (youthful, energetic, cyberpunk)",
         "Platform format (video script, Instagram reel, poster copy)",
-        "Key attractions and call to action (registration dates, website)",
-        "Constraints (duration, character count, scene directions)"
+        "Key attractions and call to action (dates, website, registration link)",
+        "Constraints (duration, character limit, scene directions)"
       ],
       "difficulty": 1
     },
@@ -92,7 +92,316 @@
       "difficulty": 1
     },
     {
+      "id": "r1_a_005",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Design an Instagram carousel for a new fitness sneaker.",
+      "context": "A product reveal campaign for an ultra-lightweight running shoe made from recycled ocean plastics.",
+      "missingElements": [
+        "5-to-7 slide breakdown with slide-by-slide visual layout",
+        "Catchy headline copy per slide with hook & retention strategy",
+        "Visual aesthetic direction (color palette, photography style, typography)",
+        "Clear swipe CTA and conversion link in bio trigger"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_006",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a funny script for a commercial about bad WiFi.",
+      "context": "A 30-second TV & YouTube pre-roll ad promoting high-speed fiber internet.",
+      "missingElements": [
+        "Two contrasting characters experiencing high-stakes video call embarrassment",
+        "Specific audio/visual gag cues and timing breakdown (0-10s, 10-20s, 20-30s)",
+        "Brand tagline integration and visual logo outro",
+        "Relatable work-from-home or gaming crisis scenario"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_007",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a poem about space exploration.",
+      "context": "A commemorative spoken-word piece for an interstellar rover landing on an exoplanet.",
+      "missingElements": [
+        "Poetic form and rhythm (free verse vs rhymed meter, cadence)",
+        "Emotional tone (wonder, existential isolation, human triumph)",
+        "Specific cosmic imagery (nebulae, gravitational waves, telemetry signals)",
+        "Length constraints (stanzas, lines, spoken duration)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_008",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Make a podcast intro for a true crime show.",
+      "context": "An atmospheric opening audio sequence for an investigative podcast focusing on unsolved cyber heists.",
+      "missingElements": [
+        "Host persona, tone, and pacing (suspenseful, measured, gritty)",
+        "Sound effects cues (typing clicks, dial-up static, ominous cello drone)",
+        "Episode tease hook and thematic signature tagline",
+        "Show credits and sponsor mention placement"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_009",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a rap battle between Isaac Newton and Albert Einstein.",
+      "context": "An educational entertainment YouTube video script in the style of Epic Rap Battles.",
+      "missingElements": [
+        "Rhyme scheme, bar count per verse, and beat tempo (BPM)",
+        "Scientific references and witty historical disses (calculus, relativity, apples)",
+        "Stage presence directions and beat switch transitions",
+        "Scoring / closing punchline challenge for the audience"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_010",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a hero backstory for a cyberpunk video game.",
+      "context": "Character bio and origin vignette for an augmented street medic turned hacker.",
+      "missingElements": [
+        "Core internal motivation, fatal flaw, and unique cybernetic ability",
+        "Dystopian worldbuilding context (megacorporation antagonist, neon slums)",
+        "Inciting tragic incident that caused them to go rogue",
+        "Formatting (Character Sheet: Stats, Lore, Dialogue sample)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_011",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a tagline and slogan for a luxury chocolate brand.",
+      "context": "Rebranding an artisanal Swiss dark chocolate company emphasizing ethical single-origin cocoa.",
+      "missingElements": [
+        "Target consumer demographic (gourmet foodies, luxury gifting)",
+        "Tone and brand personality (sophisticated, sensual, sustainable)",
+        "Variations (short 3-word punchy slogan vs evocative packaging copy)",
+        "Competitor differentiation from mass-market brands"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_012",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a comic book scene where two superheroes argue.",
+      "context": "A 4-page comic script depicting ideological conflict between a vigilante tech-detective and a cosmic protector.",
+      "missingElements": [
+        "Page-by-page and panel-by-panel script breakdown (Panel 1, Panel 2...)",
+        "Visual descriptions for artist (angles, lighting, facial expressions)",
+        "Dialogue bubbles, captions, and SFX lettering instructions",
+        "Escalating philosophical tension before a plot-interrupting crisis"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_013",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a catchy jingle for an electric toothbrush.",
+      "context": "A 15-second radio and Spotify audio ad featuring an ultra-sonic smart toothbrush with gum tracking.",
+      "missingElements": [
+        "Musical genre, tempo, and vocal style (upbeat pop, rhythmic chant)",
+        "Key product benefit highlights (30-day battery, plaque removal, sonic speed)",
+        "Audio cues and sound effects (sparkle ping, whirring buzz)",
+        "Memorable rhyming hook with brand name repetition"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_014",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a spooky campfire story for teenagers.",
+      "context": "A suspenseful urban legend narrative set in an abandoned smart-house in the woods.",
+      "missingElements": [
+        "Foreshadowing, rising dread, and auditory sensory details",
+        "Pacing instructions for the storyteller (pauses, whispered lines)",
+        "Unexpected twist ending rather than generic monster tropes",
+        "Target length and reading duration (3-4 minutes)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_015",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write an elevator pitch script for a fantasy novel.",
+      "context": "A 60-second verbal pitch to literary agents for a high-fantasy heist novel.",
+      "missingElements": [
+        "Logline formula (Protagonist + Inciting Incident + Stakes + Unique Hook)",
+        "Comp titles ('Ocean\\'s Eleven meets Mistborn')",
+        "Target market, reader demographic, and world magic system USP",
+        "Clear call to action for manuscript submission"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_016",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a viral TikTok video concept for a book launch.",
+      "context": "A BookTok video promoting an enemies-to-lovers dark academia thriller.",
+      "missingElements": [
+        "Trending audio suggestion, on-screen text hook (POV format)",
+        "Fast-paced visual aesthetic moodboard (candles, old library, rainy window)",
+        "Curiosity gap question in caption to drive comments and shares",
+        "Video duration (12-15 seconds) and hashtags"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_017",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a monologue for a villain who thinks they are doing good.",
+      "context": "A theatrical monologue for a rogue geneticist eliminating human fear to prevent wars.",
+      "missingElements": [
+        "Philosophical justification, internal anguish, and cold rational logic",
+        "Stage movement, vocal dynamics (whisper to crescendo), and breathing marks",
+        "Props interaction and dramatic lighting cues",
+        "Target length (60-90 seconds) and character objective"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_018",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write copy for a billboard on a busy highway.",
+      "context": "Outdoor advertising for a sleep-tracker smartwatch targeting stressed commuter drivers.",
+      "missingElements": [
+        "Maximum 7-word headline constraint for 60mph visibility",
+        "High-contrast visual layout description and typography hierarchy",
+        "Emotional trigger (fatigue awareness vs energy boost)",
+        "Simple, memorable URL or QR code placement directive"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_019",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create a quest briefing for an RPG game.",
+      "context": "An in-game dialogue dialogue quest given by a mysterious tavern bartender in a steampunk city.",
+      "missingElements": [
+        "NPC voice dialect and personality quirks",
+        "Clear quest objectives, optional bonus conditions, and danger warnings",
+        "Branching dialogue choices (Aggressive, Inquisitive, Greedy)",
+        "Explicit reward breakdown (Gold, XP, Steampunk grappling hook)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_020",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a launch email for a designer clothing drop.",
+      "context": "An exclusive VIP streetwear capsule collection with only 100 numbered pieces.",
+      "missingElements": [
+        "Subject line with high FOMO and urgency trigger",
+        "Visual design layout (hero image, product showcase, scarcity counter)",
+        "Brand voice (minimalist, rebellious, premium)",
+        "Direct checkout CTA button and drop unlock countdown timer"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_021",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a children's story about a dragon who loves baking.",
+      "context": "An illustrated bedtime picture book for children aged 4-7.",
+      "missingElements": [
+        "Rhythmic and alliterative language suitable for reading aloud",
+        "Page-by-page layout (Spread 1 to Spread 12) with illustration descriptions",
+        "Relatable moral lesson on embracing unusual passions and sharing",
+        "Gentle, cozy vocabulary and wholesome conflict resolution"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_022",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a speech for a college graduation valedictorian.",
+      "context": "A 5-minute commencement speech for a graduating class entering the AI and remote-work era.",
+      "missingElements": [
+        "Speech structure (Humorous opening hook, shared memory, poignant challenge, visionary call to action)",
+        "Delivery cadence markers ([PAUSE FOR LAUGHTER], [EMPHASIZE])",
+        "Universal emotional themes balancing resilience with optimism",
+        "Memorable closing punchline"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_023",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Create an immersive worldbuilding guide for a floating island city.",
+      "context": "Setting guide for an aerial fantasy realm powered by gravity crystals.",
+      "missingElements": [
+        "Structured lore categories (Geography, Architecture, Economy, Social Classes, Defense)",
+        "Sensory environmental details (wind currents, altitude sickness, sky-docking)",
+        "Central cultural conflict and resource scarcity point",
+        "Markdown formatting with bulleted dossier structure"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_024",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a menu description for a futuristic cyberpunk restaurant.",
+      "context": "A high-end dining menu in Neo-Tokyo featuring synthetic gastronomy and neon molecular drinks.",
+      "missingElements": [
+        "3 distinct course categories (Synth-Appetizers, Quantum Mains, Cyber-Cocktails)",
+        "Sensory culinary adjectives blended with sci-fi ingredients (hydro-grown kelp, bioluminescent caviar)",
+        "Atmospheric menu styling and price format (in Cyber-Credits ₵)",
+        "Humorous warning disclaimers for cybernetic-enhanced diners"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_a_025",
+      "genre": "A",
+      "genreName": "CREATIVE",
+      "badPrompt": "Write a movie scene where a detective realizes who the killer is.",
+      "context": "A tense neo-noir thriller climax in a rain-soaked archive room.",
+      "missingElements": [
+        "Industry standard screenplay formatting (SCENE HEADING, ACTION, CHARACTER, PARENTHETICAL, DIALOGUE)",
+        "Visual clue discovery trigger and internal epiphany realization cues",
+        "Camera choreography (extreme close-up on eyes, rack focus to door)",
+        "Pacing tension build leading to an immediate life-or-death cliffhanger"
+      ],
+      "difficulty": 1
+    },
+    {
       "id": "r1_b_001",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can a company increase sales?",
+      "context": "A direct-to-consumer organic skincare brand experiencing slowing quarterly revenue growth.",
+      "missingElements": [
+        "Business model & unit economics (AOV, customer acquisition cost, repeat purchase rate)",
+        "Specific growth channels (omnichannel retail, influencer affiliate loops, email upsells)",
+        "Budget constraints, timeline milestones, and expected revenue targets",
+        "Structured strategic framework (e.g., Ansoff Matrix, Pirate Funnel AAARRR)",
+        "Output format (executive memo with prioritized action items)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_002",
       "genre": "B",
       "genreName": "BUSINESS",
       "badPrompt": "Sell this product.",
@@ -107,7 +416,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_b_002",
+      "id": "r1_b_003",
       "genre": "B",
       "genreName": "BUSINESS",
       "badPrompt": "Write a launch strategy for an app.",
@@ -121,7 +430,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_b_003",
+      "id": "r1_b_004",
       "genre": "B",
       "genreName": "BUSINESS",
       "badPrompt": "Write an email to win back churning customers.",
@@ -135,7 +444,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_b_004",
+      "id": "r1_b_005",
       "genre": "B",
       "genreName": "BUSINESS",
       "badPrompt": "Create a pitch deck script for investors.",
@@ -149,14 +458,294 @@
       "difficulty": 1
     },
     {
+      "id": "r1_b_006",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How should we price our new subscription service?",
+      "context": "An AI-powered video editing tool transitioning from free beta to paid monetization tiers.",
+      "missingElements": [
+        "Pricing strategy model (Freemium, Usage-based, Value-based tiers: Starter/Pro/Enterprise)",
+        "Feature gating matrix (export resolution, cloud rendering minutes, team seats)",
+        "Competitor price benchmarking and willingness-to-pay elasticity",
+        "Annual vs monthly billing discount incentives"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_007",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a partnership proposal to a major brand.",
+      "context": "A student esports tournament platform proposing co-branding to a global gaming beverage company.",
+      "missingElements": [
+        "Mutual value proposition and audience alignment metrics (Gen Z gamer reach, stream impressions)",
+        "Tiered sponsorship packages (Title Sponsor, Official Energy Partner) with deliverables",
+        "Activation ideas (custom branded tournaments, influencer shoutouts, booth space)",
+        "Investment pricing and clear meeting scheduling call to action"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_008",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a go-to-market plan for an electric delivery bike.",
+      "context": "B2B commercial launch targeting last-mile grocery delivery fleets in tier-1 metro cities.",
+      "missingElements": [
+        "B2B buyer persona (Fleet Managers, Logistics Heads, Unit Franchisees)",
+        "Total Cost of Ownership (TCO) comparison against petrol scooters",
+        "Direct sales & pilot trial deployment strategy",
+        "After-sales battery swapping SLA and servicing guarantees"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_009",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a crisis communication response for a data leak.",
+      "context": "A fintech digital wallet app acknowledging an unauthorized database exposure affecting 50,000 users.",
+      "missingElements": [
+        "Official executive transparency tone (no legalistic obfuscation)",
+        "Clear disclosure of what was exposed vs what remained encrypted (passwords/funds safe)",
+        "Immediate remedial actions taken (patch deployment, law enforcement notification)",
+        "User action steps (2FA reset, free credit monitoring helpline)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_010",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How do we hire top software engineers on a startup budget?",
+      "context": "A seed-funded AI startup competing with big tech compensation in a tight engineering talent market.",
+      "missingElements": [
+        "Employee Value Proposition (EVP) focusing on equity upside, autonomy, and rapid tech stack ownership",
+        "Alternative sourcing channels (open-source contributors, hackathons, niche Discord communities)",
+        "Streamlined, respectful technical interview workflow (take-home vs pair programming)",
+        "Non-monetary perks (fully remote, asynchronous culture, learning stipends)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_011",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a cold outreach message to prospective clients on LinkedIn.",
+      "context": "A cybersecurity consultancy reaching out to CISOs of mid-market healthcare providers.",
+      "missingElements": [
+        "Hyper-personalized opening hook referencing recent industry compliance mandates (HIPAA audit)",
+        "Clear pain-point trigger (ransomware vulnerabilities in legacy hospital portals)",
+        "Zero-obligation low-friction offer (Free 15-minute attack surface vulnerability scan)",
+        "Concise length under 100 words with polite sign-off"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_012",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Conduct a SWOT analysis for a boutique coffee chain.",
+      "context": "A regional 10-store specialty coffee roaster considering expansion into airport terminals.",
+      "missingElements": [
+        "Structured 2x2 SWOT grid format with 4-5 high-signal bullet points per quadrant",
+        "Specific external factors (airport foot traffic, high concession fees, drive-thru competition)",
+        "Internal capabilities (direct-trade bean supply chain vs limited capital reserves)",
+        "Synthesis section with SO, ST, WO, WT actionable strategic plays"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_013",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an executive summary for our annual business review.",
+      "context": "A cloud logistics SaaS summarizing fiscal year performance for board stakeholders.",
+      "missingElements": [
+        "Key top-line financial metrics (ARR growth, Net Revenue Retention, Gross Margin, Burn Multiple)",
+        "Major product milestones shipped and enterprise client logo acquisitions",
+        "Macro headwinds, competitive threats, and operational bottlenecks encountered",
+        "3 strategic north-star bets for the upcoming fiscal year"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_014",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can we expand our brand internationally?",
+      "context": "A direct-to-consumer Indian organic tea brand entering the UK and European retail market.",
+      "missingElements": [
+        "Market entry mode evaluation (Direct export, E-commerce cross-border, Local distributor joint venture)",
+        "Regulatory & certification compliance (EU Organic, Fairtrade import duties, packaging regulations)",
+        "Localization strategy (flavour preferences, premium gifting packaging adaptation)",
+        "Phased 12-month budget and milestone roadmap"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_015",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Design a customer loyalty reward program.",
+      "context": "A fast-casual healthy salad bowl restaurant chain with 25 physical outlets.",
+      "missingElements": [
+        "Program structure (Tiered status vs Points-per-dollar vs Subscription VIP club)",
+        "Reward catalog economics (high perceived value with low marginal cost food perks)",
+        "Gamification & retention triggers (streak bonuses, birthday surprises, double-point Tuesdays)",
+        "Mobile app integration and pos cashier frictionless onboarding mechanism"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_016",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a script for firing an agency for poor performance.",
+      "context": "A VP of Marketing terminating a digital performance ad agency due to missed ROAS targets over 3 quarters.",
+      "missingElements": [
+        "Professional, firm, and legally sound executive tone",
+        "Documented chronological performance discrepancies against agreed SLA contract terms",
+        "Smooth transition and asset handover timeline (ad accounts, creative assets, remaining invoices)",
+        "Clear 30-day formal termination date"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_017",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a competitor battlecard for sales reps.",
+      "context": "A modern project management tool competing directly against legacy Jira in enterprise sales deals.",
+      "missingElements": [
+        "Quick-reference battlecard structure (Competitor Strengths, Weaknesses, Landmines to Lay)",
+        "Objection-handling soundbites for common buyer hesitations ('Jira is already integrated')",
+        "Feature-by-feature side-by-side differentiation table (Speed, UI simplicity, AI auto-summaries)",
+        "Pricing & total cost of ownership knockout argument"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_018",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How can a retail store deal with showrooming?",
+      "context": "A brick-and-mortar consumer electronics store where shoppers test gear in person but buy cheaper on Amazon.",
+      "missingElements": [
+        "In-store unique value creation (instant price matching, extended in-house warranty, trade-in bonus)",
+        "Staff training to pivot showroomers into consultative experience-based buyers",
+        "Bundling strategies (free setup, local repair guarantees, exclusive distributor package deals)",
+        "Omnichannel retail app integration with exclusive in-store checkout discounts"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_019",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a performance improvement plan for an underperforming employee.",
+      "context": "A constructive PIP for an account executive missing quarterly sales quotas for two consecutive periods.",
+      "missingElements": [
+        "Empathetic, clear, and objective HR-compliant documentation",
+        "Specific quantitative activity & output benchmarks (Outreach calls/week, Demo completion rate, Closed revenue)",
+        "Support resources provided (weekly 1-on-1 coaching, pitch training, shadowing top performers)",
+        "30/60/90-day review cadence and explicit success criteria"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_020",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an RFP for selecting a new cloud vendor.",
+      "context": "An enterprise financial institution seeking Request For Proposal bids for multi-cloud infrastructure migration.",
+      "missingElements": [
+        "Technical scope of work (compute workloads, latency SLAs, zero-trust security standards, DR redundancy)",
+        "Vendor qualification criteria and compliance mandates (SOC2 Type II, ISO 27001, GDPR)",
+        "Pricing model breakdown (reserved instances, egress cost caps, support tiers)",
+        "Submission timeline, scoring rubric, and procurement evaluation phases"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_021",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Create a viral referral program for a fintech app.",
+      "context": "A student neo-banking app wanting to acquire 100,000 university users with zero ad spend.",
+      "missingElements": [
+        "Double-sided viral incentive mechanics (Give ₹100, Get ₹100 upon first campus debit transaction)",
+        "Gamified milestone unlocks (Unlock custom metal card at 5 successful friends invited)",
+        "Anti-fraud and identity verification verification safeguards (Aadhaar/PAN KYC check before reward disbursement)",
+        "Frictionless sharing flow (WhatsApp deep-links, instant QR code campus tap)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_022",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How to pivot a failing restaurant into a cloud kitchen?",
+      "context": "A high-rent sit-down dining venue with plummeting foot traffic restructuring into a multi-brand virtual kitchen.",
+      "missingElements": [
+        "Operational transition roadmap (kitchen line reconfiguration, packaging optimization for 30-minute delivery transit)",
+        "Multi-brand menu matrix (Biryani brand + Burger brand running on same kitchen inventory)",
+        "Aggregator negotiation & optimization strategy (Zomato/Swiggy ad bidding, commission margins)",
+        "Cost restructuring model (Front-of-house staff reallocation, rent renegotiation)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_023",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write a franchise expansion agreement proposal.",
+      "context": "A successful bubble tea brand pitching franchise opportunities to regional master franchise investors.",
+      "missingElements": [
+        "Franchise fee structure (Initial franchise fee, 5% ongoing royalty, 2% national marketing fund)",
+        "Unit economics snapshot (Average payback period, EBITDA margin, capex per store)",
+        "Franchisor support package (Site selection, standard operating procedure manual, centralized syrup supply chain)",
+        "Territory exclusivity conditions and minimum store rollout schedule"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_024",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "How to handle a sudden supplier price hike?",
+      "context": "A manufacturing company facing an unexpected 25% price increase on key raw metal components.",
+      "missingElements": [
+        "Strategic negotiation playbook (Volume commitment leverage, contract clause review, payment term extension)",
+        "Alternative supplier qualification & dual-sourcing framework",
+        "Internal value engineering (Component redesign, scrap reduction)",
+        "Selective customer price pass-through strategy without triggering churn"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_b_025",
+      "genre": "B",
+      "genreName": "BUSINESS",
+      "badPrompt": "Write an all-hands speech announcing a company pivot.",
+      "context": "A CEO delivering a 10-minute town hall announcing a shift from custom software services to a standardized AI product.",
+      "missingElements": [
+        "Visionary narrative framing (Honoring past achievements while explaining urgency of market shift)",
+        "Addressing employee anxiety (Job role transitions, upskilling programs, transparent runway updates)",
+        "Clear 90-day company-wide operational priorities and milestone expectations",
+        "Q&A session handling guidelines and inspiring closing call to action"
+      ],
+      "difficulty": 1
+    },
+    {
       "id": "r1_c_001",
       "genre": "C",
       "genreName": "DATA / ANALYSIS",
-      "badPrompt": "Analyze this sales data.",
+      "badPrompt": "Analyze these sales numbers.",
       "context": "Quarterly e-commerce revenue figures across 4 regions with sudden Q3 drop.",
       "missingElements": [
         "Specific analytical goals (anomaly detection, MoM growth, profit margins)",
-        "Required statistical metrics and calculations",
+        "Required statistical metrics and calculations (variance, churn correlation, CAGR)",
         "Output format (markdown summary table, executive bullet points, chart recommendations)",
         "Target audience (board of directors vs operational managers)",
         "Actionable recommendations based on insights"
@@ -170,10 +759,10 @@
       "badPrompt": "Compare these two electric cars.",
       "context": "Comparing Tesla Model 3 and Hyundai Ioniq 5 for corporate fleet procurement.",
       "missingElements": [
-        "Comparison criteria (battery efficiency, TCO, maintenance, charging curve)",
-        "Evaluation methodology and scoring weightage",
-        "Structured comparison matrix/table",
-        "Executive recommendation with 5-year ROI justification"
+        "Comparison criteria (battery efficiency, TCO, maintenance, charging curve, resale value)",
+        "Evaluation methodology and scoring weightage (1-10 rating matrix)",
+        "Structured comparison matrix/table with data points",
+        "Executive recommendation with 5-year fleet ROI justification"
       ],
       "difficulty": 1
     },
@@ -185,7 +774,7 @@
       "context": "A 12-month post-operative dataset across 5,000 patients to identify high-risk re-admissions.",
       "missingElements": [
         "Demographic and comorbidity risk-stratification parameters",
-        "Statistical correlation methods (odds ratios, p-values)",
+        "Statistical correlation methods (odds ratios, p-values, 30-day readmission rates)",
         "Structured clinical findings table with confidence intervals",
         "Operational triage protocol recommendations for nursing staff"
       ],
@@ -206,7 +795,316 @@
       "difficulty": 1
     },
     {
+      "id": "r1_c_005",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our website traffic drop.",
+      "context": "A media publisher experiencing a 40% sudden plunge in organic search visitors over 3 weeks.",
+      "missingElements": [
+        "Traffic dimension breakdowns (Organic vs Direct vs Referral, Device type, Geo-regions)",
+        "Technical SEO diagnostic factors (Google algorithm update, crawl errors, broken canonical tags, core web vitals)",
+        "Top-page vs sitewide impact comparative table",
+        "Step-by-step engineering and editorial recovery action plan"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_006",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate this marketing campaign dataset.",
+      "context": "Multi-channel advertising campaign data across Meta, Google Ads, TikTok, and LinkedIn.",
+      "missingElements": [
+        "Key performance metric formulas (CAC, ROAS, CPC, Click-To-Conversion Rate per channel)",
+        "Channel-by-channel performance benchmark comparison table",
+        "Attribution model methodology (First-touch vs Linear vs Data-driven multi-touch)",
+        "Budget reallocation matrix for the upcoming quarter"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_007",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze customer support ticket sentiment.",
+      "context": "A dataset of 10,000 resolved customer support tickets following a major mobile app update.",
+      "missingElements": [
+        "Sentiment scoring methodology (Positive/Neutral/Negative classification with confidence score)",
+        "Categorical root-cause clustering (Bug reports, UI confusion, Billing disputes, Feature requests)",
+        "Customer churn risk score correlation with resolution time (First Response Time vs CSAT)",
+        "Prioritized top-5 engineering bug fix backlog table"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_008",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Predict employee turnover from HR survey data.",
+      "context": "An annual internal employee pulse survey covering 2,000 corporate staff across 6 departments.",
+      "missingElements": [
+        "Attrition risk feature indicators (eNPS, overtime hours, manager approval ratings, tenure, compensation benchmark)",
+        "Departmental heat-map table with flight-risk severity ratings",
+        "Statistical significance markers and leading retention warning signs",
+        "HR retention intervention playbook for high-risk talent cohorts"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_009",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Perform a financial ratio analysis on this company balance sheet.",
+      "context": "Annual audited balance sheets and income statements for a public manufacturing company across 3 years.",
+      "missingElements": [
+        "Standard financial ratio categories (Liquidity: Current/Quick ratio; Solvency: Debt-to-Equity; Profitability: ROE, ROIC; Efficiency: Asset Turnover)",
+        "Year-over-Year trend table with industry benchmark comparisons",
+        "Working capital and cash flow health diagnostic summary",
+        "Credit risk rating assessment and debt restructuring insights"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_010",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our SaaS product churn cohorts.",
+      "context": "Monthly subscription cohort retention data spanning 24 months across SMB and Enterprise tiers.",
+      "missingElements": [
+        "Cohort retention triangle / heat matrix structure (Month 0 to Month 12 retention %)",
+        "Net Revenue Retention (NRR) vs Gross Logo Churn calculations",
+        "Feature adoption correlation with long-term account survival",
+        "Actionable onboarding milestones to bridge the 'Day 30' cliff"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_011",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Forecast inventory demand for Black Friday.",
+      "context": "3-year historical retail sales data and lead times for 50 SKU categories ahead of peak holiday season.",
+      "missingElements": [
+        "Time-series forecasting parameters (Seasonal lift, Trend smoothing, Safety stock buffer percentages)",
+        "Supply chain lead-time constraint modeling (Stockout probability vs Overstock holding cost)",
+        "SKU prioritization breakdown (ABC Analysis: Fast-movers vs Slow-movers)",
+        "Recommended re-order quantities table with target order placement deadlines"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_012",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze A/B test results for our checkout page.",
+      "context": "A 14-day split test of 50,000 visitors testing 1-step checkout vs 3-step checkout.",
+      "missingElements": [
+        "Statistical significance test parameters (p-value, 95% Confidence Interval, Sample size power calculation)",
+        "Primary conversion metric vs secondary metrics (Cart abandonment rate, Average Order Value, Payment failure rate)",
+        "Device segmentation table (Mobile browser vs Desktop conversion differences)",
+        "Definitive ship/rollback decision recommendation with revenue projection"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_013",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize user survey feedback on our new feature.",
+      "context": "Qualitative feedback responses from 500 beta testers evaluating an AI voice transcription tool.",
+      "missingElements": [
+        "Thematic coding analysis (Accuracy complaints, UI speed, Export formatting requests)",
+        "Frequency count and Net Promoter Score (NPS) breakdown per user persona",
+        "Direct verbatim representative quote highlights organized by theme",
+        "Product roadmap prioritization matrix (High Effort/High Impact vs Quick Wins)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_014",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze warehouse delivery delay data.",
+      "context": "Fleet delivery GPS logs across 10 fulfillment hubs showing chronic 2-day delivery SLA breaches.",
+      "missingElements": [
+        "Bottleneck root-cause breakdown (Pick-and-pack latency, Last-mile courier transit, Weather anomalies)",
+        "Hub-by-hub performance comparison ranking table (On-time delivery % vs SLA breach rate)",
+        "Peak traffic hour delay correlation",
+        "Optimization recommendations (Dynamic route dispatching, localized micro-fulfillment hubs)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_015",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Interpret our server crash logs and latency spikes.",
+      "context": "API gateway error logs and database query latency metrics during a flash sale peak.",
+      "missingElements": [
+        "Error status code distribution breakdown (HTTP 500, 502, 504 timeouts)",
+        "Database slow query identification (Unindexed table scans, connection pool exhaustion)",
+        "Infrastructure resource saturation timeline (CPU %, RAM memory leak, IOPS ceiling)",
+        "Step-by-step auto-scaling and Redis caching architecture fix recommendations"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_016",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Benchmark our SaaS pricing against competitors.",
+      "context": "Pricing tier data from 8 leading competitors in the AI code-generation market.",
+      "missingElements": [
+        "Value metric unit comparison (Seat-based, Token-based, API call volume tiers)",
+        "Feature comparison matrix across Starter, Pro, and Enterprise tiers",
+        "Price-to-feature positioning perceptual map / scatter table",
+        "Strategic price positioning recommendation for optimal market penetration"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_017",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze our company carbon footprint audit.",
+      "context": "Scope 1, Scope 2, and Scope 3 greenhouse gas emissions data across corporate offices and data centers.",
+      "missingElements": [
+        "Standard ESG emission category breakdown (Direct fuel, Purchased electricity, Supply chain logistics) in MT CO2e",
+        "Per-employee and per-dollar revenue carbon intensity ratios",
+        "Comparison against industry net-zero target milestones",
+        "Prioritized top-4 decarbonization initiatives with estimated emission reduction potential"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_018",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate hospital emergency room wait-time data.",
+      "context": "Quarterly patient triage logs in an urban hospital showing average triage wait times exceeding 4 hours.",
+      "missingElements": [
+        "Acuity triage level breakdown (ESI Level 1-5 patient volume and door-to-doctor time)",
+        "Time-of-day and day-of-week surge bottleneck identification table",
+        "Bed utilization and physician staffing ratio correlations",
+        "Lean healthcare triage protocol optimizations to reduce median wait time by 35%"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_019",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze mobile app uninstalls.",
+      "context": "Telemetry event logs showing 60% of users uninstalling a fintech budget tracker within 72 hours of download.",
+      "missingElements": [
+        "Friction point event drop-off funnel (Bank account link failure, Mandatory phone OTP, Empty dashboard state)",
+        "Device and OS version crash correlation breakdown",
+        "Time-to-first-value (Aha! Moment) latency analysis",
+        "Redesigned onboarding UX recommendations with expected retention lift"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_020",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Find correlations in student exam performance data.",
+      "context": "Standardized test scores for 3,000 university students correlated with lecture attendance and LMS activity.",
+      "missingElements": [
+        "Statistical correlation coefficients (Pearson r values, regression coefficient R²)",
+        "Multivariate analysis controlling for prior GPA and study hour logs",
+        "Visual markdown data table showing attendance bands (<50%, 50-75%, >75%) vs passing rates",
+        "Academic intervention triggers for at-risk students"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_021",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Summarize real estate housing price trends.",
+      "context": "5-year property sales transaction records across 8 metropolitan neighborhoods.",
+      "missingElements": [
+        "Price per square foot median trends and YoY percentage changes",
+        "Inventory absorption rate (Months of supply) and days on market (DOM)",
+        "Mortgage interest rate sensitivity impact analysis",
+        "Neighborhood investment ranking table with cap rate yields"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_022",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze employee salary equity data.",
+      "context": "Internal compensation audit across 1,500 employees across gender, tenure, and department bands.",
+      "missingElements": [
+        "Comp-ratio analysis adjusted for role level, years of experience, and performance rating",
+        "Statistical pay gap identification table with significance indicators",
+        "Compliance benchmarking with international equal pay legal standards",
+        "Budget remediation formula to correct identified disparities"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_023",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Evaluate our call center agent performance metrics.",
+      "context": "Monthly telephony logs for 80 customer support agents handling technical troubleshooting calls.",
+      "missingElements": [
+        "Key operational metrics matrix (Average Handle Time, First Contact Resolution %, Customer Satisfaction CSAT, Transfer Rate)",
+        "Top-quartile vs bottom-quartile agent behavioral comparison table",
+        "Call volume spike distribution across shift timings",
+        "Targeted training coaching interventions and gamified incentive model"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_024",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Analyze hotel booking cancellations.",
+      "context": "Online travel agency booking dataset with a 38% cancellation rate ahead of holiday weekends.",
+      "missingElements": [
+        "Lead-time booking cancellation curve (Cancellations at 30 days vs 48 hours before check-in)",
+        "Channel-specific cancellation rate comparison (Direct website vs Booking.com vs Expedia)",
+        "Price elasticity and free-cancellation policy impact",
+        "Dynamic deposit and non-refundable discount revenue management strategy"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_c_025",
+      "genre": "C",
+      "genreName": "DATA / ANALYSIS",
+      "badPrompt": "Perform a customer lifetime value (LTV) segmentation analysis.",
+      "context": "Historical purchasing behavior across 50,000 customers of a subscription coffee e-commerce club.",
+      "missingElements": [
+        "RFM (Recency, Frequency, Monetary) segmentation matrix with customer cohort tiers (Champions, Loyalists, At-Risk, Lost)",
+        "Average LTV calculation formulas per segment (ARPU x Gross Margin / Churn Rate)",
+        "LTV:CAC ratio evaluation by acquisition channel",
+        "Customized upsell and retention marketing campaigns for high-value cohorts"
+      ],
+      "difficulty": 1
+    },
+    {
       "id": "r1_d_001",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Students aren't attending college events. What should we do?",
+      "context": "A university student council facing low attendance (<15%) across cultural and technical campus events.",
+      "missingElements": [
+        "Root cause diagnostic analysis (Timing clashes with exams, lack of incentives, poor promotion channels)",
+        "Target audience segmentation (Hostelers vs Day scholars, Undergrads vs Postgrads)",
+        "Low-cost engagement and gamification mechanics (Attendance perks, academic credit, food vouchers)",
+        "Multi-channel outreach plan (WhatsApp Class Reps, Instagram Reels, Department Ambassadors)",
+        "Structured 4-week execution roadmap with measurable attendance target KPIs"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_002",
       "genre": "D",
       "genreName": "REAL-WORLD / PROBLEM SOLVING",
       "badPrompt": "Plan a college event.",
@@ -221,7 +1119,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_d_002",
+      "id": "r1_d_003",
       "genre": "D",
       "genreName": "REAL-WORLD / PROBLEM SOLVING",
       "badPrompt": "Fix the campus parking problem.",
@@ -235,7 +1133,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_d_003",
+      "id": "r1_d_004",
       "genre": "D",
       "genreName": "REAL-WORLD / PROBLEM SOLVING",
       "badPrompt": "Reduce cafeteria food waste by 50%.",
@@ -249,7 +1147,7 @@
       "difficulty": 1
     },
     {
-      "id": "r1_d_004",
+      "id": "r1_d_005",
       "genre": "D",
       "genreName": "REAL-WORLD / PROBLEM SOLVING",
       "badPrompt": "Set up a student mental health peer-support network.",
@@ -259,6 +1157,286 @@
         "Confidentiality safeguards and data privacy protocols",
         "Emergency escalation pathways to licensed clinical professionals",
         "Awareness outreach strategy to destigmatize help-seeking"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_006",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to stop students from using AI to cheat on assignments?",
+      "context": "A university academic council balancing academic integrity with constructive AI literacy.",
+      "missingElements": [
+        "Redesigned assessment methodologies (Oral defenses, process-based portfolios, in-class practicals)",
+        "Clear institutional AI usage policy guidelines (Permitted brainstorming vs prohibited plagiarism)",
+        "Faculty training on AI-assisted rubric grading and detection limitations",
+        "Student honor code covenant and positive AI adoption incentives"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_007",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve campus hostel internet connectivity on a budget.",
+      "context": "Hostels with 1,200 residents suffering bandwidth choking and dead zones during evening hours.",
+      "missingElements": [
+        "Network traffic management & Quality of Service (QoS) bandwidth allocation rules (Prioritizing academic domains)",
+        "Low-cost mesh WiFi extender deployment map and channel interference optimization",
+        "Peak-hour bandwidth quota policies and fair usage thresholds",
+        "Student IT volunteer maintenance roster and ticketing system"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_008",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a campus e-waste recycling drive.",
+      "context": "A student club collecting discarded laptops, phones, cables, and circuit boards across campus.",
+      "missingElements": [
+        "Logistical drop-off station network across academic blocks and hostels",
+        "Certified e-waste recycling vendor partnership & safe data destruction guarantees",
+        "Gamified collection incentives (Department leaderboard prizes, coupon rewards)",
+        "Public awareness campaign highlighting heavy-metal toxicity risks"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_009",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How can our college club get corporate sponsorships?",
+      "context": "A robotics club seeking ₹2,00,000 in industry funding for building an autonomous Mars rover prototype.",
+      "missingElements": [
+        "Structured corporate pitch dossier (Title Sponsor, Hardware Partner, Lab Mentorship tiers)",
+        "Tangible sponsor ROI deliverables (Direct student hiring access, brand logo on rover, tech workshop branding)",
+        "Target corporate outreach list (Automotive companies, robotics firms, tech conglomerates)",
+        "Cold email outreach scripts and executive meeting pitch structure"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_010",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Make our college campus 100% single-use plastic free.",
+      "context": "An environmental green council eliminating plastic water bottles, straws, and cutlery across all food courts.",
+      "missingElements": [
+        "Sustainable alternative supply chain sourcing (Biodegradable areca nut plates, steel water refill kiosks)",
+        "Vendor contract compliance transition period and micro-subsidy model",
+        "Student buy-in campaign ('BYOB: Bring Your Own Bottle' discounts)",
+        "Enforcement policy and campus audit verification milestones"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_011",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Design an alumni mentorship program for career guidance.",
+      "context": "Connecting 500 final-year engineering students with working industry alumni mentors.",
+      "missingElements": [
+        "Mentor-mentee matching criteria and algorithm factors (Domain interest, tech stack, career aspirations)",
+        "Structured 8-week curriculum guide (Resume review, mock interviews, portfolio audit, networking tips)",
+        "Platform & communication protocols (Slack/Discord community guidelines, monthly check-in tracking)",
+        "Program feedback mechanisms and annual alumni recognition awards"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_012",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to handle a sudden power failure during a major live event?",
+      "context": "An emergency contingency protocol for a 2,000-person auditorium concert during an unexpected blackout.",
+      "missingElements": [
+        "Immediate emergency response checklist (Emergency lighting, backup generator transfer SLA < 60s)",
+        "Crowd control & evacuation safety procedures (Stage manager announcements, illuminated exit guides)",
+        "Audio/visual equipment surge protection protocols",
+        "Roles and responsibilities table for stage crew, security, and volunteers"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_013",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve student attendance in morning 8 AM classes.",
+      "context": "Academic departments reporting average 8 AM class attendance under 45%.",
+      "missingElements": [
+        "Behavioral science & nudge theory incentives (Interactive morning quizzes with bonus points)",
+        "Curriculum redesign (Flipping classroom lectures into hands-on group lab activities)",
+        "Campus logistics optimizations (Hostel breakfast timing alignment, morning shuttle frequency)",
+        "Student-faculty dialogue and schedule rebalancing proposals"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_014",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Organize a city-wide blood donation camp at college.",
+      "context": "A student Red Cross society aiming to collect 500 units of blood in a single day.",
+      "missingElements": [
+        "Certified hospital blood bank partnership & medical supervision requirements",
+        "Pre-screening health safety checklist (Hemoglobin tests, donor eligibility guidelines, resting area)",
+        "Hour-by-hour appointment slot booking system to prevent overcrowding",
+        "Donor care package (Refreshments, donor certificate, digital blood card)"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_015",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to prevent cyberbullying on anonymous campus confession pages?",
+      "context": "Unmoderated Instagram confession pages spreading defamatory rumors and toxic harassment among students.",
+      "missingElements": [
+        "Digital safety reporting & escalation protocol for victims",
+        "Collaboration with student leaders and page administrators for strict moderation guidelines",
+        "Campus legal and cybercell awareness workshops",
+        "Anonymous peer-counseling support and positive social media culture campaigns"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_016",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a peer-to-peer textbook and notes exchange library.",
+      "context": "Students spending excessive money each semester on physical reference books and study materials.",
+      "missingElements": [
+        "Digital inventory cataloging system (QR code scanning, book condition grading: Like New/Good/Fair)",
+        "Lending & return deposit policy to prevent lost books",
+        "Physical drop-box and pickup logistics inside central library",
+        "Crowdsourced verified topper-notes upload platform with upvoting"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_017",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to resolve a toxic team conflict in a semester capstone project?",
+      "context": "A 4-person senior engineering team where 1 member is doing zero work and 2 members are fighting over leadership.",
+      "missingElements": [
+        "Objective contribution audit framework (GitHub commit logs, task board assignments)",
+        "Constructive mediation facilitation script for faculty advisors",
+        "Workload re-allocation agreement with written milestone sign-offs",
+        "Individual grading grading rubric based on peer evaluations"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_018",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Set up a campus stray animal welfare and vaccination program.",
+      "context": "A growing population of campus dogs leading to student safety complaints and animal welfare concerns.",
+      "missingElements": [
+        "Animal NGO and certified veterinarian partnership for ABC (Animal Birth Control) and anti-rabies vaccination",
+        "Designated feeding zones away from main academic footpaths",
+        "Student volunteer feeding and health monitoring roster",
+        "Campus community awareness and dog-bite prevention safety education"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_019",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Design a high-impact campus anti-ragging awareness campaign.",
+      "context": "Welcoming 1,500 incoming first-year students to foster a safe, inclusive, zero-tolerance environment.",
+      "missingElements": [
+        "24x7 anonymous emergency SOS helpline & physical complaint box locations",
+        "Senior-junior icebreaking mentorship orientation workshops",
+        "Legal penal consequences infographic posters and digital orientation modules",
+        "Faculty flying squad patrol schedule in hostels and cafeteria zones"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_020",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to manage long queues at the college printing station before exams?",
+      "context": "Chaotic 45-minute lines at the campus photocopy center on assignment submission mornings.",
+      "missingElements": [
+        "Cloud-print submission portal (Students upload PDF, pay online via UPI, pick up via token #)",
+        "Self-service automated printing kiosk deployment feasibility",
+        "Off-peak printing discounts to spread morning demand",
+        "Department-level digital assignment submission policy mandates"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_021",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a student internship placement preparation bootcamp.",
+      "context": "A 4-week crash course preparing 300 non-CS students for tech and consulting campus placements.",
+      "missingElements": [
+        "Week-by-week curriculum (Aptitude tests, Data structures & algorithms, System design, Case interviews)",
+        "Daily practice schedule with timed mock assessments",
+        "Alumni resume review clinics and live behavioral interview simulations",
+        "Placement readiness tracking dashboard and performance scoring"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_022",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Reduce electricity wastage across college lecture halls.",
+      "context": "Lights, fans, and ACs left running in empty classrooms costing the institution ₹50,000 in wasted power monthly.",
+      "missingElements": [
+        "Low-cost IoT motion sensor and timer deployment schedule",
+        "Classroom energy-warden student volunteer responsibility system",
+        "Departmental energy conservation competition with saved-cost grant rewards",
+        "Facility management end-of-day automated power cutoff checklist"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_023",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "How to organize an emergency relief collection drive for flood victims?",
+      "context": "A student union mobilizing emergency supplies (ration kits, blankets, medicines) following regional flood devastation.",
+      "missingElements": [
+        "Prioritized essential supply checklist verified with disaster management authorities",
+        "Campus collection hubs, sorting protocols, and waterproof packaging logistics",
+        "Direct transport & delivery coordination with on-ground rescue personnel",
+        "Transparent donation accounting ledger and live community updates"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_024",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Improve the quality and hygiene of campus drinking water dispensers.",
+      "context": "Student complaints regarding water purifier filter maintenance and irregular temperature control.",
+      "missingElements": [
+        "Weekly water quality testing protocol (TDS levels, microbial testing, pH balance audit)",
+        "Preventive maintenance calendar with public QR code service log tags on each cooler",
+        "Student escalation channel for immediate filter replacement requests",
+        "Sanitation schedule for dispenser nozzles and drainage trays"
+      ],
+      "difficulty": 1
+    },
+    {
+      "id": "r1_d_025",
+      "genre": "D",
+      "genreName": "REAL-WORLD / PROBLEM SOLVING",
+      "badPrompt": "Create a sustainable startup incubation cell for student entrepreneurs.",
+      "context": "Setting up a campus incubator to help student teams convert final-year projects into commercial startups.",
+      "missingElements": [
+        "Seed grant application & pitch evaluation framework",
+        "Legal, patent IP, and company incorporation mentorship support",
+        "Co-working space access rules and shared lab equipment booking system",
+        "Annual Demo Day investor showcase with angel investors and VC partners"
       ],
       "difficulty": 1
     }
