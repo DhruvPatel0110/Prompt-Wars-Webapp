@@ -97,14 +97,6 @@ export async function evaluateRound2Challenge2({ targetReport, studentPrompt, te
   return evaluateRound2Prompt({ assignedChallenge: targetReport, studentPrompt, teamName });
 }
 
-<<<<<<< HEAD
-// --- Groq Image Evaluator (Primary - Free Tier with resilient model fallback) ---
-async function evaluateImageWithGroq({ targetImage, studentPrompt }) {
-  const prompt = `You are an authoritative AI judge for PROMPT WARS Round 2: Prompt Reverse Engineering.
-A student team was shown a specific target image and tasked with writing a prompt that would regenerate and recreate that exact visual output.
-=======
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
-
 // ============================================================================
 // LLM PROMPT BUILDER
 // ============================================================================
@@ -116,17 +108,12 @@ TARGET IMAGE SPECIFICATIONS:
 - Title: "${targetImage.title || 'Competition Asset'}"
 - Visual Description: "${targetImage.description || ''}"
 - Key Visual Elements: ${JSON.stringify(targetImage.keyElements || [])}
-<<<<<<< HEAD
-- Reference Prompt (for context): "${targetImage.targetVisualPrompt || ''}"
-=======
 - Reference Creation Prompt: "${targetImage.targetVisualPrompt || ''}"
 - Evaluation Rubric Focus: ${JSON.stringify(targetImage.evaluationCriteria || {})}
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
 STUDENT'S REVERSE-ENGINEERED PROMPT:
 """${studentPrompt}"""
 
-<<<<<<< HEAD
 SCORING PHILOSOPHY & OBJECTIVE:
 - The objective is VISUAL FIDELITY and finding the CLOSEST CONCEPTUAL RECREATION MATCH to the target image (NOT exact verbatim word matching).
 - Students only saw the image, not the hidden prompt. Reward them for accurately dissecting and describing what is visually present (camera angle, lighting, colors, subjects, textures, render engine style) even when they use synonyms or creative prompt terminology.
@@ -134,22 +121,12 @@ SCORING PHILOSOPHY & OBJECTIVE:
 - Moderate scores (8-13/20): Prompts that capture the core subject but miss specific lighting cues, camera lens perspective, or secondary environment details.
 - Low scores (1-7/20): Vague, generic prompts with little to no detail.
 
-EVALUATE ON 4 CORE PILLARS (Total 20 pts):
-1. composition_score (0-5): Camera angle, perspective (e.g. low-angle, aerial, eye-level), framing, depth of field, aspect ratio.
-2. colors_score (0-5): Color palette accuracy, lighting sources, shadows, ambient glow, atmospheric reflections.
-3. subject_score (0-5): Primary subjects, characters/objects, environment accuracy, architecture and key details.
-4. style_score (0-5): Art style, rendering medium cues (e.g. Octane, Unreal Engine 5, 8k, digital concept art, cinematic photograph).
-
-Respond ONLY with valid JSON (no markdown):
-{"composition_score":<number 0-5>,"colors_score":<number 0-5>,"subject_score":<number 0-5>,"style_score":<number 0-5>,"total_score":<number 0-20>,"reasoning":"<constructive feedback highlighting closest matches and missed visual nuances>","matched_elements":["<element 1>","<element 2>"],"missed_elements":["<element 1>"]}`;
-=======
 EVALUATION PRINCIPLE (Strict Visual Similarity):
 Evaluate how closely an image generated from the student's prompt would match the target image across 4 criteria (Total 20 Points):
 
 1. composition_score (0.0 to 5.0 pts):
    - Camera angle / perspective (e.g. low-angle, wide panoramic, macro close-up, top-down, centered, eye-level).
    - Framing, spatial depth, foreground/background layering, aspect ratio.
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
 2. colors_score (0.0 to 5.0 pts):
    - Color palette fidelity matching target image (e.g. neon pink/cyan/purple vs golden sunset vs monochrome obsidian).
@@ -158,17 +135,11 @@ Evaluate how closely an image generated from the student's prompt would match th
 3. subject_score (0.0 to 5.0 pts):
    - Accurate identification of primary subject(s), characters, focal objects.
    - Accuracy of secondary environment details, materials, textures, and key props listed in the target.
-   - If the student describes something completely unrelated (e.g. food for a sci-fi city), score 0-1.
+   - If the student describes something completely unrelated, score 0-1.
 
 4. style_score (0.0 to 5.0 pts):
    - Art medium (digital concept art, matte painting, 3D render, studio photography, anime, cinematic film still).
    - Rendering engine & lens parameters (Unreal Engine 5, Octane render, ray tracing, 8k, lens focal length, photorealism).
-
-SCORING CALIBRATION:
-- 0.0 - 1.0: Off-topic, gibberish, or generic 1-liner with no similarity to the image.
-- 1.5 - 2.5: Weak recreation. Mentions a vague concept but misses specific subjects, colors, and camera angle.
-- 3.0 - 4.0: Good recreation. Captures the main subject, general colors, and style well.
-- 4.5 - 5.0: Masterful reverse-engineering. High-fidelity match for perspective, color palette, fine details, and render cues.
 
 Respond ONLY with valid JSON matching this exact schema (no markdown, no code blocks):
 {"composition_score":<number 0-5>,"colors_score":<number 0-5>,"subject_score":<number 0-5>,"style_score":<number 0-5>,"total_score":<number 0-20>,"reasoning":"<detailed feedback on what matched and what was missed>","matched_elements":["<matched detail 1>","<matched detail 2>"],"missed_elements":["<missed detail 1>","<missed detail 2>"]}`;

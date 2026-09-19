@@ -17,18 +17,11 @@ export const HostRound2Control = () => {
   const [evalProgress, setEvalProgress] = useState(null);
 
   const round2State = hostState?.round2State || {};
-  const allTeams = hostState?.teams || [];
-<<<<<<< HEAD
-  const isR1AdvanceTriggered = Boolean(hostState?.roundState?.advanceTriggered);
-  const qualifiedFromR1 = allTeams.filter(t => t.isQualified);
-  const teams = isR1AdvanceTriggered ? qualifiedFromR1 : (qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams);
-=======
   const isR1Advanced = Boolean(hostState?.roundState?.advanceTriggered || hostState?.activeRound >= 2);
   const qualifiedFromR1 = allTeams.filter(t => t.isQualified && !t.isEliminated);
   const teams = isR1Advanced 
     ? (qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams.filter(t => !t.isEliminated)) 
     : allTeams.filter(t => !t.isEliminated);
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
   const isR2Running = serverTimer?.round2?.timerRunning ?? round2State.timerRunning ?? false;
   const isLocked = serverTimer?.round2?.isLocked ?? round2State.isLocked ?? true;

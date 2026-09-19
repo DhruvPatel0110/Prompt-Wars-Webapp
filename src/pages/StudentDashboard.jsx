@@ -133,7 +133,6 @@ export const StudentDashboard = () => {
   }
 
   // ----------------------------------------------------
-<<<<<<< HEAD
   // QUALIFICATION & ELIMINATION STATUS RESOLUTION
   // ----------------------------------------------------
   const isR1AdvanceTriggered = Boolean(teamState?.roundState?.advanceTriggered);
@@ -146,21 +145,6 @@ export const StudentDashboard = () => {
   // Round 2 status
   const isR2Eliminated = isR2AdvanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true);
   const isR2Qualified = isR2AdvanceTriggered && team.round2?.isQualified === true && isR1Qualified;
-=======
-  // ELIMINATION DETECTION & SPECTATOR ROUTING
-  // ----------------------------------------------------
-  const isEliminatedInR1 = Boolean(
-    (team.isEliminated || team.isQualified === false) &&
-    (teamState?.roundState?.advanceTriggered || activeRound >= 2 || teamState?.roundState?.status === 'ADVANCED')
-  );
-
-  const isEliminatedInR2 = Boolean(
-    (team.round2?.isEliminated || team.round2?.isQualified === false) &&
-    (teamState?.round2State?.advanceTriggered || activeRound >= 3 || teamState?.round2State?.status === 'ADVANCED')
-  );
-
-  const isEliminated = isEliminatedInR1 || isEliminatedInR2;
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
   // ----------------------------------------------------
   // TOURNAMENT ROUND ROUTER & NAVIGATION
@@ -193,13 +177,8 @@ export const StudentDashboard = () => {
               )}
             </button>
 
-<<<<<<< HEAD
             {/* ROUND 2 TAB: ONLY VISIBLE IF TEAM QUALIFIED FROM ROUND 1 */}
             {isR1Qualified && (
-=======
-            {/* Round 2 Tab ONLY for teams qualified from Round 1 */}
-            {team.isQualified && (
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
               <button
                 onClick={() => setSelectedRoundTab(2)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -222,13 +201,8 @@ export const StudentDashboard = () => {
               </button>
             )}
 
-<<<<<<< HEAD
             {/* ROUND 3 TAB: ONLY VISIBLE IF TEAM QUALIFIED FROM ROUND 2 */}
             {isR2Qualified && (
-=======
-            {/* Round 3 Tab ONLY for teams qualified from Round 2 */}
-            {team.round2?.isQualified && !team.round2?.isEliminated && (
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
               <button
                 onClick={() => setSelectedRoundTab(3)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -348,7 +322,6 @@ export const StudentDashboard = () => {
   const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
   const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-<<<<<<< HEAD
   // ----------------------------------------------------
   // 1. ELIMINATED TEAMS (STRICT LOCKOUT SCREEN)
   // If eliminated in Round 1, team CANNOT access Round 2 or Round 3
@@ -453,28 +426,6 @@ export const StudentDashboard = () => {
         </div>
       );
     }
-=======
-  // If team is eliminated after Round 1 and on advanced round, show elimination screen
-  if (isEliminatedInR1 && (activeRound >= 2 || currentViewRound >= 2)) {
-    if (selectedRoundTab === 1) {
-      // Let them view sealed Round 1 submission
-    } else {
-      return renderEliminationScreen();
-    }
-  }
-
-  // If team is eliminated after Round 2 and on Round 3, show elimination screen
-  if (isEliminatedInR2 && (activeRound >= 3 || currentViewRound >= 3)) {
-    if (selectedRoundTab === 1 || selectedRoundTab === 2) {
-      // Let them view past submissions
-    } else {
-      return renderEliminationScreen();
-    }
-  }
-
-  // View Round 3 Workspace (Qualified only)
-  if (currentViewRound === 3 && !isEliminated) {
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     return (
       <div>
         {renderRoundSwitcher()}
@@ -483,7 +434,6 @@ export const StudentDashboard = () => {
     );
   }
 
-<<<<<<< HEAD
   // ----------------------------------------------------
   // 3. ROUND 2 VIEW (ONLY FOR ROUND 1 QUALIFIED TEAMS)
   // ----------------------------------------------------
@@ -491,10 +441,6 @@ export const StudentDashboard = () => {
     if (!isR1Qualified) {
       return null;
     }
-=======
-  // View Round 2 Workspace (Qualified only)
-  if (currentViewRound === 2 && !isEliminatedInR1) {
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     return (
       <div>
         {renderRoundSwitcher()}

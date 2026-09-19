@@ -60,7 +60,16 @@ export const StudentRound3 = ({ team, round3State }) => {
   const isCompleted = round3State?.status === 'COMPLETED' || r3.status === 'evaluated';
   const bombTimer = round3State?.bombTimerRemaining ?? 30;
 
-<<<<<<< HEAD
+  // Sync initial drafts if received from server props
+  useEffect(() => {
+    if (team?.round3?.masterDraft && !masterDraft) {
+      setMasterDraft(team.round3.masterDraft);
+    }
+    if (team?.round3?.adaptedDraft && !adaptedDraft) {
+      setAdaptedDraft(team.round3.adaptedDraft);
+    }
+  }, [team?.round3?.masterDraft, team?.round3?.adaptedDraft]);
+
   // Block eliminated teams from accessing Round 3
   if (team?.isQualified === false || team?.isEliminated === true || team?.round2?.isQualified === false || team?.round2?.isEliminated === true) {
     return (
@@ -82,17 +91,6 @@ export const StudentRound3 = ({ team, round3State }) => {
       </div>
     );
   }
-=======
-  // Sync initial drafts if received from server props
-  useEffect(() => {
-    if (team?.round3?.masterDraft && !masterDraft) {
-      setMasterDraft(team.round3.masterDraft);
-    }
-    if (team?.round3?.adaptedDraft && !adaptedDraft) {
-      setAdaptedDraft(team.round3.adaptedDraft);
-    }
-  }, [team?.round3?.masterDraft, team?.round3?.adaptedDraft]);
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
   // Sound effect on Bomb Detonation
   useEffect(() => {

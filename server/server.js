@@ -298,7 +298,6 @@ io.on('connection', (socket) => {
   });
 
   // ==========================================
-<<<<<<< HEAD
   // INTERACTIVE PROMPT SANDBOX ENGINE
   // ==========================================
 
@@ -351,8 +350,6 @@ io.on('connection', (socket) => {
   });
 
   // ==========================================
-=======
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
   // HOST ADMIN EVENTS & CONTROLS
   // ==========================================
 
@@ -659,13 +656,7 @@ io.on('connection', (socket) => {
   socket.on('admin:release_sabotage', handleSabotageRelease);
 
   socket.on('admin:evaluate_round3', async (data, callback) => {
-<<<<<<< HEAD
     const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
-=======
-    const qualifiedTeams = Array.from(stateManager.teams.values()).filter(t => (t.round2?.isQualified && !t.round2?.isEliminated) || (t.isQualified && !t.isEliminated));
-    const teamsInR3 = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(stateManager.teams.values());
-
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     if (teamsInR3.length === 0) {
       return callback?.({ success: false, error: 'No teams registered for Round 3.' });
     }

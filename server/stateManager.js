@@ -640,11 +640,6 @@ export class StateManager {
     const challenges = this.round2Challenges;
     if (!challenges || challenges.length === 0) return;
     
-<<<<<<< HEAD
-    const targetTeams = this.roundState.advanceTriggered
-      ? Array.from(this.teams.values()).filter(t => t.isQualified)
-      : Array.from(this.teams.values());
-=======
     // Explicitly mark eliminated teams from Round 1 as 'eliminated'
     for (const team of this.teams.values()) {
       if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
@@ -658,7 +653,6 @@ export class StateManager {
     // Only allot active challenge and drafting status to qualified teams
     const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
     const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
     targetTeams.forEach((team, idx) => {
       const challenge = challenges[idx % challenges.length];
@@ -737,13 +731,7 @@ export class StateManager {
   saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-<<<<<<< HEAD
-    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
-      return null;
-    }
-=======
     if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) return team;
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     const text = (draftText || "").slice(0, 3500);
     team.round2.draftPrompt = text;
     team.round2.c1_draft = text;
@@ -754,13 +742,8 @@ export class StateManager {
   submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
-<<<<<<< HEAD
-    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
-      throw new Error("Team was eliminated in Round 1 and cannot participate in Round 2.");
-=======
     if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
       throw new Error("Your team was eliminated after Round 1 and cannot submit in Round 2.");
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     }
     if (this.round2State.isLocked && this.round2State.status === 'LOCKED' && this.activeRound !== 2) {
       throw new Error("Round 2 is currently locked.");
@@ -867,13 +850,8 @@ export class StateManager {
   }
 
   getRound2Leaderboard() {
-<<<<<<< HEAD
-    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified);
-    const list = this.roundState.advanceTriggered ? qualifiedTeams : Array.from(this.teams.values());
-=======
     const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
     const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
     return list;
   }
@@ -883,16 +861,10 @@ export class StateManager {
   // ==========================================
 
   allotRound3Cases() {
-<<<<<<< HEAD
-    const r3Teams = Array.from(this.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
-    if (r3Teams.length === 0) return;
-    const availableCases = this.round3Data.cases || [];
-=======
     const r3Data = this.loadRound3Data();
     this.round3Data = r3Data;
     const availableCases = r3Data.cases || [];
     if (availableCases.length === 0) return;
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
     // Explicitly mark eliminated teams as eliminated in Round 3
     for (const team of this.teams.values()) {
@@ -984,14 +956,9 @@ export class StateManager {
   saveRound3MasterDraft(teamId, draftText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-<<<<<<< HEAD
-    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
-    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
-=======
     if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
       return team;
     }
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     team.round3.masterDraft = (draftText || "").slice(0, 4500);
     return team;
   }
@@ -1005,11 +972,7 @@ export class StateManager {
 
     // Initialize adapted drafts with current master draft for qualified teams
     for (const team of this.teams.values()) {
-<<<<<<< HEAD
-      if (team.isQualified && team.round2?.isQualified && team.round3.assignedCase) {
-=======
       if (team.round3.assignedCase && !team.isEliminated && !team.round2?.isEliminated) {
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
         team.round3.masterPrompt = team.round3.masterDraft || "Master Strategy Draft";
         team.round3.adaptedDraft = team.round3.masterPrompt;
         team.round3.status = 'bomb_active';
@@ -1023,14 +986,9 @@ export class StateManager {
   saveRound3BombDraft(teamId, adaptedText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-<<<<<<< HEAD
-    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
-    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
-=======
     if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
       return team;
     }
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     team.round3.adaptedDraft = (adaptedText || "").slice(0, 4500);
     return team;
   }
@@ -1038,16 +996,8 @@ export class StateManager {
   submitRound3(teamId, adaptedPrompt) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
-<<<<<<< HEAD
-    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
-      throw new Error("Team was eliminated in Round 1.");
-    }
-    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) {
-      throw new Error("Team was eliminated in Round 2.");
-=======
     if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
       throw new Error("Your team was eliminated and cannot submit in Round 3.");
->>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     }
 
     const text = (adaptedPrompt || team.round3.adaptedDraft || team.round3.masterDraft || "").trim();
