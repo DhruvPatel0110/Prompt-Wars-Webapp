@@ -185,10 +185,10 @@ io.on('connection', (socket) => {
         socketId: socket.id
       });
       socket.join(`team:${team.id}`);
-      
+
       const teamView = stateManager.getTeamView(team.id);
       callback?.({ success: true, teamView });
-      
+
       syncAdminClients();
       syncProjectorClients();
     } catch (err) {
@@ -703,6 +703,14 @@ httpServer.on('error', (err) => {
   } else {
     console.error('Server error:', err);
   }
+});
+// Serve React frontend
+const frontendPath = path.join(__dirname, '..', 'dist');
+
+app.use(express.static(frontendPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 httpServer.listen(PORT, '0.0.0.0', () => {
