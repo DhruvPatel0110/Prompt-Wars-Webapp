@@ -17,7 +17,7 @@ export class StateManager {
     this.questionsData = this.loadQuestionsData();
     this.round2Challenges = this.loadRound2Data();
     this.round2Data = { challenges: this.round2Challenges };
-    this.round3Data = this.loadJSON(ROUND3_FILE, { cases: [] });
+    this.round3Data = this.loadRound3Data();
     this.teamsRoster = this.loadJSON(TEAMS_FILE, []);
 
     this.activeRound = 1;
@@ -166,6 +166,33 @@ export class StateManager {
     }
   }
 
+  loadRound3Data() {
+    try {
+      const rootPath = path.join(__dirname, '..', 'ROUND3.json');
+      if (fs.existsSync(rootPath)) {
+        const raw = fs.readFileSync(rootPath, 'utf8');
+        const data = JSON.parse(raw);
+        let list = [];
+        if (Array.isArray(data.cases)) list = data.cases;
+        else if (Array.isArray(data)) list = data;
+        if (list.length > 0) {
+          console.log(`[StateManager] Loaded ${list.length} unique Round 3 Case Studies from root ROUND3.json`);
+          try {
+            if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+            fs.writeFileSync(ROUND3_FILE, JSON.stringify({ cases: list }, null, 2), 'utf8');
+          } catch (e) {}
+          return { cases: list };
+        }
+      }
+      const fileData = this.loadJSON(ROUND3_FILE, { cases: [] });
+      console.log(`[StateManager] Loaded ${fileData.cases?.length || 0} Round 3 Case Studies from data/round3_cases.json`);
+      return fileData;
+    } catch (err) {
+      console.error(`[StateManager] Failed to load Round 3 data:`, err.message);
+      return { cases: [] };
+    }
+  }
+
   loadJSON(filepath, fallback) {
     try {
       if (fs.existsSync(filepath)) {
@@ -235,14 +262,6 @@ export class StateManager {
         evaluation: null,
         finalRank: null,
         isWinner: false
-      },
-
-      // Interactive AI Sandbox Quota
-      sandbox: {
-        r1RunsLeft: 5,
-        r2RunsLeft: 4,
-        r3RunsLeft: 4,
-        totalRunsUsed: 0
       }
     };
   }
@@ -368,25 +387,6 @@ export class StateManager {
       this.saveSnapshot();
     }
     return deleted;
-  }
-
-  useSandboxCredit(teamId, round = 1) {
-    const team = this.teams.get(teamId);
-    if (!team) throw new Error("Team not found");
-    if (!team.sandbox) {
-      team.sandbox = { r1RunsLeft: 5, r2RunsLeft: 4, r3RunsLeft: 4, totalRunsUsed: 0 };
-    }
-    const key = round === 1 ? 'r1RunsLeft' : round === 2 ? 'r2RunsLeft' : 'r3RunsLeft';
-    if (typeof team.sandbox[key] !== 'number') {
-      team.sandbox[key] = round === 1 ? 5 : 4;
-    }
-    if (team.sandbox[key] <= 0) {
-      throw new Error(`Sandbox test limit reached for Round ${round} (${round === 1 ? 5 : 4} runs max).`);
-    }
-    team.sandbox[key]--;
-    team.sandbox.totalRunsUsed = (team.sandbox.totalRunsUsed || 0) + 1;
-    this.saveSnapshot();
-    return team.sandbox[key];
   }
 
   // --- Socket Registration ---
@@ -621,6 +621,15 @@ export class StateManager {
       } else {
         team.isQualified = false;
         team.isEliminated = true;
+        team.round2.isEliminated = true;
+        team.round2.isQualified = false;
+        team.round2.status = 'eliminated';
+        team.round2.assignedChallenge = null;
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.status = 'eliminated';
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
       }
     });
 
@@ -631,9 +640,25 @@ export class StateManager {
     const challenges = this.round2Challenges;
     if (!challenges || challenges.length === 0) return;
     
+<<<<<<< HEAD
     const targetTeams = this.roundState.advanceTriggered
       ? Array.from(this.teams.values()).filter(t => t.isQualified)
       : Array.from(this.teams.values());
+=======
+    // Explicitly mark eliminated teams from Round 1 as 'eliminated'
+    for (const team of this.teams.values()) {
+      if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
+        team.round2.status = 'eliminated';
+        team.round2.isEliminated = true;
+        team.round2.isQualified = false;
+        team.round2.assignedChallenge = null;
+      }
+    }
+
+    // Only allot active challenge and drafting status to qualified teams
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
     targetTeams.forEach((team, idx) => {
       const challenge = challenges[idx % challenges.length];
@@ -712,9 +737,13 @@ export class StateManager {
   saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+<<<<<<< HEAD
     if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
       return null;
     }
+=======
+    if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) return team;
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     const text = (draftText || "").slice(0, 3500);
     team.round2.draftPrompt = text;
     team.round2.c1_draft = text;
@@ -725,8 +754,13 @@ export class StateManager {
   submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+<<<<<<< HEAD
     if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
       throw new Error("Team was eliminated in Round 1 and cannot participate in Round 2.");
+=======
+    if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
+      throw new Error("Your team was eliminated after Round 1 and cannot submit in Round 2.");
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     }
     if (this.round2State.isLocked && this.round2State.status === 'LOCKED' && this.activeRound !== 2) {
       throw new Error("Round 2 is currently locked.");
@@ -810,6 +844,12 @@ export class StateManager {
       } else {
         team.round2.isQualified = false;
         team.round2.isEliminated = true;
+        team.round2.status = 'eliminated';
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.status = 'eliminated';
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
       }
     });
 
@@ -827,8 +867,13 @@ export class StateManager {
   }
 
   getRound2Leaderboard() {
+<<<<<<< HEAD
     const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified);
     const list = this.roundState.advanceTriggered ? qualifiedTeams : Array.from(this.teams.values());
+=======
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
     return list;
   }
@@ -838,18 +883,48 @@ export class StateManager {
   // ==========================================
 
   allotRound3Cases() {
+<<<<<<< HEAD
     const r3Teams = Array.from(this.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
     if (r3Teams.length === 0) return;
     const availableCases = this.round3Data.cases || [];
+=======
+    const r3Data = this.loadRound3Data();
+    this.round3Data = r3Data;
+    const availableCases = r3Data.cases || [];
+    if (availableCases.length === 0) return;
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
-    r3Teams.forEach((team, idx) => {
-      const caseItem = availableCases[idx % availableCases.length] || availableCases[0];
+    // Explicitly mark eliminated teams as eliminated in Round 3
+    for (const team of this.teams.values()) {
+      if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+        team.round3.status = 'eliminated';
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
+      }
+    }
+
+    // Filter qualified teams from Round 2
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.round2?.isQualified && !t.round2?.isEliminated && !t.isEliminated);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
+    const finalTeams = targetTeams.length > 0 ? targetTeams : Array.from(this.teams.values());
+
+    finalTeams.forEach((team, idx) => {
+      // 1-to-1 guaranteed distinct case assignment
+      const caseItem = availableCases[idx % availableCases.length];
       const bombs = caseItem?.bombs || [];
-      const bombItem = bombs[idx % bombs.length] || bombs[0];
+      const bombItem = bombs[0] || {
+        headline: "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+        description: "Marketing budget slashed to ₹3,000. All paid ads and print banners are immediately revoked.",
+        directive: "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+      };
 
       team.round3.assignedCase = caseItem;
       team.round3.assignedBomb = bombItem;
-      team.round3.status = 'drafting';
+      if (!team.round3.status || team.round3.status === 'idle') {
+        team.round3.status = 'drafting';
+      }
     });
 
     this.saveSnapshot();
@@ -909,8 +984,14 @@ export class StateManager {
   saveRound3MasterDraft(teamId, draftText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+<<<<<<< HEAD
     if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
     if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
+=======
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      return team;
+    }
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     team.round3.masterDraft = (draftText || "").slice(0, 4500);
     return team;
   }
@@ -924,7 +1005,11 @@ export class StateManager {
 
     // Initialize adapted drafts with current master draft for qualified teams
     for (const team of this.teams.values()) {
+<<<<<<< HEAD
       if (team.isQualified && team.round2?.isQualified && team.round3.assignedCase) {
+=======
+      if (team.round3.assignedCase && !team.isEliminated && !team.round2?.isEliminated) {
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
         team.round3.masterPrompt = team.round3.masterDraft || "Master Strategy Draft";
         team.round3.adaptedDraft = team.round3.masterPrompt;
         team.round3.status = 'bomb_active';
@@ -938,8 +1023,14 @@ export class StateManager {
   saveRound3BombDraft(teamId, adaptedText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+<<<<<<< HEAD
     if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
     if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
+=======
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      return team;
+    }
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     team.round3.adaptedDraft = (adaptedText || "").slice(0, 4500);
     return team;
   }
@@ -947,11 +1038,16 @@ export class StateManager {
   submitRound3(teamId, adaptedPrompt) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+<<<<<<< HEAD
     if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
       throw new Error("Team was eliminated in Round 1.");
     }
     if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) {
       throw new Error("Team was eliminated in Round 2.");
+=======
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      throw new Error("Your team was eliminated and cannot submit in Round 3.");
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     }
 
     const text = (adaptedPrompt || team.round3.adaptedDraft || team.round3.masterDraft || "").trim();
@@ -1046,18 +1142,23 @@ export class StateManager {
     // Round 3 Main Timer
     if (this.round3State.timerRunning && this.round3State.timerRemaining > 0) {
       this.round3State.timerRemaining -= 1;
-      // Auto trigger bomb at 30 seconds if not already detonated
-      if (this.round3State.timerRemaining === 30 && this.round3State.phase === 'master_draft') {
-        this.detonateFinalBomb();
-      }
-      if (this.round3State.timerRemaining <= 0) {
+      // Stop timer & block user screen as last minute approaches (pause at 1 min / 60s left)
+      if (this.round3State.phase === 'master_draft' && this.round3State.timerRemaining <= 60) {
+        this.round3State.timerRemaining = 60;
+        this.round3State.timerRunning = false;
+        this.round3State.timerStartedAt = null;
+        this.round3State.timerEndsAt = null;
+        this.round3State.phase = 'warning_hold';
+        this.round3State.status = 'WARNING_HOLD';
+        this.saveSnapshot();
+      } else if (this.round3State.timerRemaining <= 0) {
         this.round3State.timerRemaining = 0;
         this.round3State.timerRunning = false;
       }
       didChange = true;
     }
 
-    // Round 3 Bomb 30-Second Countdown
+    // Round 3 Bomb 30-Second Countdown (Starts ONLY after host authorizes detonation)
     if (this.round3State.bombRunning && this.round3State.bombTimerRemaining > 0) {
       this.round3State.bombTimerRemaining -= 1;
       if (this.round3State.bombTimerRemaining <= 0) {
@@ -1090,6 +1191,15 @@ export class StateManager {
       team.round2.assignedChallenge = this.round2Challenges[idx % this.round2Challenges.length];
     }
 
+    // Ensure Round 3 case is assigned uniquely
+    if (!team.round3.assignedCase && this.round3Data.cases?.length > 0) {
+      const teamsList = Array.from(this.teams.values());
+      const idx = Math.max(0, teamsList.findIndex(t => t.id === teamId));
+      const caseItem = this.round3Data.cases[idx % this.round3Data.cases.length];
+      team.round3.assignedCase = caseItem;
+      team.round3.assignedBomb = caseItem?.bombs?.[0] || null;
+    }
+
     return {
       activeRound: this.activeRound,
       team: {
@@ -1112,9 +1222,7 @@ export class StateManager {
         // Round 2
         round2: team.round2,
         // Round 3
-        round3: team.round3,
-        // Interactive AI Sandbox
-        sandbox: team.sandbox || { r1RunsLeft: 5, r2RunsLeft: 4, r3RunsLeft: 4, totalRunsUsed: 0 }
+        round3: team.round3
       },
       roundState: {
         round: this.roundState.round,

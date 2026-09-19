@@ -197,6 +197,11 @@ export const Leaderboard = ({
                             ELIMINATED
                           </span>
                         )
+                      ) : team.isEliminated ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-red-950/60 border border-red-500/40 text-red-400">
+                          <XCircle className="w-3.5 h-3.5" />
+                          ELIMINATED
+                        </span>
                       ) : isSubmitted ? (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-950/60 border border-cyan-500/40 text-cyan-300">
                           <Clock className="w-3.5 h-3.5" />

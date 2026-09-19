@@ -305,6 +305,21 @@ export function evaluateWithHeuristics({ badPrompt, genreName, improvedPrompt })
   const charCount = text.length;
   const genre = (genreName || "CREATIVE").toUpperCase();
 
+  // Strict check for empty / null / placeholder prompts
+  if (!text || charCount < 10 || /^no prompt submitted/i.test(text)) {
+    return {
+      clarity_score: 0,
+      context_score: 0,
+      constraints_score: 0,
+      format_score: 0,
+      creativity_score: 0,
+      total_score: 0,
+      reasoning: "No valid prompt submitted (0/20). Reconstruct the weak prompt with a clear role, context, constraints, and output format to score.",
+      strengths: [],
+      improvements: ["Submit a reconstructed prompt to receive evaluation."]
+    };
+  }
+
   // 1. Clarity & Specificity (0 - 5)
   let clarityScore = 0;
   const strengths = [];

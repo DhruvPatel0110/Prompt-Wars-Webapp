@@ -10,7 +10,6 @@ import { StateManager } from './stateManager.js';
 import { evaluateSubmission, evaluateBatchWithConcurrency } from './evaluator.js';
 import { evaluateRound2Prompt, evaluateRound2Challenge1, evaluateRound2Challenge2 } from './evaluatorRound2.js';
 import { evaluateRound3Submission } from './evaluatorRound3.js';
-import { runPromptSandbox } from './sandboxSimulator.js';
 
 dotenv.config();
 
@@ -80,50 +79,6 @@ app.get('/api/export/csv', (req, res) => {
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename=prompt_wars_championship_results.csv');
   res.send(csv);
-});
-
-app.post('/api/sandbox/run', async (req, res) => {
-  try {
-    const { teamId, round = 1, challengeType = 'prompt', promptText = '', testInput = '' } = req.body;
-    const team = stateManager.teams.get(teamId);
-    if (!team) {
-      return res.status(404).json({ success: false, error: 'Team not found' });
-    }
-
-    const rNum = Number(round) || 1;
-    let contextData = {};
-    if (rNum === 1) {
-      contextData = {
-        genreName: team.assignedGenre?.name,
-        badPrompt: team.assignedQuestion?.badPrompt,
-        title: team.assignedQuestion?.context
-      };
-    } else if (rNum === 2) {
-      contextData = challengeType === 'image'
-        ? (stateManager.round2State.activeImageChallenge || {})
-        : (stateManager.round2State.activeReportChallenge || {});
-    } else if (rNum === 3) {
-      contextData = team.round3?.assignedCase || stateManager.round3Data.cases?.[0] || {};
-    }
-
-    const runsRemaining = stateManager.useSandboxCredit(teamId, rNum);
-    const result = await runPromptSandbox({
-      round: rNum,
-      challengeType,
-      promptText,
-      testInput,
-      contextData,
-      teamName: team.name
-    });
-
-    syncTeamClient(teamId);
-    return res.json({
-      ...result,
-      runsRemaining
-    });
-  } catch (err) {
-    return res.status(400).json({ success: false, error: err.message });
-  }
 });
 
 // Broadcast Helpers
@@ -231,10 +186,10 @@ io.on('connection', (socket) => {
         socketId: socket.id
       });
       socket.join(`team:${team.id}`);
-      
+
       const teamView = stateManager.getTeamView(team.id);
       callback?.({ success: true, teamView });
-      
+
       syncAdminClients();
       syncProjectorClients();
     } catch (err) {
@@ -343,6 +298,7 @@ io.on('connection', (socket) => {
   });
 
   // ==========================================
+<<<<<<< HEAD
   // INTERACTIVE PROMPT SANDBOX ENGINE
   // ==========================================
 
@@ -395,6 +351,8 @@ io.on('connection', (socket) => {
   });
 
   // ==========================================
+=======
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
   // HOST ADMIN EVENTS & CONTROLS
   // ==========================================
 
@@ -589,7 +547,7 @@ io.on('connection', (socket) => {
       id: team.id,
       name: team.name,
       assignedChallenge: team.round2?.assignedChallenge || stateManager.round2Challenges[0],
-      studentPrompt: team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || "High detail render of target competition asset"
+      studentPrompt: team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || ""
     }));
 
     const evaluations = await evaluateBatchWithConcurrency(
@@ -685,7 +643,7 @@ io.on('connection', (socket) => {
     syncProjectorClients();
   });
 
-  socket.on('admin:detonate_bomb', () => {
+  const handleSabotageRelease = () => {
     stateManager.detonateFinalBomb();
     broadcastTimerState();
     syncAllTeamClients();
@@ -695,15 +653,25 @@ io.on('connection', (socket) => {
       durationSeconds: 30,
       detonatedAt: Date.now()
     });
-  });
+  };
+
+  socket.on('admin:detonate_bomb', handleSabotageRelease);
+  socket.on('admin:release_sabotage', handleSabotageRelease);
 
   socket.on('admin:evaluate_round3', async (data, callback) => {
+<<<<<<< HEAD
     const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
+=======
+    const qualifiedTeams = Array.from(stateManager.teams.values()).filter(t => (t.round2?.isQualified && !t.round2?.isEliminated) || (t.isQualified && !t.isEliminated));
+    const teamsInR3 = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(stateManager.teams.values());
+
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     if (teamsInR3.length === 0) {
-      return callback?.({ success: false, error: 'No qualified teams for Round 3.' });
+      return callback?.({ success: false, error: 'No teams registered for Round 3.' });
     }
 
     stateManager.round3State.status = 'EVALUATING';
+    broadcastTimerState();
     syncAdminClients();
     syncProjectorClients();
     callback?.({ success: true, total: teamsInR3.length });
@@ -712,9 +680,17 @@ io.on('connection', (socket) => {
     let completed = 0;
 
     for (const team of teamsInR3) {
-      const caseItem = team.round3.assignedCase || stateManager.round3Data.cases[0];
-      const bombItem = team.round3.assignedBomb || caseItem.bombs[0];
-      const mPrompt = team.round3.masterPrompt || team.round3.masterDraft || "Master Strategic Blueprint";
+      const caseItem = team.round3.assignedCase || stateManager.round3Data.cases[0] || {
+        title: "National Tech Fest Growth Crisis",
+        category: "Growth & Event Operations",
+        scenario: { context: "Flagship 3-day tech symposium in 30 days.", metrics: {}, requiredPillars: [] }
+      };
+      const bombItem = team.round3.assignedBomb || caseItem.bombs?.[0] || {
+        headline: "🚨 CRITICAL CRISIS INJECTION",
+        description: "Emergency adaptation required.",
+        directive: "Pivot strategy immediately."
+      };
+      const mPrompt = team.round3.masterPrompt || team.round3.masterDraft || "";
       const aPrompt = team.round3.adaptedPrompt || team.round3.adaptedDraft || mPrompt;
 
       const evalRes = await evaluateRound3Submission({
@@ -731,9 +707,11 @@ io.on('connection', (socket) => {
     }
 
     stateManager.setRound3EvaluationResults(evaluations);
+    broadcastTimerState();
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
+    broadcastToAdmins('admin:r3_eval_complete', { total: teamsInR3.length });
   });
 
   socket.on('admin:reveal_podium', () => {
@@ -806,6 +784,14 @@ httpServer.on('error', (err) => {
   } else {
     console.error('Server error:', err);
   }
+});
+// Serve React frontend
+const frontendPath = path.join(__dirname, '..', 'dist');
+
+app.use(express.static(frontendPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 httpServer.listen(PORT, '0.0.0.0', () => {

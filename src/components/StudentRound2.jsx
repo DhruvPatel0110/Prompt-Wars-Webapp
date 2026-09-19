@@ -4,12 +4,11 @@ import {
   Image as ImageIcon, ZoomIn, ZoomOut, RotateCcw, 
   Sparkles, CheckCircle2, XCircle, Trophy, Send, RefreshCw, 
   AlertCircle, Check, Eye, HelpCircle, ArrowRight, ShieldCheck,
-  Maximize2, Compass, Layers, FlaskConical, X, Sliders, Info,
+  Maximize2, Compass, Layers, X, Sliders, Info,
   Camera, Sun, Palette, Wand2, Lock
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
-import { PromptSandboxModal } from './PromptSandboxModal';
 import { soundEngine } from '../utils/audio';
 
 export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
@@ -23,10 +22,8 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
   const [draftPrompt, setDraftPrompt] = useState(initialPrompt);
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSandbox, setShowSandbox] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const sandboxRunsLeft = team?.sandbox?.r2RunsLeft ?? 4;
   const autosaveRef = useRef(null);
 
   // Synchronize draft if team state updates from server
@@ -134,23 +131,6 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
       } else {
         setErrorMessage(res?.error || 'Submission failed');
       }
-    });
-  };
-
-  // Run in AI Sandbox Simulation
-  const handleRunSandbox = ({ round, challengeType, promptText, testInput }) => {
-    return new Promise((resolve, reject) => {
-      if (!socket) return reject(new Error("Socket disconnected"));
-      socket.emit('team:sandbox_run', {
-        teamId: effectiveTeamId,
-        round: 2,
-        challengeType: 'image',
-        promptText: draftPrompt,
-        testInput
-      }, (res) => {
-        if (res?.success) resolve(res);
-        else reject(new Error(res?.error || "Sandbox simulation failed."));
-      });
     });
   };
 
@@ -428,18 +408,7 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
             </div>
 
             {/* Bottom Actions Bar */}
-            <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setShowSandbox(true)}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-cyan-300 bg-cyan-950/50 hover:bg-cyan-500/20 border border-cyan-500/40 transition-all flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
-                >
-                  <FlaskConical className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Test in Sandbox ({sandboxRunsLeft} left)</span>
-                </button>
-              </div>
-
+            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-end">
               <div className="w-full sm:w-auto flex items-center gap-2">
                 <button
                   onClick={handleSubmit}
@@ -653,18 +622,6 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
           </div>
         </div>
       )}
-
-      {/* Interactive Prompt Sandbox Modal */}
-      <PromptSandboxModal
-        isOpen={showSandbox}
-        onClose={() => setShowSandbox(false)}
-        round={2}
-        challengeType="image"
-        promptText={draftPrompt}
-        runsRemaining={sandboxRunsLeft}
-        onRunSandbox={handleRunSandbox}
-        title="Round 2: Reverse-Engineering Simulation"
-      />
     </div>
   );
 };

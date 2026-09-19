@@ -1,9 +1,14 @@
 {
+<<<<<<< HEAD
   "activeRound": 2,
+=======
+  "activeRound": 1,
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
   "roundState": {
     "round": 1,
     "roundName": "PROMPT MAKEOVER",
     "tagline": "SPIN. UNLOCK. REWRITE.",
+<<<<<<< HEAD
     "isLocked": false,
     "status": "ADVANCED",
     "timerDuration": 600,
@@ -11,8 +16,17 @@
     "timerRunning": true,
     "timerStartedAt": 1789808069618,
     "timerEndsAt": 1789808669618,
+=======
+    "isLocked": true,
+    "status": "LOCKED",
+    "timerDuration": 600,
+    "timerRemaining": 600,
+    "timerRunning": false,
+    "timerStartedAt": null,
+    "timerEndsAt": null,
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
     "eliminationPercentage": 50,
-    "advanceTriggered": true
+    "advanceTriggered": false
   },
   "round2State": {
     "round": 2,
@@ -49,6 +63,7 @@
     "advanceTriggered": false,
     "podiumRevealed": false
   },
+<<<<<<< HEAD
   "teams": [
     {
       "id": "team-1",
@@ -901,4 +916,7 @@
       }
     }
   ]
+=======
+  "teams": []
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 }

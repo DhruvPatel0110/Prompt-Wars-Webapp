@@ -18,9 +18,17 @@ export const HostRound2Control = () => {
 
   const round2State = hostState?.round2State || {};
   const allTeams = hostState?.teams || [];
+<<<<<<< HEAD
   const isR1AdvanceTriggered = Boolean(hostState?.roundState?.advanceTriggered);
   const qualifiedFromR1 = allTeams.filter(t => t.isQualified);
   const teams = isR1AdvanceTriggered ? qualifiedFromR1 : (qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams);
+=======
+  const isR1Advanced = Boolean(hostState?.roundState?.advanceTriggered || hostState?.activeRound >= 2);
+  const qualifiedFromR1 = allTeams.filter(t => t.isQualified && !t.isEliminated);
+  const teams = isR1Advanced 
+    ? (qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams.filter(t => !t.isEliminated)) 
+    : allTeams.filter(t => !t.isEliminated);
+>>>>>>> 8aeb21002d1ecb73f587e4ea4fd3b400f6e48fd3
 
   const isR2Running = serverTimer?.round2?.timerRunning ?? round2State.timerRunning ?? false;
   const isLocked = serverTimer?.round2?.isLocked ?? round2State.isLocked ?? true;
@@ -247,6 +255,13 @@ export const HostRound2Control = () => {
               const score = r2.totalScore ?? r2.evaluation?.total_score ?? '-';
               const isSub = !!(r2.submittedPrompt || r2.c1_submittedPrompt);
               const isEval = !!(r2.evaluation || r2.c1_evaluation);
+              const isElim = Boolean(
+                team.isEliminated ||
+                r2.isEliminated ||
+                r2.status === 'eliminated' ||
+                (team.isQualified === false && hostState?.roundState?.advanceTriggered) ||
+                (r2.isQualified === false && hostState?.round2State?.advanceTriggered)
+              );
 
               return (
                 <tr key={team.id} className="hover:bg-cyan-950/20 transition-colors">
@@ -282,13 +297,15 @@ export const HostRound2Control = () => {
                   </td>
                   <td className="py-3 px-4 text-center">
                     <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${
-                      isEval
+                      isElim
+                        ? 'bg-red-950/80 text-red-400 border border-red-500/40'
+                        : isEval
                         ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/40'
                         : isSub
                         ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40'
                         : 'bg-gray-800 text-gray-400'
                     }`}>
-                      {isEval ? 'EVALUATED' : isSub ? 'SUBMITTED' : 'DRAFTING'}
+                      {isElim ? 'ELIMINATED' : isEval ? 'EVALUATED' : isSub ? 'SUBMITTED' : 'DRAFTING'}
                     </span>
                   </td>
                   <td className="py-3 px-3 text-center">
