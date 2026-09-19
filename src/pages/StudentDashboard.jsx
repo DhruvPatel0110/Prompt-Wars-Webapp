@@ -152,10 +152,24 @@ export const StudentDashboard = () => {
   }
 
   // ----------------------------------------------------
+  // QUALIFICATION & ELIMINATION STATUS RESOLUTION
+  // ----------------------------------------------------
+  const isR1AdvanceTriggered = Boolean(teamState?.roundState?.advanceTriggered);
+  const isR2AdvanceTriggered = Boolean(teamState?.round2State?.advanceTriggered);
+
+  // Round 1 status
+  const isR1Eliminated = isR1AdvanceTriggered && (team.isQualified === false || team.isEliminated === true);
+  const isR1Qualified = isR1AdvanceTriggered && team.isQualified === true;
+
+  // Round 2 status
+  const isR2Eliminated = isR2AdvanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true);
+  const isR2Qualified = isR2AdvanceTriggered && team.round2?.isQualified === true && isR1Qualified;
+
+  // ----------------------------------------------------
   // TOURNAMENT ROUND ROUTER & NAVIGATION
   // ----------------------------------------------------
   const renderRoundSwitcher = () => {
-    if (!team.isQualified && activeRound === 1 && !teamState?.roundState?.advanceTriggered) return null;
+    if (!isR1AdvanceTriggered && activeRound === 1) return null;
 
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
@@ -175,9 +189,15 @@ export const StudentDashboard = () => {
                   {team.evaluation.total_score}p
                 </span>
               )}
+              {isR1Eliminated && (
+                <span className="px-1.5 py-0.2 rounded bg-gray-500/30 text-gray-300 text-[10px] font-bold">
+                  COMPLETED
+                </span>
+              )}
             </button>
 
-            {(team.isQualified || activeRound >= 2) && (
+            {/* ROUND 2 TAB: ONLY VISIBLE IF TEAM QUALIFIED FROM ROUND 1 */}
+            {isR1Qualified && (
               <button
                 onClick={() => setSelectedRoundTab(2)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -192,10 +212,16 @@ export const StudentDashboard = () => {
                     {team.round2.totalScore}p
                   </span>
                 )}
+                {isR2Eliminated && (
+                  <span className="px-1.5 py-0.2 rounded bg-gray-500/30 text-gray-300 text-[10px] font-bold">
+                    COMPLETED
+                  </span>
+                )}
               </button>
             )}
 
-            {(team.round2?.isQualified || activeRound >= 3) && (
+            {/* ROUND 3 TAB: ONLY VISIBLE IF TEAM QUALIFIED FROM ROUND 2 */}
+            {isR2Qualified && (
               <button
                 onClick={() => setSelectedRoundTab(3)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -237,8 +263,110 @@ export const StudentDashboard = () => {
   const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
   const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-  // View Round 3 Workspace
+  // ----------------------------------------------------
+  // 1. ELIMINATED TEAMS (STRICT LOCKOUT SCREEN)
+  // If eliminated in Round 1, team CANNOT access Round 2 or Round 3
+  // ----------------------------------------------------
+  if (isR1Eliminated) {
+    return (
+      <div>
+        {renderRoundSwitcher()}
+        <div className="max-w-3xl mx-auto px-4 py-12 text-center animate-fade-in">
+          <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-red-500/40 bg-gradient-to-b from-red-950/30 via-[#070a13]/90 to-[#070a13] shadow-[0_0_50px_rgba(255,60,60,0.2)]">
+            <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500/40 text-red-400 flex items-center justify-center mx-auto mb-6 shadow-[0_0_25px_rgba(255,60,60,0.3)]">
+              <XCircle className="w-10 h-10" />
+            </div>
+
+            <span className="px-4 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-mono font-bold uppercase tracking-widest">
+              ROUND 1 CONCLUDED • TOP 50% ADVANCING
+            </span>
+
+            <h1 className="font-display font-black text-3xl sm:text-5xl text-white mt-3 tracking-wider">
+              BETTER LUCK NEXT TIME
+            </h1>
+
+            <p className="text-gray-300 font-sans text-base max-w-lg mx-auto mt-2">
+              Thank you for competing in PROMPT WARS, <span className="text-red-300 font-bold">{team.name || user?.teamName}</span>! The top 50% of teams have advanced to Round 2.
+            </p>
+
+            {/* Score & Rank Display */}
+            <div className="my-6 grid grid-cols-2 gap-4 max-w-md mx-auto">
+              <div className="p-4 rounded-2xl bg-black/50 border border-red-500/30">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-gray-400">Total Round 1 Score</div>
+                <div className="font-display font-black text-4xl text-red-400 mt-1">
+                  {team.evaluation?.total_score ?? 0}
+                  <span className="text-lg text-gray-500 font-normal"> / 20</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-black/50 border border-white/[0.08]">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-gray-400">Final Arena Rank</div>
+                <div className="font-display font-black text-4xl text-gray-200 mt-1">
+                  #{team.rank || 'N/A'}
+                </div>
+              </div>
+            </div>
+
+            {/* 4-Criteria Rubric Breakdown */}
+            {team.evaluation && (
+              <div className="p-5 rounded-2xl bg-black/40 border border-white/[0.08] text-left max-w-lg mx-auto space-y-3">
+                <div className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider">
+                  Evaluation Rubric Breakdown
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] flex justify-between items-center">
+                    <span className="text-gray-400">Clarity & Specificity:</span>
+                    <span className="text-cyan-400 font-bold">{team.evaluation.clarity_score ?? 0}/5</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] flex justify-between items-center">
+                    <span className="text-gray-400">Prompt Engineering:</span>
+                    <span className="text-amber-400 font-bold">{team.evaluation.techniques_score ?? 0}/5</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] flex justify-between items-center">
+                    <span className="text-gray-400">Structure & Format:</span>
+                    <span className="text-emerald-400 font-bold">{team.evaluation.format_score ?? 0}/5</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] flex justify-between items-center">
+                    <span className="text-gray-400">Creativity & Style:</span>
+                    <span className="text-purple-400 font-bold">{team.evaluation.creativity_score ?? 0}/5</span>
+                  </div>
+                </div>
+
+                {team.evaluation.reasoning && (
+                  <div className="pt-2 text-xs text-gray-300 font-sans border-t border-white/[0.06]">
+                    <strong className="text-gray-400 block mb-1">AI Evaluator Feedback:</strong>
+                    <p className="italic leading-relaxed">{team.evaluation.reasoning}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Recorded Prompt */}
+            {(team.submittedPrompt || localDraft) && (
+              <div className="mt-6 p-4 rounded-2xl bg-black/50 border border-white/[0.08] text-left max-w-lg mx-auto">
+                <div className="text-xs font-mono text-gray-400 uppercase mb-2">Your Recorded Submission:</div>
+                <div className="text-xs font-mono text-gray-300 whitespace-pre-wrap max-h-36 overflow-y-auto leading-relaxed">
+                  {team.submittedPrompt || localDraft}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------
+  // 2. ROUND 3 VIEW (ONLY FOR QUALIFIED FINALISTS)
+  // ----------------------------------------------------
   if (currentViewRound === 3) {
+    if (!isR2Qualified) {
+      return (
+        <div>
+          {renderRoundSwitcher()}
+          <StudentRound2 team={team} round2State={teamState?.round2State} />
+        </div>
+      );
+    }
     return (
       <div>
         {renderRoundSwitcher()}
@@ -247,8 +375,13 @@ export const StudentDashboard = () => {
     );
   }
 
-  // View Round 2 Workspace
+  // ----------------------------------------------------
+  // 3. ROUND 2 VIEW (ONLY FOR ROUND 1 QUALIFIED TEAMS)
+  // ----------------------------------------------------
   if (currentViewRound === 2) {
+    if (!isR1Qualified) {
+      return null;
+    }
     return (
       <div>
         {renderRoundSwitcher()}
@@ -338,66 +471,52 @@ export const StudentDashboard = () => {
     );
   }
 
-  // 2. POST-ROUND 1 ADVANCEMENT VERDICT SCREEN
-  if (team.isQualified !== null && team.isQualified !== undefined && !selectedRoundTab && teamState?.roundState?.advanceTriggered && activeRound === 1) {
+  // 2. POST-ROUND 1 ADVANCEMENT VERDICT CELEBRATION (For Qualified Teams)
+  if (isR1Qualified && !selectedRoundTab && isR1AdvanceTriggered && activeRound === 1) {
     return (
       <div>
         {renderRoundSwitcher()}
         <div className="max-w-3xl mx-auto px-4 py-12 text-center animate-fade-in">
-          {team.isQualified ? (
-            <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-emerald-500/50 bg-gradient-to-b from-emerald-950/30 via-[#070a13]/80 to-[#070a13] shadow-[0_0_50px_rgba(0,255,136,0.2)]">
-              <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-6 shadow-[0_0_35px_rgba(0,255,136,0.4)] animate-bounce">
-                <Trophy className="w-12 h-12" />
-              </div>
-
-              <span className="px-4 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-xs font-mono font-bold uppercase tracking-widest">
-                OFFICIAL VERDICT • ADVANCING
-              </span>
-
-              <h1 className="font-display font-black text-4xl sm:text-5xl text-white mt-3 tracking-wider">
-                🎉 QUALIFIED FOR ROUND 2!
-              </h1>
-
-              <p className="text-gray-300 font-sans text-base max-w-lg mx-auto mt-2">
-                Outstanding performance, <span className="text-emerald-400 font-bold">{team.name}</span>! Your prompt placed you in the top 50%.
-              </p>
-
-              <div className="my-8 p-6 rounded-2xl bg-black/40 border border-emerald-500/30 max-w-md mx-auto">
-                <div className="text-xs font-mono uppercase tracking-wider text-gray-400">Total Round 1 Score</div>
-                <div className="font-display font-black text-6xl text-emerald-400 mt-1 drop-shadow-[0_0_15px_rgba(0,255,136,0.6)]">
-                  {team.evaluation?.total_score || 0}
-                  <span className="text-2xl text-gray-500 font-normal"> / 20</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setSelectedRoundTab(2)}
-                className="cyber-btn px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 mx-auto shadow-[0_0_25px_rgba(0,255,136,0.5)]"
-              >
-                <span>ENTER ROUND 2: REVERSE ENGINEERING</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+          <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-emerald-500/50 bg-gradient-to-b from-emerald-950/30 via-[#070a13]/80 to-[#070a13] shadow-[0_0_50px_rgba(0,255,136,0.2)]">
+            <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-6 shadow-[0_0_35px_rgba(0,255,136,0.4)] animate-bounce">
+              <Trophy className="w-12 h-12" />
             </div>
-          ) : (
-            <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-red-500/40 bg-gradient-to-b from-red-950/20 to-[#070a13]">
-              <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500/40 text-red-400 flex items-center justify-center mx-auto mb-6">
-                <XCircle className="w-10 h-10" />
+
+            <span className="px-4 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-xs font-mono font-bold uppercase tracking-widest">
+              OFFICIAL VERDICT • ADVANCING
+            </span>
+
+            <h1 className="font-display font-black text-4xl sm:text-5xl text-white mt-3 tracking-wider">
+              🎉 QUALIFIED FOR ROUND 2!
+            </h1>
+
+            <p className="text-gray-300 font-sans text-base max-w-lg mx-auto mt-2">
+              Outstanding performance, <span className="text-emerald-400 font-bold">{team.name}</span>! Your prompt placed you in the qualifying bracket.
+            </p>
+
+            <div className="my-8 p-6 rounded-2xl bg-black/40 border border-emerald-500/30 max-w-md mx-auto">
+              <div className="text-xs font-mono uppercase tracking-wider text-gray-400">Total Round 1 Score</div>
+              <div className="font-display font-black text-6xl text-emerald-400 mt-1 drop-shadow-[0_0_15px_rgba(0,255,136,0.6)]">
+                {team.evaluation?.total_score || 0}
+                <span className="text-2xl text-gray-500 font-normal"> / 20</span>
               </div>
-              <h1 className="font-display font-black text-3xl sm:text-4xl text-white mt-3 tracking-wider">
-                BETTER LUCK NEXT TIME
-              </h1>
-              <p className="text-gray-300 font-sans text-sm max-w-md mx-auto mt-2">
-                Thank you for competing in PROMPT WARS! Your score was {team.evaluation?.total_score || 0}/20.
-              </p>
             </div>
-          )}
+
+            <button
+              onClick={() => setSelectedRoundTab(2)}
+              className="cyber-btn px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 mx-auto shadow-[0_0_25px_rgba(0,255,136,0.5)]"
+            >
+              <span>ENTER ROUND 2: REVERSE ENGINEERING</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   // 3. POST-SUBMIT WAITING ROOM (Round 1 only, while waiting for evaluation/advancement)
-  if (isSubmitted && activeRound === 1 && !teamState?.roundState?.advanceTriggered) {
+  if (isSubmitted && activeRound === 1 && !isR1AdvanceTriggered) {
     return (
       <div>
         {renderRoundSwitcher()}

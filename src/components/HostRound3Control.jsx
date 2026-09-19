@@ -13,7 +13,9 @@ export const HostRound3Control = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   const round3State = hostState?.round3State || {};
-  const teams = (hostState?.teams || []).filter(t => t.round2?.isQualified || t.isQualified);
+  const isR2AdvanceTriggered = Boolean(hostState?.round2State?.advanceTriggered);
+  const qualifiedForR3 = (hostState?.teams || []).filter(t => t.isQualified && t.round2?.isQualified);
+  const teams = isR2AdvanceTriggered ? qualifiedForR3 : (qualifiedForR3.length > 0 ? qualifiedForR3 : (hostState?.teams || []).filter(t => t.isQualified));
   const phase = round3State.phase || 'master_draft';
   const isR3Running = serverTimer?.round3?.timerRunning ?? round3State.timerRunning ?? false;
   const isLocked = serverTimer?.round3?.isLocked ?? round3State.isLocked ?? true;

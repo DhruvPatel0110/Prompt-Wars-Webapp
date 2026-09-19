@@ -54,25 +54,32 @@ export async function evaluateRound2Challenge2({ targetReport, studentPrompt, te
 // --- Groq Image Evaluator (Primary - Free Tier with resilient model fallback) ---
 async function evaluateImageWithGroq({ targetImage, studentPrompt }) {
   const prompt = `You are an authoritative AI judge for PROMPT WARS Round 2: Prompt Reverse Engineering.
-A student team was shown a specific target image and tasked with writing a prompt that would regenerate/recreate that exact visual output.
+A student team was shown a specific target image and tasked with writing a prompt that would regenerate and recreate that exact visual output.
 
 TARGET IMAGE DETAILS:
 - Title: ${targetImage.title}
 - Description: ${targetImage.description}
 - Key Visual Elements: ${JSON.stringify(targetImage.keyElements || [])}
-- Reference Prompt: "${targetImage.targetVisualPrompt || ''}"
+- Reference Prompt (for context): "${targetImage.targetVisualPrompt || ''}"
 
 STUDENT'S REVERSE-ENGINEERED PROMPT:
 "${studentPrompt}"
 
-Evaluate how accurately this student prompt captures the target image across 4 criteria (Total 20 pts):
-1. composition_score (0-5): Camera angle, framing, depth of field, perspective, aspect ratio.
+SCORING PHILOSOPHY & OBJECTIVE:
+- The objective is VISUAL FIDELITY and finding the CLOSEST CONCEPTUAL RECREATION MATCH to the target image (NOT exact verbatim word matching).
+- Students only saw the image, not the hidden prompt. Reward them for accurately dissecting and describing what is visually present (camera angle, lighting, colors, subjects, textures, render engine style) even when they use synonyms or creative prompt terminology.
+- High scores (14-19/20): Prompts that would successfully generate a visual output closely resembling the target artwork.
+- Moderate scores (8-13/20): Prompts that capture the core subject but miss specific lighting cues, camera lens perspective, or secondary environment details.
+- Low scores (1-7/20): Vague, generic prompts with little to no detail.
+
+EVALUATE ON 4 CORE PILLARS (Total 20 pts):
+1. composition_score (0-5): Camera angle, perspective (e.g. low-angle, aerial, eye-level), framing, depth of field, aspect ratio.
 2. colors_score (0-5): Color palette accuracy, lighting sources, shadows, ambient glow, atmospheric reflections.
-3. subject_score (0-5): Primary subjects, secondary details, environment accuracy, architecture/textures.
-4. style_score (0-5): Art style, render engine tokens (Octane, Unreal, Studio photo, 8k, lens focal length), medium fidelity.
+3. subject_score (0-5): Primary subjects, characters/objects, environment accuracy, architecture and key details.
+4. style_score (0-5): Art style, rendering medium cues (e.g. Octane, Unreal Engine 5, 8k, digital concept art, cinematic photograph).
 
 Respond ONLY with valid JSON (no markdown):
-{"composition_score":<number 0-5>,"colors_score":<number 0-5>,"subject_score":<number 0-5>,"style_score":<number 0-5>,"total_score":<number 0-20>,"reasoning":"<constructive feedback on prompt accuracy>","matched_elements":["<element>"],"missed_elements":["<element>"]}`;
+{"composition_score":<number 0-5>,"colors_score":<number 0-5>,"subject_score":<number 0-5>,"style_score":<number 0-5>,"total_score":<number 0-20>,"reasoning":"<constructive feedback highlighting closest matches and missed visual nuances>","matched_elements":["<element 1>","<element 2>"],"missed_elements":["<element 1>"]}`;
 
   const candidateModels = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
   let lastError = null;

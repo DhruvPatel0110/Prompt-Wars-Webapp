@@ -609,22 +609,13 @@ export class StateManager {
       return (a.timerUsedSeconds || 9999) - (b.timerUsedSeconds || 9999);
     });
 
-    const evaluatedOrSubmittedTeams = teamsList.filter(t => t.evaluation || t.submittedPrompt);
-    const totalActiveTeams = evaluatedOrSubmittedTeams.length > 0 ? evaluatedOrSubmittedTeams.length : teamsList.length;
-    const qualifyCount = Math.max(1, Math.ceil(totalActiveTeams * ((100 - this.roundState.eliminationPercentage) / 100)));
-    const MIN_QUALIFYING_SCORE = 8.0; // Minimum 8/20 (40% competency) required to advance
+    const totalTeams = teamsList.length || 1;
+    // Mandatory 50% cutoff: strictly top 50% of total teams advance to Round 2
+    const qualifyCount = Math.max(1, Math.ceil(totalTeams * ((100 - this.roundState.eliminationPercentage) / 100)));
 
     teamsList.forEach((team, idx) => {
       team.rank = idx + 1;
-      const score = team.evaluation?.total_score ?? (team.submittedPrompt ? 0 : -1);
-      const isEvaluated = team.evaluation !== null && team.evaluation !== undefined;
-      const hasSubmission = Boolean(team.submittedPrompt || isEvaluated);
-
-      // A team qualifies ONLY if:
-      // 1. They are in the top cutoff bracket
-      // 2. They have a valid submission
-      // 3. Their score meets or exceeds the minimum passing threshold (>= 8.0/20)
-      if (idx < qualifyCount && hasSubmission && (!isEvaluated || score >= MIN_QUALIFYING_SCORE)) {
+      if (idx < qualifyCount) {
         team.isQualified = true;
         team.isEliminated = false;
       } else {
@@ -640,8 +631,11 @@ export class StateManager {
     const challenges = this.round2Challenges;
     if (!challenges || challenges.length === 0) return;
     
-    const allTeams = Array.from(this.teams.values());
-    allTeams.forEach((team, idx) => {
+    const targetTeams = this.roundState.advanceTriggered
+      ? Array.from(this.teams.values()).filter(t => t.isQualified)
+      : Array.from(this.teams.values());
+
+    targetTeams.forEach((team, idx) => {
       const challenge = challenges[idx % challenges.length];
       team.round2.assignedChallenge = challenge;
       if (!team.round2.status || team.round2.status === 'idle') {
@@ -718,6 +712,9 @@ export class StateManager {
   saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
+      return null;
+    }
     const text = (draftText || "").slice(0, 3500);
     team.round2.draftPrompt = text;
     team.round2.c1_draft = text;
@@ -728,6 +725,9 @@ export class StateManager {
   submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
+      throw new Error("Team was eliminated in Round 1 and cannot participate in Round 2.");
+    }
     if (this.round2State.isLocked && this.round2State.status === 'LOCKED' && this.activeRound !== 2) {
       throw new Error("Round 2 is currently locked.");
     }
@@ -794,21 +794,17 @@ export class StateManager {
 
   computeRound2Leaderboard() {
     const qualifiedTeamsFromR1 = Array.from(this.teams.values()).filter(t => t.isQualified);
-    const teamsList = qualifiedTeamsFromR1.length > 0 ? qualifiedTeamsFromR1 : Array.from(this.teams.values());
+    const teamsList = this.roundState.advanceTriggered ? qualifiedTeamsFromR1 : Array.from(this.teams.values());
     
     teamsList.sort((a, b) => (b.round2.totalScore || 0) - (a.round2.totalScore || 0));
 
     const totalInR2 = teamsList.length || 1;
+    // Mandatory 50% cutoff: strictly top 50% of Round 2 participants advance to Grand Finale
     const qualifyCount = Math.max(1, Math.ceil(totalInR2 * ((100 - this.round2State.eliminationPercentage) / 100)));
-    const MIN_R2_QUALIFYING_SCORE = 8.0; // Minimum 8/20 (40%) to advance to Grand Finale
 
     teamsList.forEach((team, idx) => {
       team.round2.rank = idx + 1;
-      const score = team.round2.totalScore || 0;
-      const isEvaluated = team.round2.evaluation !== null && team.round2.evaluation !== undefined;
-      const hasSubmission = Boolean(team.round2.submittedPrompt || team.round2.c1_submittedPrompt || isEvaluated);
-
-      if (idx < qualifyCount && hasSubmission && (!isEvaluated || score >= MIN_R2_QUALIFYING_SCORE)) {
+      if (idx < qualifyCount) {
         team.round2.isQualified = true;
         team.round2.isEliminated = false;
       } else {
@@ -832,7 +828,7 @@ export class StateManager {
 
   getRound2Leaderboard() {
     const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified);
-    const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values());
+    const list = this.roundState.advanceTriggered ? qualifiedTeams : Array.from(this.teams.values());
     list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
     return list;
   }
@@ -842,7 +838,8 @@ export class StateManager {
   // ==========================================
 
   allotRound3Cases() {
-    const r3Teams = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const r3Teams = Array.from(this.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
+    if (r3Teams.length === 0) return;
     const availableCases = this.round3Data.cases || [];
 
     r3Teams.forEach((team, idx) => {
@@ -912,6 +909,8 @@ export class StateManager {
   saveRound3MasterDraft(teamId, draftText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
+    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
     team.round3.masterDraft = (draftText || "").slice(0, 4500);
     return team;
   }
@@ -923,9 +922,9 @@ export class StateManager {
     this.round3State.bombTimerRemaining = 30;
     this.round3State.bombDetonatedAt = Date.now();
 
-    // Initialize adapted drafts with current master draft for all teams
+    // Initialize adapted drafts with current master draft for qualified teams
     for (const team of this.teams.values()) {
-      if (team.round3.assignedCase) {
+      if (team.isQualified && team.round2?.isQualified && team.round3.assignedCase) {
         team.round3.masterPrompt = team.round3.masterDraft || "Master Strategy Draft";
         team.round3.adaptedDraft = team.round3.masterPrompt;
         team.round3.status = 'bomb_active';
@@ -939,6 +938,8 @@ export class StateManager {
   saveRound3BombDraft(teamId, adaptedText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) return null;
+    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) return null;
     team.round3.adaptedDraft = (adaptedText || "").slice(0, 4500);
     return team;
   }
@@ -946,6 +947,12 @@ export class StateManager {
   submitRound3(teamId, adaptedPrompt) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+    if (this.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
+      throw new Error("Team was eliminated in Round 1.");
+    }
+    if (this.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)) {
+      throw new Error("Team was eliminated in Round 2.");
+    }
 
     const text = (adaptedPrompt || team.round3.adaptedDraft || team.round3.masterDraft || "").trim();
     team.round3.adaptedPrompt = text;
@@ -973,7 +980,7 @@ export class StateManager {
   }
 
   computeRound3Leaderboard() {
-    const r3Teams = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const r3Teams = Array.from(this.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
     r3Teams.sort((a, b) => {
       const scoreA = a.round3.evaluation?.total_score ?? -1;
       const scoreB = b.round3.evaluation?.total_score ?? -1;
@@ -1005,7 +1012,7 @@ export class StateManager {
   }
 
   getRound3Leaderboard() {
-    const list = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const list = Array.from(this.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
     list.sort((a, b) => (a.round3.finalRank || 999) - (b.round3.finalRank || 999));
     return list;
   }

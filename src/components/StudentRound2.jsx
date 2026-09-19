@@ -55,6 +55,28 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
   const evaluation = team?.round2?.evaluation || team?.round2?.c1_evaluation;
   const totalScore = team?.round2?.totalScore || evaluation?.total_score || 0;
 
+  // If team was eliminated in Round 1, block display entirely
+  if (team?.isQualified === false || team?.isEliminated === true) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-12 text-center animate-fade-in">
+        <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-red-500/40 bg-gradient-to-b from-red-950/20 to-[#070a13]">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500/40 text-red-400 flex items-center justify-center mx-auto mb-6">
+            <XCircle className="w-10 h-10" />
+          </div>
+          <span className="px-3.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 font-mono text-xs uppercase tracking-wider">
+            ACCESS RESTRICTED • ELIMINATED
+          </span>
+          <h1 className="font-display font-black text-3xl sm:text-4xl text-white mt-3 tracking-wider">
+            BETTER LUCK NEXT TIME
+          </h1>
+          <p className="text-gray-300 font-sans text-sm max-w-md mx-auto mt-2">
+            You were eliminated in Round 1 and cannot participate in Round 2.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Handle Confetti on Qualification
   useEffect(() => {
     if (isAdvanceTriggered && isQualified) {
@@ -159,7 +181,7 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
               Maximum Score: 20 Points
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono">
-              Passing Cutoff: 8.0/20 (Top 50%)
+              Passing Cutoff: Top 50% Advance
             </span>
           </div>
           <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-wider mt-2">

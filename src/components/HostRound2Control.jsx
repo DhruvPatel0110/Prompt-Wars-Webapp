@@ -18,8 +18,9 @@ export const HostRound2Control = () => {
 
   const round2State = hostState?.round2State || {};
   const allTeams = hostState?.teams || [];
+  const isR1AdvanceTriggered = Boolean(hostState?.roundState?.advanceTriggered);
   const qualifiedFromR1 = allTeams.filter(t => t.isQualified);
-  const teams = qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams;
+  const teams = isR1AdvanceTriggered ? qualifiedFromR1 : (qualifiedFromR1.length > 0 ? qualifiedFromR1 : allTeams);
 
   const isR2Running = serverTimer?.round2?.timerRunning ?? round2State.timerRunning ?? false;
   const isLocked = serverTimer?.round2?.isLocked ?? round2State.isLocked ?? true;
@@ -455,7 +456,7 @@ export const HostRound2Control = () => {
               Advance to Round 3?
             </h3>
             <p className="text-xs text-gray-300 font-sans leading-relaxed">
-              This will lock Round 2, publish the final Round 2 leaderboard, qualify the top 50% performers with ≥8.0/20, and automatically allot case studies for the Grand Finale.
+              This will lock Round 2, publish the final Round 2 leaderboard, qualify the top 50% performers, and automatically allot case studies for the Grand Finale.
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
               <button

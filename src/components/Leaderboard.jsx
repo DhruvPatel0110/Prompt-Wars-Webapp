@@ -77,10 +77,7 @@ export const Leaderboard = ({
               const score = team.evaluation?.total_score ?? null;
               const isEvaluated = score !== null;
               const isSubmitted = team.submissionStatus === 'submitted' || Boolean(team.submittedPrompt);
-              const isPassingScore = score !== null && score >= 8.0;
-              const isQualified = isEvaluated 
-                ? (actualRank <= cutoffIndex && isPassingScore)
-                : (actualRank <= cutoffIndex && isSubmitted);
+              const isQualified = actualRank <= cutoffIndex;
               const isCutoffRow = actualRank === cutoffIndex && idx !== filteredTeams.length - 1;
 
               return (

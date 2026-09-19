@@ -86,6 +86,28 @@ export const StudentRound3 = ({ team, round3State }) => {
   const isCompleted = round3State?.status === 'COMPLETED' || r3.status === 'evaluated';
   const bombTimer = round3State?.bombTimerRemaining ?? 30;
 
+  // Block eliminated teams from accessing Round 3
+  if (team?.isQualified === false || team?.isEliminated === true || team?.round2?.isQualified === false || team?.round2?.isEliminated === true) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-12 text-center animate-fade-in">
+        <div className="glass-panel w-full p-8 sm:p-10 rounded-3xl border-red-500/40 bg-gradient-to-b from-red-950/20 to-[#070a13]">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500/40 text-red-400 flex items-center justify-center mx-auto mb-6">
+            <XCircle className="w-10 h-10" />
+          </div>
+          <span className="px-3.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 font-mono text-xs uppercase tracking-wider">
+            ACCESS RESTRICTED • ELIMINATED
+          </span>
+          <h1 className="font-display font-black text-3xl sm:text-4xl text-white mt-3 tracking-wider">
+            BETTER LUCK NEXT TIME
+          </h1>
+          <p className="text-gray-300 font-sans text-sm max-w-md mx-auto mt-2">
+            You were eliminated and cannot participate in the Grand Finale.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Sound effect on Bomb Detonation
   useEffect(() => {
     if (isBombPhase && !isSubmitted) {

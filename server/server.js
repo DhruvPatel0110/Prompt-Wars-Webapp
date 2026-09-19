@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { StateManager } from './stateManager.js';
 import { evaluateSubmission, evaluateBatchWithConcurrency } from './evaluator.js';
@@ -353,6 +354,13 @@ io.on('connection', (socket) => {
       }
 
       const rNum = Number(round) || 1;
+      if (rNum === 2 && stateManager.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) {
+        return callback?.({ success: false, error: 'Team was eliminated in Round 1 and cannot use the Round 2 sandbox.' });
+      }
+      if (rNum === 3 && ((stateManager.roundState.advanceTriggered && (team.isQualified === false || team.isEliminated === true)) || (stateManager.round2State.advanceTriggered && (team.round2?.isQualified === false || team.round2?.isEliminated === true)))) {
+        return callback?.({ success: false, error: 'Team was eliminated and cannot use the Round 3 sandbox.' });
+      }
+
       let contextData = {};
       if (rNum === 1) {
         contextData = {
@@ -566,9 +574,9 @@ io.on('connection', (socket) => {
 
   socket.on('admin:evaluate_round2', async (data, callback) => {
     const qualifiedTeams = Array.from(stateManager.teams.values()).filter(t => t.isQualified);
-    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(stateManager.teams.values());
+    const targetTeams = stateManager.roundState.advanceTriggered ? qualifiedTeams : Array.from(stateManager.teams.values());
     if (targetTeams.length === 0) {
-      return callback?.({ success: false, error: 'No teams to evaluate for Round 2.' });
+      return callback?.({ success: false, error: 'No qualified teams to evaluate for Round 2.' });
     }
 
     stateManager.round2State.status = 'EVALUATING';
@@ -690,7 +698,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('admin:evaluate_round3', async (data, callback) => {
-    const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.isQualified && t.round2?.isQualified);
     if (teamsInR3.length === 0) {
       return callback?.({ success: false, error: 'No qualified teams for Round 3.' });
     }
@@ -769,6 +777,27 @@ io.on('connection', (socket) => {
     }
   });
 });
+
+// --- Production Static & SPA Hosting (Render Deployment) ---
+const distPath = path.join(__dirname, '..', 'dist');
+const round2ImagesPath = path.join(__dirname, '..', 'round2_images');
+const publicPath = path.join(__dirname, '..', 'public');
+
+if (fs.existsSync(round2ImagesPath)) {
+  app.use('/round2_images', express.static(round2ImagesPath));
+}
+if (fs.existsSync(publicPath)) {
+  app.use(express.static(publicPath));
+}
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+      return next();
+    }
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 httpServer.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
