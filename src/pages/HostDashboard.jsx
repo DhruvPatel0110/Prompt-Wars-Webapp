@@ -26,7 +26,7 @@ export const HostDashboard = () => {
     totalTeams: teams.length || 70,
     connectedCount: teams.filter(t => t.connected).length,
     r1Submitted: teams.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length,
-    r2Submitted: teams.filter(t => t.round2?.status === 'both_submitted' || t.round2?.status === 'evaluated').length,
+    r2Submitted: teams.filter(t => t.round2?.status === 'submitted' || t.round2?.status === 'evaluated' || t.round2?.submittedPrompt || t.round2?.c1_submittedPrompt).length,
     r3Submitted: teams.filter(t => t.round3?.status === 'submitted' || t.round3?.status === 'evaluated').length
   };
 
@@ -52,10 +52,29 @@ export const HostDashboard = () => {
   const handleEvaluateAll = () => {
     setIsEvaluating(true);
     socket?.emit('admin:evaluate_all', {}, (res) => {
-      setIsEvaluating(false);
-      if (!res?.success) alert(res?.error || 'Evaluation failed.');
+      if (!res?.success) {
+        setIsEvaluating(false);
+        alert(res?.error || 'Evaluation failed.');
+      }
     });
   };
+
+  React.useEffect(() => {
+    if (!socket) return;
+    const onEvalComplete = () => {
+      setIsEvaluating(false);
+    };
+    socket.on('admin:eval_complete', onEvalComplete);
+    return () => {
+      socket.off('admin:eval_complete', onEvalComplete);
+    };
+  }, [socket]);
+
+  React.useEffect(() => {
+    if (state?.status === 'EVALUATED') {
+      setIsEvaluating(false);
+    }
+  }, [state?.status]);
 
   // Advance Round 1 to Round 2
   const handleAdvanceRound = () => {
@@ -276,6 +295,37 @@ export const HostDashboard = () => {
               </button>
             </div>
           </div>
+
+          {/* Live AI Batch Adjudication Progress Card */}
+          {(isEvaluating || state?.status === 'EVALUATING' || (evalProgress && evalProgress.completed < evalProgress.total)) && (
+            <div className="glass-panel p-4 rounded-2xl border-purple-500/50 bg-gradient-to-r from-purple-950/40 via-[#0d1424] to-indigo-950/40 shadow-[0_0_25px_rgba(138,43,226,0.3)]">
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-purple-400 animate-spin" />
+                  <span className="font-display font-bold text-sm text-purple-200">
+                    AI ADJUDICATOR BATCH EVALUATION IN PROGRESS
+                  </span>
+                </div>
+                <span className="font-mono text-xs font-bold text-purple-300">
+                  {evalProgress?.completed || 0} / {evalProgress?.total || teams.length} TEAMS SCORED
+                </span>
+              </div>
+              <div className="w-full bg-black/60 rounded-full h-2.5 overflow-hidden border border-purple-500/30">
+                <div 
+                  className="bg-gradient-to-r from-purple-500 via-indigo-400 to-cyan-400 h-2.5 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${evalProgress?.total ? Math.round((evalProgress.completed / evalProgress.total) * 100) : (isEvaluating ? 45 : 100)}%`
+                  }}
+                />
+              </div>
+              {evalProgress?.currentTeam && (
+                <div className="text-[11px] font-mono text-gray-400 mt-2 flex items-center gap-1.5">
+                  <span>Currently evaluating:</span>
+                  <span className="text-cyan-300 font-bold">{evalProgress.currentTeam}</span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Sub-nav Tab Selector */}
           <div className="flex items-center gap-2 border-b border-[#1f2b48] pb-3">

@@ -1,91 +1,2632 @@
 {
-  "activeRound": 1,
+  "activeRound": 3,
   "roundState": {
     "round": 1,
     "roundName": "PROMPT MAKEOVER",
     "tagline": "SPIN. UNLOCK. REWRITE.",
     "isLocked": false,
-    "status": "ACTIVE",
+    "status": "ADVANCED",
     "timerDuration": 600,
-    "timerRemaining": 600,
+    "timerRemaining": 534,
     "timerRunning": false,
-    "timerStartedAt": null,
-    "timerEndsAt": null,
+    "timerStartedAt": 1789757427418,
+    "timerEndsAt": 1789758027418,
     "eliminationPercentage": 50,
-    "advanceTriggered": false
+    "advanceTriggered": true
   },
   "round2State": {
     "round": 2,
     "roundName": "PROMPT REVERSE ENGINEERING",
     "tagline": "SEE THE OUTPUT. BUILD THE PROMPT.",
-    "isLocked": true,
-    "status": "LOCKED",
+    "isLocked": false,
+    "status": "ADVANCED",
     "timerDuration": 900,
-    "timerRemaining": 900,
+    "timerRemaining": 866,
     "timerRunning": false,
-    "timerStartedAt": null,
-    "timerEndsAt": null,
+    "timerStartedAt": 1789757459062,
+    "timerEndsAt": 1789758359062,
     "eliminationPercentage": 50,
-    "advanceTriggered": false,
-    "activeImageChallenge": {
-      "id": "r2_img_001",
-      "type": "image",
-      "challengeNumber": 1,
-      "title": "Solarpunk Neo-Metropolis 2077",
-      "description": "A high-altitude panoramic architectural concept art showing a futuristic eco-city blending vertical forest skyscrapers, solar-glass transit rails, lush sky-bridges, and flying electric air-taxis at golden hour sunset with warm neon lighting.",
-      "difficulty": 2,
-      "aspectRatio": "16:9",
-      "targetVisualPrompt": "Ultra-detailed futuristic solarpunk metropolis at golden hour sunset. Cinematic wide-angle perspective of towering glass and carbon-fiber sky-towers covered in lush cascading rooftop gardens, vertical greenery, and glowing solar-paneled spirals. Hyperloop glass tubes and sleek electric VTOL flying taxis crisscross between soaring skybridges. Warm sunset lighting reflects across curved holographic billboards and crystalline bio-domes. Masterpiece architectural rendering in Unreal Engine 5, octane render, 8k resolution, crisp photorealistic textures, volumetric sunset god-rays.",
-      "keyElements": [
-        "Solarpunk futuristic architectural style with vertical hanging gardens",
-        "Golden hour sunset atmosphere with warm orange and purple sky glow",
-        "Sleek flying electric air-taxis and transparent hyperloop sky-tubes",
-        "Ultra-wide cinematic angle with high depth of field",
-        "Holographic signage and crystalline bio-domes with volumetric lighting"
-      ],
-      "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='skyGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#0a0826'/><stop offset='40%' stop-color='#3b1443'/><stop offset='75%' stop-color='#e65c00'/><stop offset='100%' stop-color='#ffd269'/></linearGradient><linearGradient id='bldg1' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#0f172a'/><stop offset='100%' stop-color='#1e293b'/></linearGradient><linearGradient id='bldg2' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00f0ff'/><stop offset='100%' stop-color='#004466'/></linearGradient><linearGradient id='greenery' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00ff88'/><stop offset='100%' stop-color='#006633'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feGaussianBlur stdDeviation='8' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='800' height='450' fill='url(#skyGrad)'/><circle cx='400' cy='320' r='140' fill='#ff8800' opacity='0.7' filter='url(#glow)'/><circle cx='400' cy='320' r='100' fill='#ffe680' opacity='0.9'/><path d='M0 450 L120 220 L180 220 L240 450 Z' fill='url(#bldg1)'/><rect x='130' y='230' width='40' height='190' fill='#00f0ff' opacity='0.3'/><rect x='80' y='270' width='20' height='60' fill='url(#greenery)' rx='5'/><rect x='110' y='320' width='30' height='40' fill='url(#greenery)' rx='5'/><path d='M260 450 L340 120 L420 120 L480 450 Z' fill='#0a0f1d'/><rect x='355' y='140' width='50' height='290' fill='url(#bldg2)' opacity='0.4'/><path d='M330 180 Q390 160 450 180 L440 195 Q390 175 340 195 Z' fill='url(#greenery)'/><path d='M320 260 Q390 240 460 260 L450 275 Q390 255 330 275 Z' fill='url(#greenery)'/><path d='M500 450 L560 170 L620 170 L680 450 Z' fill='url(#bldg1)'/><rect x='570' y='190' width='40' height='230' fill='#ff007f' opacity='0.3'/><path d='M550 230 Q600 215 650 230' stroke='url(#greenery)' stroke-width='12' fill='none'/><path d='M100 300 Q400 240 700 320' stroke='#00f0ff' stroke-width='4' fill='none' opacity='0.8' filter='url(#glow)'/><path d='M120 340 Q400 380 680 280' stroke='#ff007f' stroke-width='3' fill='none' opacity='0.7' filter='url(#glow)'/><polygon points='220,160 260,170 230,175' fill='#00f0ff' filter='url(#glow)'/><line x1='210' y1='168' x2='180' y2='168' stroke='#00f0ff' stroke-width='2' opacity='0.8'/><polygon points='580,120 620,130 590,135' fill='#ffd700' filter='url(#glow)'/><line x1='570' y1='128' x2='540' y2='128' stroke='#ffd700' stroke-width='2' opacity='0.8'/><rect x='0' y='420' width='800' height='30' fill='#050811'/><text x='30' y='438' fill='#00f0ff' font-family='monospace' font-size='11' letter-spacing='2'>[TARGET 01 : SOLARPUNK METROPOLIS // GOLDEN HOUR CINEMATIC]</text></svg>",
-      "evaluationCriteria": {
-        "composition": "Visual hierarchy, wide-angle panoramic city skyline, soaring towers, skybridges",
-        "colors": "Golden hour sunset palette (orange, amber, purple sky, cyan/neon highlights)",
-        "subject": "Solarpunk futuristic eco-city with vertical hanging gardens and flying air-taxis",
-        "style": "Cinematic photorealistic 3D render, volumetric lighting, Unreal Engine 5 aesthetic"
-      }
-    },
-    "activeReportChallenge": {
-      "id": "r2_rep_001",
-      "type": "report",
-      "challengeNumber": 2,
-      "title": "FY 2025-26 Comprehensive Enterprise SaaS Performance & Financial Report",
-      "difficulty": 2,
-      "reportSummary": "A 12-month financial and operating metric analysis for a high-growth AI Developer Cloud platform detailing ARR, MRR, Gross Margins, CAC payback, Customer Churn, and EBITDA breakdown across 4 quarters.",
-      "targetReportMarkdown": "# EXECUTIVE FINANCIAL & OPERATIONAL AUDIT: FY 2025–2026\n**Entity:** CloudMatrix AI Inc. | **Reporting Currency:** USD ($) in Thousands\n\n---\n\n## 1. Executive Performance Summary\nDuring FY 2025–2026, CloudMatrix AI achieved an Annual Recurring Revenue (ARR) milestone of **$48.6M**, reflecting **82.4% year-over-year expansion**. Gross Margin strengthened from 71.2% in Q1 to **79.8% in Q4** driven by optimized GPU inference cluster utilization.\n\n```\nKey Annual KPI Scorecard:\n• Ending ARR: $48,620,000 (Target: $44,000,000 | +10.5% vs Plan)\n• Net Revenue Retention (NRR): 134.2%\n• Blended CAC Payback Period: 8.4 Months\n• Rule of 40 Index: 54.8 (Growth 82.4% - FCF Margin 27.6%)\n```\n\n---\n\n## 2. Quarterly Financial Matrix (USD in '000s)\n\n| Quarter | Gross Revenue | Infrastructure COGS | Gross Profit | S&M Expenses | R&D Investment | G&A Overhead | Adjusted EBITDA | Operating Margin |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Q1 (Apr-Jun)** | $8,450 | $2,430 | $6,020 (71.2%) | $3,120 | $2,840 | $980 | **-$920** | -10.9% |\n| **Q2 (Jul-Sep)** | $10,890 | $2,720 | $8,170 (75.0%) | $3,650 | $3,100 | $1,050 | **+$370** | +3.4% |\n| **Q3 (Oct-Dec)** | $13,420 | $2,980 | $10,440 (77.8%) | $4,200 | $3,350 | $1,180 | **+$1,710** | +12.7% |\n| **Q4 (Jan-Mar)** | $15,860 | $3,200 | $12,660 (79.8%) | $4,850 | $3,620 | $1,290 | **+$2,900** | +18.3% |\n| **FY TOTAL** | **$48,620** | **$11,330** | **$37,290 (76.7%)** | **$15,820** | **$12,910** | **$4,500** | **+$4,060** | **+8.4%** |\n\n---\n\n## 3. Unit Economics & Customer Cohort Trends\n- **Enterprise Tier Expansion:** Enterprise customers with >$100k ACV expanded from 42 to **118 accounts**.\n- **CAC Efficiency:** Customer Acquisition Cost decreased from $14,200 in Q1 to **$11,800 in Q4** due to viral developer bottom-up adoption.\n- **Inference Cost Compression:** Unit cost per 1M LLM tokens generated reduced by **46.8%** following tensor quantization deployment.\n\n---\n\n## 4. Strategic Outlook & Capital Allocation for FY 2026–27\n1. **Compute Infrastructure:** Allocate $8.5M in Capex to secure dedicated 256-node H200 GPU clusters.\n2. **International Expansion:** Initiate EMEA enterprise sales hub with target ARR contribution of $6.0M by Q3.\n3. **Free Cash Flow:** Target sustainable +20% FCF margin while preserving >65% top-line growth.",
-      "targetReportPrompt": "Act as a Chief Financial Officer at a Tier-1 Venture-Backed AI SaaS company. Generate a detailed, publication-ready Executive Financial and Operational Audit Report for FY 2025-2026. The report must include: 1) Executive Performance Summary with ARR ($48.6M), 82.4% YoY growth, NRR (134.2%), and Rule of 40 score; 2) A 4-quarter structured markdown financial table breaking down Gross Revenue, Infrastructure COGS, Gross Profit with margin %, Sales & Marketing, R&D, G&A, and Adjusted EBITDA; 3) Granular Unit Economics section covering Enterprise ACV, CAC trends, and inference cost reduction; 4) Strategic capital allocation roadmap for next financial year. Use precise financial syntax and markdown formatting.",
-      "evaluationCriteria": {
-        "structure": "Executive summary, 4-quarter financial breakdown table, unit economics, strategic outlook",
-        "content": "Specific financial figures ($48.6M ARR, 82.4% YoY, COGS, EBITDA, NRR)",
-        "format": "Crisp markdown tables, currency delimiters, percentages, bolded subtotals",
-        "insights": "Strategic analysis of GPU cluster optimization, CAC compression, expansion plans"
-      }
-    }
+    "advanceTriggered": true,
+    "activeImageChallenge": null,
+    "activeReportChallenge": null
   },
   "round3State": {
     "round": 3,
     "roundName": "FINAL PROMPT BATTLE",
     "tagline": "BUILD. ADAPT. SURVIVE.",
-    "isLocked": true,
-    "status": "LOCKED",
-    "phase": "master_draft",
+    "isLocked": false,
+    "status": "BOMB_DETONATED",
+    "phase": "bomb_detonated",
     "timerDuration": 900,
-    "timerRemaining": 900,
+    "timerRemaining": 898,
     "timerRunning": false,
-    "timerStartedAt": null,
-    "timerEndsAt": null,
+    "timerStartedAt": 1789757491198,
+    "timerEndsAt": 1789758391198,
     "bombDurationSeconds": 30,
-    "bombTimerRemaining": 30,
+    "bombTimerRemaining": 28,
     "bombRunning": false,
-    "bombDetonatedAt": null,
+    "bombDetonatedAt": 1789757491913,
     "advanceTriggered": false,
-    "podiumRevealed": false
+    "podiumRevealed": true
   },
-  "teams": []
+  "teams": [
+    {
+      "id": "team_01",
+      "name": "Falcon Squad 1",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521938,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_01",
+          "challengeNumber": 1,
+          "filename": "1.png",
+          "imageUrl": "/round2_images/1.png",
+          "title": "Neon Cyberpunk Assassin in Rainy Alley",
+          "description": "A cinematic, low-angle digital concept art of a cybernetic warrior standing in a rain-drenched Neo-Tokyo alleyway illuminated by vibrant pink, purple, and electric cyan neon kanji signs, with wet asphalt reflections and atmospheric steam.",
+          "keyElements": [
+            "Cyberpunk warrior with glowing cybernetic implants and visor",
+            "Rain-slicked asphalt with vivid neon pink and cyan reflections",
+            "Dense vertical holographic kanji billboards and neon signs",
+            "Cinematic low-angle perspective with anamorphic lens flare",
+            "Atmospheric volumetric rain particles and rising steam"
+          ],
+          "targetVisualPrompt": "Cinematic low-angle digital concept art of a futuristic cyberpunk assassin standing in a narrow rain-soaked alley in Neo-Tokyo at night. Dressed in tactical carbon-fiber techwear with glowing crimson ocular implants and a holographic katana. The ground is wet glossy asphalt reflecting vibrant pink, purple, and turquoise kanji neon signs. Heavy volumetric rain, floating atmospheric steam, anamorphic lens flares, Unreal Engine 5 render, 8k resolution, photorealistic cinematic lighting.",
+          "evaluationCriteria": {
+            "composition": "Low-angle cinematic perspective, vertical framing of towering alley walls",
+            "colors": "Noir shadow palette with intense neon pink, cyan, and glowing crimson highlights",
+            "subject": "Cybernetic tactical warrior in cyberpunk alley with weapons/techwear",
+            "style": "Cinematic sci-fi digital concept art, raytraced reflections, volumetric rain"
+          }
+        },
+        "draftPrompt": "Cinematic low angle concept art of neon assassin in rainy alleyway, 8k resolution",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": 1789757521949,
+        "evaluation": {
+          "composition_score": 3.25,
+          "colors_score": 3.25,
+          "subject_score": 3.25,
+          "style_score": 3.25,
+          "total_score": 13,
+          "reasoning": "Scored 13/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 13,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 8,
+        "c1_draft": "Cinematic low angle concept art of neon assassin in rainy alleyway, 8k resolution",
+        "c1_submittedPrompt": "Cinematic low-angle digital concept art of a futuristic cyberpunk assassin standing in a narrow rain-soaked alley in Neo-Tokyo at night. Dressed in tactical techwear with glowing crimson ocular implants, wet asphalt reflections, volumetric rain, Unreal Engine 5 render, 8k resolution.",
+        "c1_submittedAt": 1789757521949,
+        "c1_evaluation": {
+          "composition_score": 3.25,
+          "colors_score": 3.25,
+          "subject_score": 3.25,
+          "style_score": 3.25,
+          "total_score": 13,
+          "reasoning": "Scored 13/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_001",
+          "title": "National Tech Fest Participation & Growth Crisis",
+          "category": "Growth & Event Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A premier engineering university is organizing its annual flagship 3-day tech symposium in exactly 30 days. The festival faces severe participation risk and low early buzz.",
+            "metrics": {
+              "expectedAuditoriumCapacity": "1,000 Students",
+              "previousYearAttendance": "350 Students (Under capacity)",
+              "targetAttendanceGoal": "800+ Registered Attendees",
+              "marketingBudget": "₹15,000 Total",
+              "promotionPeriodDays": "30 Days",
+              "activeStudentVolunteers": "20 Core Members",
+              "socialMediaEngagement": "Under 2% Click-Through Rate",
+              "marketConstraint": "Two rival college fests overlap on the exact same weekend."
+            },
+            "requiredPillars": [
+              "1. Target Audience Segmentation & High-Conversion Student Personas",
+              "2. Zero-Cost & Low-Cost Guerrilla Marketing Strategy",
+              "3. High-Conversion Content, Reel & Discord Viral Campaign Plan",
+              "4. Campus Ambassador Network & Referral Incentive Mechanics",
+              "5. Granular INR Budget Allocation Matrix with Contingency Buffer",
+              "6. 30-Day Day-by-Day Milestone Gantt Roadmap (Tease -> Blitz -> Conversion -> Last-mile)",
+              "7. Gamified Student Engagement Funnel & Exclusive Ticket Unlock Perks",
+              "8. Measurable Conversion Funnel KPIs & Stage Benchmarks",
+              "9. High-Stakes Risk Mitigation & Crisis Management Matrix",
+              "10. Projected ROI, Revenue Model & Attendance Conversion Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_001_budget_slash",
+              "headline": "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+              "description": "The student council treasury just froze funds! Your total marketing budget is slashed from ₹15,000 down to ₹3,000. All paid ads and print banners are immediately revoked.",
+              "impactField": "budget",
+              "directive": "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+            },
+            {
+              "bombId": "bomb_002_time_crunch",
+              "headline": "🚨 SCHEDULE EMERGENCY: 30 DAYS ➔ 15 DAYS!",
+              "description": "Due to university semester exam rescheduling, the festival date has been moved forward by 15 days! You only have 15 days remaining.",
+              "impactField": "timeline",
+              "directive": "Compress all rollout phases into an immediate 15-day blitz, prioritizing high-velocity flash campaigns over slow awareness funnels."
+            },
+            {
+              "bombId": "bomb_003_audience_pivot",
+              "headline": "🚨 DEMOGRAPHIC PIVOT: EXPAND TO INDUSTRY & ALUMNI!",
+              "description": "University trustees mandate opening the flagship competitions to working junior software developers and tech alumni, not just undergraduates.",
+              "impactField": "audience",
+              "directive": "Pivot brand tone, prize incentives, networking value proposition, and communication channels toward working engineers and alumni."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_001_budget_slash",
+          "headline": "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+          "description": "The student council treasury just froze funds! Your total marketing budget is slashed from ₹15,000 down to ₹3,000. All paid ads and print banners are immediately revoked.",
+          "impactField": "budget",
+          "directive": "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_02",
+      "name": "Falcon Squad 2",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521939,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_02",
+          "challengeNumber": 2,
+          "filename": "2.png",
+          "imageUrl": "/round2_images/2.png",
+          "title": "Solarpunk Floating Sky-City Archipelago",
+          "description": "A bright, panoramic wide-angle architectural concept painting of colossal floating sky-islands connected by crystalline bridges and waterfalls cascading into golden sunset clouds, featuring lush vertical hanging gardens and sleek solar airships.",
+          "keyElements": [
+            "Massive anti-gravity floating islands with futuristic architecture",
+            "Cascading waterfalls pouring into golden fluffy cloudscapes",
+            "Lush rooftop eco-gardens, vertical forests, and solar-glass domes",
+            "Sleek aerodynamic airships and solar gliders sailing between islands",
+            "Warm golden hour sunset lighting with volumetric sun rays"
+          ],
+          "targetVisualPrompt": "Breathtaking panoramic matte painting of an advanced solarpunk floating sky-metropolis during a radiant golden hour sunset. Giant floating island landmasses tethered by crystalline energy bridges, with cascading freshwater waterfalls plunging into sea of golden clouds below. Towering ivory eco-spires covered in lush vertical forests, hanging gardens, and crystalline bio-domes. Sleek solar-powered gliders cruising in the open sky. Octane Render, 8k resolution, Studio Ghibli meets architectural masterpiece.",
+          "evaluationCriteria": {
+            "composition": "Panoramic ultra-wide vista, atmospheric depth across cloud layers",
+            "colors": "Golden hour amber, warm orange, soft sky blue, and vibrant emerald greens",
+            "subject": "Floating sky islands with solarpunk towers, waterfalls, and solar gliders",
+            "style": "High-fantasy utopian architectural concept art, volumetric god rays"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 3.5,
+          "colors_score": 3.5,
+          "subject_score": 3.5,
+          "style_score": 3.5,
+          "total_score": 14,
+          "reasoning": "Scored 14/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 14,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 6,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 3.5,
+          "colors_score": 3.5,
+          "subject_score": 3.5,
+          "style_score": 3.5,
+          "total_score": 14,
+          "reasoning": "Scored 14/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_002",
+          "title": "Hyperlocal EV Fleet Subscription Launch Crisis",
+          "category": "Product Launch & Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A green-mobility startup is launching a peer-to-peer electric two-wheeler subscription service in a tier-2 college town with severe range anxiety and skeptical consumers.",
+            "metrics": {
+              "fleetSize": "120 Smart Electric Scooters",
+              "chargingHubs": "8 Automated Battery Swap Stations",
+              "targetMonthlySubscribers": "500 Active Riders in 30 Days",
+              "launchBudget": "₹50,000 Marketing & Ops Reserve",
+              "timelineWeeks": "4 Weeks to Launch",
+              "competitorPricing": "15% cheaper legacy petrol rentals"
+            },
+            "requiredPillars": [
+              "1. Brand Positioning & Overcoming Consumer Range Anxiety",
+              "2. Hyperlocal Campus & Tech Park Activation Blitz",
+              "3. Tiered Subscription Pricing & Security Deposit Mechanics",
+              "4. Battery Swap Network SLA & Fleet Operations Protocol",
+              "5. Granular Launch Budget Allocation Matrix",
+              "6. 4-Week Phased Rollout Roadmap & T-Minus Checklist",
+              "7. Referral Loops & Gamified Clean-Kilometer Rewards",
+              "8. Unit Economics (CAC, LTV, Fleet Utilization Rate) KPIs",
+              "9. Emergency Vehicle Breakdown & Power Contingency SLA",
+              "10. 90-Day Expansion & Investor Milestone Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_004_grid_failure",
+              "headline": "🚨 POWER GRID HALT: 6 OUT OF 8 HUBS BLOCKED!",
+              "description": "Municipal electrical permit delays have halted 6 out of your 8 planned swap hubs! You must launch with only 2 operational hubs.",
+              "impactField": "operations",
+              "directive": "Deploy mobile battery swap vans, restructure delivery geofences, and launch rapid on-demand swap dispatch protocols."
+            },
+            {
+              "bombId": "bomb_005_budget_cut",
+              "headline": "🚨 CAPITAL CRUNCH: ₹50,000 ➔ ₹10,000!",
+              "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
+              "impactField": "budget",
+              "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+            },
+            {
+              "bombId": "bomb_006_monsoon_flood",
+              "headline": "🚨 MONSOON FLOODING: 40% OF SERVICE AREA WATERLOGGED!",
+              "description": "Unseasonal severe monsoons have flooded main university arterial roads, raising water-damage battery fears.",
+              "impactField": "safety",
+              "directive": "Implement water-ingress safety certifications, launch complimentary rain-gear add-ons, and dynamic flood-safe routing."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_005_budget_cut",
+          "headline": "🚨 CAPITAL CRUNCH: ₹50,000 ➔ ₹10,000!",
+          "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
+          "impactField": "budget",
+          "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_03",
+      "name": "Falcon Squad 3",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521939,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_04",
+          "challengeNumber": 3,
+          "filename": "4.png",
+          "imageUrl": "/round2_images/4.png",
+          "title": "Quantum AI Neural Supercomputer Core",
+          "description": "A high-tech macro photograph of a spherical quantum computing processor core suspended in zero-gravity inside a vacuum cryo-chamber, surrounded by glowing golden coaxial cables and laser optical waveguides emitting pulse beams.",
+          "keyElements": [
+            "Central glowing quantum processor sphere with crystalline geometry",
+            "Intricate spiral arrangement of gold-plated cryo dilution cables",
+            "Pulsing sapphire blue and emerald green laser optical beams",
+            "Dark frosted titanium vacuum chamber with ambient rim lighting",
+            "Extreme macro detail with shallow depth of field and specular highlights"
+          ],
+          "targetVisualPrompt": "Studio macro photography of a cutting-edge quantum supercomputer core suspended inside a zero-gravity cryogenic vacuum chamber. Central crystalline processor sphere pulsing with complex laser light pathways in sapphire and emerald hues. Surrounded by elaborate bundles of golden microwave cables and superconducting circuits. Crisp focus on central core, soft industrial bokeh in background, metallic reflections, 8k commercial tech hardware catalog aesthetic.",
+          "evaluationCriteria": {
+            "composition": "Centered focal core with radial golden cable framing and tight macro crop",
+            "colors": "Obsidian dark background with superconducting gold, sapphire blue, and emerald glow",
+            "subject": "Spherical quantum computing processor core and cryogenic wire harness",
+            "style": "Commercial tech hardware studio photography, shallow depth of field"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 3.75,
+          "colors_score": 3.75,
+          "subject_score": 3.75,
+          "style_score": 3.75,
+          "total_score": 15,
+          "reasoning": "Scored 15/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 15,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 5,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 3.75,
+          "colors_score": 3.75,
+          "subject_score": 3.75,
+          "style_score": 3.75,
+          "total_score": 15,
+          "reasoning": "Scored 15/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_003",
+          "title": "10-Minute Dark-Store Quick Commerce Expansion",
+          "category": "High-Velocity Logistics & Unit Economics",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A venture-funded quick-commerce platform is expanding into a dense metro quadrant by deploying 6 automated micro-fulfillment dark stores targeting high basket-size households.",
+            "metrics": {
+              "targetDailyOrders": "5,000 Orders/Day within 60 Days",
+              "darkStoresDeployed": "6 Micro-Hubs (1.8km delivery radius each)",
+              "marketingAndIncentiveBudget": "₹1,50,000 Total",
+              "riderFleetSize": "80 Dedicated Gig Drivers",
+              "averageOrderValue": "₹420",
+              "customerAcquisitionCost": "Target under ₹90 per user",
+              "deliveryTimePromise": "Strictly 10–12 Minutes"
+            },
+            "requiredPillars": [
+              "1. Hyperlocal Demographic Mapping & High-AOV Category Mix",
+              "2. 10-Minute Dark Store Picking & Packing Assembly SLA",
+              "3. First-Order Viral Acquisition Hook & Referral Mechanics",
+              "4. Rider Dispatch Optimization & Safety-First Route Protocols",
+              "5. Granular ₹1,50,000 Budget Allocation & Burn Schedule",
+              "6. 60-Day Phased Scale Roadmap (Alpha -> Hub Rollout -> Scale)",
+              "7. Gamified Customer Retention & Free-Delivery Subscription Tiers",
+              "8. Unit Economics (Contribution Margin per Order) Scorecard",
+              "9. Extreme Rush Hour & Inventory Stockout Contingency Plan",
+              "10. 90-Day Breakeven & Dark-Store EBITDA Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_007_union_strike",
+              "headline": "🚨 FLEET STRIKE: 70% OF GIG RIDERS WALK OUT!",
+              "description": "Rider union announces sudden protest over fuel surge, halting 56 out of 80 delivery riders across all hubs!",
+              "impactField": "operations",
+              "directive": "Introduce micro-zone customer self-pickup curbside lockers with 25% instant discounts and optimize remaining riders on clustered drop routes."
+            },
+            {
+              "bombId": "bomb_008_cold_storage_outage",
+              "headline": "🚨 COLD-CHAIN DISASTER: 3 DARK STORES LOSE POWER!",
+              "description": "Transformer blowout destroys refrigeration across 3 key dark stores, threatening ₹60,000 in perishable inventory.",
+              "impactField": "inventory",
+              "directive": "Launch a flash 2-hour 'Zero-Waste Megadeal' clearance blitz to liquidate perishables immediately while rerouting dry orders."
+            },
+            {
+              "bombId": "bomb_009_predatory_pricing",
+              "headline": "🚨 COMPETITOR ATTACK: RIVAL LAUNCHES 60% CASHBACK!",
+              "description": "A well-funded rival launches an aggressive 60% cashback blitz in your exact service zones.",
+              "impactField": "competition",
+              "directive": "Pivot from price wars to superior product exclusivity (fresh artisan bakery, localized specialty items) and guaranteed sub-10 minute reliability."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_009_predatory_pricing",
+          "headline": "🚨 COMPETITOR ATTACK: RIVAL LAUNCHES 60% CASHBACK!",
+          "description": "A well-funded rival launches an aggressive 60% cashback blitz in your exact service zones.",
+          "impactField": "competition",
+          "directive": "Pivot from price wars to superior product exclusivity (fresh artisan bakery, localized specialty items) and guaranteed sub-10 minute reliability."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_04",
+      "name": "Falcon Squad 4",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521939,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_05",
+          "challengeNumber": 4,
+          "filename": "5.png",
+          "imageUrl": "/round2_images/5.png",
+          "title": "Mystic Ancient Temple in Bioluminescent Jungle",
+          "description": "An enchanting nighttime fantasy illustration of an overgrown ancient stone temple hidden deep inside an alien rainforest with giant glowing blue and magenta mushrooms, floating spore particles, and a glowing spirit river.",
+          "keyElements": [
+            "Carved ancient Mayan/Cambodian style stone ruins overgrown with moss",
+            "Giant luminous blue and purple fungal caps illuminating the jungle canopy",
+            "Twisting banyan roots and tropical foliage dripping with dewdrops",
+            "Gentle glowing turquoise river flowing past temple steps",
+            "Floating ethereal luminescence and magical firefly spore particles"
+          ],
+          "targetVisualPrompt": "Enchanting night concept art of an ancient overgrown stone temple lost in a mystical bioluminescent alien rainforest. Giant luminous glowing mushrooms emit vivid indigo and magenta light against ancient mossy stone carvings. A serene glowing turquoise stream winds past the temple entrance, reflecting floating ethereal firefly particles. Lush tropical banyan roots, atmospheric mist, magical fantasy aesthetic, ArtStation trending, 8k wallpaper quality.",
+          "evaluationCriteria": {
+            "composition": "Leading lines along glowing river toward mysterious central temple entrance",
+            "colors": "Deep nocturnal indigo, electric bioluminescent cyan, magenta, and moss green",
+            "subject": "Overgrown ancient temple ruins enveloped by glowing bioluminescent flora",
+            "style": "High-fantasy environmental illustration, magical atmospheric glow"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 4,
+          "colors_score": 4,
+          "subject_score": 4,
+          "style_score": 4,
+          "total_score": 16,
+          "reasoning": "Scored 16/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 16,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 4,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 4,
+          "colors_score": 4,
+          "subject_score": 4,
+          "style_score": 4,
+          "total_score": 16,
+          "reasoning": "Scored 16/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_004",
+          "title": "FinTech Student Micro-Credit Neo-Bank Launch",
+          "category": "FinTech, Regulatory Compliance & Growth",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A digital neo-bank is launching a zero-annual-fee micro-credit wallet designed specifically for college students with zero credit history, utilizing alternative campus transaction scores.",
+            "metrics": {
+              "targetActiveWallets": "10,000 Verified Accounts in 45 Days",
+              "initialCreditLimit": "₹2,000 Instant Revolving Line",
+              "marketingBudget": "₹75,000",
+              "interestRateModel": "0% for 30 Days, 1.5% monthly rollover",
+              "underwritingModel": "Alternative GPA & Canteen transaction score",
+              "regulatoryRequirement": "Mandatory digital KYC & RBI lending guidelines"
+            },
+            "requiredPillars": [
+              "1. Responsible Financial Brand Persona & Financial Literacy Framing",
+              "2. Campus Brand Ambassador Network & Society Sponsorships",
+              "3. Frictionless Digital Onboarding & KYC Experience Design",
+              "4. Alternative Underwriting & Default Risk Mitigation Rules",
+              "5. Granular ₹75,000 Growth Budget Allocation Matrix",
+              "6. 45-Day Phased Launch Gantt (Closed Beta -> Multi-Campus Blitz)",
+              "7. Gamified Credit-Score Building & Timely-Repayment Rewards",
+              "8. Unit Economics (CAC, Repayment Velocity, NPA Rate) Scorecard",
+              "9. Delinquency Management & Ethical Recovery Safeguards",
+              "10. 12-Month Neo-Bank Expansion & Merchant Ecosystem Roadmap"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_010_regulatory_freeze",
+              "headline": "🚨 REGULATORY MANDATE: PHYSICAL BIOMETRIC KYC REQUIRED!",
+              "description": "Central banking regulator issues sudden guideline mandating in-person biometric verification for all student credit lines, breaking 1-click digital KYC!",
+              "impactField": "compliance",
+              "directive": "Deploy authorized student ambassador KYC kiosks at campus libraries and partner with campus bookstores for instant in-person verification perks."
+            },
+            {
+              "bombId": "bomb_011_default_surge",
+              "headline": "🚨 DEFAULT SURGE: EARLY DELINQUENCY HITS 18%!",
+              "description": "Beta cohort reveals unacceptably high 18% 30-day default rates, threatening institutional credit underwriting lines.",
+              "impactField": "risk",
+              "directive": "Tighten initial limits to ₹500 unlockable dynamically with each on-time payment, and introduce squad social-collateral accountability groups."
+            },
+            {
+              "bombId": "bomb_012_campus_ban",
+              "headline": "🚨 CAMPUS ACCESS BLOCKED: AUTHORITIES BAN BOOTHS!",
+              "description": "College deans ban all external commercial promotional booths and physical flyer distributions on campus grounds.",
+              "impactField": "marketing",
+              "directive": "Shift 100% of marketing to student developer hackathon sponsorships, online Discord coding bounties, and inter-college gaming tournaments."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_010_regulatory_freeze",
+          "headline": "🚨 REGULATORY MANDATE: PHYSICAL BIOMETRIC KYC REQUIRED!",
+          "description": "Central banking regulator issues sudden guideline mandating in-person biometric verification for all student credit lines, breaking 1-click digital KYC!",
+          "impactField": "compliance",
+          "directive": "Deploy authorized student ambassador KYC kiosks at campus libraries and partner with campus bookstores for instant in-person verification perks."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_05",
+      "name": "Falcon Squad 5",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521940,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_06",
+          "challengeNumber": 5,
+          "filename": "6.png",
+          "imageUrl": "/round2_images/6.png",
+          "title": "Deep-Space Dyson Sphere Star Harvester",
+          "description": "An epic cosmic sci-fi space scene capturing a colossal megastructure cage enclosing a radiant blue giant star, with massive energy collector panels, plasma solar flares, and interstellar explorer starships in orbit.",
+          "keyElements": [
+            "Massive geometric Dyson sphere megastructure encircling a burning star",
+            "Radiant blue/white star core emitting violent plasma solar flares",
+            "Orbital relay stations and energy beam transfer pathways",
+            "Sleek exploration starcraft observing the scale of the structure",
+            "Deep cosmic backdrop with starfield nebula clouds and starlight"
+          ],
+          "targetVisualPrompt": "Epic hard sci-fi cosmic panorama of a colossal Dyson sphere megastructure harvesting energy from a brilliant blue giant star. Enormous geometric rings of dark carbon-alloy solar collectors encircle the stellar core, with intense solar flares and coronal mass ejections contained by glowing magnetic forcefields. Tiny explorer starships in deep space provide dramatic scale. High contrast cosmic lighting, interstellar nebula background, 8k space opera wallpaper.",
+          "evaluationCriteria": {
+            "composition": "Astronomical scale contrast between tiny starship and massive stellar sphere",
+            "colors": "Deep cosmic black and nebula purple with blinding electric blue and solar white",
+            "subject": "Dyson sphere star harvester megastructure and cosmic plasma flares",
+            "style": "Hard sci-fi cinematic digital matte painting, crisp stellar lighting"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 4.25,
+          "colors_score": 4.25,
+          "subject_score": 4.25,
+          "style_score": 4.25,
+          "total_score": 17,
+          "reasoning": "Scored 17/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 17,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 3,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 4.25,
+          "colors_score": 4.25,
+          "subject_score": 4.25,
+          "style_score": 4.25,
+          "total_score": 17,
+          "reasoning": "Scored 17/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_001",
+          "title": "National Tech Fest Participation & Growth Crisis",
+          "category": "Growth & Event Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A premier engineering university is organizing its annual flagship 3-day tech symposium in exactly 30 days. The festival faces severe participation risk and low early buzz.",
+            "metrics": {
+              "expectedAuditoriumCapacity": "1,000 Students",
+              "previousYearAttendance": "350 Students (Under capacity)",
+              "targetAttendanceGoal": "800+ Registered Attendees",
+              "marketingBudget": "₹15,000 Total",
+              "promotionPeriodDays": "30 Days",
+              "activeStudentVolunteers": "20 Core Members",
+              "socialMediaEngagement": "Under 2% Click-Through Rate",
+              "marketConstraint": "Two rival college fests overlap on the exact same weekend."
+            },
+            "requiredPillars": [
+              "1. Target Audience Segmentation & High-Conversion Student Personas",
+              "2. Zero-Cost & Low-Cost Guerrilla Marketing Strategy",
+              "3. High-Conversion Content, Reel & Discord Viral Campaign Plan",
+              "4. Campus Ambassador Network & Referral Incentive Mechanics",
+              "5. Granular INR Budget Allocation Matrix with Contingency Buffer",
+              "6. 30-Day Day-by-Day Milestone Gantt Roadmap (Tease -> Blitz -> Conversion -> Last-mile)",
+              "7. Gamified Student Engagement Funnel & Exclusive Ticket Unlock Perks",
+              "8. Measurable Conversion Funnel KPIs & Stage Benchmarks",
+              "9. High-Stakes Risk Mitigation & Crisis Management Matrix",
+              "10. Projected ROI, Revenue Model & Attendance Conversion Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_001_budget_slash",
+              "headline": "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+              "description": "The student council treasury just froze funds! Your total marketing budget is slashed from ₹15,000 down to ₹3,000. All paid ads and print banners are immediately revoked.",
+              "impactField": "budget",
+              "directive": "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+            },
+            {
+              "bombId": "bomb_002_time_crunch",
+              "headline": "🚨 SCHEDULE EMERGENCY: 30 DAYS ➔ 15 DAYS!",
+              "description": "Due to university semester exam rescheduling, the festival date has been moved forward by 15 days! You only have 15 days remaining.",
+              "impactField": "timeline",
+              "directive": "Compress all rollout phases into an immediate 15-day blitz, prioritizing high-velocity flash campaigns over slow awareness funnels."
+            },
+            {
+              "bombId": "bomb_003_audience_pivot",
+              "headline": "🚨 DEMOGRAPHIC PIVOT: EXPAND TO INDUSTRY & ALUMNI!",
+              "description": "University trustees mandate opening the flagship competitions to working junior software developers and tech alumni, not just undergraduates.",
+              "impactField": "audience",
+              "directive": "Pivot brand tone, prize incentives, networking value proposition, and communication channels toward working engineers and alumni."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_002_time_crunch",
+          "headline": "🚨 SCHEDULE EMERGENCY: 30 DAYS ➔ 15 DAYS!",
+          "description": "Due to university semester exam rescheduling, the festival date has been moved forward by 15 days! You only have 15 days remaining.",
+          "impactField": "timeline",
+          "directive": "Compress all rollout phases into an immediate 15-day blitz, prioritizing high-velocity flash campaigns over slow awareness funnels."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_06",
+      "name": "Falcon Squad 6",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521941,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_07",
+          "challengeNumber": 6,
+          "filename": "7.png",
+          "imageUrl": "/round2_images/7.png",
+          "title": "Retro-Futuristic Synthwave Sunset Highway",
+          "description": "An iconic 1980s synthwave / outrun digital artwork featuring a sleek chrome sports car driving toward a giant wireframe sun on an infinite grid highway through neon palm-lined mountains at dusk.",
+          "keyElements": [
+            "1980s retro supercar (Countach/Delorean style) speeding down perspective grid",
+            "Giant segmented glowing neon sun setting on the horizon",
+            "Silhouetted palm trees lining the geometric grid road",
+            "Neon wireframe mountain peaks flanking the landscape",
+            "Vibrant magenta, orange, violet, and electric cyan color gradient"
+          ],
+          "targetVisualPrompt": "Classic synthwave outrun digital art aesthetic. Low-angle rear perspective of a sleek 1980s retro-futuristic sports car driving fast down an endless neon purple grid highway. In the background, an enormous segmented glowing orange and yellow sun sets behind wireframe neon mountain ranges. Silhouetted tropical palm trees flank the road under a star-filled violet sky. Neon grid reflections, retro aesthetic, 8k crisp vector style, 80s nostalgia.",
+          "evaluationCriteria": {
+            "composition": "Centered perspective leading straight to horizon sun, low-angle car rear",
+            "colors": "Vibrant synthwave palette (neon magenta, hot pink, cyan, electric violet, sunset orange)",
+            "subject": "Vintage wedge supercar on infinite digital grid highway with wireframe mountains",
+            "style": "Synthwave / Outrun retro 80s digital illustration, neon glow"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 4.5,
+          "colors_score": 4.5,
+          "subject_score": 4.5,
+          "style_score": 4.5,
+          "total_score": 18,
+          "reasoning": "Scored 18/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 18,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 2,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 4.5,
+          "colors_score": 4.5,
+          "subject_score": 4.5,
+          "style_score": 4.5,
+          "total_score": 18,
+          "reasoning": "Scored 18/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_002",
+          "title": "Hyperlocal EV Fleet Subscription Launch Crisis",
+          "category": "Product Launch & Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A green-mobility startup is launching a peer-to-peer electric two-wheeler subscription service in a tier-2 college town with severe range anxiety and skeptical consumers.",
+            "metrics": {
+              "fleetSize": "120 Smart Electric Scooters",
+              "chargingHubs": "8 Automated Battery Swap Stations",
+              "targetMonthlySubscribers": "500 Active Riders in 30 Days",
+              "launchBudget": "₹50,000 Marketing & Ops Reserve",
+              "timelineWeeks": "4 Weeks to Launch",
+              "competitorPricing": "15% cheaper legacy petrol rentals"
+            },
+            "requiredPillars": [
+              "1. Brand Positioning & Overcoming Consumer Range Anxiety",
+              "2. Hyperlocal Campus & Tech Park Activation Blitz",
+              "3. Tiered Subscription Pricing & Security Deposit Mechanics",
+              "4. Battery Swap Network SLA & Fleet Operations Protocol",
+              "5. Granular Launch Budget Allocation Matrix",
+              "6. 4-Week Phased Rollout Roadmap & T-Minus Checklist",
+              "7. Referral Loops & Gamified Clean-Kilometer Rewards",
+              "8. Unit Economics (CAC, LTV, Fleet Utilization Rate) KPIs",
+              "9. Emergency Vehicle Breakdown & Power Contingency SLA",
+              "10. 90-Day Expansion & Investor Milestone Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_004_grid_failure",
+              "headline": "🚨 POWER GRID HALT: 6 OUT OF 8 HUBS BLOCKED!",
+              "description": "Municipal electrical permit delays have halted 6 out of your 8 planned swap hubs! You must launch with only 2 operational hubs.",
+              "impactField": "operations",
+              "directive": "Deploy mobile battery swap vans, restructure delivery geofences, and launch rapid on-demand swap dispatch protocols."
+            },
+            {
+              "bombId": "bomb_005_budget_cut",
+              "headline": "🚨 CAPITAL CRUNCH: ₹50,000 ➔ ₹10,000!",
+              "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
+              "impactField": "budget",
+              "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+            },
+            {
+              "bombId": "bomb_006_monsoon_flood",
+              "headline": "🚨 MONSOON FLOODING: 40% OF SERVICE AREA WATERLOGGED!",
+              "description": "Unseasonal severe monsoons have flooded main university arterial roads, raising water-damage battery fears.",
+              "impactField": "safety",
+              "directive": "Implement water-ingress safety certifications, launch complimentary rain-gear add-ons, and dynamic flood-safe routing."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_006_monsoon_flood",
+          "headline": "🚨 MONSOON FLOODING: 40% OF SERVICE AREA WATERLOGGED!",
+          "description": "Unseasonal severe monsoons have flooded main university arterial roads, raising water-damage battery fears.",
+          "impactField": "safety",
+          "directive": "Implement water-ingress safety certifications, launch complimentary rain-gear add-ons, and dynamic flood-safe routing."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_07",
+      "name": "Falcon Squad 7",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521941,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_08",
+          "challengeNumber": 7,
+          "filename": "8.png",
+          "imageUrl": "/round2_images/8.png",
+          "title": "Industrial Steampunk Airship Dockyard",
+          "description": "A bustling Victorian steampunk shipyard set atop mountain cliffs where massive brass zeppelins and clockwork airships dock at iron gantries amid plumes of white boiler steam and golden smog at sunrise.",
+          "keyElements": [
+            "Massive rigid airship with polished brass gears, propellers, and clockwork rigging",
+            "Towering cast-iron dockyard scaffolding and steam crane gantries",
+            "Dense billowing clouds of white steam and warm coal-fire smoke",
+            "Victorian industrial architecture on rugged alpine cliff edges",
+            "Warm sepia, brass, copper, and early morning amber sunlight"
+          ],
+          "targetVisualPrompt": "Detailed Victorian steampunk industrial concept art of a cliffside airship dockyard at dawn. Gigantic rigid dirigibles with riveted copper hulls, brass clockwork propellers, and leather gasbags tethered to towering wrought-iron mooring towers. Workers on catwalks surrounded by billowing steam pipes, glowing furnace braziers, and mechanical cranes. Warm golden sunrise cuts through industrial smog. Highly detailed architectural illustration, 8k masterpiece.",
+          "evaluationCriteria": {
+            "composition": "Multi-tiered industrial elevation showing mooring towers and docked airships",
+            "colors": "Rich copper, brass, cast iron black, warm sepia, and amber dawn glow",
+            "subject": "Victorian steampunk airships tethered at towering cliffside iron dockyards",
+            "style": "Detailed period steampunk matte painting, atmospheric steam and grit"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 4.75,
+          "colors_score": 4.75,
+          "subject_score": 4.75,
+          "style_score": 4.75,
+          "total_score": 19,
+          "reasoning": "Scored 19/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 19,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 1,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 4.75,
+          "colors_score": 4.75,
+          "subject_score": 4.75,
+          "style_score": 4.75,
+          "total_score": 19,
+          "reasoning": "Scored 19/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_003",
+          "title": "10-Minute Dark-Store Quick Commerce Expansion",
+          "category": "High-Velocity Logistics & Unit Economics",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A venture-funded quick-commerce platform is expanding into a dense metro quadrant by deploying 6 automated micro-fulfillment dark stores targeting high basket-size households.",
+            "metrics": {
+              "targetDailyOrders": "5,000 Orders/Day within 60 Days",
+              "darkStoresDeployed": "6 Micro-Hubs (1.8km delivery radius each)",
+              "marketingAndIncentiveBudget": "₹1,50,000 Total",
+              "riderFleetSize": "80 Dedicated Gig Drivers",
+              "averageOrderValue": "₹420",
+              "customerAcquisitionCost": "Target under ₹90 per user",
+              "deliveryTimePromise": "Strictly 10–12 Minutes"
+            },
+            "requiredPillars": [
+              "1. Hyperlocal Demographic Mapping & High-AOV Category Mix",
+              "2. 10-Minute Dark Store Picking & Packing Assembly SLA",
+              "3. First-Order Viral Acquisition Hook & Referral Mechanics",
+              "4. Rider Dispatch Optimization & Safety-First Route Protocols",
+              "5. Granular ₹1,50,000 Budget Allocation & Burn Schedule",
+              "6. 60-Day Phased Scale Roadmap (Alpha -> Hub Rollout -> Scale)",
+              "7. Gamified Customer Retention & Free-Delivery Subscription Tiers",
+              "8. Unit Economics (Contribution Margin per Order) Scorecard",
+              "9. Extreme Rush Hour & Inventory Stockout Contingency Plan",
+              "10. 90-Day Breakeven & Dark-Store EBITDA Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_007_union_strike",
+              "headline": "🚨 FLEET STRIKE: 70% OF GIG RIDERS WALK OUT!",
+              "description": "Rider union announces sudden protest over fuel surge, halting 56 out of 80 delivery riders across all hubs!",
+              "impactField": "operations",
+              "directive": "Introduce micro-zone customer self-pickup curbside lockers with 25% instant discounts and optimize remaining riders on clustered drop routes."
+            },
+            {
+              "bombId": "bomb_008_cold_storage_outage",
+              "headline": "🚨 COLD-CHAIN DISASTER: 3 DARK STORES LOSE POWER!",
+              "description": "Transformer blowout destroys refrigeration across 3 key dark stores, threatening ₹60,000 in perishable inventory.",
+              "impactField": "inventory",
+              "directive": "Launch a flash 2-hour 'Zero-Waste Megadeal' clearance blitz to liquidate perishables immediately while rerouting dry orders."
+            },
+            {
+              "bombId": "bomb_009_predatory_pricing",
+              "headline": "🚨 COMPETITOR ATTACK: RIVAL LAUNCHES 60% CASHBACK!",
+              "description": "A well-funded rival launches an aggressive 60% cashback blitz in your exact service zones.",
+              "impactField": "competition",
+              "directive": "Pivot from price wars to superior product exclusivity (fresh artisan bakery, localized specialty items) and guaranteed sub-10 minute reliability."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_007_union_strike",
+          "headline": "🚨 FLEET STRIKE: 70% OF GIG RIDERS WALK OUT!",
+          "description": "Rider union announces sudden protest over fuel surge, halting 56 out of 80 delivery riders across all hubs!",
+          "impactField": "operations",
+          "directive": "Introduce micro-zone customer self-pickup curbside lockers with 25% instant discounts and optimize remaining riders on clustered drop routes."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_08",
+      "name": "Falcon Squad 8",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521942,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_09",
+          "challengeNumber": 8,
+          "filename": "9.png",
+          "imageUrl": "/round2_images/9.png",
+          "title": "Abyssal Bioluminescent Oceanic Research Station",
+          "description": "An underwater deep-sea photographic concept of a modular titanium oceanic research base anchored on the abyssal seafloor next to black-smoker volcanic vents, surrounded by glowing bioluminescent jellyfish and robotic submersibles.",
+          "keyElements": [
+            "Geodesic titanium habitat domes with warm glowing amber viewports",
+            "Deep oceanic abyssal black water with floating bioluminescent siphonophores",
+            "Active volcanic hydrothermal vents billowing dark mineral smoke",
+            "Yellow deep-sea exploration submersible scanning seafloor with floodlights",
+            "Underwater volumetric light caustics and floating marine snow particles"
+          ],
+          "targetVisualPrompt": "National Geographic style deep-ocean underwater photography of an advanced research habitat on the Mariana Trench seabed. Illuminated geodesic habitat modules anchored to volcanic basalt rock next to active hydrothermal vents. Swarms of electric blue and violet bioluminescent jellyfish drift through the dark water. A yellow robotic ROV submarine illuminates deep-sea coral with high-power xenon spotlights. Volumetric water caustics, marine snow, 8k documentary photograph.",
+          "evaluationCriteria": {
+            "composition": "Underwater seafloor depth with illuminated habitat dome and ROV floodlights",
+            "colors": "Abyssal midnight blue/black with bright bioluminescent cyan and warm amber windows",
+            "subject": "Deep-sea titanium research station and robotic submersibles near hydrothermal vents",
+            "style": "Photorealistic deep-sea documentary quality with volumetric caustics"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 3,
+          "colors_score": 3,
+          "subject_score": 3,
+          "style_score": 3,
+          "total_score": 12,
+          "reasoning": "Scored 12/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 12,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 10,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 3,
+          "colors_score": 3,
+          "subject_score": 3,
+          "style_score": 3,
+          "total_score": 12,
+          "reasoning": "Scored 12/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_004",
+          "title": "FinTech Student Micro-Credit Neo-Bank Launch",
+          "category": "FinTech, Regulatory Compliance & Growth",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A digital neo-bank is launching a zero-annual-fee micro-credit wallet designed specifically for college students with zero credit history, utilizing alternative campus transaction scores.",
+            "metrics": {
+              "targetActiveWallets": "10,000 Verified Accounts in 45 Days",
+              "initialCreditLimit": "₹2,000 Instant Revolving Line",
+              "marketingBudget": "₹75,000",
+              "interestRateModel": "0% for 30 Days, 1.5% monthly rollover",
+              "underwritingModel": "Alternative GPA & Canteen transaction score",
+              "regulatoryRequirement": "Mandatory digital KYC & RBI lending guidelines"
+            },
+            "requiredPillars": [
+              "1. Responsible Financial Brand Persona & Financial Literacy Framing",
+              "2. Campus Brand Ambassador Network & Society Sponsorships",
+              "3. Frictionless Digital Onboarding & KYC Experience Design",
+              "4. Alternative Underwriting & Default Risk Mitigation Rules",
+              "5. Granular ₹75,000 Growth Budget Allocation Matrix",
+              "6. 45-Day Phased Launch Gantt (Closed Beta -> Multi-Campus Blitz)",
+              "7. Gamified Credit-Score Building & Timely-Repayment Rewards",
+              "8. Unit Economics (CAC, Repayment Velocity, NPA Rate) Scorecard",
+              "9. Delinquency Management & Ethical Recovery Safeguards",
+              "10. 12-Month Neo-Bank Expansion & Merchant Ecosystem Roadmap"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_010_regulatory_freeze",
+              "headline": "🚨 REGULATORY MANDATE: PHYSICAL BIOMETRIC KYC REQUIRED!",
+              "description": "Central banking regulator issues sudden guideline mandating in-person biometric verification for all student credit lines, breaking 1-click digital KYC!",
+              "impactField": "compliance",
+              "directive": "Deploy authorized student ambassador KYC kiosks at campus libraries and partner with campus bookstores for instant in-person verification perks."
+            },
+            {
+              "bombId": "bomb_011_default_surge",
+              "headline": "🚨 DEFAULT SURGE: EARLY DELINQUENCY HITS 18%!",
+              "description": "Beta cohort reveals unacceptably high 18% 30-day default rates, threatening institutional credit underwriting lines.",
+              "impactField": "risk",
+              "directive": "Tighten initial limits to ₹500 unlockable dynamically with each on-time payment, and introduce squad social-collateral accountability groups."
+            },
+            {
+              "bombId": "bomb_012_campus_ban",
+              "headline": "🚨 CAMPUS ACCESS BLOCKED: AUTHORITIES BAN BOOTHS!",
+              "description": "College deans ban all external commercial promotional booths and physical flyer distributions on campus grounds.",
+              "impactField": "marketing",
+              "directive": "Shift 100% of marketing to student developer hackathon sponsorships, online Discord coding bounties, and inter-college gaming tournaments."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_011_default_surge",
+          "headline": "🚨 DEFAULT SURGE: EARLY DELINQUENCY HITS 18%!",
+          "description": "Beta cohort reveals unacceptably high 18% 30-day default rates, threatening institutional credit underwriting lines.",
+          "impactField": "risk",
+          "directive": "Tighten initial limits to ₹500 unlockable dynamically with each on-time payment, and introduce squad social-collateral accountability groups."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_09",
+      "name": "Falcon Squad 9",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521942,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_10",
+          "challengeNumber": 9,
+          "filename": "10.png",
+          "imageUrl": "/round2_images/10.png",
+          "title": "Samurai Cyber-Ronin in Cherry Blossom Sanctuary",
+          "description": "A dramatic cinematic portrait of a cybernetically enhanced ronin samurai kneeling in meditation under a glowing neon-pink cherry blossom tree in a tranquil futuristic Japanese courtyard at dusk.",
+          "keyElements": [
+            "Cybernetic samurai in traditional lacquered armor with glowing neon circuits",
+            "Dual futuristic katanas with illuminated laser edges resting on tatami",
+            "Ancient blooming sakura cherry tree with falling luminous pink petals",
+            "Shoji screen architecture blending wood and holographic panels",
+            "Zen garden gravel raked into geometric cyber patterns"
+          ],
+          "targetVisualPrompt": "Cinematic portrait of a cyberpunk samurai warrior in reflective matte-black and gold lacquered armor kneeling in meditation. Glowing cyan circuit lines trace along his robotic arms. In front of him rest twin plasma katanas emitting an intense edge glow. Above, a giant ancient cherry blossom tree sheds glowing pink petals into a tranquil zen stone courtyard. Soft dusk lighting, mist, Ghost in the Shell meets feudal Japan, Unreal Engine 5 render, 8k.",
+          "evaluationCriteria": {
+            "composition": "Centered heroic kneeling figure under arching sakura branches",
+            "colors": "Harmonious balance of sakura pink, midnight blue, obsidian black, and neon cyan",
+            "subject": "Cybernetic ronin samurai meditating in futuristic zen cherry blossom garden",
+            "style": "Cinematic sci-fi oriental concept art, photorealistic character textures"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 3.25,
+          "colors_score": 3.25,
+          "subject_score": 3.25,
+          "style_score": 3.25,
+          "total_score": 13,
+          "reasoning": "Scored 13/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 13,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 9,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 3.25,
+          "colors_score": 3.25,
+          "subject_score": 3.25,
+          "style_score": 3.25,
+          "total_score": 13,
+          "reasoning": "Scored 13/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_001",
+          "title": "National Tech Fest Participation & Growth Crisis",
+          "category": "Growth & Event Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A premier engineering university is organizing its annual flagship 3-day tech symposium in exactly 30 days. The festival faces severe participation risk and low early buzz.",
+            "metrics": {
+              "expectedAuditoriumCapacity": "1,000 Students",
+              "previousYearAttendance": "350 Students (Under capacity)",
+              "targetAttendanceGoal": "800+ Registered Attendees",
+              "marketingBudget": "₹15,000 Total",
+              "promotionPeriodDays": "30 Days",
+              "activeStudentVolunteers": "20 Core Members",
+              "socialMediaEngagement": "Under 2% Click-Through Rate",
+              "marketConstraint": "Two rival college fests overlap on the exact same weekend."
+            },
+            "requiredPillars": [
+              "1. Target Audience Segmentation & High-Conversion Student Personas",
+              "2. Zero-Cost & Low-Cost Guerrilla Marketing Strategy",
+              "3. High-Conversion Content, Reel & Discord Viral Campaign Plan",
+              "4. Campus Ambassador Network & Referral Incentive Mechanics",
+              "5. Granular INR Budget Allocation Matrix with Contingency Buffer",
+              "6. 30-Day Day-by-Day Milestone Gantt Roadmap (Tease -> Blitz -> Conversion -> Last-mile)",
+              "7. Gamified Student Engagement Funnel & Exclusive Ticket Unlock Perks",
+              "8. Measurable Conversion Funnel KPIs & Stage Benchmarks",
+              "9. High-Stakes Risk Mitigation & Crisis Management Matrix",
+              "10. Projected ROI, Revenue Model & Attendance Conversion Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_001_budget_slash",
+              "headline": "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+              "description": "The student council treasury just froze funds! Your total marketing budget is slashed from ₹15,000 down to ₹3,000. All paid ads and print banners are immediately revoked.",
+              "impactField": "budget",
+              "directive": "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+            },
+            {
+              "bombId": "bomb_002_time_crunch",
+              "headline": "🚨 SCHEDULE EMERGENCY: 30 DAYS ➔ 15 DAYS!",
+              "description": "Due to university semester exam rescheduling, the festival date has been moved forward by 15 days! You only have 15 days remaining.",
+              "impactField": "timeline",
+              "directive": "Compress all rollout phases into an immediate 15-day blitz, prioritizing high-velocity flash campaigns over slow awareness funnels."
+            },
+            {
+              "bombId": "bomb_003_audience_pivot",
+              "headline": "🚨 DEMOGRAPHIC PIVOT: EXPAND TO INDUSTRY & ALUMNI!",
+              "description": "University trustees mandate opening the flagship competitions to working junior software developers and tech alumni, not just undergraduates.",
+              "impactField": "audience",
+              "directive": "Pivot brand tone, prize incentives, networking value proposition, and communication channels toward working engineers and alumni."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_003_audience_pivot",
+          "headline": "🚨 DEMOGRAPHIC PIVOT: EXPAND TO INDUSTRY & ALUMNI!",
+          "description": "University trustees mandate opening the flagship competitions to working junior software developers and tech alumni, not just undergraduates.",
+          "impactField": "audience",
+          "directive": "Pivot brand tone, prize incentives, networking value proposition, and communication channels toward working engineers and alumni."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_10",
+      "name": "Falcon Squad 10",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521942,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_11",
+          "challengeNumber": 10,
+          "filename": "11.png",
+          "imageUrl": "/round2_images/11.png",
+          "title": "Post-Apocalyptic Overgrown Glass Biosphere Dome",
+          "description": "A wide environmental concept art showing the interior of a shattered giant glass geodesic greenhouse in a post-human world, where tropical jungle vines and ancient trees have reclaimed rusted vintage vehicles.",
+          "keyElements": [
+            "Giant fractured geodesic glass dome ceiling letting in dusty sunbeams",
+            "Lush feral jungle growth swallowing rusted cars and decayed concrete ruins",
+            "Towering banyan trees growing through the broken floor tiles",
+            "Flock of colorful tropical birds flying through the sunlit opening",
+            "Volumetric dusty atmospheric haze with dramatic sun rays"
+          ],
+          "targetVisualPrompt": "Moody post-apocalyptic environment concept art inside a massive ruined botanical biosphere dome. Shattered geometric glass ceiling panels allow dramatic god-rays of golden sunlight to pierce the thick atmospheric dust. Nature has completely reclaimed the interior: lush green vines, ancient mossy ferns, and giant trees burst through cracked marble floors, encasing rusted old vehicles. The Last of Us aesthetic, hyper-detailed textures, Octane render 8k.",
+          "evaluationCriteria": {
+            "composition": "High-vaulted panoramic dome view with diagonal volumetric sunlight beams",
+            "colors": "Earthy forest greens, rust orange, weathered concrete grey, and warm sunlit rays",
+            "subject": "Ruined botanical biosphere dome overtaken by feral jungle flora",
+            "style": "Detailed post-apocalyptic concept art, rich textural decay and lighting"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 3.5,
+          "colors_score": 3.5,
+          "subject_score": 3.5,
+          "style_score": 3.5,
+          "total_score": 14,
+          "reasoning": "Scored 14/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 14,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 7,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 3.5,
+          "colors_score": 3.5,
+          "subject_score": 3.5,
+          "style_score": 3.5,
+          "total_score": 14,
+          "reasoning": "Scored 14/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "drafting",
+        "assignedCase": {
+          "id": "r3_case_002",
+          "title": "Hyperlocal EV Fleet Subscription Launch Crisis",
+          "category": "Product Launch & Operations Strategy",
+          "difficulty": 3,
+          "scenario": {
+            "context": "A green-mobility startup is launching a peer-to-peer electric two-wheeler subscription service in a tier-2 college town with severe range anxiety and skeptical consumers.",
+            "metrics": {
+              "fleetSize": "120 Smart Electric Scooters",
+              "chargingHubs": "8 Automated Battery Swap Stations",
+              "targetMonthlySubscribers": "500 Active Riders in 30 Days",
+              "launchBudget": "₹50,000 Marketing & Ops Reserve",
+              "timelineWeeks": "4 Weeks to Launch",
+              "competitorPricing": "15% cheaper legacy petrol rentals"
+            },
+            "requiredPillars": [
+              "1. Brand Positioning & Overcoming Consumer Range Anxiety",
+              "2. Hyperlocal Campus & Tech Park Activation Blitz",
+              "3. Tiered Subscription Pricing & Security Deposit Mechanics",
+              "4. Battery Swap Network SLA & Fleet Operations Protocol",
+              "5. Granular Launch Budget Allocation Matrix",
+              "6. 4-Week Phased Rollout Roadmap & T-Minus Checklist",
+              "7. Referral Loops & Gamified Clean-Kilometer Rewards",
+              "8. Unit Economics (CAC, LTV, Fleet Utilization Rate) KPIs",
+              "9. Emergency Vehicle Breakdown & Power Contingency SLA",
+              "10. 90-Day Expansion & Investor Milestone Projections"
+            ]
+          },
+          "bombs": [
+            {
+              "bombId": "bomb_004_grid_failure",
+              "headline": "🚨 POWER GRID HALT: 6 OUT OF 8 HUBS BLOCKED!",
+              "description": "Municipal electrical permit delays have halted 6 out of your 8 planned swap hubs! You must launch with only 2 operational hubs.",
+              "impactField": "operations",
+              "directive": "Deploy mobile battery swap vans, restructure delivery geofences, and launch rapid on-demand swap dispatch protocols."
+            },
+            {
+              "bombId": "bomb_005_budget_cut",
+              "headline": "🚨 CAPITAL CRUNCH: ₹50,000 ➔ ₹10,000!",
+              "description": "Angel investor tranche delayed! Your launch budget is compressed from ₹50,000 to ₹10,000.",
+              "impactField": "budget",
+              "directive": "Replace expensive offline experiential marketing with viral campus test-ride challenges and peer referral discounts."
+            },
+            {
+              "bombId": "bomb_006_monsoon_flood",
+              "headline": "🚨 MONSOON FLOODING: 40% OF SERVICE AREA WATERLOGGED!",
+              "description": "Unseasonal severe monsoons have flooded main university arterial roads, raising water-damage battery fears.",
+              "impactField": "safety",
+              "directive": "Implement water-ingress safety certifications, launch complimentary rain-gear add-ons, and dynamic flood-safe routing."
+            }
+          ]
+        },
+        "assignedBomb": {
+          "bombId": "bomb_004_grid_failure",
+          "headline": "🚨 POWER GRID HALT: 6 OUT OF 8 HUBS BLOCKED!",
+          "description": "Municipal electrical permit delays have halted 6 out of your 8 planned swap hubs! You must launch with only 2 operational hubs.",
+          "impactField": "operations",
+          "directive": "Deploy mobile battery swap vans, restructure delivery geofences, and launch rapid on-demand swap dispatch protocols."
+        },
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_11",
+      "name": "Falcon Squad 11",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521943,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_12",
+          "challengeNumber": 11,
+          "filename": "12.png",
+          "imageUrl": "/round2_images/12.png",
+          "title": "Intergalactic Alien Bazaar on Desert Planet",
+          "description": "A colorful, vibrant wide-angle marketplace scene on an arid desert planet with twin suns in the sky, packed with alien merchants, exotic bioluminescent creature vendors, and floating hover-stalls.",
+          "keyElements": [
+            "Twin red and yellow suns setting over a crimson desert horizon",
+            "Lively alien marketplace with diverse extraterrestrial species and droids",
+            "Hovering market carts displaying exotic glowing fruits and space tech",
+            "Weathered sandstone domed architecture with colorful silk canopies",
+            "Warm dusty desert atmosphere with vibrant market color pops"
+          ],
+          "targetVisualPrompt": "Vibrant and bustling alien market street on a desert outpost planet under twin sunset suns. Richly dressed extraterrestrial merchant species trade glowing bioluminescent alien produce and futuristic scrap from floating repulsorlift stalls. Silk woven canopies in saffron, indigo, and crimson stretch between weathered adobe dome structures. Star Wars Mos Eisley meets Dune, cinematic wide shot, rich environmental detail, 8k digital painting.",
+          "evaluationCriteria": {
+            "composition": "Dynamic bustling street-level perspective with deep atmospheric vanishing point",
+            "colors": "Warm terracotta, desert sand, twin sunset gradient, with vibrant market stalls",
+            "subject": "Exotic alien bazaar with varied species, hover-stalls, and desert architecture",
+            "style": "Cinematic sci-fi worldbuilding concept art, lively character diversity"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 7,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 11,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_12",
+      "name": "Falcon Squad 12",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521944,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_13",
+          "challengeNumber": 12,
+          "filename": "13.png",
+          "imageUrl": "/round2_images/13.png",
+          "title": "Celestial Dragon of the Nebula Stardust",
+          "description": "A majestic cosmic fantasy illustration of an ethereal celestial dragon composed of glowing stellar gas and stardust, weaving through a vibrant purple and gold interstellar nebula cloud.",
+          "keyElements": [
+            "Serpentine Eastern dragon formed of incandescent cosmic stardust and nebulas",
+            "Glowing crystalline dragon scales reflecting distant supernova light",
+            "Intricate spiral horns emitting starlight filaments and cometary dust",
+            "Surrounding deep-space nebula with glowing magenta and gold gas clouds",
+            "Background star clusters and luminous cosmic spirals"
+          ],
+          "targetVisualPrompt": "Magnificent celestial cosmic dragon serpentine beast soaring through deep space. Body formed of swirling radiant stellar nebulae, burning stardust, and iridescent diamond scales. Glowing golden horns and whiskers trailing incandescent cometary stardust. Deep cosmic void background filled with spiral galaxies, vibrant magenta and celestial turquoise gas clouds. Epic fantasy space art, high resolution, glowing ethereal lighting, masterpiece.",
+          "evaluationCriteria": {
+            "composition": "Fluid S-curve dynamic motion of the dragon traversing the cosmic frame",
+            "colors": "Cosmic violet, luminous magenta, sparkling gold, and deep galactic navy",
+            "subject": "Mythical celestial dragon made of interstellar gas and starry nebulae",
+            "style": "High-fantasy cosmic digital painting, brilliant luminescence and particle effects"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 5,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 18,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_13",
+      "name": "Falcon Squad 13",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521944,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_14",
+          "challengeNumber": 13,
+          "filename": "14.png",
+          "imageUrl": "/round2_images/14.png",
+          "title": "Futuristic Electric Hypercar in Monochromatic Tunnel",
+          "description": "A sleek, low-slung aerodynamic electric concept supercar speeding through a stark white minimalist LED-strip tunnel with motion blur reflections and glowing red taillights.",
+          "keyElements": [
+            "Ultra-aerodynamic matte-black and carbon-fiber electric supercar silhouette",
+            "Minimalist architectural tunnel lined with continuous linear LED lighting",
+            "High-speed motion blur along wet tunnel floor and wall reflections",
+            "Vibrant neon red continuous lightbar taillights trailing behind car",
+            "Clean, high-contrast commercial automotive studio photography style"
+          ],
+          "targetVisualPrompt": "Commercial automotive photography of a futuristic luxury electric hypercar driving at high speed through a minimalist subterranean architectural tunnel. Symmetrical white LED light strips along ceiling and walls create dramatic speed streaks on the glossy carbon-fiber bodywork. Continuous glowing crimson laser taillight bar creates trailing light exposure. Low-angle tracking shot, crisp focal clarity on the rear diffuser, 8k automotive catalog quality.",
+          "evaluationCriteria": {
+            "composition": "Low-angle dynamic tracking shot with symmetrical tunnel vanishing point",
+            "colors": "High-contrast monochrome white/black with intense streak of glowing red taillights",
+            "subject": "Futuristic luxury electric supercar in illuminated minimalist tunnel",
+            "style": "High-end commercial automotive photography, motion tracking and light trails"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 6,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 15,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_14",
+      "name": "Falcon Squad 14",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521945,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_15",
+          "challengeNumber": 14,
+          "filename": "15.png",
+          "imageUrl": "/round2_images/15.png",
+          "title": "Magical Alchemist Laboratory at Midnight",
+          "description": "An intricately detailed fantasy illustration of a wizard alchemist's cluttered library workshop filled with glowing potion vials, floating spellbooks, astronomical orreries, and candlelight.",
+          "keyElements": [
+            "Antique wooden study packed with towering bookshelves and ancient scrolls",
+            "Glass flasks and alembics bubbling with glowing emerald and amethyst liquids",
+            "Hovering arcane spellbooks radiating golden magical runes",
+            "Brass astronomical armillary sphere and celestial globes on heavy oak desk",
+            "Warm flickering candlelight and moonlight streaming through Gothic stained glass"
+          ],
+          "targetVisualPrompt": "Cozy and intricate fantasy concept art of a grand medieval alchemist's chamber at midnight. Towering mahogany bookshelves overflowing with leather-bound spell tomes. On the heavy cluttered oak desk, blown-glass alembics and retorts bubble with luminescent cyan and violet elixirs. A brass armillary sphere rotates smoothly while open grimoires float gently in mid-air. Warm candlelight, cool moonlight through Gothic arch windows, 8k storybook illustration.",
+          "evaluationCriteria": {
+            "composition": "Intricately packed layered interior with foreground desk and background shelves",
+            "colors": "Warm amber candlelight, deep mahogany wood tones, with glowing emerald/purple potions",
+            "subject": "Medieval fantasy alchemist workshop with floating spellbooks and glowing vials",
+            "style": "Detailed fantasy concept illustration, rich environmental clutter and magical lighting"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 7,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 12,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_15",
+      "name": "Falcon Squad 15",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521945,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_16",
+          "challengeNumber": 15,
+          "filename": "16.png",
+          "imageUrl": "/round2_images/16.png",
+          "title": "Volcanic Obsidian Fortress in Lava Sea",
+          "description": "An intimidating dark fantasy citadel built from jagged black obsidian rock towering over an active caldera lake of roaring molten lava, with ash lightning storms in the sky.",
+          "keyElements": [
+            "Monolithic dark obsidian castle spires with sharp geometric architecture",
+            "Lava falls cascading into a boiling crimson molten lava sea below",
+            "Cracks in the fortress walls glowing with internal magma energy",
+            "Volcanic ash cloud storm with crackling red volcanic lightning",
+            "Intense fiery orange and soot-black dramatic contrast lighting"
+          ],
+          "targetVisualPrompt": "Epic dark fantasy landscape of a menacing black obsidian fortress perched upon a colossal volcanic crater. Spires of sharp volcanic glass rise above a churning lake of molten glowing orange lava. Cascades of liquid fire pour down rocky cliffs into the fiery depths. The stormy night sky is choked with billowing black ash and arcs of crimson volcanic lightning. Lord of the Rings Mordor aesthetic, cinematic matte painting, Unreal Engine 5 render, 8k.",
+          "evaluationCriteria": {
+            "composition": "Towering vertical scale of dark citadel set against expansive glowing lava lake",
+            "colors": "High contrast fiery orange, molten yellow, charred charcoal, and obsidian black",
+            "subject": "Menacing dark obsidian fortress in active volcanic lava caldera",
+            "style": "Epic dark fantasy matte painting, dynamic lava shaders and atmospheric lightning"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 5,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 19,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_16",
+      "name": "Falcon Squad 16",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521945,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_17",
+          "challengeNumber": 16,
+          "filename": "17.png",
+          "imageUrl": "/round2_images/17.png",
+          "title": "Crystalline Ice Palace of the Frozen Aurora",
+          "description": "A breathtaking polar landscape featuring a monumental cathedral-like palace carved entirely from translucent sapphire ice under vivid green and violet Northern Lights aurora borealis.",
+          "keyElements": [
+            "Monumental ice castle with translucent crystal spires and gothic arches",
+            "Vivid undulating ribbons of green and violet aurora borealis across night sky",
+            "Frozen mirror-like glacial lake reflecting the castle and auroral lights",
+            "Snow-covered jagged mountain peaks surrounding the frozen valley",
+            "Crisp, clear arctic atmosphere with sparkling ice crystals in the air"
+          ],
+          "targetVisualPrompt": "Enchanting wide-angle winter landscape featuring a grand crystalline ice palace carved into an arctic glacier. Towering translucent ice spires refract luminous green and purple ribbons of the Aurora Borealis dancing across a starry polar sky. A perfectly still frozen lake in the foreground creates a mirror reflection of the glowing palace. Pristine snow, volumetric polar frost, crisp 8k cinematic nature photography.",
+          "evaluationCriteria": {
+            "composition": "Symmetrical reflection across frozen lake with wide sweeping aurora sky",
+            "colors": "Ice crystal cyan, glacial sapphire blue, radiant aurora green, and deep violet",
+            "subject": "Gothic crystalline ice palace beneath vibrant aurora borealis",
+            "style": "Photorealistic arctic fantasy landscape, crystal light refraction"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 6,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 16,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_17",
+      "name": "Falcon Squad 17",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521946,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_18",
+          "challengeNumber": 17,
+          "filename": "18.png",
+          "imageUrl": "/round2_images/18.png",
+          "title": "Cybernetic Bio-Android Botanical Greenhouse",
+          "description": "A striking fine-art sci-fi portrait of a porcelain-white humanoid android sitting among blooming pink orchids and glass terrariums, connected to subtle fiber-optic data vines.",
+          "keyElements": [
+            "Elegant porcelain and gold-filigree female android seated in serene pose",
+            "Exotic blooming pink orchids and delicate tropical flora draping around figure",
+            "Luminous fiber-optic strands woven like ivy between botanical stems",
+            "Warm diffused sunlight filtering through frosted greenhouse glass panes",
+            "High-fashion editorial portrait aesthetic with crisp macro textures"
+          ],
+          "targetVisualPrompt": "Fine-art sci-fi editorial portrait of a serene female android composed of polished white ceramic and delicate gold kintsugi filigree. She sits calmly enveloped by a lush greenhouse of rare blooming magenta orchids and hanging ferns. Glowing emerald fiber-optic threads mimic organic vine roots connecting to her cybernetic chassis. Soft diffused natural sunbeam lighting, Vogue editorial photography, Hasselblad medium format camera, 8k crisp focus.",
+          "evaluationCriteria": {
+            "composition": "Close-up portrait composition balancing android symmetry with organic flora",
+            "colors": "Porcelain white, gold accents, orchid magenta, and botanical foliage green",
+            "subject": "Ceramic and gold cybernetic android immersed in botanical greenhouse flowers",
+            "style": "High-fashion fine art photography, soft diffused natural lighting"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 7,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 13,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_18",
+      "name": "Falcon Squad 18",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521947,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_19",
+          "challengeNumber": 18,
+          "filename": "19.png",
+          "imageUrl": "/round2_images/19.png",
+          "title": "Colossal Ancient Golem Guardian in Alpine Pass",
+          "description": "A cinematic scale fantasy concept painting of an enormous ancient stone golem walking through a snowy mountain gorge, with old pine forests growing on its shoulders and ancient blue runes glowing on its chest.",
+          "keyElements": [
+            "Gigantic moss-covered stone golem towering over mountain ridge",
+            "Ancient pine trees and snow patches naturally rooted on golem's shoulders",
+            "Mystic blue carved runes glowing brightly through cracks in ancient granite",
+            "Tiny travelers on horseback on the snowy mountain road looking up in awe",
+            "Dramatic mountain peaks shrouded in blizzard mist and cold atmospheric haze"
+          ],
+          "targetVisualPrompt": "Cinematic wide-angle fantasy matte painting of a colossal primordial stone golem striding through a snow-covered alpine mountain pass. An entire grove of pine trees and moss grows along its massive rocky back and shoulders. Glowing cyan ancient magical glyphs are carved into its chest and eyes. Tiny travelers in hooded cloaks watch from a mountain trail in the foreground for epic scale. Shadow of the Colossus mood, atmospheric snow haze, 8k painting.",
+          "evaluationCriteria": {
+            "composition": "Epic low-angle sense of colossal scale with foreground traveler contrast",
+            "colors": "Cold granite grey, mountain snow white, alpine forest green, and glowing cyan runes",
+            "subject": "Colossal primordial stone golem carrying pine forest in snowy mountain pass",
+            "style": "Cinematic epic fantasy matte painting, atmospheric mountain haze"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 5,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 20,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.25,
+          "colors_score": 1.25,
+          "subject_score": 1.25,
+          "style_score": 1.25,
+          "total_score": 5,
+          "reasoning": "Scored 5/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_19",
+      "name": "Falcon Squad 19",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521947,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_20",
+          "challengeNumber": 19,
+          "filename": "20.png",
+          "imageUrl": "/round2_images/20.png",
+          "title": "Neon Holographic Cyber-Arcade in Future Tokyo",
+          "description": "A vibrant first-person perspective inside a crowded futuristic retro-arcade in Akihabara 2088, filled with glowing holographic claw machines, arcade cabinets, neon soda dispensers, and anime posters.",
+          "keyElements": [
+            "First-person wide interior shot of a multi-level futuristic arcade game center",
+            "Glowing holographic 3D games projecting floating retro sprites into the air",
+            "Vibrant neon light reflections across polished linoleum flooring",
+            "Crowds of young cyber-enthusiasts in holographic jackets playing games",
+            "Saturated neon pink, cyan, yellow, and violet aesthetic with dense signage"
+          ],
+          "targetVisualPrompt": "Vibrant first-person perspective inside a hyper-futuristic retro arcade in Akihabara Neo-Tokyo. Rows of glowing neon arcade cabinets project 3D interactive holograms of retro 8-bit characters into the air. Reflective glossy dark floor catches the brilliant neon pink, cyan, and gold light wash. Holographic ceiling advertisements and anime signage fill every corner. Atmospheric neon bloom, cinematic wide lens, 8k Octane render, cyberpunk nightlife.",
+          "evaluationCriteria": {
+            "composition": "First-person immersive wide perspective with dense spatial depth",
+            "colors": "High saturation neon pink, electric cyan, lemon yellow, and dark violet shadows",
+            "subject": "Futuristic multi-level retro arcade with holographic games and neon signage",
+            "style": "Cyberpunk interior concept art, vibrant neon bloom and reflections"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 6,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 17,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 1.5,
+          "style_score": 1.5,
+          "total_score": 6,
+          "reasoning": "Scored 6/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    },
+    {
+      "id": "team_20",
+      "name": "Falcon Squad 20",
+      "pin": "1234",
+      "connected": false,
+      "socketId": null,
+      "lastSeen": 1789757521948,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
+      "isEliminated": false,
+      "isQualified": false,
+      "rank": null,
+      "round2": {
+        "status": "evaluated",
+        "assignedChallenge": {
+          "id": "r2_img_01",
+          "challengeNumber": 1,
+          "filename": "1.png",
+          "imageUrl": "/round2_images/1.png",
+          "title": "Neon Cyberpunk Assassin in Rainy Alley",
+          "description": "A cinematic, low-angle digital concept art of a cybernetic warrior standing in a rain-drenched Neo-Tokyo alleyway illuminated by vibrant pink, purple, and electric cyan neon kanji signs, with wet asphalt reflections and atmospheric steam.",
+          "keyElements": [
+            "Cyberpunk warrior with glowing cybernetic implants and visor",
+            "Rain-slicked asphalt with vivid neon pink and cyan reflections",
+            "Dense vertical holographic kanji billboards and neon signs",
+            "Cinematic low-angle perspective with anamorphic lens flare",
+            "Atmospheric volumetric rain particles and rising steam"
+          ],
+          "targetVisualPrompt": "Cinematic low-angle digital concept art of a futuristic cyberpunk assassin standing in a narrow rain-soaked alley in Neo-Tokyo at night. Dressed in tactical carbon-fiber techwear with glowing crimson ocular implants and a holographic katana. The ground is wet glossy asphalt reflecting vibrant pink, purple, and turquoise kanji neon signs. Heavy volumetric rain, floating atmospheric steam, anamorphic lens flares, Unreal Engine 5 render, 8k resolution, photorealistic cinematic lighting.",
+          "evaluationCriteria": {
+            "composition": "Low-angle cinematic perspective, vertical framing of towering alley walls",
+            "colors": "Noir shadow palette with intense neon pink, cyan, and glowing crimson highlights",
+            "subject": "Cybernetic tactical warrior in cyberpunk alley with weapons/techwear",
+            "style": "Cinematic sci-fi digital concept art, raytraced reflections, volumetric rain"
+          }
+        },
+        "draftPrompt": "",
+        "submittedPrompt": "Test submitted prompt with sufficient length for evaluation verification",
+        "submittedAt": null,
+        "evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        },
+        "totalScore": 7,
+        "isQualified": false,
+        "isEliminated": true,
+        "rank": 14,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
+        "c1_evaluation": {
+          "composition_score": 1.75,
+          "colors_score": 1.75,
+          "subject_score": 1.75,
+          "style_score": 1.75,
+          "total_score": 7,
+          "reasoning": "Scored 7/20",
+          "matched_elements": [
+            "Valid subject"
+          ],
+          "missed_elements": []
+        }
+      },
+      "round3": {
+        "status": "idle",
+        "assignedCase": null,
+        "assignedBomb": null,
+        "masterDraft": "",
+        "masterPrompt": null,
+        "adaptedDraft": "",
+        "adaptedPrompt": null,
+        "submittedAt": null,
+        "timeTakenSeconds": null,
+        "evaluation": null,
+        "finalRank": null,
+        "isWinner": false
+      },
+      "sandbox": {
+        "r1RunsLeft": 5,
+        "r2RunsLeft": 4,
+        "r3RunsLeft": 4,
+        "totalRunsUsed": 0
+      }
+    }
+  ]
 }

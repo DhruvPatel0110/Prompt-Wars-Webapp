@@ -14,20 +14,21 @@ const SNAPSHOT_FILE = path.join(DATA_DIR, 'game_state_snapshot.json');
 
 export class StateManager {
   constructor() {
-    this.questionsData = this.loadJSON(QUESTIONS_FILE, { genres: {}, questions: [] });
-    this.round2Data = this.loadJSON(ROUND2_FILE, { challenges: { image: [], report: [] } });
+    this.questionsData = this.loadQuestionsData();
+    this.round2Challenges = this.loadRound2Data();
+    this.round2Data = { challenges: this.round2Challenges };
     this.round3Data = this.loadJSON(ROUND3_FILE, { cases: [] });
     this.teamsRoster = this.loadJSON(TEAMS_FILE, []);
 
     this.activeRound = 1;
 
-    // Round 1 State
+    // Round 1 State (Starts LOCKED until Host starts the event)
     this.roundState = {
       round: 1,
       roundName: "PROMPT MAKEOVER",
       tagline: "SPIN. UNLOCK. REWRITE.",
-      isLocked: false,
-      status: 'ACTIVE', // 'LOCKED' | 'ACTIVE' | 'EVALUATING' | 'EVALUATED' | 'ADVANCED'
+      isLocked: true,
+      status: 'LOCKED', // 'LOCKED' | 'ACTIVE' | 'EVALUATING' | 'EVALUATED' | 'ADVANCED'
       timerDuration: 600,
       timerRemaining: 600,
       timerRunning: false,
@@ -37,7 +38,7 @@ export class StateManager {
       advanceTriggered: false
     };
 
-    // Round 2 State
+    // Round 2 State (Starts LOCKED until Host starts Round 2)
     this.round2State = {
       round: 2,
       roundName: "PROMPT REVERSE ENGINEERING",
@@ -50,9 +51,7 @@ export class StateManager {
       timerStartedAt: null,
       timerEndsAt: null,
       eliminationPercentage: 50,
-      advanceTriggered: false,
-      activeImageChallenge: this.round2Data.challenges?.image?.[0] || null,
-      activeReportChallenge: this.round2Data.challenges?.report?.[0] || null
+      advanceTriggered: false
     };
 
     // Round 3 State
@@ -81,6 +80,90 @@ export class StateManager {
     this.projectorSockets = new Set();
 
     this.loadSnapshot();
+  }
+
+  loadQuestionsData() {
+    const rootA = path.join(__dirname, '..', 'ROUND1_A.json');
+    const rootB = path.join(__dirname, '..', 'ROUND1_B.json');
+    const rootC = path.join(__dirname, '..', 'ROUND1_C.json');
+    const rootD = path.join(__dirname, '..', 'ROUND1_D.json');
+
+    if (fs.existsSync(rootA) && fs.existsSync(rootB) && fs.existsSync(rootC) && fs.existsSync(rootD)) {
+      try {
+        const dataA = JSON.parse(fs.readFileSync(rootA, 'utf8'));
+        const dataB = JSON.parse(fs.readFileSync(rootB, 'utf8'));
+        const dataC = JSON.parse(fs.readFileSync(rootC, 'utf8'));
+        const dataD = JSON.parse(fs.readFileSync(rootD, 'utf8'));
+
+        const combined = {
+          genres: {
+            A: {
+              name: dataA.genreName || "CREATIVE",
+              description: dataA.description || "",
+              badge: dataA.badge || "CREATIVE ARTS",
+              color: dataA.color || "#ff007f"
+            },
+            B: {
+              name: dataB.genreName || "BUSINESS",
+              description: dataB.description || "",
+              badge: dataB.badge || "COMMERCIAL",
+              color: dataB.color || "#00f0ff"
+            },
+            C: {
+              name: dataC.genreName || "DATA / ANALYSIS",
+              description: dataC.description || "",
+              badge: dataC.badge || "ANALYTICS",
+              color: dataC.color || "#8a2be2"
+            },
+            D: {
+              name: dataD.genreName || "REAL-WORLD / PROBLEM SOLVING",
+              description: dataD.description || "",
+              badge: dataD.badge || "PROBLEM SOLVER",
+              color: dataD.color || "#00ff88"
+            }
+          },
+          questions: [
+            ...(dataA.questions || []),
+            ...(dataB.questions || []),
+            ...(dataC.questions || []),
+            ...(dataD.questions || [])
+          ]
+        };
+
+        try {
+          if (!fs.existsSync(DATA_DIR)) {
+            fs.mkdirSync(DATA_DIR, { recursive: true });
+          }
+          fs.writeFileSync(QUESTIONS_FILE, JSON.stringify(combined, null, 2), 'utf8');
+        } catch (e) {
+          console.warn('[StateManager] Notice: could not cache round1_questions.json:', e.message);
+        }
+
+        console.log(`[StateManager] Successfully loaded ${combined.questions.length} Round 1 questions from ROUND1_A.json, ROUND1_B.json, ROUND1_C.json, ROUND1_D.json`);
+        return combined;
+      } catch (err) {
+        console.error(`[StateManager] Error parsing root ROUND1_A-D.json files:`, err.message);
+      }
+    }
+
+    return this.loadJSON(QUESTIONS_FILE, { genres: {}, questions: [] });
+  }
+
+  loadRound2Data() {
+    try {
+      const data = this.loadJSON(ROUND2_FILE, { challenges: [] });
+      let list = [];
+      if (Array.isArray(data.challenges)) {
+        list = data.challenges;
+      } else if (Array.isArray(data.challenges?.image)) {
+        list = data.challenges.image;
+      }
+      console.log(`[StateManager] Loaded ${list.length} Round 2 competition image challenges.`);
+      return list;
+    } catch (err) {
+      console.error(`[StateManager] Failed to load Round 2 challenges:`, err.message);
+      return [];
+    }
   }
 
   loadJSON(filepath, fallback) {
@@ -119,21 +202,23 @@ export class StateManager {
       isQualified: false,
       rank: null,
 
-      // Round 2 Fields
+      // Round 2 Fields (Reverse Engineering)
       round2: {
-        status: 'idle', // 'idle' | 'drafting' | 'c1_submitted' | 'c2_submitted' | 'both_submitted' | 'evaluated'
-        c1_draft: "",
-        c1_submittedPrompt: null,
-        c1_submittedAt: null,
-        c1_evaluation: null,
-        c2_draft: "",
-        c2_submittedPrompt: null,
-        c2_submittedAt: null,
-        c2_evaluation: null,
+        status: 'idle', // 'idle' | 'drafting' | 'submitted' | 'evaluated'
+        assignedChallenge: null,
+        draftPrompt: "",
+        submittedPrompt: null,
+        submittedAt: null,
+        evaluation: null,
         totalScore: 0,
         isQualified: false,
         isEliminated: false,
-        rank: null
+        rank: null,
+        // Legacy aliases
+        c1_draft: "",
+        c1_submittedPrompt: null,
+        c1_submittedAt: null,
+        c1_evaluation: null
       },
 
       // Round 3 Fields
@@ -345,15 +430,20 @@ export class StateManager {
   performSpin(teamId, requestedGenre = null) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
-    if (team.spinResult) return team;
+    if (team.spinResult && team.assignedQuestion) return team;
 
     const genresKeys = ['A', 'B', 'C', 'D'];
     const genreKey = requestedGenre && genresKeys.includes(requestedGenre)
       ? requestedGenre
       : genresKeys[Math.floor(Math.random() * genresKeys.length)];
 
-    const genreInfo = this.questionsData.genres[genreKey];
-    const candidates = (this.questionsData.questions || []).filter(q => q.genre === genreKey);
+    const genreInfo = this.questionsData?.genres?.[genreKey] || {
+      name: genreKey === 'A' ? 'CREATIVE' : genreKey === 'B' ? 'BUSINESS' : genreKey === 'C' ? 'DATA / ANALYSIS' : 'REAL-WORLD / PROBLEM SOLVING',
+      color: genreKey === 'A' ? '#ff007f' : genreKey === 'B' ? '#00f0ff' : genreKey === 'C' ? '#8a2be2' : '#00ff88',
+      badge: genreKey === 'A' ? 'CREATIVE ARTS' : genreKey === 'B' ? 'COMMERCIAL' : genreKey === 'C' ? 'ANALYTICS' : 'PROBLEM SOLVER'
+    };
+
+    const candidates = (this.questionsData?.questions || []).filter(q => q.genre === genreKey);
     const chosenQuestion = candidates.length > 0 
       ? candidates[Math.floor(Math.random() * candidates.length)]
       : {
@@ -422,6 +512,8 @@ export class StateManager {
   }
 
   startTimer() {
+    this.roundState.isLocked = false;
+    this.roundState.status = 'ACTIVE';
     if (!this.roundState.timerRunning) {
       this.roundState.timerRunning = true;
       this.roundState.timerStartedAt = Date.now();
@@ -507,12 +599,22 @@ export class StateManager {
       return (a.timerUsedSeconds || 9999) - (b.timerUsedSeconds || 9999);
     });
 
-    const totalActiveTeams = teamsList.filter(t => t.submissionStatus !== 'idle' || t.submittedPrompt).length || teamsList.length;
+    const evaluatedOrSubmittedTeams = teamsList.filter(t => t.evaluation || t.submittedPrompt);
+    const totalActiveTeams = evaluatedOrSubmittedTeams.length > 0 ? evaluatedOrSubmittedTeams.length : teamsList.length;
     const qualifyCount = Math.max(1, Math.ceil(totalActiveTeams * ((100 - this.roundState.eliminationPercentage) / 100)));
+    const MIN_QUALIFYING_SCORE = 8.0; // Minimum 8/20 (40% competency) required to advance
 
     teamsList.forEach((team, idx) => {
       team.rank = idx + 1;
-      if (idx < qualifyCount && (team.evaluation?.total_score > 0 || team.submittedPrompt)) {
+      const score = team.evaluation?.total_score ?? (team.submittedPrompt ? 0 : -1);
+      const isEvaluated = team.evaluation !== null && team.evaluation !== undefined;
+      const hasSubmission = Boolean(team.submittedPrompt || isEvaluated);
+
+      // A team qualifies ONLY if:
+      // 1. They are in the top cutoff bracket
+      // 2. They have a valid submission
+      // 3. Their score meets or exceeds the minimum passing threshold (>= 8.0/20)
+      if (idx < qualifyCount && hasSubmission && (!isEvaluated || score >= MIN_QUALIFYING_SCORE)) {
         team.isQualified = true;
         team.isEliminated = false;
       } else {
@@ -524,11 +626,32 @@ export class StateManager {
     return teamsList;
   }
 
+  allotRound2Challenges() {
+    const challenges = this.round2Challenges;
+    if (!challenges || challenges.length === 0) return;
+    
+    // Allot unique images to qualified teams (or all teams if no qualifications marked yet)
+    const allTeams = Array.from(this.teams.values());
+    const qualifiedTeams = allTeams.filter(t => t.isQualified);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : allTeams;
+
+    targetTeams.forEach((team, idx) => {
+      const challenge = challenges[idx % challenges.length];
+      team.round2.assignedChallenge = challenge;
+      if (!team.round2.status || team.round2.status === 'idle') {
+        team.round2.status = 'drafting';
+      }
+    });
+
+    this.saveSnapshot();
+  }
+
   advanceRound() {
     this.computeLeaderboard();
     this.roundState.status = 'ADVANCED';
     this.roundState.advanceTriggered = true;
     this.activeRound = 2;
+    this.allotRound2Challenges();
     this.saveSnapshot();
     return { roundState: this.roundState, leaderboard: this.getLeaderboard() };
   }
@@ -541,6 +664,7 @@ export class StateManager {
     this.activeRound = 2;
     this.round2State.isLocked = false;
     this.round2State.status = 'ACTIVE';
+    this.allotRound2Challenges();
     this.startRound2Timer();
     this.saveSnapshot();
     return this.round2State;
@@ -555,10 +679,13 @@ export class StateManager {
   }
 
   startRound2Timer() {
+    this.round2State.isLocked = false;
+    this.round2State.status = 'ACTIVE';
     if (!this.round2State.timerRunning) {
       this.round2State.timerRunning = true;
       this.round2State.timerStartedAt = Date.now();
       this.round2State.timerEndsAt = Date.now() + (this.round2State.timerRemaining * 1000);
+      this.saveSnapshot();
     }
     return this.round2State;
   }
@@ -582,50 +709,45 @@ export class StateManager {
     return this.round2State;
   }
 
-  saveRound2Draft(teamId, challengeType, draftText) {
+  saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-    if (challengeType === 'image') {
-      team.round2.c1_draft = (draftText || "").slice(0, 2500);
-    } else {
-      team.round2.c2_draft = (draftText || "").slice(0, 2500);
-    }
+    const text = (draftText || "").slice(0, 3500);
+    team.round2.draftPrompt = text;
+    team.round2.c1_draft = text;
     if (team.round2.status === 'idle') team.round2.status = 'drafting';
     return team;
   }
 
-  submitRound2(teamId, challengeType, promptText) {
+  submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
     if (this.round2State.isLocked && this.round2State.status !== 'ACTIVE') {
       throw new Error("Round 2 is currently locked.");
     }
 
-    const text = (promptText || "").trim();
+    const text = (promptText || team.round2.draftPrompt || "").trim();
     if (text.length < 30) throw new Error("Prompt must be at least 30 characters.");
 
-    if (challengeType === 'image') {
-      team.round2.c1_submittedPrompt = text;
-      team.round2.c1_submittedAt = Date.now();
-      team.round2.status = team.round2.c2_submittedPrompt ? 'both_submitted' : 'c1_submitted';
-    } else {
-      team.round2.c2_submittedPrompt = text;
-      team.round2.c2_submittedAt = Date.now();
-      team.round2.status = team.round2.c1_submittedPrompt ? 'both_submitted' : 'c2_submitted';
-    }
+    team.round2.submittedPrompt = text;
+    team.round2.c1_submittedPrompt = text;
+    team.round2.submittedAt = Date.now();
+    team.round2.c1_submittedAt = team.round2.submittedAt;
+    team.round2.status = 'submitted';
 
     this.saveSnapshot();
     return team;
   }
 
   setRound2EvaluationResults(evaluations) {
-    // evaluations: { [teamId]: { c1_eval, c2_eval, totalScore } }
+    // evaluations: { [teamId]: evalResult } OR { [teamId]: { evaluation, totalScore } }
     Object.entries(evaluations).forEach(([teamId, data]) => {
       const team = this.teams.get(teamId);
       if (team) {
-        team.round2.c1_evaluation = data.c1_eval;
-        team.round2.c2_evaluation = data.c2_eval;
-        team.round2.totalScore = (data.c1_eval?.total_score || 0) + (data.c2_eval?.total_score || 0);
+        const evalObj = data.evaluation || data.c1_eval || data;
+        team.round2.evaluation = evalObj;
+        team.round2.c1_evaluation = evalObj;
+        team.round2.totalScore = Number(evalObj.total_score || 0);
         team.round2.status = 'evaluated';
       }
     });
@@ -635,16 +757,52 @@ export class StateManager {
     this.saveSnapshot();
   }
 
+  setRound2ManualScore(teamId, criteriaKey, score) {
+    const team = this.teams.get(teamId);
+    if (!team) return null;
+    if (!team.round2.evaluation) {
+      team.round2.evaluation = {
+        composition_score: 0,
+        colors_score: 0,
+        subject_score: 0,
+        style_score: 0,
+        total_score: 0,
+        reasoning: "Manually adjusted by Host",
+        matched_elements: [],
+        missed_elements: []
+      };
+    }
+    team.round2.evaluation[criteriaKey] = Number(score);
+    team.round2.evaluation.total_score = 
+      (team.round2.evaluation.composition_score || 0) +
+      (team.round2.evaluation.colors_score || 0) +
+      (team.round2.evaluation.subject_score || 0) +
+      (team.round2.evaluation.style_score || 0);
+    team.round2.totalScore = team.round2.evaluation.total_score;
+    team.round2.c1_evaluation = team.round2.evaluation;
+
+    this.computeRound2Leaderboard();
+    this.saveSnapshot();
+    return team;
+  }
+
   computeRound2Leaderboard() {
     const qualifiedTeamsFromR1 = Array.from(this.teams.values()).filter(t => t.isQualified);
-    qualifiedTeamsFromR1.sort((a, b) => (b.round2.totalScore || 0) - (a.round2.totalScore || 0));
+    const teamsList = qualifiedTeamsFromR1.length > 0 ? qualifiedTeamsFromR1 : Array.from(this.teams.values());
+    
+    teamsList.sort((a, b) => (b.round2.totalScore || 0) - (a.round2.totalScore || 0));
 
-    const totalInR2 = qualifiedTeamsFromR1.length || 1;
+    const totalInR2 = teamsList.length || 1;
     const qualifyCount = Math.max(1, Math.ceil(totalInR2 * ((100 - this.round2State.eliminationPercentage) / 100)));
+    const MIN_R2_QUALIFYING_SCORE = 8.0; // Minimum 8/20 (40%) to advance to Grand Finale
 
-    qualifiedTeamsFromR1.forEach((team, idx) => {
+    teamsList.forEach((team, idx) => {
       team.round2.rank = idx + 1;
-      if (idx < qualifyCount && (team.round2.totalScore > 0 || team.round2.c1_submittedPrompt || team.round2.c2_submittedPrompt)) {
+      const score = team.round2.totalScore || 0;
+      const isEvaluated = team.round2.evaluation !== null && team.round2.evaluation !== undefined;
+      const hasSubmission = Boolean(team.round2.submittedPrompt || team.round2.c1_submittedPrompt || isEvaluated);
+
+      if (idx < qualifyCount && hasSubmission && (!isEvaluated || score >= MIN_R2_QUALIFYING_SCORE)) {
         team.round2.isQualified = true;
         team.round2.isEliminated = false;
       } else {
@@ -653,7 +811,7 @@ export class StateManager {
       }
     });
 
-    return qualifiedTeamsFromR1;
+    return teamsList;
   }
 
   advanceRound2() {
@@ -667,7 +825,8 @@ export class StateManager {
   }
 
   getRound2Leaderboard() {
-    const list = Array.from(this.teams.values()).filter(t => t.isQualified);
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified);
+    const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values());
     list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
     return list;
   }
@@ -713,6 +872,8 @@ export class StateManager {
   }
 
   startRound3Timer() {
+    this.round3State.isLocked = false;
+    this.round3State.status = 'ACTIVE';
     if (!this.round3State.timerRunning) {
       this.round3State.timerRunning = true;
       this.round3State.timerStartedAt = Date.now();
@@ -909,6 +1070,13 @@ export class StateManager {
     const team = this.teams.get(teamId);
     if (!team) return null;
 
+    // Ensure Round 2 image is assigned
+    if (!team.round2.assignedChallenge && this.round2Challenges.length > 0) {
+      const teamsList = Array.from(this.teams.values());
+      const idx = Math.max(0, teamsList.findIndex(t => t.id === teamId));
+      team.round2.assignedChallenge = this.round2Challenges[idx % this.round2Challenges.length];
+    }
+
     return {
       activeRound: this.activeRound,
       team: {
@@ -956,8 +1124,7 @@ export class StateManager {
         timerRemaining: this.round2State.timerRemaining,
         timerRunning: this.round2State.timerRunning,
         advanceTriggered: this.round2State.advanceTriggered,
-        activeImageChallenge: this.round2State.activeImageChallenge,
-        activeReportChallenge: this.round2State.activeReportChallenge
+        activeImageChallenge: team.round2.assignedChallenge || this.round2Challenges[0] || null
       },
       round3State: {
         round: this.round3State.round,
@@ -981,8 +1148,8 @@ export class StateManager {
     const teamsList = Array.from(this.teams.values());
     const connectedCount = teamsList.filter(t => t.connected).length;
     const r1Submitted = teamsList.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length;
-    const r2Submitted = teamsList.filter(t => t.round2.status === 'both_submitted' || t.round2.status === 'evaluated').length;
-    const r3Submitted = teamsList.filter(t => t.round3.status === 'submitted' || t.round3.status === 'evaluated').length;
+    const r2Submitted = teamsList.filter(t => t.round2?.status === 'submitted' || t.round2?.status === 'evaluated' || t.round2?.submittedPrompt || t.round2?.c1_submittedPrompt).length;
+    const r3Submitted = teamsList.filter(t => t.round3?.status === 'submitted' || t.round3?.status === 'evaluated').length;
 
     return {
       activeRound: this.activeRound,
@@ -1036,8 +1203,8 @@ export class StateManager {
       round: 1,
       roundName: "PROMPT MAKEOVER",
       tagline: "SPIN. UNLOCK. REWRITE.",
-      isLocked: false,
-      status: 'ACTIVE',
+      isLocked: true,
+      status: 'LOCKED',
       timerDuration: 600,
       timerRemaining: 600,
       timerRunning: false,

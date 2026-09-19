@@ -1,36 +1,28 @@
 {
-  "round": 1,
-  "roundName": "PROMPT MAKEOVER",
-  "tagline": "SPIN. UNLOCK. REWRITE.",
-  "durationSeconds": 600,
   "genres": {
     "A": {
       "name": "CREATIVE",
-      "category": "Storytelling, Ads & Content",
       "description": "Storytelling, Advertisement, Social media viral content, Video scripts, Poster/campaign concepts",
-      "color": "#ff007f",
-      "badge": "CREATIVE ARTS"
+      "badge": "CREATIVE ARTS",
+      "color": "#ff007f"
     },
     "B": {
       "name": "BUSINESS",
-      "category": "Marketing & Strategy",
       "description": "Marketing, Product launch, Business strategy, Customer communication, Brand promotion",
-      "color": "#00f0ff",
-      "badge": "COMMERCIAL"
+      "badge": "COMMERCIAL",
+      "color": "#00f0ff"
     },
     "C": {
       "name": "DATA / ANALYSIS",
-      "category": "Reports, Metrics & Finance",
       "description": "Reports, Tables, Financial summaries, Data interpretation, Comparison and insights",
-      "color": "#8a2be2",
-      "badge": "ANALYTICS"
+      "badge": "ANALYTICS",
+      "color": "#8a2be2"
     },
     "D": {
       "name": "REAL-WORLD / PROBLEM SOLVING",
-      "category": "Operations, Campus & Crisis",
       "description": "College problems, Event planning, Productivity, Education, Public-awareness campaigns",
-      "color": "#00ff88",
-      "badge": "PROBLEM SOLVER"
+      "badge": "PROBLEM SOLVER",
+      "color": "#00ff88"
     }
   },
   "questions": [

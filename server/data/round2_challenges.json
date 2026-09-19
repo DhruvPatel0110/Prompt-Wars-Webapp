@@ -3,170 +3,424 @@
   "roundName": "PROMPT REVERSE ENGINEERING",
   "tagline": "SEE THE OUTPUT. BUILD THE PROMPT.",
   "durationSeconds": 900,
-  "challenges": {
-    "image": [
-      {
-        "id": "r2_img_001",
-        "type": "image",
-        "challengeNumber": 1,
-        "title": "Solarpunk Neo-Metropolis 2077",
-        "description": "A high-altitude panoramic architectural concept art showing a futuristic eco-city blending vertical forest skyscrapers, solar-glass transit rails, lush sky-bridges, and flying electric air-taxis at golden hour sunset with warm neon lighting.",
-        "difficulty": 2,
-        "aspectRatio": "16:9",
-        "targetVisualPrompt": "Ultra-detailed futuristic solarpunk metropolis at golden hour sunset. Cinematic wide-angle perspective of towering glass and carbon-fiber sky-towers covered in lush cascading rooftop gardens, vertical greenery, and glowing solar-paneled spirals. Hyperloop glass tubes and sleek electric VTOL flying taxis crisscross between soaring skybridges. Warm sunset lighting reflects across curved holographic billboards and crystalline bio-domes. Masterpiece architectural rendering in Unreal Engine 5, octane render, 8k resolution, crisp photorealistic textures, volumetric sunset god-rays.",
-        "keyElements": [
-          "Solarpunk futuristic architectural style with vertical hanging gardens",
-          "Golden hour sunset atmosphere with warm orange and purple sky glow",
-          "Sleek flying electric air-taxis and transparent hyperloop sky-tubes",
-          "Ultra-wide cinematic angle with high depth of field",
-          "Holographic signage and crystalline bio-domes with volumetric lighting"
-        ],
-        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='skyGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#0a0826'/><stop offset='40%' stop-color='#3b1443'/><stop offset='75%' stop-color='#e65c00'/><stop offset='100%' stop-color='#ffd269'/></linearGradient><linearGradient id='bldg1' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#0f172a'/><stop offset='100%' stop-color='#1e293b'/></linearGradient><linearGradient id='bldg2' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00f0ff'/><stop offset='100%' stop-color='#004466'/></linearGradient><linearGradient id='greenery' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#00ff88'/><stop offset='100%' stop-color='#006633'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feGaussianBlur stdDeviation='8' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='800' height='450' fill='url(#skyGrad)'/><circle cx='400' cy='320' r='140' fill='#ff8800' opacity='0.7' filter='url(#glow)'/><circle cx='400' cy='320' r='100' fill='#ffe680' opacity='0.9'/><path d='M0 450 L120 220 L180 220 L240 450 Z' fill='url(#bldg1)'/><rect x='130' y='230' width='40' height='190' fill='#00f0ff' opacity='0.3'/><rect x='80' y='270' width='20' height='60' fill='url(#greenery)' rx='5'/><rect x='110' y='320' width='30' height='40' fill='url(#greenery)' rx='5'/><path d='M260 450 L340 120 L420 120 L480 450 Z' fill='#0a0f1d'/><rect x='355' y='140' width='50' height='290' fill='url(#bldg2)' opacity='0.4'/><path d='M330 180 Q390 160 450 180 L440 195 Q390 175 340 195 Z' fill='url(#greenery)'/><path d='M320 260 Q390 240 460 260 L450 275 Q390 255 330 275 Z' fill='url(#greenery)'/><path d='M500 450 L560 170 L620 170 L680 450 Z' fill='url(#bldg1)'/><rect x='570' y='190' width='40' height='230' fill='#ff007f' opacity='0.3'/><path d='M550 230 Q600 215 650 230' stroke='url(#greenery)' stroke-width='12' fill='none'/><path d='M100 300 Q400 240 700 320' stroke='#00f0ff' stroke-width='4' fill='none' opacity='0.8' filter='url(#glow)'/><path d='M120 340 Q400 380 680 280' stroke='#ff007f' stroke-width='3' fill='none' opacity='0.7' filter='url(#glow)'/><polygon points='220,160 260,170 230,175' fill='#00f0ff' filter='url(#glow)'/><line x1='210' y1='168' x2='180' y2='168' stroke='#00f0ff' stroke-width='2' opacity='0.8'/><polygon points='580,120 620,130 590,135' fill='#ffd700' filter='url(#glow)'/><line x1='570' y1='128' x2='540' y2='128' stroke='#ffd700' stroke-width='2' opacity='0.8'/><rect x='0' y='420' width='800' height='30' fill='#050811'/><text x='30' y='438' fill='#00f0ff' font-family='monospace' font-size='11' letter-spacing='2'>[TARGET 01 : SOLARPUNK METROPOLIS // GOLDEN HOUR CINEMATIC]</text></svg>",
-        "evaluationCriteria": {
-          "composition": "Visual hierarchy, wide-angle panoramic city skyline, soaring towers, skybridges",
-          "colors": "Golden hour sunset palette (orange, amber, purple sky, cyan/neon highlights)",
-          "subject": "Solarpunk futuristic eco-city with vertical hanging gardens and flying air-taxis",
-          "style": "Cinematic photorealistic 3D render, volumetric lighting, Unreal Engine 5 aesthetic"
-        }
-      },
-      {
-        "id": "r2_img_002",
-        "type": "image",
-        "challengeNumber": 1,
-        "title": "Quantum Neuromorphic Processor Core",
-        "description": "A macro close-up product photograph of a next-generation quantum computing microchip with glowing photonic superconducting circuitry, crystal sapphire substrate, laser optical waveguides, and frosted titanium heat sinks.",
-        "difficulty": 2,
-        "aspectRatio": "1:1",
-        "targetVisualPrompt": "Studio macro photography of an advanced quantum neuromorphic AI processor die. Center square microchip glowing with intricate microscopic blue and emerald photonic circuit traces, superconducting gold wire bonds, and crystalline sapphire substrate. Mounted on a matte obsidian motherboard with laser-etched circuitry. High-tech studio rim lighting, crisp 100mm macro lens focus, shallow depth of field, metallic specular reflections, ISO 100, 8k commercial tech hardware catalog quality.",
-        "keyElements": [
-          "Extreme macro studio close-up of a square quantum microchip core",
-          "Glowing blue and emerald optical photonic circuit pathways",
-          "Gold superconducting wire bonds on obsidian dark substrate",
-          "Shallow depth of field with sharp focal plane and smooth bokeh",
-          "Premium commercial hardware product photography aesthetic"
-        ],
-        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600' width='100%' height='100%'><defs><radialGradient id='coreGlow' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='#00ffcc'/><stop offset='50%' stop-color='#0077aa'/><stop offset='100%' stop-color='#050b18'/></radialGradient><filter id='bloom'><feGaussianBlur stdDeviation='6' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='600' height='600' fill='#030712'/><rect x='100' y='100' width='400' height='400' rx='24' fill='#0b1329' stroke='#1e293b' stroke-width='4'/><rect x='170' y='170' width='260' height='260' rx='16' fill='url(#coreGlow)' stroke='#00f0ff' stroke-width='3' filter='url(#bloom)'/><rect x='220' y='220' width='160' height='160' fill='#06101e' stroke='#ffd700' stroke-width='2'/><path d='M220 250 L180 250 M220 300 L175 300 M220 350 L180 350' stroke='#ffd700' stroke-width='3'/><path d='M380 250 L420 250 M380 300 L425 300 M380 350 L420 350' stroke='#ffd700' stroke-width='3'/><path d='M250 220 L250 180 M300 220 L300 175 M350 220 L350 180' stroke='#ffd700' stroke-width='3'/><path d='M250 380 L250 420 M300 380 L300 425 M350 380 L350 420' stroke='#ffd700' stroke-width='3'/><path d='M240 240 L360 360 M240 360 L360 240 M300 240 L300 360 M240 300 L360 300' stroke='#00ffcc' stroke-width='1.5' opacity='0.7'/><circle cx='300' cy='300' r='30' fill='#00f0ff' opacity='0.4' filter='url(#bloom)'/><circle cx='300' cy='300' r='12' fill='#ffffff'/><text x='180' y='150' fill='#94a3b8' font-family='monospace' font-size='12' letter-spacing='3'>QUANTUM CORE // X-9000</text></svg>",
-        "evaluationCriteria": {
-          "composition": "Centered macro square product composition, tight crop, focal isolation",
-          "colors": "Obsidian black, electric cyan, emerald green, superconducting gold",
-          "subject": "Microscopic quantum neuromorphic AI processor die and motherboard circuitry",
-          "style": "High-end commercial tech macro photography, studio lighting, shallow depth of field"
-        }
-      },
-      {
-        "id": "r2_img_003",
-        "type": "image",
-        "challengeNumber": 1,
-        "title": "Cyberpunk Autonomous Police Recon Drone",
-        "description": "A low-angle cinematic street-level shot in a rain-soaked Neo-Tokyo cyberpunk alley at night, featuring a hovering quad-rotor tactical police drone with glowing red optical sensors, volumetric searchlights cutting through dense neon smog.",
-        "difficulty": 2,
-        "aspectRatio": "16:9",
-        "targetVisualPrompt": "Cinematic low-angle night photography in a rain-slicked cyberpunk alley. In the foreground, a menacing matte-black tactical autonomous police quadcopter drone hovers at eye level. Glowing crimson optical sensor eye and high-intensity volumetric cyan searchlight cutting through dense rain and atmospheric neon steam. Wet asphalt reflecting vibrant pink and turquoise kanji neon signs. Blade Runner 2049 aesthetic, anamorphic lens flare, shallow depth of field, f/1.4, photorealistic 8k octane render.",
-        "keyElements": [
-          "Low-angle eye-level perspective of a hovering tactical drone",
-          "Rain-slicked alley with wet asphalt reflections",
-          "Glowing crimson sensor eye and volumetric cyan searchlight beams",
-          "Vibrant pink, purple, and turquoise neon signage in the background",
-          "Blade Runner 2049 cinematic noir lighting with anamorphic lens flares"
-        ],
-        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='neonRain' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#050510'/><stop offset='50%' stop-color='#100926'/><stop offset='100%' stop-color='#0a1525'/></linearGradient><filter id='redGlow'><feGaussianBlur stdDeviation='10' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><rect width='800' height='450' fill='url(#neonRain)'/><line x1='100' y1='50' x2='80' y2='400' stroke='#ff007f' stroke-width='6' opacity='0.6'/><line x1='720' y1='30' x2='700' y2='380' stroke='#00f0ff' stroke-width='8' opacity='0.5'/><polygon points='300,180 500,180 540,240 260,240' fill='#111827' stroke='#374151' stroke-width='3'/><circle cx='400' cy='210' r='24' fill='#ff0044' filter='url(#redGlow)'/><circle cx='400' cy='210' r='10' fill='#ffffff'/><polygon points='400,225 150,450 650,450' fill='#00f0ff' opacity='0.15'/><text x='40' y='430' fill='#ff0055' font-family='monospace' font-size='12' letter-spacing='2'>[TARGET 03 : CYBER RECON DRONE // RAIN ALLEY]</text></svg>",
-        "evaluationCriteria": {
-          "composition": "Low-angle eye-level hovering drone framing, wet reflection leading lines",
-          "colors": "Noir shadow palette with intense neon pink, cyan, and glowing crimson red",
-          "subject": "Matte black tactical police drone with searchlight in rain-drenched alley",
-          "style": "Cinematic sci-fi noir, anamorphic lens flare, atmospheric rain particles"
-        }
-      },
-      {
-        "id": "r2_img_004",
-        "type": "image",
-        "challengeNumber": 1,
-        "title": "Bio-Luminescent Deep Sea Hydrothermal Research Habitat",
-        "description": "An underwater deep-sea photographic concept of a modular titanium oceanic research base stationed on the abyssal seafloor near volcanic hydrothermal vents, illuminated by glowing blue bio-luminescent coral reefs and submarine floodlights.",
-        "difficulty": 2,
-        "aspectRatio": "16:9",
-        "targetVisualPrompt": "National Geographic style deep-sea underwater photograph of an oceanic abyssal research station at 4,000 meters depth. Geodesic titanium habitat domes with glowing warm interior amber portholes anchored into rocky basalt seafloor beside smoking black-smoker hydrothermal vents. Surrounding deep-water coral glows with vivid electric cyan and neon violet bioluminescence. External yellow submersible ROVs inspect undersea cabling with powerful xenon spotlights. Clear underwater volumetric caustics, marine snow particles, ultra-crisp National Geographic 8k quality.",
-        "keyElements": [
-          "Deep ocean abyss setting with hydrothermal black-smoker vents",
-          "Geodesic titanium habitat domes with glowing amber windows",
-          "Bioluminescent cyan and violet deep-sea coral glow",
-          "Submersible ROV inspection craft with xenon floodlights",
-          "Underwater volumetric caustics and marine snow particles"
-        ],
-        "imageSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450' width='100%' height='100%'><defs><linearGradient id='abyssGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#010814'/><stop offset='60%' stop-color='#021c38'/><stop offset='100%' stop-color='#00050d'/></linearGradient><radialGradient id='domeGlow' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='#ffe066'/><stop offset='60%' stop-color='#ff8800'/><stop offset='100%' stop-color='#000000'/></radialGradient></defs><rect width='800' height='450' fill='url(#abyssGrad)'/><ellipse cx='400' cy='320' rx='140' ry='90' fill='#0f2b48' stroke='#00ffcc' stroke-width='2'/><circle cx='400' cy='310' r='30' fill='url(#domeGlow)'/><ellipse cx='220' cy='350' rx='80' ry='50' fill='#081e33' stroke='#00f0ff' stroke-width='1.5'/><ellipse cx='580' cy='350' rx='80' ry='50' fill='#081e33' stroke='#00f0ff' stroke-width='1.5'/><path d='M100 450 L140 280 L180 450 Z' fill='#050c18'/><text x='40' y='430' fill='#00ffcc' font-family='monospace' font-size='12' letter-spacing='2'>[TARGET 04 : ABYSSAL HABITAT // BIOLUMINESCENT REEF]</text></svg>",
-        "evaluationCriteria": {
-          "composition": "Abyssal underwater floor layout with central research dome and secondary modules",
-          "colors": "Deep oceanic midnight blue, glowing amber interiors, bioluminescent cyan",
-          "subject": "Deep-sea titanium research station and robotic submersibles near hydrothermal vents",
-          "style": "Photorealistic National Geographic deep-sea documentary quality with volumetric caustics"
-        }
+  "challenges": [
+    {
+      "id": "r2_img_01",
+      "challengeNumber": 1,
+      "filename": "1.png",
+      "imageUrl": "/round2_images/1.png",
+      "title": "Neon Cyberpunk Assassin in Rainy Alley",
+      "description": "A cinematic, low-angle digital concept art of a cybernetic warrior standing in a rain-drenched Neo-Tokyo alleyway illuminated by vibrant pink, purple, and electric cyan neon kanji signs, with wet asphalt reflections and atmospheric steam.",
+      "keyElements": [
+        "Cyberpunk warrior with glowing cybernetic implants and visor",
+        "Rain-slicked asphalt with vivid neon pink and cyan reflections",
+        "Dense vertical holographic kanji billboards and neon signs",
+        "Cinematic low-angle perspective with anamorphic lens flare",
+        "Atmospheric volumetric rain particles and rising steam"
+      ],
+      "targetVisualPrompt": "Cinematic low-angle digital concept art of a futuristic cyberpunk assassin standing in a narrow rain-soaked alley in Neo-Tokyo at night. Dressed in tactical carbon-fiber techwear with glowing crimson ocular implants and a holographic katana. The ground is wet glossy asphalt reflecting vibrant pink, purple, and turquoise kanji neon signs. Heavy volumetric rain, floating atmospheric steam, anamorphic lens flares, Unreal Engine 5 render, 8k resolution, photorealistic cinematic lighting.",
+      "evaluationCriteria": {
+        "composition": "Low-angle cinematic perspective, vertical framing of towering alley walls",
+        "colors": "Noir shadow palette with intense neon pink, cyan, and glowing crimson highlights",
+        "subject": "Cybernetic tactical warrior in cyberpunk alley with weapons/techwear",
+        "style": "Cinematic sci-fi digital concept art, raytraced reflections, volumetric rain"
       }
-    ],
-    "report": [
-      {
-        "id": "r2_rep_001",
-        "type": "report",
-        "challengeNumber": 2,
-        "title": "FY 2025-26 Comprehensive Enterprise SaaS Performance & Financial Report",
-        "difficulty": 2,
-        "reportSummary": "A 12-month financial and operating metric analysis for a high-growth AI Developer Cloud platform detailing ARR, MRR, Gross Margins, CAC payback, Customer Churn, and EBITDA breakdown across 4 quarters.",
-        "targetReportMarkdown": "# EXECUTIVE FINANCIAL & OPERATIONAL AUDIT: FY 2025–2026\n**Entity:** CloudMatrix AI Inc. | **Reporting Currency:** USD ($) in Thousands\n\n---\n\n## 1. Executive Performance Summary\nDuring FY 2025–2026, CloudMatrix AI achieved an Annual Recurring Revenue (ARR) milestone of **$48.6M**, reflecting **82.4% year-over-year expansion**. Gross Margin strengthened from 71.2% in Q1 to **79.8% in Q4** driven by optimized GPU inference cluster utilization.\n\n```\nKey Annual KPI Scorecard:\n• Ending ARR: $48,620,000 (Target: $44,000,000 | +10.5% vs Plan)\n• Net Revenue Retention (NRR): 134.2%\n• Blended CAC Payback Period: 8.4 Months\n• Rule of 40 Index: 54.8 (Growth 82.4% - FCF Margin 27.6%)\n```\n\n---\n\n## 2. Quarterly Financial Matrix (USD in '000s)\n\n| Quarter | Gross Revenue | Infrastructure COGS | Gross Profit | S&M Expenses | R&D Investment | G&A Overhead | Adjusted EBITDA | Operating Margin |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Q1 (Apr-Jun)** | $8,450 | $2,430 | $6,020 (71.2%) | $3,120 | $2,840 | $980 | **-$920** | -10.9% |\n| **Q2 (Jul-Sep)** | $10,890 | $2,720 | $8,170 (75.0%) | $3,650 | $3,100 | $1,050 | **+$370** | +3.4% |\n| **Q3 (Oct-Dec)** | $13,420 | $2,980 | $10,440 (77.8%) | $4,200 | $3,350 | $1,180 | **+$1,710** | +12.7% |\n| **Q4 (Jan-Mar)** | $15,860 | $3,200 | $12,660 (79.8%) | $4,850 | $3,620 | $1,290 | **+$2,900** | +18.3% |\n| **FY TOTAL** | **$48,620** | **$11,330** | **$37,290 (76.7%)** | **$15,820** | **$12,910** | **$4,500** | **+$4,060** | **+8.4%** |\n\n---\n\n## 3. Unit Economics & Customer Cohort Trends\n- **Enterprise Tier Expansion:** Enterprise customers with >$100k ACV expanded from 42 to **118 accounts**.\n- **CAC Efficiency:** Customer Acquisition Cost decreased from $14,200 in Q1 to **$11,800 in Q4** due to viral developer bottom-up adoption.\n- **Inference Cost Compression:** Unit cost per 1M LLM tokens generated reduced by **46.8%** following tensor quantization deployment.\n\n---\n\n## 4. Strategic Outlook & Capital Allocation for FY 2026–27\n1. **Compute Infrastructure:** Allocate $8.5M in Capex to secure dedicated 256-node H200 GPU clusters.\n2. **International Expansion:** Initiate EMEA enterprise sales hub with target ARR contribution of $6.0M by Q3.\n3. **Free Cash Flow:** Target sustainable +20% FCF margin while preserving >65% top-line growth.",
-        "targetReportPrompt": "Act as a Chief Financial Officer at a Tier-1 Venture-Backed AI SaaS company. Generate a detailed, publication-ready Executive Financial and Operational Audit Report for FY 2025-2026. The report must include: 1) Executive Performance Summary with ARR ($48.6M), 82.4% YoY growth, NRR (134.2%), and Rule of 40 score; 2) A 4-quarter structured markdown financial table breaking down Gross Revenue, Infrastructure COGS, Gross Profit with margin %, Sales & Marketing, R&D, G&A, and Adjusted EBITDA; 3) Granular Unit Economics section covering Enterprise ACV, CAC trends, and inference cost reduction; 4) Strategic capital allocation roadmap for next financial year. Use precise financial syntax and markdown formatting.",
-        "evaluationCriteria": {
-          "structure": "Executive summary, 4-quarter financial breakdown table, unit economics, strategic outlook",
-          "content": "Specific financial figures ($48.6M ARR, 82.4% YoY, COGS, EBITDA, NRR)",
-          "format": "Crisp markdown tables, currency delimiters, percentages, bolded subtotals",
-          "insights": "Strategic analysis of GPU cluster optimization, CAC compression, expansion plans"
-        }
-      },
-      {
-        "id": "r2_rep_002",
-        "type": "report",
-        "challengeNumber": 2,
-        "title": "Cloud Infrastructure SOC-2 Security & Penetration Vulnerability Audit",
-        "difficulty": 2,
-        "reportSummary": "A rigorous cybersecurity penetration testing and compliance audit of an AWS/Kubernetes multi-tenant cloud banking environment identifying CVSS vulnerabilities, blast radius analysis, and remediation SLAs.",
-        "targetReportMarkdown": "# CLOUD INFRASTRUCTURE SECURITY & PENETRATION AUDIT (SOC-2 TYPE II)\n**Target Environment:** FinCore Multi-Tenant Kubernetes Banking Cloud | **Severity Scope:** CVSS v3.1 Standards\n\n---\n\n## 1. Executive Security Posture\nOver a 14-day red-team penetration assessment, FinCore exhibited strong edge perimeter defenses but revealed **two critical privilege escalation vectors** within container sidecar service meshes and IAM role assumptions.\n\n```\nSecurity Vulnerability Summary Scorecard:\n• Total Findings Identified: 18 (2 Critical | 5 High | 7 Medium | 4 Low)\n• Mean Time to Detect (MTTD): 4.2 Minutes\n• Mean Time to Remediate (MTTR): 18.6 Hours (Target: <24.0 Hours)\n• Zero-Trust Compliance Index: 91.4%\n```\n\n---\n\n## 2. Threat & Vulnerability Severity Matrix\n\n| Finding ID | Vulnerability Category | Affected Component | CVSS Score | Severity Level | Exploitation Vector | Remediation SLA |\n| :--- | :--- | :--- | :---: | :---: | :--- | :---: |\n| **SEC-001** | IAM Role Privilege Escalation | Vault K8s Sidecar | **9.8** | 🚨 **CRITICAL** | Over-permissioned wildcard `s3:*` token | **24 Hours** |\n| **SEC-002** | Unauthenticated SSRF | Webhook Dispatcher | **9.1** | 🚨 **CRITICAL** | Metadata service endpoint query `169.254` | **24 Hours** |\n| **SEC-003** | Stored XSS in Audit Logs | Admin Portal UI | **7.5** | ⚠️ **HIGH** | Unsanitized user-agent header injection | **72 Hours** |\n| **SEC-004** | Outdated OpenSSL Library | Core Banking API Pods | **7.2** | ⚠️ **HIGH** | Known memory leak buffer overflow | **72 Hours** |\n| **SEC-005** | Loose CORS Policy Header | Customer Auth Gateway | **5.4** | 🟡 **MEDIUM** | Wildcard origin reflection on staging API | **7 Days** |\n\n---\n\n## 3. Blast Radius & Attack Path Analysis\n1. **Lateral Pod Hopping:** Compromising SEC-001 enables malicious root actors to assume administrative AWS IAM roles, exposing read access to 4.2M customer PII records in S3 cold storage.\n2. **Kubelet Escape:** Zero container breakout was achieved due to enforced AppArmor profiles and read-only root filesystems.\n\n---\n\n## 4. Remediation Directives & Compliance Sign-Off\n- **Immediate Patch:** Enforce least-privilege IAM scoping with explicit ARN boundaries by T+24h.\n- **Network Policies:** Implement Calico egress blocking to `169.254.169.254` across all worker nodes.",
-        "targetReportPrompt": "Act as a Principal Cybersecurity Penetration Tester and Cloud Security Architect. Generate a formal SOC-2 Type II Technical Vulnerability Audit Report for a multi-tenant cloud banking platform. The report must contain: 1) Executive Security Posture with MTTD, MTTR, and compliance indices; 2) A detailed Markdown Vulnerability Table featuring Finding ID, Category, Affected Component, CVSS score (0.0-10.0), Severity (Critical/High/Medium), and Remediation SLA; 3) Blast Radius and Lateral Movement Attack Path Analysis; 4) Mandatory Architectural Remediation Directives.",
-        "evaluationCriteria": {
-          "structure": "Executive security posture, CVSS vulnerability table, attack path analysis, remediation directives",
-          "content": "Specific CVSS scores (9.8, 9.1, 7.5), finding IDs, MTTR, K8s component names",
-          "format": "Crisp markdown table with severity badges, alert icons, and technical parameters",
-          "insights": "In-depth analysis of IAM privilege escalation, lateral blast radius, and network egress rules"
-        }
-      },
-      {
-        "id": "r2_rep_003",
-        "type": "report",
-        "challengeNumber": 2,
-        "title": "Global Supply Chain Resilience & Ocean Freight Margin Audit",
-        "difficulty": 2,
-        "reportSummary": "An international freight logistics and supply chain risk report assessing container demurrage costs, Suez canal transit delays, on-time delivery rates, and nearshoring ROI.",
-        "targetReportMarkdown": "# GLOBAL MARITIME SUPPLY CHAIN AUDIT & MARGIN ANALYSIS: Q3–Q4\n**Operator:** TransPacific Ocean Logistics Consortium | **Scope:** Asia–North America Trade Lanes\n\n---\n\n## 1. Executive Logistical Briefing\nDuring the second half of the operating year, maritime shipping lanes experienced a **23.4% rise in spot container rates** due to geopolitical canal diversions. Despite route expansions, Fleet Capacity Utilization reached **94.8%**, yielding a net operating margin of **16.2%**.\n\n```\nOperational Logistics KPI Matrix:\n• On-Time In-Full (OTIF) Delivery: 81.6% (Industry Benchmark: 76.0%)\n• Average Vessel Dwell Time: 4.6 Days per Port Call\n• Carbon Intensity Indicator (CII): Grade B (4.2g CO2/ton-mile)\n• Demurrage & Detention Penalties: $1.42M (-32% vs Previous Quarter)\n```\n\n---\n\n## 2. Trade Route Efficiency & Cost Matrix\n\n| Trade Corridor | TEU Volume | Avg Transit Days | Spot Rate (40ft) | Bunker Fuel Cost | Port Dwell Time | Operating Margin |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Shanghai ➔ Los Angeles** | 142,000 | 14.8 Days | $4,850 | $1,120 | 3.8 Days | **+21.4%** |\n| **Shenzhen ➔ Rotterdam** | 118,500 | 28.4 Days | $6,200 | $1,840 | 5.4 Days | **+14.8%** |\n| **Singapore ➔ Hamburg** | 94,200 | 26.2 Days | $5,950 | $1,710 | 4.9 Days | **+15.3%** |\n| **Busan ➔ Long Beach** | 86,400 | 13.2 Days | $4,600 | $1,050 | 3.2 Days | **+24.1%** |\n| **CONSOLIDATED TOTAL** | **441,100** | **20.6 Days** | **$5,400 (Avg)** | **$1,430** | **4.3 Days** | **+18.9%** |\n\n---\n\n## 3. Nearshoring Feasibility & Strategic Recommendations\n- **Mexico Corridor Expansion:** Shifting 15% of Tier-2 component manufacturing to Monterrey reduces transit cycle from 15 days to **48 hours by rail**.\n- **Dual Sourcing Hedging:** Maintain 30% contract volume on fixed 12-month index-linked rate agreements to hedge against spot price volatility.",
-        "targetReportPrompt": "Act as a Chief Logistics Officer at a Global Ocean Shipping Enterprise. Generate an executive Supply Chain Efficiency and Margin Audit Report. Include: 1) Executive logistical summary with OTIF rate, vessel dwell time, and CII index; 2) A detailed 5-column Markdown shipping corridor table detailing TEU Volume, Transit Days, Spot Rates ($), Bunker Fuel Costs, and Operating Margins; 3) Nearshoring ROI and dual-sourcing strategic risk mitigations.",
-        "evaluationCriteria": {
-          "structure": "Executive briefing, trade route matrix table, nearshoring and dual-sourcing roadmap",
-          "content": "Specific TEU numbers (142k, 118.5k), spot rates ($4,850), transit days, OTIF percentages",
-          "format": "Markdown financial and operational logistics tables with bold totals",
-          "insights": "Strategic analysis of rail nearshoring to Monterrey vs maritime spot rate volatility"
-        }
-      },
-      {
-        "id": "r2_rep_004",
-        "type": "report",
-        "challengeNumber": 2,
-        "title": "HealthTech AI Clinical Trial Diagnostic Efficacy Report",
-        "difficulty": 2,
-        "reportSummary": "A double-blind clinical trial validation report assessing deep-learning diagnostic sensitivity, specificity, false-positive tradeoffs, and FDA 510(k) clearance metrics across 12,000 patient pathology scans.",
-        "targetReportMarkdown": "# CLINICAL TRIAL VALIDATION AUDIT: AI RADIOLOGY DIAGNOSTIC ENGINE\n**Device:** NeuroScan AI v3.4 | **Trial Phase:** Phase III Multi-Center Double-Blind Study (N=12,400)\n\n---\n\n## 1. Executive Diagnostic Performance\nAcross 12,400 thoracic CT scans reviewed by both certified radiologists and NeuroScan AI v3.4, the algorithm demonstrated a **98.4% Area Under Curve (AUC-ROC)** for early-stage pulmonary nodule detection, outperforming general radiologist baseline by **+6.2% sensitivity**.\n\n```\nClinical Performance Scorecard:\n• Sensitivity (True Positive Rate): 97.2% (95% CI: 96.4%–98.0%)\n• Specificity (True Negative Rate): 94.8% (95% CI: 93.9%–95.6%)\n• Positive Predictive Value (PPV): 89.6%\n• Negative Predictive Value (NPV): 98.7%\n• Mean Inference Latency: 1.42 Seconds per Multi-Slice Volume\n```\n\n---\n\n## 2. Multi-Center Cohort Diagnostic Matrix\n\n| Clinical Trial Site | Patient Cohort (N) | Modality | Ground Truth Positive | AI True Positive | False Positives | False Negatives | Sensitivity |\n| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n| **Mayo Clinic Hub** | 3,800 | 64-Slice High-Res CT | 420 | 412 | 28 | 8 | **98.1%** |\n| **Johns Hopkins** | 3,200 | Dual-Energy Low-Dose | 360 | 348 | 24 | 12 | **96.7%** |\n| **Stanford Health** | 2,900 | 128-Slice Volumetric | 310 | 303 | 19 | 7 | **97.7%** |\n| **Mass General** | 2,500 | Standard Helical CT | 280 | 270 | 22 | 10 | **96.4%** |\n| **TOTAL POOL** | **12,400** | **Multi-Center** | **1,370** | **1,333** | **93** | **37** | **97.3%** |\n\n---\n\n## 3. Regulatory & Clinical Safety Clearance\n- **FDA 510(k) Equivalence:** Satisfies Substantial Equivalence thresholds under predicate device K210892.\n- **Radiologist Workflow Acceleration:** Triaging scans with automated AI pre-segmentation reduced clinical diagnostic turnaround time by **41.2%**.",
-        "targetReportPrompt": "Act as a Lead Medical AI Clinical Trial Director and Regulatory Specialist. Write an official Clinical Validation Audit Report for an AI-assisted pathology and radiology detection device. The report must contain: 1) Executive diagnostic performance with AUC-ROC (98.4%), Sensitivity, Specificity, PPV, NPV, and 95% Confidence Intervals; 2) A comprehensive Multi-Center Cohort Markdown Table comparing patient volume, True/False positives/negatives, and sensitivity per trial hospital; 3) FDA 510(k) regulatory clearance analysis and radiologist workflow acceleration metrics.",
-        "evaluationCriteria": {
-          "structure": "Executive diagnostic performance, multi-center cohort table, regulatory FDA 510(k) compliance",
-          "content": "Precise clinical figures (AUC 98.4%, 97.2% Sensitivity, 94.8% Specificity, N=12,400, hospital names)",
-          "format": "Clinical audit markdown tables with confidence intervals and statistical metrics",
-          "insights": "Analysis of FDA predicate equivalence and radiologist triage turnaround reduction"
-        }
+    },
+    {
+      "id": "r2_img_02",
+      "challengeNumber": 2,
+      "filename": "2.png",
+      "imageUrl": "/round2_images/2.png",
+      "title": "Solarpunk Floating Sky-City Archipelago",
+      "description": "A bright, panoramic wide-angle architectural concept painting of colossal floating sky-islands connected by crystalline bridges and waterfalls cascading into golden sunset clouds, featuring lush vertical hanging gardens and sleek solar airships.",
+      "keyElements": [
+        "Massive anti-gravity floating islands with futuristic architecture",
+        "Cascading waterfalls pouring into golden fluffy cloudscapes",
+        "Lush rooftop eco-gardens, vertical forests, and solar-glass domes",
+        "Sleek aerodynamic airships and solar gliders sailing between islands",
+        "Warm golden hour sunset lighting with volumetric sun rays"
+      ],
+      "targetVisualPrompt": "Breathtaking panoramic matte painting of an advanced solarpunk floating sky-metropolis during a radiant golden hour sunset. Giant floating island landmasses tethered by crystalline energy bridges, with cascading freshwater waterfalls plunging into sea of golden clouds below. Towering ivory eco-spires covered in lush vertical forests, hanging gardens, and crystalline bio-domes. Sleek solar-powered gliders cruising in the open sky. Octane Render, 8k resolution, Studio Ghibli meets architectural masterpiece.",
+      "evaluationCriteria": {
+        "composition": "Panoramic ultra-wide vista, atmospheric depth across cloud layers",
+        "colors": "Golden hour amber, warm orange, soft sky blue, and vibrant emerald greens",
+        "subject": "Floating sky islands with solarpunk towers, waterfalls, and solar gliders",
+        "style": "High-fantasy utopian architectural concept art, volumetric god rays"
       }
-    ]
-  }
+    },
+    {
+      "id": "r2_img_04",
+      "challengeNumber": 3,
+      "filename": "4.png",
+      "imageUrl": "/round2_images/4.png",
+      "title": "Quantum AI Neural Supercomputer Core",
+      "description": "A high-tech macro photograph of a spherical quantum computing processor core suspended in zero-gravity inside a vacuum cryo-chamber, surrounded by glowing golden coaxial cables and laser optical waveguides emitting pulse beams.",
+      "keyElements": [
+        "Central glowing quantum processor sphere with crystalline geometry",
+        "Intricate spiral arrangement of gold-plated cryo dilution cables",
+        "Pulsing sapphire blue and emerald green laser optical beams",
+        "Dark frosted titanium vacuum chamber with ambient rim lighting",
+        "Extreme macro detail with shallow depth of field and specular highlights"
+      ],
+      "targetVisualPrompt": "Studio macro photography of a cutting-edge quantum supercomputer core suspended inside a zero-gravity cryogenic vacuum chamber. Central crystalline processor sphere pulsing with complex laser light pathways in sapphire and emerald hues. Surrounded by elaborate bundles of golden microwave cables and superconducting circuits. Crisp focus on central core, soft industrial bokeh in background, metallic reflections, 8k commercial tech hardware catalog aesthetic.",
+      "evaluationCriteria": {
+        "composition": "Centered focal core with radial golden cable framing and tight macro crop",
+        "colors": "Obsidian dark background with superconducting gold, sapphire blue, and emerald glow",
+        "subject": "Spherical quantum computing processor core and cryogenic wire harness",
+        "style": "Commercial tech hardware studio photography, shallow depth of field"
+      }
+    },
+    {
+      "id": "r2_img_05",
+      "challengeNumber": 4,
+      "filename": "5.png",
+      "imageUrl": "/round2_images/5.png",
+      "title": "Mystic Ancient Temple in Bioluminescent Jungle",
+      "description": "An enchanting nighttime fantasy illustration of an overgrown ancient stone temple hidden deep inside an alien rainforest with giant glowing blue and magenta mushrooms, floating spore particles, and a glowing spirit river.",
+      "keyElements": [
+        "Carved ancient Mayan/Cambodian style stone ruins overgrown with moss",
+        "Giant luminous blue and purple fungal caps illuminating the jungle canopy",
+        "Twisting banyan roots and tropical foliage dripping with dewdrops",
+        "Gentle glowing turquoise river flowing past temple steps",
+        "Floating ethereal luminescence and magical firefly spore particles"
+      ],
+      "targetVisualPrompt": "Enchanting night concept art of an ancient overgrown stone temple lost in a mystical bioluminescent alien rainforest. Giant luminous glowing mushrooms emit vivid indigo and magenta light against ancient mossy stone carvings. A serene glowing turquoise stream winds past the temple entrance, reflecting floating ethereal firefly particles. Lush tropical banyan roots, atmospheric mist, magical fantasy aesthetic, ArtStation trending, 8k wallpaper quality.",
+      "evaluationCriteria": {
+        "composition": "Leading lines along glowing river toward mysterious central temple entrance",
+        "colors": "Deep nocturnal indigo, electric bioluminescent cyan, magenta, and moss green",
+        "subject": "Overgrown ancient temple ruins enveloped by glowing bioluminescent flora",
+        "style": "High-fantasy environmental illustration, magical atmospheric glow"
+      }
+    },
+    {
+      "id": "r2_img_06",
+      "challengeNumber": 5,
+      "filename": "6.png",
+      "imageUrl": "/round2_images/6.png",
+      "title": "Deep-Space Dyson Sphere Star Harvester",
+      "description": "An epic cosmic sci-fi space scene capturing a colossal megastructure cage enclosing a radiant blue giant star, with massive energy collector panels, plasma solar flares, and interstellar explorer starships in orbit.",
+      "keyElements": [
+        "Massive geometric Dyson sphere megastructure encircling a burning star",
+        "Radiant blue/white star core emitting violent plasma solar flares",
+        "Orbital relay stations and energy beam transfer pathways",
+        "Sleek exploration starcraft observing the scale of the structure",
+        "Deep cosmic backdrop with starfield nebula clouds and starlight"
+      ],
+      "targetVisualPrompt": "Epic hard sci-fi cosmic panorama of a colossal Dyson sphere megastructure harvesting energy from a brilliant blue giant star. Enormous geometric rings of dark carbon-alloy solar collectors encircle the stellar core, with intense solar flares and coronal mass ejections contained by glowing magnetic forcefields. Tiny explorer starships in deep space provide dramatic scale. High contrast cosmic lighting, interstellar nebula background, 8k space opera wallpaper.",
+      "evaluationCriteria": {
+        "composition": "Astronomical scale contrast between tiny starship and massive stellar sphere",
+        "colors": "Deep cosmic black and nebula purple with blinding electric blue and solar white",
+        "subject": "Dyson sphere star harvester megastructure and cosmic plasma flares",
+        "style": "Hard sci-fi cinematic digital matte painting, crisp stellar lighting"
+      }
+    },
+    {
+      "id": "r2_img_07",
+      "challengeNumber": 6,
+      "filename": "7.png",
+      "imageUrl": "/round2_images/7.png",
+      "title": "Retro-Futuristic Synthwave Sunset Highway",
+      "description": "An iconic 1980s synthwave / outrun digital artwork featuring a sleek chrome sports car driving toward a giant wireframe sun on an infinite grid highway through neon palm-lined mountains at dusk.",
+      "keyElements": [
+        "1980s retro supercar (Countach/Delorean style) speeding down perspective grid",
+        "Giant segmented glowing neon sun setting on the horizon",
+        "Silhouetted palm trees lining the geometric grid road",
+        "Neon wireframe mountain peaks flanking the landscape",
+        "Vibrant magenta, orange, violet, and electric cyan color gradient"
+      ],
+      "targetVisualPrompt": "Classic synthwave outrun digital art aesthetic. Low-angle rear perspective of a sleek 1980s retro-futuristic sports car driving fast down an endless neon purple grid highway. In the background, an enormous segmented glowing orange and yellow sun sets behind wireframe neon mountain ranges. Silhouetted tropical palm trees flank the road under a star-filled violet sky. Neon grid reflections, retro aesthetic, 8k crisp vector style, 80s nostalgia.",
+      "evaluationCriteria": {
+        "composition": "Centered perspective leading straight to horizon sun, low-angle car rear",
+        "colors": "Vibrant synthwave palette (neon magenta, hot pink, cyan, electric violet, sunset orange)",
+        "subject": "Vintage wedge supercar on infinite digital grid highway with wireframe mountains",
+        "style": "Synthwave / Outrun retro 80s digital illustration, neon glow"
+      }
+    },
+    {
+      "id": "r2_img_08",
+      "challengeNumber": 7,
+      "filename": "8.png",
+      "imageUrl": "/round2_images/8.png",
+      "title": "Industrial Steampunk Airship Dockyard",
+      "description": "A bustling Victorian steampunk shipyard set atop mountain cliffs where massive brass zeppelins and clockwork airships dock at iron gantries amid plumes of white boiler steam and golden smog at sunrise.",
+      "keyElements": [
+        "Massive rigid airship with polished brass gears, propellers, and clockwork rigging",
+        "Towering cast-iron dockyard scaffolding and steam crane gantries",
+        "Dense billowing clouds of white steam and warm coal-fire smoke",
+        "Victorian industrial architecture on rugged alpine cliff edges",
+        "Warm sepia, brass, copper, and early morning amber sunlight"
+      ],
+      "targetVisualPrompt": "Detailed Victorian steampunk industrial concept art of a cliffside airship dockyard at dawn. Gigantic rigid dirigibles with riveted copper hulls, brass clockwork propellers, and leather gasbags tethered to towering wrought-iron mooring towers. Workers on catwalks surrounded by billowing steam pipes, glowing furnace braziers, and mechanical cranes. Warm golden sunrise cuts through industrial smog. Highly detailed architectural illustration, 8k masterpiece.",
+      "evaluationCriteria": {
+        "composition": "Multi-tiered industrial elevation showing mooring towers and docked airships",
+        "colors": "Rich copper, brass, cast iron black, warm sepia, and amber dawn glow",
+        "subject": "Victorian steampunk airships tethered at towering cliffside iron dockyards",
+        "style": "Detailed period steampunk matte painting, atmospheric steam and grit"
+      }
+    },
+    {
+      "id": "r2_img_09",
+      "challengeNumber": 8,
+      "filename": "9.png",
+      "imageUrl": "/round2_images/9.png",
+      "title": "Abyssal Bioluminescent Oceanic Research Station",
+      "description": "An underwater deep-sea photographic concept of a modular titanium oceanic research base anchored on the abyssal seafloor next to black-smoker volcanic vents, surrounded by glowing bioluminescent jellyfish and robotic submersibles.",
+      "keyElements": [
+        "Geodesic titanium habitat domes with warm glowing amber viewports",
+        "Deep oceanic abyssal black water with floating bioluminescent siphonophores",
+        "Active volcanic hydrothermal vents billowing dark mineral smoke",
+        "Yellow deep-sea exploration submersible scanning seafloor with floodlights",
+        "Underwater volumetric light caustics and floating marine snow particles"
+      ],
+      "targetVisualPrompt": "National Geographic style deep-ocean underwater photography of an advanced research habitat on the Mariana Trench seabed. Illuminated geodesic habitat modules anchored to volcanic basalt rock next to active hydrothermal vents. Swarms of electric blue and violet bioluminescent jellyfish drift through the dark water. A yellow robotic ROV submarine illuminates deep-sea coral with high-power xenon spotlights. Volumetric water caustics, marine snow, 8k documentary photograph.",
+      "evaluationCriteria": {
+        "composition": "Underwater seafloor depth with illuminated habitat dome and ROV floodlights",
+        "colors": "Abyssal midnight blue/black with bright bioluminescent cyan and warm amber windows",
+        "subject": "Deep-sea titanium research station and robotic submersibles near hydrothermal vents",
+        "style": "Photorealistic deep-sea documentary quality with volumetric caustics"
+      }
+    },
+    {
+      "id": "r2_img_10",
+      "challengeNumber": 9,
+      "filename": "10.png",
+      "imageUrl": "/round2_images/10.png",
+      "title": "Samurai Cyber-Ronin in Cherry Blossom Sanctuary",
+      "description": "A dramatic cinematic portrait of a cybernetically enhanced ronin samurai kneeling in meditation under a glowing neon-pink cherry blossom tree in a tranquil futuristic Japanese courtyard at dusk.",
+      "keyElements": [
+        "Cybernetic samurai in traditional lacquered armor with glowing neon circuits",
+        "Dual futuristic katanas with illuminated laser edges resting on tatami",
+        "Ancient blooming sakura cherry tree with falling luminous pink petals",
+        "Shoji screen architecture blending wood and holographic panels",
+        "Zen garden gravel raked into geometric cyber patterns"
+      ],
+      "targetVisualPrompt": "Cinematic portrait of a cyberpunk samurai warrior in reflective matte-black and gold lacquered armor kneeling in meditation. Glowing cyan circuit lines trace along his robotic arms. In front of him rest twin plasma katanas emitting an intense edge glow. Above, a giant ancient cherry blossom tree sheds glowing pink petals into a tranquil zen stone courtyard. Soft dusk lighting, mist, Ghost in the Shell meets feudal Japan, Unreal Engine 5 render, 8k.",
+      "evaluationCriteria": {
+        "composition": "Centered heroic kneeling figure under arching sakura branches",
+        "colors": "Harmonious balance of sakura pink, midnight blue, obsidian black, and neon cyan",
+        "subject": "Cybernetic ronin samurai meditating in futuristic zen cherry blossom garden",
+        "style": "Cinematic sci-fi oriental concept art, photorealistic character textures"
+      }
+    },
+    {
+      "id": "r2_img_11",
+      "challengeNumber": 10,
+      "filename": "11.png",
+      "imageUrl": "/round2_images/11.png",
+      "title": "Post-Apocalyptic Overgrown Glass Biosphere Dome",
+      "description": "A wide environmental concept art showing the interior of a shattered giant glass geodesic greenhouse in a post-human world, where tropical jungle vines and ancient trees have reclaimed rusted vintage vehicles.",
+      "keyElements": [
+        "Giant fractured geodesic glass dome ceiling letting in dusty sunbeams",
+        "Lush feral jungle growth swallowing rusted cars and decayed concrete ruins",
+        "Towering banyan trees growing through the broken floor tiles",
+        "Flock of colorful tropical birds flying through the sunlit opening",
+        "Volumetric dusty atmospheric haze with dramatic sun rays"
+      ],
+      "targetVisualPrompt": "Moody post-apocalyptic environment concept art inside a massive ruined botanical biosphere dome. Shattered geometric glass ceiling panels allow dramatic god-rays of golden sunlight to pierce the thick atmospheric dust. Nature has completely reclaimed the interior: lush green vines, ancient mossy ferns, and giant trees burst through cracked marble floors, encasing rusted old vehicles. The Last of Us aesthetic, hyper-detailed textures, Octane render 8k.",
+      "evaluationCriteria": {
+        "composition": "High-vaulted panoramic dome view with diagonal volumetric sunlight beams",
+        "colors": "Earthy forest greens, rust orange, weathered concrete grey, and warm sunlit rays",
+        "subject": "Ruined botanical biosphere dome overtaken by feral jungle flora",
+        "style": "Detailed post-apocalyptic concept art, rich textural decay and lighting"
+      }
+    },
+    {
+      "id": "r2_img_12",
+      "challengeNumber": 11,
+      "filename": "12.png",
+      "imageUrl": "/round2_images/12.png",
+      "title": "Intergalactic Alien Bazaar on Desert Planet",
+      "description": "A colorful, vibrant wide-angle marketplace scene on an arid desert planet with twin suns in the sky, packed with alien merchants, exotic bioluminescent creature vendors, and floating hover-stalls.",
+      "keyElements": [
+        "Twin red and yellow suns setting over a crimson desert horizon",
+        "Lively alien marketplace with diverse extraterrestrial species and droids",
+        "Hovering market carts displaying exotic glowing fruits and space tech",
+        "Weathered sandstone domed architecture with colorful silk canopies",
+        "Warm dusty desert atmosphere with vibrant market color pops"
+      ],
+      "targetVisualPrompt": "Vibrant and bustling alien market street on a desert outpost planet under twin sunset suns. Richly dressed extraterrestrial merchant species trade glowing bioluminescent alien produce and futuristic scrap from floating repulsorlift stalls. Silk woven canopies in saffron, indigo, and crimson stretch between weathered adobe dome structures. Star Wars Mos Eisley meets Dune, cinematic wide shot, rich environmental detail, 8k digital painting.",
+      "evaluationCriteria": {
+        "composition": "Dynamic bustling street-level perspective with deep atmospheric vanishing point",
+        "colors": "Warm terracotta, desert sand, twin sunset gradient, with vibrant market stalls",
+        "subject": "Exotic alien bazaar with varied species, hover-stalls, and desert architecture",
+        "style": "Cinematic sci-fi worldbuilding concept art, lively character diversity"
+      }
+    },
+    {
+      "id": "r2_img_13",
+      "challengeNumber": 12,
+      "filename": "13.png",
+      "imageUrl": "/round2_images/13.png",
+      "title": "Celestial Dragon of the Nebula Stardust",
+      "description": "A majestic cosmic fantasy illustration of an ethereal celestial dragon composed of glowing stellar gas and stardust, weaving through a vibrant purple and gold interstellar nebula cloud.",
+      "keyElements": [
+        "Serpentine Eastern dragon formed of incandescent cosmic stardust and nebulas",
+        "Glowing crystalline dragon scales reflecting distant supernova light",
+        "Intricate spiral horns emitting starlight filaments and cometary dust",
+        "Surrounding deep-space nebula with glowing magenta and gold gas clouds",
+        "Background star clusters and luminous cosmic spirals"
+      ],
+      "targetVisualPrompt": "Magnificent celestial cosmic dragon serpentine beast soaring through deep space. Body formed of swirling radiant stellar nebulae, burning stardust, and iridescent diamond scales. Glowing golden horns and whiskers trailing incandescent cometary stardust. Deep cosmic void background filled with spiral galaxies, vibrant magenta and celestial turquoise gas clouds. Epic fantasy space art, high resolution, glowing ethereal lighting, masterpiece.",
+      "evaluationCriteria": {
+        "composition": "Fluid S-curve dynamic motion of the dragon traversing the cosmic frame",
+        "colors": "Cosmic violet, luminous magenta, sparkling gold, and deep galactic navy",
+        "subject": "Mythical celestial dragon made of interstellar gas and starry nebulae",
+        "style": "High-fantasy cosmic digital painting, brilliant luminescence and particle effects"
+      }
+    },
+    {
+      "id": "r2_img_14",
+      "challengeNumber": 13,
+      "filename": "14.png",
+      "imageUrl": "/round2_images/14.png",
+      "title": "Futuristic Electric Hypercar in Monochromatic Tunnel",
+      "description": "A sleek, low-slung aerodynamic electric concept supercar speeding through a stark white minimalist LED-strip tunnel with motion blur reflections and glowing red taillights.",
+      "keyElements": [
+        "Ultra-aerodynamic matte-black and carbon-fiber electric supercar silhouette",
+        "Minimalist architectural tunnel lined with continuous linear LED lighting",
+        "High-speed motion blur along wet tunnel floor and wall reflections",
+        "Vibrant neon red continuous lightbar taillights trailing behind car",
+        "Clean, high-contrast commercial automotive studio photography style"
+      ],
+      "targetVisualPrompt": "Commercial automotive photography of a futuristic luxury electric hypercar driving at high speed through a minimalist subterranean architectural tunnel. Symmetrical white LED light strips along ceiling and walls create dramatic speed streaks on the glossy carbon-fiber bodywork. Continuous glowing crimson laser taillight bar creates trailing light exposure. Low-angle tracking shot, crisp focal clarity on the rear diffuser, 8k automotive catalog quality.",
+      "evaluationCriteria": {
+        "composition": "Low-angle dynamic tracking shot with symmetrical tunnel vanishing point",
+        "colors": "High-contrast monochrome white/black with intense streak of glowing red taillights",
+        "subject": "Futuristic luxury electric supercar in illuminated minimalist tunnel",
+        "style": "High-end commercial automotive photography, motion tracking and light trails"
+      }
+    },
+    {
+      "id": "r2_img_15",
+      "challengeNumber": 14,
+      "filename": "15.png",
+      "imageUrl": "/round2_images/15.png",
+      "title": "Magical Alchemist Laboratory at Midnight",
+      "description": "An intricately detailed fantasy illustration of a wizard alchemist's cluttered library workshop filled with glowing potion vials, floating spellbooks, astronomical orreries, and candlelight.",
+      "keyElements": [
+        "Antique wooden study packed with towering bookshelves and ancient scrolls",
+        "Glass flasks and alembics bubbling with glowing emerald and amethyst liquids",
+        "Hovering arcane spellbooks radiating golden magical runes",
+        "Brass astronomical armillary sphere and celestial globes on heavy oak desk",
+        "Warm flickering candlelight and moonlight streaming through Gothic stained glass"
+      ],
+      "targetVisualPrompt": "Cozy and intricate fantasy concept art of a grand medieval alchemist's chamber at midnight. Towering mahogany bookshelves overflowing with leather-bound spell tomes. On the heavy cluttered oak desk, blown-glass alembics and retorts bubble with luminescent cyan and violet elixirs. A brass armillary sphere rotates smoothly while open grimoires float gently in mid-air. Warm candlelight, cool moonlight through Gothic arch windows, 8k storybook illustration.",
+      "evaluationCriteria": {
+        "composition": "Intricately packed layered interior with foreground desk and background shelves",
+        "colors": "Warm amber candlelight, deep mahogany wood tones, with glowing emerald/purple potions",
+        "subject": "Medieval fantasy alchemist workshop with floating spellbooks and glowing vials",
+        "style": "Detailed fantasy concept illustration, rich environmental clutter and magical lighting"
+      }
+    },
+    {
+      "id": "r2_img_16",
+      "challengeNumber": 15,
+      "filename": "16.png",
+      "imageUrl": "/round2_images/16.png",
+      "title": "Volcanic Obsidian Fortress in Lava Sea",
+      "description": "An intimidating dark fantasy citadel built from jagged black obsidian rock towering over an active caldera lake of roaring molten lava, with ash lightning storms in the sky.",
+      "keyElements": [
+        "Monolithic dark obsidian castle spires with sharp geometric architecture",
+        "Lava falls cascading into a boiling crimson molten lava sea below",
+        "Cracks in the fortress walls glowing with internal magma energy",
+        "Volcanic ash cloud storm with crackling red volcanic lightning",
+        "Intense fiery orange and soot-black dramatic contrast lighting"
+      ],
+      "targetVisualPrompt": "Epic dark fantasy landscape of a menacing black obsidian fortress perched upon a colossal volcanic crater. Spires of sharp volcanic glass rise above a churning lake of molten glowing orange lava. Cascades of liquid fire pour down rocky cliffs into the fiery depths. The stormy night sky is choked with billowing black ash and arcs of crimson volcanic lightning. Lord of the Rings Mordor aesthetic, cinematic matte painting, Unreal Engine 5 render, 8k.",
+      "evaluationCriteria": {
+        "composition": "Towering vertical scale of dark citadel set against expansive glowing lava lake",
+        "colors": "High contrast fiery orange, molten yellow, charred charcoal, and obsidian black",
+        "subject": "Menacing dark obsidian fortress in active volcanic lava caldera",
+        "style": "Epic dark fantasy matte painting, dynamic lava shaders and atmospheric lightning"
+      }
+    },
+    {
+      "id": "r2_img_17",
+      "challengeNumber": 16,
+      "filename": "17.png",
+      "imageUrl": "/round2_images/17.png",
+      "title": "Crystalline Ice Palace of the Frozen Aurora",
+      "description": "A breathtaking polar landscape featuring a monumental cathedral-like palace carved entirely from translucent sapphire ice under vivid green and violet Northern Lights aurora borealis.",
+      "keyElements": [
+        "Monumental ice castle with translucent crystal spires and gothic arches",
+        "Vivid undulating ribbons of green and violet aurora borealis across night sky",
+        "Frozen mirror-like glacial lake reflecting the castle and auroral lights",
+        "Snow-covered jagged mountain peaks surrounding the frozen valley",
+        "Crisp, clear arctic atmosphere with sparkling ice crystals in the air"
+      ],
+      "targetVisualPrompt": "Enchanting wide-angle winter landscape featuring a grand crystalline ice palace carved into an arctic glacier. Towering translucent ice spires refract luminous green and purple ribbons of the Aurora Borealis dancing across a starry polar sky. A perfectly still frozen lake in the foreground creates a mirror reflection of the glowing palace. Pristine snow, volumetric polar frost, crisp 8k cinematic nature photography.",
+      "evaluationCriteria": {
+        "composition": "Symmetrical reflection across frozen lake with wide sweeping aurora sky",
+        "colors": "Ice crystal cyan, glacial sapphire blue, radiant aurora green, and deep violet",
+        "subject": "Gothic crystalline ice palace beneath vibrant aurora borealis",
+        "style": "Photorealistic arctic fantasy landscape, crystal light refraction"
+      }
+    },
+    {
+      "id": "r2_img_18",
+      "challengeNumber": 17,
+      "filename": "18.png",
+      "imageUrl": "/round2_images/18.png",
+      "title": "Cybernetic Bio-Android Botanical Greenhouse",
+      "description": "A striking fine-art sci-fi portrait of a porcelain-white humanoid android sitting among blooming pink orchids and glass terrariums, connected to subtle fiber-optic data vines.",
+      "keyElements": [
+        "Elegant porcelain and gold-filigree female android seated in serene pose",
+        "Exotic blooming pink orchids and delicate tropical flora draping around figure",
+        "Luminous fiber-optic strands woven like ivy between botanical stems",
+        "Warm diffused sunlight filtering through frosted greenhouse glass panes",
+        "High-fashion editorial portrait aesthetic with crisp macro textures"
+      ],
+      "targetVisualPrompt": "Fine-art sci-fi editorial portrait of a serene female android composed of polished white ceramic and delicate gold kintsugi filigree. She sits calmly enveloped by a lush greenhouse of rare blooming magenta orchids and hanging ferns. Glowing emerald fiber-optic threads mimic organic vine roots connecting to her cybernetic chassis. Soft diffused natural sunbeam lighting, Vogue editorial photography, Hasselblad medium format camera, 8k crisp focus.",
+      "evaluationCriteria": {
+        "composition": "Close-up portrait composition balancing android symmetry with organic flora",
+        "colors": "Porcelain white, gold accents, orchid magenta, and botanical foliage green",
+        "subject": "Ceramic and gold cybernetic android immersed in botanical greenhouse flowers",
+        "style": "High-fashion fine art photography, soft diffused natural lighting"
+      }
+    },
+    {
+      "id": "r2_img_19",
+      "challengeNumber": 18,
+      "filename": "19.png",
+      "imageUrl": "/round2_images/19.png",
+      "title": "Colossal Ancient Golem Guardian in Alpine Pass",
+      "description": "A cinematic scale fantasy concept painting of an enormous ancient stone golem walking through a snowy mountain gorge, with old pine forests growing on its shoulders and ancient blue runes glowing on its chest.",
+      "keyElements": [
+        "Gigantic moss-covered stone golem towering over mountain ridge",
+        "Ancient pine trees and snow patches naturally rooted on golem's shoulders",
+        "Mystic blue carved runes glowing brightly through cracks in ancient granite",
+        "Tiny travelers on horseback on the snowy mountain road looking up in awe",
+        "Dramatic mountain peaks shrouded in blizzard mist and cold atmospheric haze"
+      ],
+      "targetVisualPrompt": "Cinematic wide-angle fantasy matte painting of a colossal primordial stone golem striding through a snow-covered alpine mountain pass. An entire grove of pine trees and moss grows along its massive rocky back and shoulders. Glowing cyan ancient magical glyphs are carved into its chest and eyes. Tiny travelers in hooded cloaks watch from a mountain trail in the foreground for epic scale. Shadow of the Colossus mood, atmospheric snow haze, 8k painting.",
+      "evaluationCriteria": {
+        "composition": "Epic low-angle sense of colossal scale with foreground traveler contrast",
+        "colors": "Cold granite grey, mountain snow white, alpine forest green, and glowing cyan runes",
+        "subject": "Colossal primordial stone golem carrying pine forest in snowy mountain pass",
+        "style": "Cinematic epic fantasy matte painting, atmospheric mountain haze"
+      }
+    },
+    {
+      "id": "r2_img_20",
+      "challengeNumber": 19,
+      "filename": "20.png",
+      "imageUrl": "/round2_images/20.png",
+      "title": "Neon Holographic Cyber-Arcade in Future Tokyo",
+      "description": "A vibrant first-person perspective inside a crowded futuristic retro-arcade in Akihabara 2088, filled with glowing holographic claw machines, arcade cabinets, neon soda dispensers, and anime posters.",
+      "keyElements": [
+        "First-person wide interior shot of a multi-level futuristic arcade game center",
+        "Glowing holographic 3D games projecting floating retro sprites into the air",
+        "Vibrant neon light reflections across polished linoleum flooring",
+        "Crowds of young cyber-enthusiasts in holographic jackets playing games",
+        "Saturated neon pink, cyan, yellow, and violet aesthetic with dense signage"
+      ],
+      "targetVisualPrompt": "Vibrant first-person perspective inside a hyper-futuristic retro arcade in Akihabara Neo-Tokyo. Rows of glowing neon arcade cabinets project 3D interactive holograms of retro 8-bit characters into the air. Reflective glossy dark floor catches the brilliant neon pink, cyan, and gold light wash. Holographic ceiling advertisements and anime signage fill every corner. Atmospheric neon bloom, cinematic wide lens, 8k Octane render, cyberpunk nightlife.",
+      "evaluationCriteria": {
+        "composition": "First-person immersive wide perspective with dense spatial depth",
+        "colors": "High saturation neon pink, electric cyan, lemon yellow, and dark violet shadows",
+        "subject": "Futuristic multi-level retro arcade with holographic games and neon signage",
+        "style": "Cyberpunk interior concept art, vibrant neon bloom and reflections"
+      }
+    }
+  ]
 }

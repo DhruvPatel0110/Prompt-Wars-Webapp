@@ -131,10 +131,11 @@ export const Navbar = ({ isAdminRoute, onNavigate }) => {
 
               <button
                 onClick={handleLogout}
-                title="Logout"
-                className="p-2 rounded-lg bg-[#0d1424] border border-[#1f2b48] hover:border-red-500/40 text-gray-400 hover:text-red-400 transition-colors"
+                title={isAdminRoute ? "Exit Host Portal" : "Switch / Change Team"}
+                className="px-2.5 py-1.5 rounded-lg bg-[#0d1424] border border-[#1f2b48] hover:border-red-500/40 text-gray-300 hover:text-red-300 text-xs font-mono flex items-center gap-1.5 transition-colors"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">{isAdminRoute ? 'Exit' : 'Switch Team'}</span>
               </button>
             </div>
           )}

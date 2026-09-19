@@ -15,7 +15,7 @@ import { PromptSandboxModal } from '../components/PromptSandboxModal';
 import { soundEngine } from '../utils/audio';
 
 export const StudentDashboard = () => {
-  const { user } = useAuth();
+  const { user, logoutTeam } = useAuth();
   const { socket, isConnected, serverTimer, teamState } = useSocket();
 
   const [localDraft, setLocalDraft] = useState('');
@@ -80,20 +80,6 @@ export const StudentDashboard = () => {
       }
       setIsAutoSaving(false);
     }, 600);
-  };
-
-  // Quick template insertion helper
-  const handleInsertTemplate = (snippet) => {
-    setLocalDraft(prev => {
-      const updated = prev ? `${prev}\n\n${snippet}` : snippet;
-      if (socket && user?.teamId) {
-        socket.emit('team:draft_update', {
-          teamId: user.teamId,
-          draftText: updated
-        });
-      }
-      return updated;
-    });
   };
 
   // Wheel Spin Callback
@@ -244,14 +230,75 @@ export const StudentDashboard = () => {
   // ----------------------------------------------------
   // ROUND 1 CORE WORKSPACE
   // ----------------------------------------------------
-  const isLocked = serverTimer.isLocked || teamState?.roundState?.isLocked;
+  const isRoundActive = (serverTimer?.timerRunning || serverTimer?.status === 'ACTIVE' || teamState?.roundState?.status === 'ACTIVE' || (!serverTimer?.isLocked && serverTimer?.isLocked !== undefined && !teamState?.roundState?.isLocked));
+  const isLocked = !isRoundActive;
   const isSubmitted = team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated';
   const hasSpun = !!team.spinResult || hasRevealedGenre;
   const charCount = localDraft.length;
   const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
   const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-  // 1. SPIN WHEEL SCREEN (Immediately accessible on entrance)
+  // 0. WAITING LOBBY SCREEN (Displayed when Host has not started/unlocked Round 1 yet)
+  if (isLocked && !hasSpun && !isSubmitted) {
+    return (
+      <div>
+        {renderRoundSwitcher()}
+        <div className="min-h-[calc(100vh-8rem)] max-w-3xl mx-auto px-4 py-12 flex flex-col items-center justify-center text-center animate-fade-in">
+          {/* Pulsing Beacon */}
+          <div className="relative mb-6">
+            <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-cyan-500/20 to-purple-600/20 border-2 border-cyan-400/50 flex items-center justify-center shadow-[0_0_50px_rgba(0,240,255,0.3)] animate-cyber-pulse">
+              <Sparkles className="w-12 h-12 text-cyan-400" />
+            </div>
+            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-cyan-500"></span>
+            </span>
+          </div>
+
+          <span className="px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 font-mono text-xs uppercase tracking-widest font-bold">
+            ARENA LOBBY • WAITING FOR HOST
+          </span>
+
+          <h1 className="font-display font-black text-3xl sm:text-5xl text-white mt-4 tracking-wider">
+            WELCOME, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">{team.name || user?.teamName || 'WARRIOR'}</span>!
+          </h1>
+          <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-lg font-sans">
+            You are officially registered and connected to the PROMPT WARS tournament arena.
+          </p>
+
+          {/* Glass Status Card */}
+          <div className="glass-panel w-full mt-8 p-6 sm:p-8 rounded-3xl border-cyan-500/30 bg-gradient-to-b from-[#0d1424]/90 to-[#070a13]/90 shadow-[0_0_40px_rgba(0,240,255,0.1)] text-left space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
+              <div className="flex items-center gap-2 text-xs font-mono">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-emerald-400 font-bold uppercase tracking-wider">Arena Connection Active</span>
+              </div>
+              <div className="text-xs font-mono text-amber-300 bg-amber-950/40 border border-amber-500/30 px-3 py-1 rounded-xl">
+                ⏳ Stage: Waiting for Host to Start
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/[0.08] text-xs text-gray-300 leading-relaxed font-sans">
+              <strong className="text-white block mb-1">🎮 What happens next?</strong>
+              Please keep this tab open and stand by. As soon as the host starts Round 1 from the host control dashboard, this screen will automatically activate the <strong>Genre Sector Wheel</strong> and start the timer.
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-xs font-mono text-gray-400">
+              <span>Team: <strong className="text-cyan-300">{team.name || user?.teamName}</strong></span>
+              <button
+                onClick={logoutTeam}
+                className="text-gray-400 hover:text-red-400 transition-colors underline underline-offset-2"
+              >
+                Change / Re-enter Team Name
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 1. SPIN WHEEL SCREEN (Immediately accessible when unlocked)
   if (!hasSpun && !isSubmitted) {
     return (
       <div>
@@ -367,7 +414,7 @@ export const StudentDashboard = () => {
     );
   }
 
-  // 5. MAIN ROUND 1 MAKEOVER STUDIO
+  // 5. MAIN ROUND 1 MAKEOVER STUDIO - CLEAN & CRISP GLASSMORPHISM
   const genre = team.assignedGenre || { name: 'CREATIVE', color: '#ff007f', badge: 'CREATIVE ARTS' };
   const question = team.assignedQuestion || {
     badPrompt: "Make an advertisement for a college fest.",
@@ -378,7 +425,7 @@ export const StudentDashboard = () => {
   return (
     <div>
       {renderRoundSwitcher()}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in">
         {errorMessage && (
           <div className="p-3.5 rounded-xl bg-red-950/70 border border-red-500/40 text-red-200 text-xs font-mono flex items-center justify-between shadow-lg">
             <span>{errorMessage}</span>
@@ -386,200 +433,127 @@ export const StudentDashboard = () => {
           </div>
         )}
 
-        {/* Top Genre & Category Card with Glassmorphism */}
-        <div className="glass-panel p-5 rounded-2xl border-cyan-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center font-display font-black text-3xl shadow-xl shrink-0 border"
-              style={{ 
-                backgroundColor: `${genre.color}20`, 
-                color: genre.color, 
-                borderColor: `${genre.color}60`,
-                boxShadow: `0 0 25px ${genre.color}30`
-              }}
-            >
-              {team.spinResult || 'A'}
-            </div>
-            <div>
-              <div className="flex items-center gap-2.5">
-                <span className="font-display font-black text-2xl text-white tracking-wider">
-                  GENRE {team.spinResult}: {genre.name}
-                </span>
-                <span 
-                  className="text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider font-mono border"
-                  style={{ 
-                    backgroundColor: `${genre.color}25`, 
-                    color: genre.color,
-                    borderColor: `${genre.color}50`
-                  }}
-                >
-                  {genre.badge || 'CATEGORY'}
-                </span>
+        {/* Top Genre & Question in Prompt Card (Glassmorphic) */}
+        <div className="glass-panel p-6 sm:p-8 rounded-3xl border-cyan-500/30 bg-gradient-to-br from-[#0d1424]/90 via-[#070a13]/80 to-[#0d1424]/90 shadow-[0_0_40px_rgba(0,240,255,0.08)]">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-4 border-b border-white/[0.08]">
+            <div className="flex items-center gap-3">
+              <span 
+                className="w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-xl border shadow-md"
+                style={{ 
+                  backgroundColor: `${genre.color}25`, 
+                  color: genre.color, 
+                  borderColor: `${genre.color}60`
+                }}
+              >
+                {team.spinResult || 'A'}
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-black text-lg text-white tracking-wider">
+                    GENRE {team.spinResult || 'A'}: {genre.name}
+                  </span>
+                  <span 
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider font-mono border"
+                    style={{ 
+                      backgroundColor: `${genre.color}20`, 
+                      color: genre.color,
+                      borderColor: `${genre.color}40`
+                    }}
+                  >
+                    {genre.badge || 'CATEGORY'}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-400 font-sans">{genre.description}</p>
               </div>
-              <p className="text-xs text-gray-400 mt-1 font-sans">{genre.description}</p>
+            </div>
+
+            <div className="text-xs font-mono px-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.08] text-gray-300 flex items-center gap-2">
+              <Compass className="w-4 h-4 text-cyan-400" />
+              <span>Goal: <strong className="text-white">{question.context}</strong></span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono bg-black/40 px-3.5 py-2 rounded-xl border border-white/[0.08]">
-            <Compass className="w-4 h-4 text-cyan-400" />
-            <span className="text-gray-400">Context:</span>
-            <span className="text-gray-200 font-semibold truncate max-w-xs">{question.context}</span>
+          {/* Assigned Bad Prompt */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Flame className="w-4 h-4 text-red-400 animate-pulse" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-red-400">
+                PROMPT IN QUESTION (DEFECTIVE):
+              </span>
+            </div>
+            <div className="p-4 sm:p-5 rounded-2xl bg-black/60 border border-red-500/40 text-red-200 font-mono text-base sm:text-lg leading-relaxed shadow-inner">
+              "{question.badPrompt}"
+            </div>
           </div>
         </div>
 
-        {/* 2-Column Makeover Studio */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          {/* Left Column (5/12): Defective Prompt Brief & Target Scenario */}
-          <div className="lg:col-span-5 flex flex-col gap-4">
-            <div className="glass-panel p-6 rounded-2xl border-red-500/30 flex-1 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-4">
-                  <div className="flex items-center gap-2">
-                    <Flame className="w-5 h-5 text-red-400 animate-pulse" />
-                    <span className="font-display font-bold text-lg tracking-wider text-red-400">
-                      BAD PROMPT (ASSIGNED)
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-red-950/60 text-red-300 border border-red-500/30">
-                    DEFECTIVE
-                  </span>
-                </div>
+        {/* Answer Box & Submission Studio */}
+        <div className="glass-panel p-6 sm:p-8 rounded-3xl border-cyan-500/40 bg-gradient-to-b from-[#0d1424]/95 via-[#070a13]/90 to-[#070a13]/95 shadow-[0_0_50px_rgba(0,240,255,0.12)]">
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.08]">
+            <div className="flex items-center gap-2">
+              <Wand2 className="w-5 h-5 text-cyan-400" />
+              <span className="font-display font-bold text-lg tracking-wider text-cyan-300">
+                YOUR RECONSTRUCTED PROMPT (ANSWER)
+              </span>
+            </div>
 
-                <div className="p-4 rounded-xl bg-black/60 border border-red-500/40 text-red-200 font-mono text-base leading-relaxed shadow-inner">
-                  "{question.badPrompt}"
-                </div>
+            {isAutoSaving ? (
+              <span className="text-xs font-mono text-cyan-400 flex items-center gap-1.5">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Saving...
+              </span>
+            ) : (
+              <span className="text-xs font-mono text-emerald-400 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5" /> Autosaved
+              </span>
+            )}
+          </div>
 
-                {/* Target Scenario & Desired Output Context */}
-                <div className="mt-5 pt-4 border-t border-white/[0.08]">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Compass className="w-4 h-4 text-cyan-400" />
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-300 font-bold">
-                      Target Scenario & Deliverable:
-                    </h4>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-cyan-950/20 border border-cyan-500/30 text-xs text-gray-200 leading-relaxed font-sans">
-                    {question.context}
-                  </div>
-                </div>
-              </div>
+          {/* Clean Textarea */}
+          <textarea
+            rows={12}
+            placeholder="Type your improved, high-precision prompt here... Specify role persona, clear context, strict constraints, and explicit output formatting."
+            value={localDraft}
+            onChange={handleDraftChange}
+            disabled={isSubmitted || isLocked}
+            className="w-full p-4 sm:p-5 rounded-2xl glass-input text-gray-100 font-mono text-sm leading-relaxed focus:outline-none focus:border-cyan-400 resize-none shadow-inner transition-colors"
+          />
 
-              {/* Rubric Criteria Box */}
-              <div className="mt-5 p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/20 text-xs text-cyan-200">
-                <div className="flex items-center gap-1.5 font-bold mb-1">
-                  <Lightbulb className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>20-Point AI Adjudication Framework:</span>
-                </div>
-                <div className="text-[11px] text-gray-400 space-y-0.5 font-mono">
-                  <div>• Clarity & Specificity (5 pts) • Persona & Role (4 pts)</div>
-                  <div>• Constraints & Guardrails (4 pts) • Output Structure (3 pts)</div>
-                  <div>• Creativity & Quality (4 pts)</div>
-                </div>
-              </div>
+          {/* Metrics bar */}
+          <div className="mt-3 flex items-center justify-between text-xs font-mono text-gray-400">
+            <span className={charCount < 50 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-semibold'}>
+              {charCount < 50 ? `Min 50 characters required (${50 - charCount} left)` : '✓ Valid Length'}
+            </span>
+            <div className="flex items-center gap-3">
+              <span>{wordCount} words</span>
+              <span>•</span>
+              <span>{charCount} / 2500 chars</span>
             </div>
           </div>
 
-          {/* Right Column (7/12): Live Improved Prompt Editor */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
-            <div className="glass-panel p-6 rounded-2xl border-cyan-500/40 flex-1 flex flex-col justify-between shadow-[0_0_35px_rgba(0,240,255,0.1)]">
-              <div>
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-3">
-                  <div className="flex items-center gap-2">
-                    <Wand2 className="w-5 h-5 text-cyan-400" />
-                    <span className="font-display font-bold text-lg text-cyan-300">
-                      YOUR IMPROVED PROMPT
-                    </span>
-                  </div>
-                  {isAutoSaving ? (
-                    <span className="text-xs font-mono text-cyan-400 flex items-center gap-1">
-                      <RefreshCw className="w-3 h-3 animate-spin" /> Saving draft...
-                    </span>
-                  ) : (
-                    <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
-                      <Check className="w-3 h-3" /> Autosaved
-                    </span>
-                  )}
-                </div>
+          {/* Action Buttons: Test in Sandbox & Lock and Submit */}
+          <div className="mt-6 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => setShowSandbox(true)}
+              className="w-full sm:w-auto px-5 py-3 rounded-2xl font-mono text-xs font-bold text-cyan-300 bg-cyan-950/40 hover:bg-cyan-500/20 border border-cyan-500/40 transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
+            >
+              <FlaskConical className="w-4 h-4 text-cyan-400" />
+              <span>Test in Sandbox ({sandboxRunsLeft} runs left)</span>
+            </button>
 
-                {/* Quick-Insert Framework Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                  <span className="text-[11px] font-mono text-gray-400 pr-1">Quick Add:</span>
-                  <button
-                    type="button"
-                    onClick={() => handleInsertTemplate("Act as an expert [Role/Persona] with 10+ years experience in [Domain].")}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-cyan-500/20 border border-white/[0.08] hover:border-cyan-500/40 text-[11px] font-mono text-gray-300 hover:text-cyan-300 transition-colors"
-                  >
-                    + Persona
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleInsertTemplate("CONSTRAINTS:\n- Tone: Professional, high-energy, concise\n- Must avoid: Clichés and vague generalizations\n- Budget/Timeline: Explicit limits")}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-cyan-500/20 border border-white/[0.08] hover:border-cyan-500/40 text-[11px] font-mono text-gray-300 hover:text-cyan-300 transition-colors"
-                  >
-                    + Constraints
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleInsertTemplate("OUTPUT STRUCTURE:\n1. Executive Summary\n2. Detailed Strategy Breakdown (Markdown Table)\n3. Actionable Next Steps & KPIs")}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-cyan-500/20 border border-white/[0.08] hover:border-cyan-500/40 text-[11px] font-mono text-gray-300 hover:text-cyan-300 transition-colors"
-                  >
-                    + Markdown Schema
-                  </button>
-                </div>
-
-                {/* Main Textarea */}
-                <textarea
-                  rows={14}
-                  placeholder="Draft your powerhouse improved prompt here... (e.g. 'Act as a Senior Creative Director...')"
-                  value={localDraft}
-                  onChange={handleDraftChange}
-                  disabled={isSubmitted || isLocked}
-                  className="w-full p-4 rounded-xl glass-input text-gray-100 font-mono text-sm leading-relaxed focus:outline-none focus:border-cyan-500/80 resize-none shadow-inner"
-                />
-
-                <div className="mt-2 flex items-center justify-between text-xs font-mono text-gray-400">
-                  <span className={charCount < 50 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-semibold'}>
-                    {charCount < 50 ? `Min 50 chars required (${50 - charCount} left)` : '✓ Valid Length'}
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span>{wordCount} words</span>
-                    <span>•</span>
-                    <span>{charCount} / 2500 chars</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Actions */}
-              <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setShowSandbox(true)}
-                    className="px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-cyan-300 bg-cyan-950/40 hover:bg-cyan-500/20 border border-cyan-500/40 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
-                  >
-                    <FlaskConical className="w-4 h-4 text-cyan-400" />
-                    <span>Test in Live Sandbox ({sandboxRunsLeft} left)</span>
-                  </button>
-                  <div className="hidden sm:flex text-xs text-gray-400 font-mono items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Single final submission</span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmModal(true)}
-                  disabled={!canSubmit || isSubmitting}
-                  className={`cyber-btn px-8 py-3.5 rounded-xl font-display font-bold text-sm uppercase tracking-wider flex items-center gap-2 ${
-                    !canSubmit
-                      ? 'bg-gray-800 text-gray-500 border border-gray-700 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-[0_0_25px_rgba(0,240,255,0.45)]'
-                  }`}
-                >
-                  <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? 'SUBMITTING...' : 'LOCK & SUBMIT PROMPT'}</span>
-                </button>
-              </div>
-            </div>
+            <button
+              type="button"
+              onClick={() => setShowConfirmModal(true)}
+              disabled={!canSubmit || isSubmitting}
+              className={`cyber-btn w-full sm:w-auto px-8 py-3.5 rounded-2xl font-display font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 ${
+                !canSubmit
+                  ? 'bg-gray-800 text-gray-500 border border-gray-700 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-[0_0_30px_rgba(0,240,255,0.45)]'
+              }`}
+            >
+              <Send className="w-4 h-4" />
+              <span>{isSubmitting ? 'SUBMITTING...' : 'LOCK & SUBMIT PROMPT'}</span>
+            </button>
           </div>
         </div>
 

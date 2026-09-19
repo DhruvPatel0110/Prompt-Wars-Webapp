@@ -94,6 +94,22 @@ export const SocketProvider = ({ children }) => {
       setEvalProgress(prog);
     });
 
+    newSocket.on('round:unlocked', (payload) => {
+      setServerTimer(prev => ({
+        ...prev,
+        isLocked: false,
+        status: 'ACTIVE'
+      }));
+    });
+
+    newSocket.on('round:locked', () => {
+      setServerTimer(prev => ({
+        ...prev,
+        isLocked: true,
+        status: 'LOCKED'
+      }));
+    });
+
     newSocket.on('round:verdict', (verdictData) => {
       setLastVerdict(verdictData);
     });

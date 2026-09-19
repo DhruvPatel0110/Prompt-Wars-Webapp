@@ -1,0 +1,398 @@
+{
+  "round": 3,
+  "roundName": "FINAL PROMPT BATTLE",
+  "tagline": "BUILD. ADAPT. SURVIVE.",
+  "durationSeconds": 900,
+  "bombDurationSeconds": 30,
+  "cases": [
+    {
+      "id": "r3_case_001",
+      "title": "College Tech & Cultural Fest Participation Crisis",
+      "category": "Event Management & Social Media Marketing",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A university is organizing its flagship 3-day annual festival in 30 days. Last year suffered from poor turnout (only 350 students). This year the team must attract at least 900 attendees despite two rival college fests happening on the exact same weekend.",
+        "metrics": {
+          "targetAttendance": "900+ Registered Attendees",
+          "previousYearAttendance": "350 Attendees (Auditorium half empty)",
+          "marketingBudget": "₹20,000 Total",
+          "promotionPeriod": "30 Days",
+          "volunteerTeam": "25 Active College Volunteers",
+          "currentEngagement": "Low (< 2% Social Media Engagement)",
+          "keyConstraint": "Overlapping dates with 2 major rival campus festivals"
+        },
+        "requiredPillars": [
+          "1. Target Audience Segmentation (Engineering, Arts, Management students)",
+          "2. Zero-Cost Guerrilla Marketing & Campus Buzz Strategy",
+          "3. High-Engagement Instagram Reels & Viral TikTok/Shorts Plan",
+          "4. Campus Ambassador Network & Squad Referral Incentives",
+          "5. Granular ₹20,000 Budget Allocation Breakdown",
+          "6. 30-Day Phased Execution Timeline (Tease -> Blitz -> Ticket Rush -> Event Days)",
+          "7. Unique Festival USPs & Headliner Competition Hooks to beat rival fests",
+          "8. Measurable Conversion KPIs & Daily Registration Benchmarks",
+          "9. Risk Management & Low-Turnout Contingency Safeguards",
+          "10. Post-Event Feedback & Community Retention Strategy"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_001_budget_slash",
+          "headline": "🚨 BUDGET EMERGENCY: ₹20,000 SLASHED TO ₹4,000!",
+          "description": "The college finance committee froze funds! Your marketing budget is slashed from ₹20,000 to ₹4,000. All paid flyers, posters, and paid influencer promotions are immediately revoked.",
+          "impactField": "Budget & Promotion Channels",
+          "directive": "Pivot immediately to 100% zero-cost guerrilla tactics, inter-department meme wars, WhatsApp status chains, and 'Squad Pass' group referral bounties."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_002",
+      "title": "Campus Electric Scooter Rental & Green Mobility Launch",
+      "category": "Clean-Tech & Operations Strategy",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A student startup is launching a shared electric scooter rental service across a sprawling university campus and nearby hostels. Students currently rely on expensive autos or long walks. The startup must prove reliability and overcome student skepticism about battery life.",
+        "metrics": {
+          "fleetSize": "100 Smart Electric Scooters",
+          "batteryChargingHubs": "6 Strategic Campus Hubs",
+          "targetSubscribers": "500 Daily Active Riders in Month 1",
+          "launchBudget": "₹35,000 Marketing & Ops Reserve",
+          "timeline": "3 Weeks to Launch",
+          "rentalPricing": "₹10 Base Fare + ₹2 per Minute",
+          "keyConstraint": "Hostel curfews (9:30 PM) and battery range anxiety"
+        },
+        "requiredPillars": [
+          "1. Brand Positioning & Solving Student Commute Bottlenecks",
+          "2. Campus Launch Blitz & Free First-Ride Activation Campaign",
+          "3. Subscription Pass Tiers (Daily, Weekly, Monthly Hostel Pass)",
+          "4. Battery Swapping & Maintenance Logistics Protocol",
+          "5. Granular ₹35,000 Budget Allocation Table",
+          "6. 3-Week Phased Rollout Roadmap (Beta Testers -> Full Fleet)",
+          "7. Gamified Clean-Riding Rewards & Peer Referral Program",
+          "8. Safety Guidelines, Speed Zones, & Geofencing Rules",
+          "9. Breakdown Assistance & Nighttime Scooter Relocation Protocol",
+          "10. Key Performance Metrics (Trips per scooter/day, Fleet Uptime)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_002_hub_outage",
+          "headline": "🚨 INFRASTRUCTURE HALT: 4 OUT OF 6 HUBS DENIED PERMITS!",
+          "description": "Campus security blocked electrical connections for 4 out of your 6 charging stations due to power load concerns! You must launch with only 2 operational swap hubs.",
+          "impactField": "Operations & Charging Logistics",
+          "directive": "Adapt your operations by introducing mobile battery delivery vans, designated hostel drop zones, and ₹20 ride-credit incentives for riders who return scooters directly to the 2 active hubs."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_003",
+      "title": "15-Minute Campus Grocery & Late-Night Snack Delivery",
+      "category": "Quick-Commerce & Hyperlocal Logistics",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A hyperlocal quick-commerce app is launching a 15-minute delivery service for hostel students needing instant snacks, stationery, and exam supplies between 7:00 PM and 3:00 AM. Local stores close by 9:00 PM, creating a massive unmet demand.",
+        "metrics": {
+          "deliveryGoal": "400 Orders/Night within 30 Days",
+          "microWarehouse": "1 Central Dark-Store near Hostels",
+          "studentCouriers": "15 Part-Time Student Couriers with Bicycles",
+          "launchBudget": "₹25,000",
+          "averageOrderValue": "₹150 (Snacks, Maggi, Energy Drinks, Stationery)",
+          "targetDeliveryTime": "Under 15 Minutes Guaranteed",
+          "keyConstraint": "Hostel warden restrictions on external deliveries after 10 PM"
+        },
+        "requiredPillars": [
+          "1. Product Catalog Selection (High-demand late-night impulse items)",
+          "2. Fast 15-Minute Packing & Delivery Routing Blueprint",
+          "3. Midnight Launch Campaign & Hostel Room Teaser Activation",
+          "4. Courier Incentive Structure & Student Delivery Shift Mechanics",
+          "5. ₹25,000 Marketing, Inventory & Tech Budget Allocation",
+          "6. 4-Week Step-by-Step Launch Gantt Roadmap",
+          "7. 'Midnight Study Squad' Combo Discounts & Social Referral Loops",
+          "8. Quality Assurance & Handling Out-of-Stock Situations",
+          "9. Hostel Delivery Drop-Box & Gate Handover Protocols",
+          "10. Target Economics (Cost per delivery, Daily Breakeven Volume)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_003_hostel_ban",
+          "headline": "🚨 ENTRY CRACKDOWN: HOSTELS BAN GATE DELIVERIES AFTER 11 PM!",
+          "description": "Hostel administration strictly bans delivery couriers from approaching hostel gates past 11:00 PM to curb late-night noise!",
+          "impactField": "Delivery Operations & Access",
+          "directive": "Surgically modify your delivery flow to appoint trusted resident Floor Captains inside each hostel who receive bulk 10:45 PM stock drops and fulfill internal room deliveries seamlessly."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_004",
+      "title": "Student Smart Budgeting & Micro-Savings App Launch",
+      "category": "Fintech & Personal Lifestyle",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A fintech startup built a mobile app that helps college students automatically save spare change from daily UPI payments and set weekly pocket-money budgets. Most students overspend in the first 10 days of the month and struggle by month-end.",
+        "metrics": {
+          "targetSignups": "3,000 Active Student Users in 45 Days",
+          "targetAverageSavings": "₹500 Saved per Student Monthly",
+          "launchBudget": "₹30,000",
+          "timeline": "6 Weeks",
+          "keyFeature": "Round-up savings on UPI spends + visual spending limits",
+          "studentPainPoint": "Zero financial discipline & running out of pocket money by week 2",
+          "keyConstraint": "Trust barrier regarding banking data and app safety"
+        },
+        "requiredPillars": [
+          "1. Relatable Brand Persona (Friendly financial mentor, not boring bank)",
+          "2. Viral TikTok/Reels Campaign on 'End-of-Month Broke Student Struggles'",
+          "3. Gamified Savings Streaks & Daily Expense Tracking Challenges",
+          "4. Campus Influencer & Student Club Partnership Mechanics",
+          "5. Granular ₹30,000 Acquisition & Reward Budget Matrix",
+          "6. 6-Week Launch Roadmap (Campus Closed Beta -> Public Rollout)",
+          "7. Trust & Security Messaging (Explaining 256-bit encryption & RBI compliance)",
+          "8. 'Save Together' Group Budgeting for Flatmates & Travel Trips",
+          "9. Risk Management for Inactive Users & Dropout Prevention",
+          "10. Growth Metrics (Daily Active Users, Average Monthly Savings Rate)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_004_safety_scare",
+          "headline": "🚨 VIRAL RUMOR SCARE: FAKE DATA PRIVACY CONCERNS ON CAMPUS!",
+          "description": "An anonymous campus Reddit/WhatsApp rumor falsely claims your app leaks student bank balances to college deans, causing a spike in uninstalls!",
+          "impactField": "Brand Reputation & User Trust",
+          "directive": "Adapt your prompt to launch a transparent 24-hour 'Open-Vault Trust Campaign' with student-body live security audits, zero-account-linking demo mode, and verified faculty endorsements."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_005",
+      "title": "Artisan Student Workspace & Specialty Coffee Café",
+      "category": "Hospitality & Community Space",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "An entrepreneur is opening a vibrant, budget-friendly specialty coffee shop and study café right outside a university district. The space offers high-speed Wi-Fi, silent study pods, and affordable quality coffee. The goal is to build a thriving daily community of coders, artists, and study groups.",
+        "metrics": {
+          "seatingCapacity": "60 Seats (Including 15 Quiet Work Pods)",
+          "targetDailyFootfall": "180 Customers per Day",
+          "launchBudget": "₹40,000",
+          "timeline": "2 Weeks to Grand Opening",
+          "averageBill": "₹120 (Coffee + Snack Combo)",
+          "competitors": "Noisy fast-food chains and overpriced commercial cafes",
+          "keyConstraint": "Students taking tables for 4+ hours with a single ₹50 order"
+        },
+        "requiredPillars": [
+          "1. Unique Café Value Proposition & Aesthetic Workspace Ambience",
+          "2. Grand Opening Buzz (Opening Day Free-Coffee Hour & Live Music)",
+          "3. Fair Table-Use & Workspace Pass System (Study Pass vs Casual Seating)",
+          "4. Student-Friendly Menu Matrix (Affordable combos, healthy study bites)",
+          "5. Granular ₹40,000 Marketing, Opening Decor & Promo Budget",
+          "6. 14-Day Day-by-Day Launch Countdown Checklist",
+          "7. Loyalty Punch-Card System & 'Study Marathon' Stamper Perks",
+          "8. Community Events (Coding meetups, open-mic nights, board game Sundays)",
+          "9. Peak-Hour Seating Management & Overflow Contingency Protocols",
+          "10. Monthly Revenue & Daily Footfall Break-Even Projections"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_005_wifi_blackout",
+          "headline": "🚨 FIBER OUTAGE: MAIN COMMERCIAL BROADBAND LINE CUT!",
+          "description": "Road construction severed the main optical fiber line 48 hours before opening! High-speed internet will be down for the entire first week.",
+          "impactField": "Core Value Proposition & Customer Experience",
+          "directive": "Pivot opening week messaging into an offline 'Analog Co-Working & Creative Chillout Week' with dual 5G mobile backup hubs, curated offline board games, acoustic study sessions, and 20% discount vouchers."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_006",
+      "title": "AI Fitness & Pocket-Friendly Healthy Meal Subscription",
+      "category": "Health, Wellness & Food-Tech",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A health-tech startup offers an affordable daily healthy meal tiffin service paired with a free AI WhatsApp fitness coach for young college students and busy early-career professionals who rely on unhealthy mess food or fast food.",
+        "metrics": {
+          "targetSubscribers": "300 Monthly Active Meal Subscribers",
+          "mealPrice": "₹79 per balanced meal (Protein-rich, fresh)",
+          "kitchenCapacity": "500 Meals Prepared Daily",
+          "launchBudget": "₹30,000",
+          "timeline": "4 Weeks",
+          "primaryCompetitors": "Oily hostel mess food and expensive fitness cafes",
+          "keyConstraint": "Perception that healthy food is bland, boring, and expensive"
+        },
+        "requiredPillars": [
+          "1. Flavor-First Healthy Menu Positioning (Tasty Indian bowls, not raw salads)",
+          "2. 7-Day Free AI WhatsApp Diet Coach Lead Generation Funnel",
+          "3. Tiered Meal Subscription Plans (Lunch-only, 30-Day Fitness Pack)",
+          "4. Kitchen Sourcing, Packaging & Daily Delivery Route Blueprint",
+          "5. Granular ₹30,000 Digital Ads, Sampling & Referral Budget Matrix",
+          "6. 4-Week Launch Roadmap (Free Tasting Booths -> Paid Subscriptions)",
+          "7. 'Hostel Transformation' Fitness Challenge with Cash & Merch Prizes",
+          "8. Quality Assurance, Freshness Guarantees & Meal Customization Rules",
+          "9. Subscription Pause/Cancellation Flexibility Policy for Vacations",
+          "10. Unit Economics (Cost per meal, Packaging cost, Customer Lifetime Value)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_006_ingredient_spike",
+          "headline": "🚨 INGREDIENT INFLATION: PANEER & CHICKEN COSTS SURGE 50%!",
+          "description": "Wholesale market supply disruptions caused the price of core proteins (paneer, chicken, soy) to spike by 50%, threatening your ₹79 price cap!",
+          "impactField": "Cost Structure & Menu Engineering",
+          "directive": "Instantly re-engineer the menu with high-protein smart substitutes (sprouted lentils, local mushroom blends, egg-protein bases) and launch a community 'Budget-Gains Recipe Vote' in the app to maintain the ₹79 promise."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_007",
+      "title": "Indie Mobile Casual Game Global Viral Launch",
+      "category": "Gaming, Entertainment & Digital Media",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A 4-person indie gaming studio developed an addictive, physics-based mobile puzzle game with vibrant pixel art. The game is polished and bug-free, but with zero publisher backing, they must generate 50,000 organic downloads in the first month on Google Play and App Store.",
+        "metrics": {
+          "downloadTarget": "50,000 Downloads in Month 1",
+          "marketingBudget": "₹25,000 Total",
+          "monetization": "Rewarded video ads + ₹99 Ad-free cosmetic skins",
+          "targetD1Retention": "45% Day-1 Player Retention Target",
+          "gameStyle": "One-tap addictive physics mechanics (Easy to learn, hard to master)",
+          "keyConstraint": "Competing against giant game studios with million-dollar ad budgets"
+        },
+        "requiredPillars": [
+          "1. Game Hook & App Store Optimization (ASO title, icon, trailer design)",
+          "2. Short-Form Video Strategy (TikTok/Reels/Shorts 'Impossible Level' clips)",
+          "3. Micro-Streamer & Gaming Creator Outreach Campaign",
+          "4. In-Game Social Share Triggers (Funny loss animations, brag screens)",
+          "5. Granular ₹25,000 Creator Gifting & Community Tournaments Budget",
+          "6. 30-Day Pre-Registration & Launch Schedule Roadmap",
+          "7. Daily Login Rewards & Level-Editor Community Creation Contests",
+          "8. Retention Funnel (Push notification timing, difficulty balancing)",
+          "9. Handling Negative Reviews & Rapid Community Feedback Loops",
+          "10. Monetization Balance (Ensuring ads don't ruin gameplay flow)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_007_store_delay",
+          "headline": "🚨 STORE DELAY: IOS APP STORE APPROVAL STUCK IN REVIEW!",
+          "description": "Apple App Store flagged an arbitrary guideline issue, delaying the iOS release by 10 days, while Android is approved and live today!",
+          "impactField": "Platform Launch & Multiplatform Campaign",
+          "directive": "Double down on an explosive Android-exclusive 'Beta Champion Tournament' with exclusive early-bird skins, while launching an iOS pre-order countdown campaign with exclusive rewards upon release."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_008",
+      "title": "Sustainable Campus Thrift & Vintage Fashion Marketplace",
+      "category": "E-Commerce, Sustainability & Creator Economy",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A student-run sustainable fashion platform allows university students to buy, sell, and upcycle pre-loved clothing, streetwear, and sneakers. The goal is to reduce fast-fashion waste, make trendy clothing affordable, and let students earn extra cash from their closets.",
+        "metrics": {
+          "targetListings": "1,500 Curated Clothing Items in Month 1",
+          "targetTransactions": "600 Completed Orders in 30 Days",
+          "commissionRate": "10% Platform Fee on Successful Sales",
+          "launchBudget": "₹20,000",
+          "timeline": "3 Weeks to Launch",
+          "sellerBase": "Hostel students clearing wardrobes + student fashion designers",
+          "keyConstraint": "Buyer concerns over clothing hygiene, fabric quality, and sizing"
+        },
+        "requiredPillars": [
+          "1. Brand Identity & Eco-Friendly Streetwear Aesthetic",
+          "2. Seller Acquisition Blitz (Hostel room-wardrobe cleanout drive)",
+          "3. Hygiene & Quality Verification Standard (Clean-Wash Badge System)",
+          "4. Seamless Campus Pickup, Drop-off & Try-on Kiosk Logistics",
+          "5. Granular ₹20,000 Photography, Packaging & Promo Budget Table",
+          "6. 3-Week Phased Launch Timeline (Seller Onboarding -> Fashion Pop-Up)",
+          "7. Live 'Campus Runway' Thrift Fashion Show & Influencer Styling Challenge",
+          "8. Buyer Protection & No-Hassle Instant Exchange Guarantee",
+          "9. Fraud Prevention (Preventing damaged or counterfeit clothing items)",
+          "10. Marketplace Health KPIs (Listing-to-sale velocity, Repeat buyer rate)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_008_venue_cancellation",
+          "headline": "🚨 VENUE SHUTDOWN: CAMPUS FASHION POP-UP PERMIT REVOKED!",
+          "description": "College administrators suddenly canceled your weekend flea market stall permit due to lawn maintenance!",
+          "impactField": "Physical Activation & Launch Event",
+          "directive": "Shift the physical pop-up into a 24-hour interactive 'Instagram Live Drop & Hostel Flash-Sale Marathon' with live virtual try-ons by student influencers and instant 30-minute hostel room delivery."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_009",
+      "title": "AI Practical Coding & Tech Career Accelerator",
+      "category": "EdTech & Career Upskilling",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "An online learning community is launching an intensive 21-day cohort called 'Zero to AI Fullstack Builder' for college students. Unlike theoretical college courses, this bootcamp focuses on building 5 real-world deployable AI projects with peer code reviews and recruiter demo days.",
+        "metrics": {
+          "targetCohortSize": "250 Enrolled Students",
+          "courseFee": "₹499 (Accessible pricing for college students)",
+          "marketingBudget": "₹25,000",
+          "promotionPeriod": "2 Weeks",
+          "mentorTeam": "4 Senior Tech Mentors & Open-Source Contributors",
+          "studentPainPoint": "Boring college syllabus with zero industry-ready project experience",
+          "keyConstraint": "High dropout rates typical in online courses"
+        },
+        "requiredPillars": [
+          "1. Practical Project-First Curriculum Positioning (5 Ship-Ready Projects)",
+          "2. Free 2-Hour 'Build Your First AI App' Workshop Lead Magnet Funnel",
+          "3. Discord/Slack Community Accountability Squads (Pair-Programming)",
+          "4. Campus Tech Society & Coding Club Partnership Program",
+          "5. Granular ₹25,000 Budget Allocation Breakdown",
+          "6. 14-Day Cohort Admissions Countdown Roadmap",
+          "7. 100% Course Fee Refund Bounty for Top 10 Project Builders",
+          "8. Recruiter Demo Day & Portfolio Showcase Integration",
+          "9. Anti-Drop-Out Mechanics (Daily milestone check-ins, mentor office hours)",
+          "10. Enrollment Conversion & Post-Cohort Placement Success KPIs"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_009_mentor_emergency",
+          "headline": "🚨 LEAD MENTOR EMERGENCY: 2 OUT OF 4 MENTORS DROP OUT!",
+          "description": "Two key mentors experienced sudden work travel and had to drop out 48 hours before the cohort kick-off!",
+          "impactField": "Teaching Capacity & Live Mentorship",
+          "directive": "Restructure mentorship into daily interactive AI-assisted code review bots, asynchronous project teardown video briefs, and elevate top alumni to lead peer-assisted breakout squads with stipend incentives."
+        }
+      ]
+    },
+    {
+      "id": "r3_case_010",
+      "title": "Emergency Pet Care & Vet On-Demand Telehealth Platform",
+      "category": "Healthcare Services & Consumer Community",
+      "difficulty": "Medium",
+      "scenario": {
+        "context": "A startup is launching an instant 24/7 video consultation and emergency first-aid advice service for pet parents in an urban area where local veterinary clinics close by 8:00 PM. Pet owners frequently panic during late-night emergencies and need immediate qualified guidance.",
+        "metrics": {
+          "targetMonthlyConsults": "800 Video Consultations in Month 1",
+          "consultationFee": "₹199 per 15-Minute Video Call (First call 50% off)",
+          "onboardedVets": "20 Verified Licensed Veterinarians on Rotational Shifts",
+          "launchBudget": "₹35,000",
+          "timeline": "3 Weeks to Launch",
+          "keyUserNeed": "Instant 60-second connection during nighttime pet emergencies",
+          "keyConstraint": "Building deep medical credibility and overcoming app adoption hesitation"
+        },
+        "requiredPillars": [
+          "1. Empathetic Brand Messaging & Immediate Emergency Value Proposition",
+          "2. Late-Night 'Vet on Call' Digital Awareness & Search Ad Campaign",
+          "3. Pet Parent Community Outreach (Dog parks, pet cafes, animal shelters)",
+          "4. 60-Second Video Triage & Doctor Matching Technical SLA",
+          "5. Granular ₹35,000 Marketing, Vet Incentives & Promo Budget Table",
+          "6. 3-Week Phased Launch Roadmap (Doctor Testing -> Public Launch)",
+          "7. Free Digital Pet Health Record & Vaccination Reminder Tool as Hook",
+          "8. Tiered Monthly Unlimited Pet-Care Subscription Pass (₹399/month)",
+          "9. Emergency Escalation Protocol for In-Person Hospital Transfer",
+          "10. Key Metrics (Response time under 90s, Customer Satisfaction Rating)"
+        ]
+      },
+      "bombs": [
+        {
+          "bombId": "bomb_010_server_spike",
+          "headline": "🚨 TRAFFIC SURGE: VIDEO SERVER BOTTLENECK!",
+          "description": "A viral pet-influencer reel caused incoming calls to surge 5x beyond video bandwidth capacity, causing video connection lag!",
+          "impactField": "Platform Infrastructure & Patient Triage",
+          "directive": "Implement an instant lightweight WhatsApp-based photo/chat symptom triage bot that resolves minor dietary queries immediately and prioritizes the video line strictly for critical medical emergencies."
+        }
+      ]
+    }
+  ]
+}

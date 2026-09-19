@@ -1,7 +1,4 @@
-/**
- * AI Evaluator Engine for PROMPT WARS Round 3: Final Prompt Battle & Emergency Bomb Adaptation
- * Total: 50 Points (30 pts Master Prompt + 20 pts Final Bomb Adaptation)
- */
+import { generateGeminiContent } from './geminiClient.js';
 
 export async function evaluateRound3Submission({ caseData, bombData, masterPrompt, adaptedPrompt, teamName }) {
   if (process.env.ANTHROPIC_API_KEY) {
@@ -111,9 +108,6 @@ Respond ONLY with valid JSON matching this schema:
 
 // --- Gemini Evaluator ---
 async function evaluateRound3WithGemini({ caseData, bombData, masterPrompt, adaptedPrompt }) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
   const prompt = `You are the Supreme AI Adjudicator for PROMPT WARS ROUND 3: GRAND FINALE.
 Case: ${caseData.title}
 Bomb: ${bombData.headline} - ${bombData.description}
@@ -128,19 +122,7 @@ bomb_subtotal (0-20).
 total_score (0-50), key_strengths, areas_for_improvement, verdict_summary.
 Respond in JSON only.`;
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
-    })
-  });
-
-  if (!response.ok) throw new Error(`Gemini HTTP ${response.status}`);
-  const data = await response.json();
-  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-  return JSON.parse(rawText);
+  return await generateGeminiContent({ prompt, jsonMode: true, temperature: 0.2 });
 }
 
 // --- Deterministic Semantic Rubric Engine ---

@@ -7,7 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { StateManager } from './stateManager.js';
 import { evaluateSubmission, evaluateBatchWithConcurrency } from './evaluator.js';
-import { evaluateRound2Challenge1, evaluateRound2Challenge2 } from './evaluatorRound2.js';
+import { evaluateRound2Prompt, evaluateRound2Challenge1, evaluateRound2Challenge2 } from './evaluatorRound2.js';
 import { evaluateRound3Submission } from './evaluatorRound3.js';
 import { runPromptSandbox } from './sandboxSimulator.js';
 
@@ -268,14 +268,30 @@ io.on('connection', (socket) => {
   // ROUND 2 TEAM EVENTS (REVERSE ENGINEERING)
   // ==========================================
 
-  socket.on('team:round2_draft_update', ({ teamId, challengeType, draftText }) => {
-    stateManager.saveRound2Draft(teamId, challengeType, draftText);
-    broadcastToAdmins('admin:r2_draft_update', { teamId, challengeType, length: (draftText || "").length });
+  socket.on('team:round2_draft_update', ({ teamId, challengeType, draftText, promptText }) => {
+    const text = draftText !== undefined ? draftText : promptText;
+    stateManager.saveRound2Draft(teamId, text, challengeType);
+    broadcastToAdmins('admin:r2_draft_update', { teamId, challengeType, length: (text || "").length });
   });
 
-  socket.on('team:round2_submit', ({ teamId, challengeType, promptText }, callback) => {
+  socket.on('team:round2_submit', ({ teamId, challengeType, promptText, studentPrompt }, callback) => {
     try {
-      const team = stateManager.submitRound2(teamId, challengeType, promptText);
+      const text = promptText !== undefined ? promptText : studentPrompt;
+      const team = stateManager.submitRound2(teamId, text, challengeType);
+      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
+      syncAdminClients();
+      syncProjectorClients();
+      callback?.({ success: true, status: team.round2.status });
+    } catch (err) {
+      callback?.({ success: false, error: err.message });
+    }
+  });
+
+  // Backward compatibility alias for submit_c1
+  socket.on('team:round2_submit_c1', ({ teamId, studentPrompt, promptText }, callback) => {
+    try {
+      const text = studentPrompt !== undefined ? studentPrompt : promptText;
+      const team = stateManager.submitRound2(teamId, text, 'image');
       socket.emit('team:state_sync', stateManager.getTeamView(teamId));
       syncAdminClients();
       syncProjectorClients();
@@ -330,9 +346,7 @@ io.on('connection', (socket) => {
           title: team.assignedQuestion?.context
         };
       } else if (rNum === 2) {
-        contextData = challengeType === 'image'
-          ? (stateManager.round2State.activeImageChallenge || {})
-          : (stateManager.round2State.activeReportChallenge || {});
+        contextData = team.round2?.assignedChallenge || stateManager.round2Challenges?.[0] || {};
       } else if (rNum === 3) {
         contextData = team.round3?.assignedCase || stateManager.round3Data.cases?.[0] || {};
       }
@@ -382,41 +396,52 @@ io.on('connection', (socket) => {
     stateManager.unlockRound();
     broadcastTimerState();
     broadcastToAll('round:unlocked', { round: 1, duration: stateManager.roundState.timerDuration });
+    syncAllTeamClients();
   });
 
   socket.on('admin:lock_round', () => {
     stateManager.lockRound();
     broadcastTimerState();
     broadcastToAll('round:locked', { round: 1 });
+    syncAllTeamClients();
   });
 
   socket.on('admin:start_timer', () => {
     stateManager.startTimer();
     broadcastTimerState();
+    broadcastToAll('round:unlocked', { round: 1, duration: stateManager.roundState.timerDuration });
+    syncAllTeamClients();
   });
 
   socket.on('admin:pause_timer', () => {
     stateManager.pauseTimer();
     broadcastTimerState();
+    syncAllTeamClients();
   });
 
   socket.on('admin:reset_timer', ({ durationSeconds }) => {
     stateManager.resetTimer(durationSeconds || 600);
     broadcastTimerState();
+    syncAllTeamClients();
   });
 
   socket.on('admin:add_time', ({ seconds }) => {
     stateManager.addTime(seconds || 60);
     broadcastTimerState();
+    syncAllTeamClients();
   });
 
   socket.on('admin:evaluate_all', async (data, callback) => {
-    const teamsToEvaluate = Array.from(stateManager.teams.values()).filter(
-      t => (t.submittedPrompt && t.submissionStatus === 'submitted') || t.submissionStatus === 'drafting' || t.draftPrompt
+    let teamsToEvaluate = Array.from(stateManager.teams.values()).filter(
+      t => (t.submittedPrompt && t.submissionStatus === 'submitted') || t.submissionStatus === 'drafting' || t.draftPrompt || t.spinResult
     );
 
     if (teamsToEvaluate.length === 0) {
-      return callback?.({ success: false, error: 'No submissions found to evaluate.' });
+      teamsToEvaluate = Array.from(stateManager.teams.values());
+    }
+
+    if (teamsToEvaluate.length === 0) {
+      return callback?.({ success: false, error: 'No registered teams found to evaluate.' });
     }
 
     stateManager.roundState.status = 'EVALUATING';
@@ -427,7 +452,7 @@ io.on('connection', (socket) => {
     const items = teamsToEvaluate.map(team => ({
       id: team.id,
       name: team.name,
-      badPrompt: team.assignedQuestion?.badPrompt || "Make an advertisement.",
+      badPrompt: team.assignedQuestion?.badPrompt || "Make an advertisement for a product.",
       genreName: team.assignedGenre?.name || "CREATIVE",
       improvedPrompt: team.submittedPrompt || team.draftPrompt || ""
     }));
@@ -442,7 +467,7 @@ io.on('connection', (socket) => {
           teamName: item.name
         });
       },
-      10,
+      2,
       ({ completed, total, currentTeam }) => {
         broadcastToAdmins('admin:eval_progress', { completed, total, currentTeam });
       }
@@ -450,6 +475,10 @@ io.on('connection', (socket) => {
 
     stateManager.setEvaluationResults(evaluations);
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAdmins('admin:eval_complete', { total: items.length });
   });
 
   socket.on('admin:set_manual_score', ({ teamId, criteriaKey, score }) => {
@@ -461,6 +490,9 @@ io.on('connection', (socket) => {
   socket.on('admin:advance_round', () => {
     stateManager.advanceRound();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
     broadcastToAll('round:verdict', {
       round: 1,
       advanceTriggered: true,
@@ -503,37 +535,45 @@ io.on('connection', (socket) => {
   });
 
   socket.on('admin:evaluate_round2', async (data, callback) => {
-    const teamsInR2 = Array.from(stateManager.teams.values()).filter(t => t.isQualified);
-    if (teamsInR2.length === 0) {
-      return callback?.({ success: false, error: 'No qualified teams for Round 2.' });
+    const qualifiedTeams = Array.from(stateManager.teams.values()).filter(t => t.isQualified);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(stateManager.teams.values());
+    if (targetTeams.length === 0) {
+      return callback?.({ success: false, error: 'No teams to evaluate for Round 2.' });
     }
 
     stateManager.round2State.status = 'EVALUATING';
     syncAdminClients();
     syncProjectorClients();
-    callback?.({ success: true, total: teamsInR2.length });
-
-    const targetImg = stateManager.round2State.activeImageChallenge;
-    const targetRep = stateManager.round2State.activeReportChallenge;
+    callback?.({ success: true, total: targetTeams.length });
 
     const evaluations = {};
     let completed = 0;
 
-    for (const team of teamsInR2) {
-      const c1Prompt = team.round2.c1_submittedPrompt || team.round2.c1_draft || "Studio render of target image";
-      const c2Prompt = team.round2.c2_submittedPrompt || team.round2.c2_draft || "Detailed financial report";
+    for (const team of targetTeams) {
+      const assignedChallenge = team.round2?.assignedChallenge || stateManager.round2Challenges[0];
+      const studentPrompt = team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || "Photorealistic render of target image";
 
-      const [c1Eval, c2Eval] = await Promise.all([
-        evaluateRound2Challenge1({ targetImage: targetImg, studentPrompt: c1Prompt, teamName: team.name }),
-        evaluateRound2Challenge2({ targetReport: targetRep, studentPrompt: c2Prompt, teamName: team.name })
-      ]);
+      const evalResult = await evaluateRound2Prompt({
+        assignedChallenge,
+        studentPrompt,
+        teamName: team.name
+      });
 
-      evaluations[team.id] = { c1_eval: c1Eval, c2_eval: c2Eval };
+      evaluations[team.id] = { evaluation: evalResult, totalScore: evalResult.total_score };
       completed++;
-      broadcastToAdmins('admin:r2_eval_progress', { completed, total: teamsInR2.length, currentTeam: team.name });
+      broadcastToAdmins('admin:r2_eval_progress', { completed, total: targetTeams.length, currentTeam: team.name });
     }
 
     stateManager.setRound2EvaluationResults(evaluations);
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAdmins('admin:r2_eval_complete', { total: targetTeams.length });
+  });
+
+  socket.on('admin:set_round2_score', ({ teamId, criteriaKey, score }) => {
+    stateManager.setRound2ManualScore(teamId, criteriaKey, score);
+    syncTeamClient(teamId);
     syncAdminClients();
     syncProjectorClients();
   });
@@ -627,6 +667,7 @@ io.on('connection', (socket) => {
     }
 
     stateManager.setRound3EvaluationResults(evaluations);
+    syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
   });

@@ -173,105 +173,16 @@ export const PromptSandboxModal = ({
             </div>
           </div>
 
-          {/* Bottom Panel: Output Display & Diagnostic Intelligence */}
+          {/* Bottom Panel: Clean Output Display & Refinement Tips */}
           {result && (
             <div className="space-y-4 pt-2 border-t border-white/[0.08] animate-fade-in">
-              {/* Telemetry & Compliance Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-2xl glass-panel border-cyan-500/30 bg-cyan-950/20">
-                  <span className="text-[10px] font-mono text-gray-400 uppercase block">Compliance Score</span>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <Zap className="w-4 h-4 text-cyan-400" />
-                    <span className="font-mono font-black text-lg text-cyan-300">
-                      {diagnostics?.complianceScore ?? 85}%
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl glass-panel border-purple-500/30 bg-purple-950/20">
-                  <span className="text-[10px] font-mono text-gray-400 uppercase block">Estimated Tokens</span>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <Activity className="w-4 h-4 text-purple-400" />
-                    <span className="font-mono font-black text-lg text-purple-300">
-                      {result?.tokens?.totalEstimated || 320} tok
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl glass-panel border-emerald-500/30 bg-emerald-950/20">
-                  <span className="text-[10px] font-mono text-gray-400 uppercase block">Execution Latency</span>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <BarChart2 className="w-4 h-4 text-emerald-400" />
-                    <span className="font-mono font-black text-lg text-emerald-300">
-                      {result?.latencyMs || 280} ms
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl glass-panel border-amber-500/30 bg-amber-950/20">
-                  <span className="text-[10px] font-mono text-gray-400 uppercase block">Engine Mode</span>
-                  <div className="flex items-center gap-1.5 mt-0.5 truncate">
-                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span className="font-mono font-bold text-xs text-amber-300 truncate">
-                      {result?.mode || 'Intelligent Sim'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Detected Pillars Chips */}
-              <div className="p-3.5 rounded-2xl glass-panel border-white/[0.08] flex flex-wrap items-center gap-2">
-                <span className="text-xs font-mono text-gray-400 pr-1">Detected Pillars:</span>
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border ${
-                  pillars.persona ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-gray-900 text-gray-500 border-gray-800'
-                }`}>
-                  <CheckCircle2 className="w-3 h-3" /> Persona {diagnostics?.extractedPersona ? `(${diagnostics.extractedPersona})` : ''}
-                </span>
-
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border ${
-                  pillars.constraints ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-gray-900 text-gray-500 border-gray-800'
-                }`}>
-                  <CheckCircle2 className="w-3 h-3" /> Constraints
-                </span>
-
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border ${
-                  pillars.negativeRules ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-gray-900 text-gray-500 border-gray-800'
-                }`}>
-                  <CheckCircle2 className="w-3 h-3" /> Negative Rules
-                </span>
-
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border ${
-                  pillars.outputFormat ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-gray-900 text-gray-500 border-gray-800'
-                }`}>
-                  <CheckCircle2 className="w-3 h-3" /> Structured Schema
-                </span>
-              </div>
-
-              {/* Actionable Suggestions Box */}
-              {diagnostics?.tips?.length > 0 && (
-                <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-cyan-200 flex items-start gap-2.5">
-                  <Lightbulb className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <span className="font-bold text-cyan-300">AI Refinement Recommendations:</span>
-                    <ul className="space-y-0.5 text-gray-300">
-                      {diagnostics.tips.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-cyan-400">•</span>
-                          <span>{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-
               {/* Generated Output Terminal Viewer */}
               <div className="rounded-2xl border border-white/[0.12] bg-black/80 overflow-hidden shadow-2xl">
                 <div className="flex items-center justify-between px-4 py-2.5 bg-white/[0.04] border-b border-white/[0.08]">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span className="font-mono text-xs font-bold text-gray-200">
-                      LIVE GENERATED LLM RESPONSE
+                      LIVE AI OUTPUT PREVIEW
                     </span>
                   </div>
                   <button
@@ -292,10 +203,28 @@ export const PromptSandboxModal = ({
                   </button>
                 </div>
 
-                <div className="p-5 font-mono text-xs text-gray-200 whitespace-pre-wrap leading-relaxed max-h-72 overflow-y-auto">
+                <div className="p-5 font-mono text-xs text-gray-100 whitespace-pre-wrap leading-relaxed max-h-72 overflow-y-auto">
                   {result.outputText}
                 </div>
               </div>
+
+              {/* Actionable Suggestions Box */}
+              {diagnostics?.tips?.length > 0 && (
+                <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-cyan-200 flex items-start gap-2.5">
+                  <Lightbulb className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <span className="font-bold text-cyan-300">Prompt Engineering Tips:</span>
+                    <ul className="space-y-0.5 text-gray-300">
+                      {diagnostics.tips.map((tip, idx) => (
+                        <li key={idx} className="flex items-start gap-1.5">
+                          <span className="text-cyan-400">•</span>
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

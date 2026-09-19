@@ -168,14 +168,16 @@ async function runMultiRoundTournamentTest() {
   // Batch AI Evaluation
   console.log(`🧠 Triggering Batch AI Evaluation for all 70 submissions...`);
   const r1EvalStart = Date.now();
-  await new Promise(resolve => adminSocket.emit('admin:evaluate_all', {}, resolve));
-  await sleep(1500);
+  const r1EvalDonePromise = new Promise(resolve => adminSocket.once('admin:eval_complete', resolve));
+  adminSocket.emit('admin:evaluate_all', {});
+  await Promise.race([r1EvalDonePromise, sleep(30000)]);
+  await sleep(500);
   console.log(`✅ Round 1 Batch Evaluation completed in ${Date.now() - r1EvalStart}ms!`);
 
   // Advance Round 1 (50% Cutoff: 35 teams qualify)
   console.log(`🏆 Broadcasting Round 1 advancement verdicts (Top 50% cutoff)...`);
   adminSocket.emit('admin:advance_round');
-  await sleep(400);
+  await sleep(800);
 
   const r1QualifiedTeams = adminLastHostView?.teams?.filter(t => t.isQualified) || [];
   console.log(`🎉 Round 1 Complete: ${r1QualifiedTeams.length}/70 teams qualified for Round 2!`);
@@ -188,47 +190,47 @@ async function runMultiRoundTournamentTest() {
   console.log(`------------------------------------------------------------------------`);
 
   adminSocket.emit('admin:unlock_round2');
-  await sleep(300);
+  await sleep(800);
 
   const r2Clients = clients.filter(c => r1QualifiedTeams.some(t => t.id === c.teamId));
 
-  // Dual Reverse Engineering Submissions (C1: Image, C2: Report)
-  console.log(`🖼️ Submitting Challenge 1 (Image Reverse Engineering) for ${r2Clients.length} teams...`);
-  const c1Promises = r2Clients.map(c => {
+  // Verify unique image challenge assignments across teams
+  const assignedImageIds = new Set();
+  (adminLastHostView?.teams || []).filter(t => t.isQualified).forEach(t => {
+    const assigned = t.round2?.assignedChallenge;
+    if (assigned) {
+      assignedImageIds.add(assigned.id || assigned.filename);
+    }
+  });
+  console.log(`🖼️ Verified distinct image challenge assignments: ${assignedImageIds.size} unique image targets distributed across ${r2Clients.length} teams.`);
+
+  // Single Image Reverse Engineering Submissions
+  console.log(`🖼️ Submitting Image Reverse Engineering Prompts for ${r2Clients.length} teams...`);
+  const r2Promises = r2Clients.map(c => {
     return new Promise(resolve => {
       c.socket.emit('team:round2_submit', {
         teamId: c.teamId,
         challengeType: 'image',
-        promptText: "Ultra-detailed futuristic solarpunk metropolis at golden hour sunset. Cinematic wide-angle perspective of towering glass and carbon-fiber sky-towers covered in lush cascading rooftop gardens, vertical greenery, and glowing solar-paneled spirals. Hyperloop glass tubes and sleek electric VTOL flying taxis crisscross between soaring skybridges. Masterpiece architectural rendering in Unreal Engine 5, octane render, 8k resolution, crisp photorealistic textures."
+        promptText: "Cinematic high-detail visual prompt reverse engineering. Low-angle wide perspective of atmospheric setting, volumetric lighting, rich color palette, crisp photographic details, Octane render, 8k resolution, photorealistic masterwork textures."
       }, resolve);
     });
   });
-  await Promise.all(c1Promises);
-
-  console.log(`📄 Submitting Challenge 2 (Report Reverse Engineering) for ${r2Clients.length} teams...`);
-  const c2Promises = r2Clients.map(c => {
-    return new Promise(resolve => {
-      c.socket.emit('team:round2_submit', {
-        teamId: c.teamId,
-        challengeType: 'report',
-        promptText: "Act as a Chief Financial Officer at a Tier-1 Venture-Backed AI SaaS company. Generate a detailed, publication-ready Executive Financial and Operational Audit Report for FY 2025-2026. The report must include: 1) Executive Performance Summary with ARR ($48.6M), 82.4% YoY growth, NRR (134.2%), and Rule of 40 score; 2) A 4-quarter structured markdown financial table breaking down Gross Revenue, Infrastructure COGS, Gross Profit with margin %, Sales & Marketing, R&D, G&A, and Adjusted EBITDA; 3) Unit Economics covering CAC and token costs."
-      }, resolve);
-    });
-  });
-  await Promise.all(c2Promises);
-  console.log(`✅ Dual challenge submissions completed for all Round 2 teams!`);
+  await Promise.all(r2Promises);
+  console.log(`✅ Image reverse-engineering prompt submissions completed for all Round 2 teams!`);
 
   // Batch AI Evaluation for Round 2
-  console.log(`🧠 Triggering Batch AI Evaluation for Round 2 (40 pts rubric)...`);
+  console.log(`🧠 Triggering Batch AI Evaluation for Round 2 (20 pts rubric)...`);
   const r2EvalStart = Date.now();
-  await new Promise(resolve => adminSocket.emit('admin:evaluate_round2', {}, resolve));
-  await sleep(1500);
+  const r2EvalDonePromise = new Promise(resolve => adminSocket.once('admin:r2_eval_complete', resolve));
+  adminSocket.emit('admin:evaluate_round2', {});
+  await Promise.race([r2EvalDonePromise, sleep(30000)]);
+  await sleep(500);
   console.log(`✅ Round 2 Batch Evaluation completed in ${Date.now() - r2EvalStart}ms!`);
 
   // Advance Round 2 (50% Cutoff: ~18 teams qualify for Final Battle)
   console.log(`🏆 Broadcasting Round 2 advancement verdicts...`);
   adminSocket.emit('admin:advance_round2');
-  await sleep(400);
+  await sleep(800);
 
   const r2QualifiedTeams = adminLastHostView?.teams?.filter(t => t.round2?.isQualified) || [];
   console.log(`🎉 Round 2 Complete: ${r2QualifiedTeams.length} finalist teams qualified for Round 3 (Grand Finale)!`);

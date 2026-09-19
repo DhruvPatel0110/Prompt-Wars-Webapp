@@ -1,3 +1,5 @@
+import { generateGeminiContent } from './geminiClient.js';
+
 /**
  * Interactive Prompt Sandbox Simulation Engine for PROMPT WARS
  * Enables real-time prompt testing, LLM generation previews, token diagnostics,
@@ -30,7 +32,7 @@ export async function runPromptSandbox({
         return {
           ...liveResult,
           latencyMs: Date.now() - startTime,
-          mode: 'LIVE_GEMINI_1.5_FLASH'
+          mode: 'LIVE_GEMINI_AI'
         };
       }
     } catch (err) {
@@ -75,9 +77,6 @@ export async function runPromptSandbox({
 // -------------------------------------------------------------
 
 async function runGeminiSandbox({ round, challengeType, prompt, testInput, contextData }) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
   let systemDirective = "You are an AI model responding to the following system/user prompt crafted in a prompt engineering tournament.";
   let userQuery = testInput || "Generate standard sample execution based on this prompt instructions.";
 
@@ -91,22 +90,9 @@ async function runGeminiSandbox({ round, challengeType, prompt, testInput, conte
     systemDirective = `You are executing a Master Strategy Prompt:\n"${prompt}"\nContext: ${contextData?.title || 'Crisis Strategy'}.\nGenerate the structured multi-pillar plan.`;
   }
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: `${systemDirective}\n\nInput Context / Test Query: ${userQuery}` }] }],
-      generationConfig: {
-        temperature: 0.4,
-        maxOutputTokens: 800
-      }
-    })
-  });
-
-  if (!response.ok) return null;
-
-  const data = await response.json();
-  const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+  const promptToSend = `${systemDirective}\n\nInput Context / Test Query: ${userQuery}`;
+  const rawText = await generateGeminiContent({ prompt: promptToSend, jsonMode: false, temperature: 0.4 });
+  const outputText = typeof rawText === 'string' ? rawText : JSON.stringify(rawText, null, 2);
   const diagnostics = analyzePromptDiagnostics(prompt, round, challengeType);
 
   return {
@@ -172,90 +158,102 @@ function simulateHeuristicOutput({ round, challengeType, prompt, testInput, cont
 
   if (round === 1) {
     const genre = (contextData?.genreName || "CREATIVE").toUpperCase();
-    const hasTable = promptLower.includes('table') || promptLower.includes('markdown') || promptLower.includes('schema');
-    const hasPersona = diagnostics.pillarsDetected.persona;
+    const hasTable = promptLower.includes('table') || promptLower.includes('markdown') || promptLower.includes('schema') || promptLower.includes('columns');
 
-    outputText = `### 🌟 [Sandbox Simulation Response - Round 1: ${genre}]\n\n`;
-    if (hasPersona) {
-      outputText += `> **Persona Activated:** Executive Specialist (${diagnostics.extractedPersona || 'Senior Domain Expert'})\n\n`;
+    if (genre === 'CREATIVE' || genre.includes('ARTS')) {
+      outputText = `### 🎬 Video Script & Campaign Creative Brief\n\n`;
+      outputText += `**Target Audience:** Undergraduate Students (Ages 18-24)\n`;
+      outputText += `**Tone:** Vibrant, high-energy, memorable\n\n`;
+      if (hasTable) {
+        outputText += `| Time (sec) | Visual Scene Description | Audio Voiceover & SFX |\n`;
+        outputText += `| :--- | :--- | :--- |\n`;
+        outputText += `| **0:00 - 0:08** | Fast-paced neon glitch cuts of coding hackathon, robot arenas, and crowded auditorium | *[Bass Drop]* "Think you have what it takes to dominate the terminal?" |\n`;
+        outputText += `| **0:08 - 0:22** | Close-ups of intense student teams collaborating, live leaderboard tickers ticking | "3 days. 50+ universities. ₹1,00,000 in grand prizes." |\n`;
+        outputText += `| **0:22 - 0:30** | Dynamic 3D festival logo reveal with glowing registration URL and QR code | "PROMPT WARS 2026. Register your squad before spots fill up!" |\n\n`;
+      } else {
+        outputText += `**Hook (0:00 - 0:08):** "3 Days of pure engineering adrenaline. Are you ready to claim the championship?"\n\n`;
+        outputText += `**Core Pitch (0:08 - 0:22):** Compete against the top developer minds across 5 intense hack tracks. Experience live DJ stages, networking masterclasses, and ₹1,00,000 in tech bounties.\n\n`;
+        outputText += `**Call-To-Action (0:22 - 0:30):** "Registration is now open. Lock in your team passes today."\n\n`;
+      }
+      outputText += `**Campaign Tagline:** *"Build Beyond Limits. Conquer the Arena."*`;
+    } 
+    else if (genre === 'CODING' || genre.includes('DATA')) {
+      outputText = `### 💻 Technical Implementation & Architecture Specification\n\n`;
+      outputText += `\`\`\`python\n`;
+      outputText += `import asyncio\nimport time\nfrom typing import Optional, Dict\n\nclass RateLimiter:\n`;
+      outputText += `    """Thread-safe Token Bucket Rate Limiter with Redis backend."""\n`;
+      outputText += `    def __init__(self, rate: int = 10, per: float = 1.0):\n`;
+      outputText += `        self.rate = rate\n        self.per = per\n        self.allowance = rate\n        self.last_check = time.time()\n\n`;
+      outputText += `    async def acquire(self) -> bool:\n`;
+      outputText += `        now = time.time()\n        elapsed = now - self.last_check\n        self.last_check = now\n        self.allowance += elapsed * (self.rate / self.per)\n`;
+      outputText += `        if self.allowance > self.rate:\n            self.allowance = self.rate\n`;
+      outputText += `        if self.allowance < 1.0:\n            return False\n        self.allowance -= 1.0\n        return True\n\`\`\`\n\n`;
+      outputText += `**Key Guarantees:** 100% async non-blocking execution, O(1) memory overhead, explicit timeout failover.`;
     }
-
-    outputText += `#### Executive Campaign & Strategic Deliverable\n`;
-    outputText += `Based on your prompt constraints, here is the generated output:\n\n`;
-    outputText += `1. **Core Value Proposition:** High-impact engagement driven by targeted storytelling and clear call-to-action.\n`;
-    outputText += `2. **Audience Hook:** "Transforming legacy limitations into automated, precision-crafted results."\n\n`;
-
-    if (hasTable) {
-      outputText += `| Phase / Channel | Target Metric | Deliverable & Output Format |\n`;
-      outputText += `| :--- | :--- | :--- |\n`;
-      outputText += `| **Launch (Days 1-7)** | 4,500 Impressions | Short-form dynamic hero hook |\n`;
-      outputText += `| **Engagement (Days 8-20)** | 18% Conversion Rate | Deep-dive comparative table |\n`;
-      outputText += `| **Closing (Days 21-30)** | 92% NPS Satisfaction | Actionable next-step workflow |\n\n`;
+    else {
+      // Business / Marketing / Real-World
+      outputText = `### 📊 Strategic Executive Brief & Action Plan\n\n`;
+      outputText += `**Strategic Objective:** High-impact execution with measurable conversion metrics and risk mitigation.\n\n`;
+      if (hasTable) {
+        outputText += `| Phase / Milestone | Target Metric | Deliverable & Channel |\n`;
+        outputText += `| :--- | :--- | :--- |\n`;
+        outputText += `| **Phase 1: Blitz Teaser** | 5,000+ Reach | Campus ambassador network & short-form video |\n`;
+        outputText += `| **Phase 2: Lead Acquisition** | 22% Conversion | Referral incentive loops with milestone badges |\n`;
+        outputText += `| **Phase 3: Event Retention** | 94% Show-up Rate | Automated WhatsApp reminders & digital check-in |\n\n`;
+      } else {
+        outputText += `• **Pillar 1: Audience Segmentation:** Targeted outreach to technical student leads.\n`;
+        outputText += `• **Pillar 2: Guerrilla Growth:** Campus squad referral mechanics with viral leaderboards.\n`;
+        outputText += `• **Pillar 3: Contingency Safeguards:** 20% budget reserve buffer with secondary venue failover.\n\n`;
+      }
+      outputText += `**Projected ROI:** 3.4x organic amplification with 0% paid advertising burn.`;
     }
-
-    outputText += `#### Constraints Adherence Verification:\n`;
-    outputText += `• **Negative Constraints:** ${diagnostics.pillarsDetected.negativeRules ? '✓ Successfully avoided clichés and generic filler' : '⚠️ Prompt lacked explicit negative exclusions'}\n`;
-    outputText += `• **Tone & Polish:** ${diagnostics.pillarsDetected.tone ? '✓ Professional, engaging, and explicit' : 'Neutral default tone'}\n`;
   } 
   else if (round === 2 && challengeType === 'image') {
-    outputText = `### 🎨 [Visual Synthesis Simulation - Midjourney / DALL-E 3]\n\n`;
-    outputText += `**Prompt Interpretation:**\n`;
-    outputText += `* **Subject Core:** ${contextData?.title || 'Target Architectural / Futuristic Scene'}\n`;
-    outputText += `* **Lighting & Atmosphere:** ${promptLower.includes('golden hour') || promptLower.includes('sunset') ? 'Warm golden hour sunset with volumetric rays' : promptLower.includes('neon') || promptLower.includes('cyber') ? 'High-contrast neon glow with reflections' : 'Cinematic studio high-key illumination'}\n`;
-    outputText += `* **Camera & Lens:** ${promptLower.includes('wide') || promptLower.includes('8k') || promptLower.includes('octane') ? 'Wide-angle 24mm f/1.8, 8k hyper-detailed Octane Render' : 'Standard 50mm perspective render'}\n`;
-    outputText += `* **Color Palette:** ${promptLower.includes('emerald') || promptLower.includes('cyan') || promptLower.includes('gold') ? 'Curated dual-tone cyberpunk palette (Cyan, Gold, Emerald)' : 'Vibrant dynamic range'}\n\n`;
-    outputText += `> **Simulated Image Engine Verdict:** Prompt clarity index is **${diagnostics.complianceScore}%**. Visual tokens correspond accurately to key target elements.`;
+    outputText = `### 🎨 Photorealistic Visual Specification Preview\n\n`;
+    outputText += `• **Core Subject:** ${contextData?.title || 'Architectural Futuristic Cybernetic Structure'}\n`;
+    outputText += `• **Camera Perspective:** Wide-angle 24mm f/1.8 cinematic perspective, sharp focal depth\n`;
+    outputText += `• **Lighting Atmosphere:** Dramatic dual-tone volumetric lighting (Emerald Neon & Warm Gold rim light)\n`;
+    outputText += `• **Rendering Parameters:** 8K Octane Render, hyper-detailed reflections, ray-traced subsurface scattering`;
   } 
   else if (round === 2 && challengeType === 'report') {
-    outputText = `### 📊 [Simulated Target Report Generation]\n\n`;
-    outputText += `# EXECUTIVE SUMMARY REPORT\n\n`;
-    outputText += `## 1. Overview & Core Performance Indicators\n`;
-    outputText += `Operating performance demonstrates strong retention and optimized expense management.\n\n`;
-    outputText += `| Quarter | Revenue ($M) | ARR Growth (%) | Net Margin (%) | Status |\n`;
+    outputText = `# EXECUTIVE FINANCIAL & PERFORMANCE REPORT\n\n`;
+    outputText += `## 1. Operating Financial Performance\n\n`;
+    outputText += `| Fiscal Quarter | Total Revenue | ARR Growth (%) | Gross Margin | Status |\n`;
     outputText += `| :--- | :--- | :--- | :--- | :--- |\n`;
-    outputText += `| Q1 2025 | $12.4M | +28.4% | 22.1% | Exceeded |\n`;
-    outputText += `| Q2 2025 | $14.8M | +31.2% | 24.5% | Target Hit |\n`;
-    outputText += `| Q3 2025 | $17.1M | +34.0% | 26.8% | Scaled |\n`;
-    outputText += `| Q4 2025 | $21.5M | +38.5% | 29.2% | High Growth |\n\n`;
-    outputText += `## 2. Key Strategic Risk Mitigation\n`;
-    outputText += `• **Customer Churn Rate:** Reduced to 1.8% through proactive SLA automation.\n`;
-    outputText += `• **Operational Runway:** 32 Months reserve capital at current burn rate.\n`;
+    outputText += `| **Q1 2025** | $12.4M | +28.4% | 78.2% | Exceeded |\n`;
+    outputText += `| **Q2 2025** | $14.8M | +31.2% | 80.5% | Target Hit |\n`;
+    outputText += `| **Q3 2025** | $17.1M | +34.0% | 82.1% | Scaled |\n`;
+    outputText += `| **Q4 2025** | $21.5M | +38.5% | 84.6% | High Growth |\n\n`;
+    outputText += `## 2. Key Unit Economics & Runway\n`;
+    outputText += `• **CAC Payback Period:** 5.2 Months\n`;
+    outputText += `• **Net Retention Rate:** 128%\n`;
+    outputText += `• **Capital Runway:** 34 Months at current operating burn`;
   } 
   else if (round === 3) {
-    const isCrisis = challengeType === 'bomb' || promptLower.includes('emergency') || promptLower.includes('budget');
-    outputText = `### 🏆 [Master Strategy Blueprint Simulation - Round 3]\n\n`;
-    if (isCrisis) {
-      outputText += `> 🚨 **EMERGENCY CONTINGENCY PIVOT DETECTED:**\n`;
-      outputText += `> Budget & constraints adapted. Zero-cost viral growth mechanics and guerrilla outreach prioritized.\n\n`;
-    }
-
-    outputText += `## Strategic Execution Plan: ${contextData?.title || 'Operational Growth Battle'}\n\n`;
-    outputText += `### Pillar 1: High-Conversion Student & User Personas\n`;
-    outputText += `Targeting high-intent engineering leads with tailored messaging across tech tracks and gamified prize pools.\n\n`;
-    outputText += `### Pillar 2: Guerrilla Growth & Zero-Cost Viral Loops\n`;
-    outputText += `• Peer-to-peer Discord squad ticket mechanics with automated referral leaderboard.\n`;
-    outputText += `• High-energy teaser reels distributed via campus ambassador networks.\n\n`;
-    outputText += `### Pillar 3: Granular Resource Allocation\n`;
-    outputText += `| Category | Resource Allocation | Impact Metric |\n`;
+    outputText = `## Grand Finale Master Strategy Blueprint: ${contextData?.title || 'Operational Growth Plan'}\n\n`;
+    outputText += `### 1. Target Audience & Student Persona Architecture\n`;
+    outputText += `High-intent engineering leads engaged through gamified team tracks and hands-on developer workshops.\n\n`;
+    outputText += `### 2. Zero-Cost Viral Mechanics\n`;
+    outputText += `• Squad referral incentives with instant Discord role unlocks.\n`;
+    outputText += `• High-energy teaser reels distributed across 25+ campus WhatsApp groups.\n\n`;
+    outputText += `### 3. Granular Budget & Milestone Allocation\n`;
+    outputText += `| Milestone | Budget Allocation | Expected Output |\n`;
     outputText += `| :--- | :--- | :--- |\n`;
-    outputText += `| Community Incentives | 45% Share | 450+ Verified Signups |\n`;
-    outputText += `| High-Impact Visuals | 25% Share | 12k Organic Views |\n`;
-    outputText += `| Contingency Reserve | 30% Share | Risk Buffer Protection |\n\n`;
-    outputText += `### Pillar 4: Risk Mitigation & Failover Protocols\n`;
-    outputText += `Real-time registration tracking with dynamic milestone unlocks at 25%, 50%, and 100% capacity thresholds.\n`;
+    outputText += `| **Community Activation** | 45% (₹6,750) | 400+ Verified Registrations |\n`;
+    outputText += `| **Visual Collateral** | 25% (₹3,750) | 10k Organic Impressions |\n`;
+    outputText += `| **Contingency Buffer** | 30% (₹4,500) | Zero-risk execution buffer |\n\n`;
+    outputText += `### 4. Contingency & Crisis Protocols\n`;
+    outputText += `Dynamic capacity tracking with automated waitlists and secondary server failover.`;
   }
-
-  const estimatedInputTokens = Math.round(prompt.length / 4);
-  const estimatedOutputTokens = Math.round(outputText.length / 4);
 
   return {
     success: true,
     outputText,
     diagnostics,
     tokens: {
-      inputEstimated: estimatedInputTokens,
-      outputEstimated: estimatedOutputTokens,
-      totalEstimated: estimatedInputTokens + estimatedOutputTokens
+      inputEstimated: Math.round(prompt.length / 4),
+      outputEstimated: Math.round(outputText.length / 4),
+      totalEstimated: Math.round((prompt.length + outputText.length) / 4)
     }
   };
 }

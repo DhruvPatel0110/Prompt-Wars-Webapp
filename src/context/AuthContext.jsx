@@ -40,19 +40,21 @@ export const AuthProvider = ({ children }) => {
           pin: teamUser.pin 
         }, (res) => {
           if (!res?.success) {
-            console.warn('Auto-reconnect failed for team:', res?.error);
+            console.warn('Auto-reconnect failed for team, clearing stale session:', res?.error);
+            logoutTeam();
           }
         });
       }
       if (adminUser) {
         socket.emit('admin:join', { adminPin: adminUser.adminPin }, (res) => {
           if (!res?.success) {
-            console.warn('Auto-reconnect failed for admin:', res?.error);
+            console.warn('Auto-reconnect failed for admin, clearing stale session:', res?.error);
+            logoutAdmin();
           }
         });
       }
     }
-  }, [socket, isConnected, teamUser, adminUser]);
+  }, [socket, isConnected]);
 
   const loginTeam = async (params, secondaryPin) => {
     setIsAuthenticating(true);

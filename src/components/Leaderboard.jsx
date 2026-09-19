@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trophy, Medal, Award, CheckCircle2, XCircle, Eye, Search, Sparkles } from 'lucide-react';
+import { Trophy, Medal, Award, CheckCircle2, XCircle, Eye, Search, Sparkles, Clock } from 'lucide-react';
 
 export const Leaderboard = ({
   teams = [],
@@ -17,7 +17,6 @@ export const Leaderboard = ({
     return (a.timerUsedSeconds || 9999) - (b.timerUsedSeconds || 9999);
   });
 
-  const activeTeams = sortedTeams.filter(t => t.submittedPrompt || t.submissionStatus !== 'idle');
   const cutoffIndex = Math.max(1, Math.ceil(sortedTeams.length * ((100 - eliminationPercentage) / 100)));
 
   const filteredTeams = sortedTeams.filter(t => 
@@ -28,15 +27,20 @@ export const Leaderboard = ({
 
   return (
     <div className="w-full flex flex-col gap-4">
-      {/* Search & Filter Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+      {/* Header with Search and Summary */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2">
+        <div className="flex items-center gap-3">
           <Trophy className="w-6 h-6 text-amber-400 drop-shadow-[0_0_8px_rgba(255,184,0,0.5)]" />
-          <h2 className="font-display font-bold text-xl sm:text-2xl text-white tracking-wider">
-            ROUND 1 LEADERBOARD & VERDICTS
-          </h2>
+          <div>
+            <h2 className="text-xl font-display font-bold tracking-wide text-white">
+              TOURNAMENT LIVE LEADERBOARD
+            </h2>
+            <p className="text-xs text-gray-400 font-mono">
+              Top 50% advancing to Round 2 • Real-time synchronization
+            </p>
+          </div>
           <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
-            {sortedTeams.length} TEAMS
+            {teams.length} Teams
           </span>
         </div>
 
@@ -44,7 +48,7 @@ export const Leaderboard = ({
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search team or genre..."
+            placeholder="Search teams or genres..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-[#0d1424] border border-[#1f2b48] text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500/50"
@@ -70,16 +74,24 @@ export const Leaderboard = ({
           <tbody className="divide-y divide-[#1f2b48]/60 text-sm font-sans">
             {filteredTeams.map((team, idx) => {
               const actualRank = sortedTeams.findIndex(t => t.id === team.id) + 1;
-              const isQualified = actualRank <= cutoffIndex && (team.evaluation?.total_score > 0 || team.submittedPrompt);
+              const score = team.evaluation?.total_score ?? null;
+              const isEvaluated = score !== null;
+              const isSubmitted = team.submissionStatus === 'submitted' || Boolean(team.submittedPrompt);
+              const isPassingScore = score !== null && score >= 8.0;
+              const isQualified = isEvaluated 
+                ? (actualRank <= cutoffIndex && isPassingScore)
+                : (actualRank <= cutoffIndex && isSubmitted);
               const isCutoffRow = actualRank === cutoffIndex && idx !== filteredTeams.length - 1;
 
               return (
                 <React.Fragment key={team.id}>
                   <tr
                     className={`transition-colors hover:bg-cyan-950/20 ${
-                      isQualified
-                        ? 'bg-emerald-950/10'
-                        : 'bg-red-950/5 opacity-80'
+                      isEvaluated && isQualified
+                        ? 'bg-emerald-950/15'
+                        : isEvaluated && !isQualified
+                        ? 'bg-red-950/10 opacity-80'
+                        : ''
                     }`}
                   >
                     {/* Rank */}
@@ -135,7 +147,7 @@ export const Leaderboard = ({
                     {/* Score */}
                     <td className="py-3.5 px-3 text-center">
                       {team.evaluation ? (
-                        <div className="font-display font-extrabold text-lg text-cyan-300 drop-shadow-[0_0_6px_rgba(0,240,255,0.4)]">
+                        <div className={`font-display font-extrabold text-lg ${score >= 8 ? 'text-cyan-300 drop-shadow-[0_0_6px_rgba(0,240,255,0.4)]' : 'text-red-400'}`}>
                           {team.evaluation.total_score}
                           <span className="text-xs text-gray-500 font-normal"> /20</span>
                         </div>
@@ -176,15 +188,26 @@ export const Leaderboard = ({
 
                     {/* Status / Verdict */}
                     <td className="py-3.5 px-4 text-center">
-                      {isQualified ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-400">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          QUALIFIED
+                      {isEvaluated ? (
+                        isQualified ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 shadow-[0_0_10px_rgba(0,255,136,0.2)]">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            QUALIFIED
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-red-950/60 border border-red-500/40 text-red-400">
+                            <XCircle className="w-3.5 h-3.5" />
+                            ELIMINATED
+                          </span>
+                        )
+                      ) : isSubmitted ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-950/60 border border-cyan-500/40 text-cyan-300">
+                          <Clock className="w-3.5 h-3.5" />
+                          SUBMITTED
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-red-950/40 border border-red-500/30 text-red-400">
-                          <XCircle className="w-3.5 h-3.5" />
-                          ELIMINATED
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-gray-900 border border-gray-700 text-gray-400">
+                          DRAFTING
                         </span>
                       )}
                     </td>
