@@ -429,7 +429,12 @@ export const HostDashboard = () => {
                     let badge = "OFFLINE";
                     let badgeColor = "text-gray-500";
 
-                    if (isSub) {
+                    if (t.isEliminated) {
+                      borderCol = "border-red-500/40";
+                      bgCol = "bg-red-950/20";
+                      badge = "ELIMINATED";
+                      badgeColor = "text-red-400";
+                    } else if (isSub) {
                       borderCol = "border-cyan-500/50 shadow-[0_0_10px_rgba(0,240,255,0.15)]";
                       bgCol = "bg-cyan-950/20";
                       badge = "SUBMITTED";

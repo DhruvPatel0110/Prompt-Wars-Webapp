@@ -15,7 +15,7 @@ export const HostRound3Control = () => {
 
   const round3State = hostState?.round3State || {};
   const qualifiedTeams = (hostState?.teams || []).filter(t => (t.round2?.isQualified && !t.round2?.isEliminated) || (t.isQualified && !t.isEliminated));
-  const teams = qualifiedTeams.length > 0 ? qualifiedTeams : (hostState?.teams || []);
+  const teams = qualifiedTeams.length > 0 ? qualifiedTeams : (hostState?.teams || []).filter(t => !t.isEliminated && !t.round2?.isEliminated);
   const phase = round3State.phase || 'master_draft';
   const isR3Running = serverTimer?.round3?.timerRunning ?? round3State.timerRunning ?? false;
   const isLocked = serverTimer?.round3?.isLocked ?? round3State.isLocked ?? true;
@@ -328,9 +328,23 @@ export const HostRound3Control = () => {
                     {totalScore}
                   </td>
                   <td className="py-3 px-4 text-center">
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-500/30">
-                      {r3.status}
-                    </span>
+                    {team.isEliminated || team.round2?.isEliminated || team.round3?.status === 'eliminated' ? (
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-red-950/80 text-red-400 border border-red-500/40">
+                        ELIMINATED
+                      </span>
+                    ) : (
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${
+                        r3.status === 'evaluated'
+                          ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/40'
+                          : r3.status === 'submitted'
+                          ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40'
+                          : r3.status === 'bomb_active'
+                          ? 'bg-red-950/80 text-red-400 border border-red-500/50 animate-pulse'
+                          : 'bg-amber-950/60 text-amber-300 border border-amber-500/30'
+                      }`}>
+                        {(r3.status || 'DRAFTING').toUpperCase()}
+                      </span>
+                    )}
                   </td>
                   <td className="py-3 px-3 text-center">
                     <button

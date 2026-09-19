@@ -56,12 +56,15 @@ async function runTest() {
   }
 
   // Advance to Round 2
+  sm.teams.forEach(t => { t.isQualified = true; t.isEliminated = false; });
   sm.roundState.status = 'ADVANCED';
+  sm.roundState.advanceTriggered = true;
   sm.activeRound = 2;
   sm.allotRound2Challenges();
 
   const assignedSet = new Set();
-  sm.teams.forEach((t) => {
+  const activeTeams = Array.from(sm.teams.values()).filter(t => !t.isEliminated);
+  activeTeams.forEach((t) => {
     const assigned = t.round2?.assignedChallenge;
     if (!assigned || !assigned.imageUrl) {
       throw new Error(`Team ${t.id} was not assigned a valid image challenge!`);

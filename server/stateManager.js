@@ -630,6 +630,15 @@ export class StateManager {
       } else {
         team.isQualified = false;
         team.isEliminated = true;
+        team.round2.isEliminated = true;
+        team.round2.isQualified = false;
+        team.round2.status = 'eliminated';
+        team.round2.assignedChallenge = null;
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.status = 'eliminated';
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
       }
     });
 
@@ -640,8 +649,21 @@ export class StateManager {
     const challenges = this.round2Challenges;
     if (!challenges || challenges.length === 0) return;
     
-    const allTeams = Array.from(this.teams.values());
-    allTeams.forEach((team, idx) => {
+    // Explicitly mark eliminated teams from Round 1 as 'eliminated'
+    for (const team of this.teams.values()) {
+      if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
+        team.round2.status = 'eliminated';
+        team.round2.isEliminated = true;
+        team.round2.isQualified = false;
+        team.round2.assignedChallenge = null;
+      }
+    }
+
+    // Only allot active challenge and drafting status to qualified teams
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
+
+    targetTeams.forEach((team, idx) => {
       const challenge = challenges[idx % challenges.length];
       team.round2.assignedChallenge = challenge;
       if (!team.round2.status || team.round2.status === 'idle') {
@@ -718,7 +740,7 @@ export class StateManager {
   saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
-    if (team.isEliminated || team.isQualified === false) return team;
+    if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) return team;
     const text = (draftText || "").slice(0, 3500);
     team.round2.draftPrompt = text;
     team.round2.c1_draft = text;
@@ -818,6 +840,12 @@ export class StateManager {
       } else {
         team.round2.isQualified = false;
         team.round2.isEliminated = true;
+        team.round2.status = 'eliminated';
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.status = 'eliminated';
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
       }
     });
 
@@ -835,8 +863,8 @@ export class StateManager {
   }
 
   getRound2Leaderboard() {
-    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified);
-    const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values());
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const list = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
     list.sort((a, b) => (a.round2.rank || 999) - (b.round2.rank || 999));
     return list;
   }
@@ -851,9 +879,20 @@ export class StateManager {
     const availableCases = r3Data.cases || [];
     if (availableCases.length === 0) return;
 
+    // Explicitly mark eliminated teams as eliminated in Round 3
+    for (const team of this.teams.values()) {
+      if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+        team.round3.status = 'eliminated';
+        team.round3.isEliminated = true;
+        team.round3.isQualified = false;
+        team.round3.assignedCase = null;
+        team.round3.assignedBomb = null;
+      }
+    }
+
     // Filter qualified teams from Round 2
-    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.round2?.isQualified && !t.round2?.isEliminated);
-    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.round2?.isQualified && !t.round2?.isEliminated && !t.isEliminated);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => !t.isEliminated);
     const finalTeams = targetTeams.length > 0 ? targetTeams : Array.from(this.teams.values());
 
     finalTeams.forEach((team, idx) => {
