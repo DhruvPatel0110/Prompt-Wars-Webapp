@@ -30,7 +30,7 @@ export const StudentDashboard = () => {
   const autosaveTimerRef = useRef(null);
 
   const team = teamState?.team || {};
-  const activeRound = teamState?.activeRound || 1;
+  const activeRound = serverTimer?.activeRound || teamState?.activeRound || 1;
   const currentViewRound = selectedRoundTab || activeRound;
   const sandboxRunsLeft = team?.sandbox?.r1RunsLeft ?? 5;
 
@@ -52,17 +52,33 @@ export const StudentDashboard = () => {
 
   // Sync draft from server state
   useEffect(() => {
-    if (team?.draftPrompt && !localDraft) {
-      setLocalDraft(team.draftPrompt);
+    if (team?.draftPrompt !== undefined && team?.draftPrompt !== null) {
+      if (!localDraft && team.draftPrompt) {
+        setLocalDraft(team.draftPrompt);
+      }
     }
   }, [team]);
 
-  // If team already has spin result, set revealed
+  // Sync spin result & listen for tournament reset
   useEffect(() => {
-    if (team?.spinResult) {
-      setHasRevealedGenre(true);
-    }
+    setHasRevealedGenre(!!team?.spinResult);
   }, [team?.spinResult]);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleTournamentReset = () => {
+      setLocalDraft('');
+      setHasRevealedGenre(false);
+      setSelectedRoundTab(null);
+      setIsSubmitting(false);
+      setErrorMessage(null);
+    };
+
+    socket.on('tournament:reset', handleTournamentReset);
+    return () => {
+      socket.off('tournament:reset', handleTournamentReset);
+    };
+  }, [socket]);
 
   // Autosave Handler
   const handleDraftChange = (e) => {
@@ -139,7 +155,7 @@ export const StudentDashboard = () => {
   // TOURNAMENT ROUND ROUTER & NAVIGATION
   // ----------------------------------------------------
   const renderRoundSwitcher = () => {
-    if (!team.isQualified && activeRound === 1) return null;
+    if (!team.isQualified && activeRound === 1 && !teamState?.roundState?.advanceTriggered) return null;
 
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
@@ -161,7 +177,7 @@ export const StudentDashboard = () => {
               )}
             </button>
 
-            {team.isQualified && (
+            {(team.isQualified || activeRound >= 2) && (
               <button
                 onClick={() => setSelectedRoundTab(2)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -179,7 +195,7 @@ export const StudentDashboard = () => {
               </button>
             )}
 
-            {(team.round2?.isQualified || activeRound === 3) && (
+            {(team.round2?.isQualified || activeRound >= 3) && (
               <button
                 onClick={() => setSelectedRoundTab(3)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -207,7 +223,21 @@ export const StudentDashboard = () => {
     );
   };
 
-  // If explicitly viewing Round 3
+  // ----------------------------------------------------
+  // ROUND STATE RESOLUTION (Must run before any screen render)
+  // ----------------------------------------------------
+  const isRound1Active = (serverTimer?.timerRunning || serverTimer?.status === 'ACTIVE' || teamState?.roundState?.status === 'ACTIVE' || (!serverTimer?.isLocked && serverTimer?.isLocked !== undefined && !teamState?.roundState?.isLocked));
+  const isRound2Active = teamState?.round2State?.status === 'ACTIVE' || teamState?.round2State?.timerRunning || serverTimer?.round2?.timerRunning || serverTimer?.round2?.status === 'ACTIVE';
+  const isRound3Active = teamState?.round3State?.status === 'ACTIVE' || teamState?.round3State?.timerRunning || serverTimer?.round3?.timerRunning || serverTimer?.round3?.status === 'ACTIVE';
+
+  const isLocked = !isRound1Active;
+  const isSubmitted = team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated';
+  const hasSpun = !!team.spinResult || hasRevealedGenre;
+  const charCount = localDraft.length;
+  const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
+  const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
+
+  // View Round 3 Workspace
   if (currentViewRound === 3) {
     return (
       <div>
@@ -217,7 +247,7 @@ export const StudentDashboard = () => {
     );
   }
 
-  // If explicitly viewing Round 2
+  // View Round 2 Workspace
   if (currentViewRound === 2) {
     return (
       <div>
@@ -230,16 +260,9 @@ export const StudentDashboard = () => {
   // ----------------------------------------------------
   // ROUND 1 CORE WORKSPACE
   // ----------------------------------------------------
-  const isRoundActive = (serverTimer?.timerRunning || serverTimer?.status === 'ACTIVE' || teamState?.roundState?.status === 'ACTIVE' || (!serverTimer?.isLocked && serverTimer?.isLocked !== undefined && !teamState?.roundState?.isLocked));
-  const isLocked = !isRoundActive;
-  const isSubmitted = team.submissionStatus === 'submitted' || team.submissionStatus === 'evaluated';
-  const hasSpun = !!team.spinResult || hasRevealedGenre;
-  const charCount = localDraft.length;
-  const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
-  const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-  // 0. WAITING LOBBY SCREEN (Displayed when Host has not started/unlocked Round 1 yet)
-  if (isLocked && !hasSpun && !isSubmitted) {
+  // 0. GLOBAL LOBBY GATE: If Round 1 is locked AND team hasn't spun yet, show lobby
+  if (isLocked && !hasSpun && !isSubmitted && activeRound === 1) {
     return (
       <div>
         {renderRoundSwitcher()}
@@ -283,14 +306,8 @@ export const StudentDashboard = () => {
               Please keep this tab open and stand by. As soon as the host starts Round 1 from the host control dashboard, this screen will automatically activate the <strong>Genre Sector Wheel</strong> and start the timer.
             </div>
 
-            <div className="pt-2 flex items-center justify-between text-xs font-mono text-gray-400">
+            <div className="pt-2 flex items-center text-xs font-mono text-gray-400">
               <span>Team: <strong className="text-cyan-300">{team.name || user?.teamName}</strong></span>
-              <button
-                onClick={logoutTeam}
-                className="text-gray-400 hover:text-red-400 transition-colors underline underline-offset-2"
-              >
-                Change / Re-enter Team Name
-              </button>
             </div>
           </div>
         </div>
@@ -298,7 +315,7 @@ export const StudentDashboard = () => {
     );
   }
 
-  // 1. SPIN WHEEL SCREEN (Immediately accessible when unlocked)
+  // 1. SPIN WHEEL SCREEN (Immediately accessible when unlocked in Round 1)
   if (!hasSpun && !isSubmitted) {
     return (
       <div>
@@ -321,8 +338,8 @@ export const StudentDashboard = () => {
     );
   }
 
-  // 3. POST-ROUND ADVANCEMENT VERDICT SCREEN
-  if (team.isQualified !== null && team.isQualified !== undefined && !selectedRoundTab && teamState?.roundState?.advanceTriggered) {
+  // 2. POST-ROUND 1 ADVANCEMENT VERDICT SCREEN
+  if (team.isQualified !== null && team.isQualified !== undefined && !selectedRoundTab && teamState?.roundState?.advanceTriggered && activeRound === 1) {
     return (
       <div>
         {renderRoundSwitcher()}
@@ -379,8 +396,8 @@ export const StudentDashboard = () => {
     );
   }
 
-  // 4. POST-SUBMIT WAITING ROOM
-  if (isSubmitted && !teamState?.roundState?.advanceTriggered) {
+  // 3. POST-SUBMIT WAITING ROOM (Round 1 only, while waiting for evaluation/advancement)
+  if (isSubmitted && activeRound === 1 && !teamState?.roundState?.advanceTriggered) {
     return (
       <div>
         {renderRoundSwitcher()}

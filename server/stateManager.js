@@ -395,6 +395,10 @@ export class StateManager {
     const team = this.teams.get(teamId);
     if (!team) return null;
     team.connected = true;
+    // Track ALL active socket connections for this team (multiple tabs/devices)
+    if (!team.socketIds) team.socketIds = new Set();
+    team.socketIds.add(socketId);
+    // Keep socketId as the last-registered for backward compat
     team.socketId = socketId;
     team.lastSeen = Date.now();
     return team;
@@ -405,9 +409,15 @@ export class StateManager {
     this.projectorSockets.delete(socketId);
 
     for (const team of this.teams.values()) {
-      if (team.socketId === socketId) {
-        team.connected = false;
-        team.socketId = null;
+      if (team.socketIds?.has(socketId)) {
+        team.socketIds.delete(socketId);
+        if (team.socketIds.size === 0) {
+          team.connected = false;
+          team.socketId = null;
+        } else {
+          // Still has other active tabs — pick any remaining as primary
+          team.socketId = [...team.socketIds][0];
+        }
         team.lastSeen = Date.now();
         return team;
       }
@@ -630,12 +640,8 @@ export class StateManager {
     const challenges = this.round2Challenges;
     if (!challenges || challenges.length === 0) return;
     
-    // Allot unique images to qualified teams (or all teams if no qualifications marked yet)
     const allTeams = Array.from(this.teams.values());
-    const qualifiedTeams = allTeams.filter(t => t.isQualified);
-    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : allTeams;
-
-    targetTeams.forEach((team, idx) => {
+    allTeams.forEach((team, idx) => {
       const challenge = challenges[idx % challenges.length];
       team.round2.assignedChallenge = challenge;
       if (!team.round2.status || team.round2.status === 'idle') {
@@ -722,7 +728,7 @@ export class StateManager {
   submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
-    if (this.round2State.isLocked && this.round2State.status !== 'ACTIVE') {
+    if (this.round2State.isLocked && this.round2State.status === 'LOCKED' && this.activeRound !== 2) {
       throw new Error("Round 2 is currently locked.");
     }
 

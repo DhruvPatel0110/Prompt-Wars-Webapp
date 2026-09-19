@@ -10,7 +10,7 @@ import { spawn } from 'child_process';
 import net from 'net';
 
 const SERVER_URL = 'http://localhost:3001';
-const NUM_CLIENTS = 70;
+const NUM_CLIENTS = 35; // 35 competition teams (~100-140 students)
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -264,10 +264,7 @@ async function runConcurrencyTest() {
   console.log(`   Admin Eval Progress Events:     ${newEvalEvents}/${NUM_CLIENTS} ✅`);
   console.log(`   Verdict Broadcasts Received:    ${verdictCount}/${NUM_CLIENTS} ✅`);
   console.log(`   Admin State Syncs:              ${adminStateSyncCount} events`);
-  console.log(`   Admin Verdict:                  ${adminVerdictReceived ? '✅' : '❌'}`);
-  console.log(`   Failed Submissions:             ${failedSubmissions.length}`);
-
-  const allPassed = successfulSubmissions === NUM_CLIENTS
+   const allPassed = successfulSubmissions === NUM_CLIENTS
     && verdictCount === NUM_CLIENTS
     && newEvalEvents >= NUM_CLIENTS
     && adminVerdictReceived;
@@ -279,7 +276,9 @@ async function runConcurrencyTest() {
   }
   console.log(`======================================================\n`);
 
-  // Cleanup
+  // Cleanup & Reset Tournament to clean lobby
+  adminSocket.emit('admin:reset_event');
+  await sleep(300);
   clients.forEach(c => c.socket.disconnect());
   adminSocket.disconnect();
   if (serverProcess) {

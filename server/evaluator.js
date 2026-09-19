@@ -1,40 +1,12 @@
 /**
  * AI Evaluator Engine for PROMPT WARS Round 1 (20 Points Total)
- * Supports Gemini / OpenAI / Anthropic APIs with fallback to comprehensive Rubric Heuristic Evaluator
+ * Provider priority: Groq (free tier) → Gemini → OpenAI → Anthropic → Heuristics
  */
 import { generateGeminiContent } from './geminiClient.js';
 
-export async function evaluateSubmission({ badPrompt, genreName, improvedPrompt, teamName }) {
-  if (process.env.GEMINI_API_KEY) {
-    try {
-      return await evaluateWithGemini({ badPrompt, genreName, improvedPrompt, teamName });
-    } catch (err) {
-      console.warn(`[Evaluator] Gemini API failed (${err.message}). Trying other providers.`);
-    }
-  }
-
-  if (process.env.OPENAI_API_KEY) {
-    try {
-      return await evaluateWithOpenAI({ badPrompt, genreName, improvedPrompt, teamName });
-    } catch (err) {
-      console.warn(`[Evaluator] OpenAI API failed (${err.message}). Trying other providers.`);
-    }
-  }
-
-  if (process.env.ANTHROPIC_API_KEY) {
-    try {
-      return await evaluateWithAnthropic({ badPrompt, genreName, improvedPrompt, teamName });
-    } catch (err) {
-      console.warn(`[Evaluator] Anthropic API failed (${err.message}). Falling back.`);
-    }
-  }
-
-  // Fallback to sophisticated heuristic & rubric analyzer
-  return evaluateWithHeuristics({ badPrompt, genreName, improvedPrompt });
-}
-
-async function evaluateWithGemini({ badPrompt, genreName, improvedPrompt, teamName }) {
-  const prompt = `You are the Official AI Adjudicator for the PROMPT WARS Championship.
+// Shared rubric prompt builder (used by all AI evaluators)
+function buildEvalPrompt({ badPrompt, genreName, improvedPrompt }) {
+  return `You are the Official AI Adjudicator for the PROMPT WARS Championship.
 Evaluate this student's prompt engineering makeover strictly, fairly, and comprehensively on the 20-point standard rubric.
 
 COMPETITION DOMAIN: "${genreName}"
@@ -51,45 +23,132 @@ EVALUATE STRICTLY ON THE 5 COMPETITION PILLARS (Total 20 points):
 
 SCORING RULES & CALIBRATION:
 - Be rigorous and fair: Generic, brief prompts without constraints should score 6-11/20. Well-architected prompts with persona, constraints, and structure should score 14-19/20.
-- Ensure total_score equals the exact sum of all 5 criteria.
+- Ensure total_score equals the exact sum of all 5 criteria scores.
 
-Respond ONLY with valid JSON matching this exact schema:
-{
-  "clarity_score": <number 0-5>,
-  "context_score": <number 0-4>,
-  "constraints_score": <number 0-4>,
-  "format_score": <number 0-3>,
-  "creativity_score": <number 0-4>,
-  "total_score": <number 0-20>,
-  "reasoning": "<concise constructive adjudication explaining why this score was awarded>",
-  "strengths": ["<strength 1>", "<strength 2>"],
-  "improvements": ["<actionable improvement 1>", "<actionable improvement 2>"]
-}`;
+Respond ONLY with valid JSON matching this exact schema (no markdown, no explanation — JSON only):
+{"clarity_score":<number 0-5>,"context_score":<number 0-4>,"constraints_score":<number 0-4>,"format_score":<number 0-3>,"creativity_score":<number 0-4>,"total_score":<number 0-20>,"reasoning":"<concise constructive adjudication>","strengths":["<strength 1>","<strength 2>"],"improvements":["<actionable improvement 1>","<actionable improvement 2>"]}`;
+}
 
-  const res = await generateGeminiContent({ prompt, jsonMode: true, temperature: 0.2 });
-  if (res && typeof res === 'object') {
-    const clarity = Math.min(5, Math.max(0, Number(res.clarity_score) || 0));
-    const context = Math.min(4, Math.max(0, Number(res.context_score) || 0));
-    const constraints = Math.min(4, Math.max(0, Number(res.constraints_score) || 0));
-    const format = Math.min(3, Math.max(0, Number(res.format_score) || 0));
-    const creativity = Math.min(4, Math.max(0, Number(res.creativity_score) || 0));
-    const total = clarity + context + constraints + format + creativity;
+// Parse and sanitize AI evaluation result
+function sanitizeEvalResult(res) {
+  const clarity = Math.min(5, Math.max(0, Number(res.clarity_score) || 0));
+  const context = Math.min(4, Math.max(0, Number(res.context_score) || 0));
+  const constraints = Math.min(4, Math.max(0, Number(res.constraints_score) || 0));
+  const format = Math.min(3, Math.max(0, Number(res.format_score) || 0));
+  const creativity = Math.min(4, Math.max(0, Number(res.creativity_score) || 0));
+  const total = clarity + context + constraints + format + creativity;
+  return {
+    clarity_score: clarity,
+    context_score: context,
+    constraints_score: constraints,
+    format_score: format,
+    creativity_score: creativity,
+    total_score: total,
+    reasoning: res.reasoning || `Scored ${total}/20 across clarity, context, constraints, format, and creativity.`,
+    strengths: Array.isArray(res.strengths) && res.strengths.length > 0 ? res.strengths : ["Structured prompt makeover"],
+    improvements: Array.isArray(res.improvements) && res.improvements.length > 0 ? res.improvements : ["Add further role depth and explicit negative constraints"]
+  };
+}
 
-    return {
-      clarity_score: clarity,
-      context_score: context,
-      constraints_score: constraints,
-      format_score: format,
-      creativity_score: creativity,
-      total_score: total,
-      reasoning: res.reasoning || `Scored ${total}/20 across clarity, context, constraints, format, and creativity.`,
-      strengths: Array.isArray(res.strengths) && res.strengths.length > 0 ? res.strengths : ["Structured prompt makeover"],
-      improvements: Array.isArray(res.improvements) && res.improvements.length > 0 ? res.improvements : ["Add further role depth and explicit negative constraints"]
-    };
+export async function evaluateSubmission({ badPrompt, genreName, improvedPrompt, teamName }) {
+  // 1. Groq (free tier - fastest, most generous rate limits)
+  if (process.env.GROQ_API_KEY) {
+    try {
+      return await evaluateWithGroq({ badPrompt, genreName, improvedPrompt });
+    } catch (err) {
+      console.warn(`[Evaluator] Groq API failed (${err.message}). Trying Gemini.`);
+    }
   }
 
-  return res;
+  // 2. Gemini
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      return await evaluateWithGemini({ badPrompt, genreName, improvedPrompt, teamName });
+    } catch (err) {
+      console.warn(`[Evaluator] Gemini API failed (${err.message}). Trying OpenAI.`);
+    }
+  }
+
+  // 3. OpenAI
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      return await evaluateWithOpenAI({ badPrompt, genreName, improvedPrompt, teamName });
+    } catch (err) {
+      console.warn(`[Evaluator] OpenAI API failed (${err.message}). Trying Anthropic.`);
+    }
+  }
+
+  // 4. Anthropic
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      return await evaluateWithAnthropic({ badPrompt, genreName, improvedPrompt, teamName });
+    } catch (err) {
+      console.warn(`[Evaluator] Anthropic API failed (${err.message}). Falling back to heuristics.`);
+    }
+  }
+
+  // 5. Fallback to sophisticated heuristic & rubric analyzer
+  return evaluateWithHeuristics({ badPrompt, genreName, improvedPrompt });
 }
+
+// --- Groq Evaluator (Primary - Free Tier with resilient model fallback) ---
+async function evaluateWithGroq({ badPrompt, genreName, improvedPrompt }) {
+  const candidateModels = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
+  let lastError = null;
+
+  for (const model of candidateModels) {
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+          max_tokens: 1200,
+          messages: [
+            {
+              role: "system",
+              content: "You are an expert prompt engineering adjudicator for the PROMPT WARS championship. Output valid JSON only — no markdown, no commentary."
+            },
+            {
+              role: "user",
+              content: buildEvalPrompt({ badPrompt, genreName, improvedPrompt })
+            }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Groq model ${model} HTTP ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content || "{}";
+      const parsed = JSON.parse(content);
+      return sanitizeEvalResult(parsed);
+    } catch (err) {
+      lastError = err;
+      console.warn(`[Evaluator] Groq model ${model} failed (${err.message}), trying next candidate...`);
+    }
+  }
+
+  throw lastError || new Error("All Groq candidate models failed.");
+}
+
+async function evaluateWithGemini({ badPrompt, genreName, improvedPrompt, teamName }) {
+  const prompt = buildEvalPrompt({ badPrompt, genreName, improvedPrompt });
+  const res = await generateGeminiContent({ prompt, jsonMode: true, temperature: 0.2 });
+  if (res && typeof res === 'object') {
+    return sanitizeEvalResult(res);
+  }
+  throw new Error('Gemini returned empty/invalid response');
+}
+
 
 async function evaluateWithOpenAI({ badPrompt, genreName, improvedPrompt }) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {

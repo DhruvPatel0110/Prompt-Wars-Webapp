@@ -7,15 +7,18 @@ import {
   Maximize2, Compass, Layers, FlaskConical, X, Sliders, Info,
   Camera, Sun, Palette, Wand2, Lock
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { PromptSandboxModal } from './PromptSandboxModal';
 import { soundEngine } from '../utils/audio';
 
 export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
-  const { socket } = useSocket();
+  const { user } = useAuth();
+  const { socket, serverTimer } = useSocket();
   const [zoomLevel, setZoomLevel] = useState(1);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   
+  const effectiveTeamId = team?.id || user?.teamId;
   const initialPrompt = team?.round2?.submittedPrompt || team?.round2?.draftPrompt || team?.round2?.c1_submittedPrompt || team?.round2?.c1_draft || '';
   const [draftPrompt, setDraftPrompt] = useState(initialPrompt);
   const [isAutoSaving, setIsAutoSaving] = useState(false);
@@ -44,9 +47,9 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
     keyElements: ["Camera Angle", "Lighting & Palette", "Primary Subject", "Render Medium"]
   };
 
-  const isLocked = round2State?.isLocked;
-  const isSubmitted = !!(team?.round2?.submittedPrompt || team?.round2?.c1_submittedPrompt);
-  const isEvaluated = !!(team?.round2?.evaluation || team?.round2?.c1_evaluation);
+  const isLocked = round2State?.isLocked && !serverTimer?.round2?.timerRunning;
+  const isSubmitted = !!(team?.round2?.submittedPrompt || team?.round2?.c1_submittedPrompt || team?.round2?.status === 'submitted' || team?.round2?.status === 'evaluated');
+  const isEvaluated = !!(team?.round2?.evaluation || team?.round2?.c1_evaluation || team?.round2?.status === 'evaluated');
   const isAdvanceTriggered = !!round2State?.advanceTriggered;
   const isQualified = !!team?.round2?.isQualified;
   const evaluation = team?.round2?.evaluation || team?.round2?.c1_evaluation;
@@ -73,11 +76,13 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
 
     if (autosaveRef.current) clearTimeout(autosaveRef.current);
     autosaveRef.current = setTimeout(() => {
-      socket?.emit('team:round2_draft_update', {
-        teamId: team.id,
-        draftText: text,
-        challengeType: 'image'
-      });
+      if (effectiveTeamId) {
+        socket?.emit('team:round2_draft_update', {
+          teamId: effectiveTeamId,
+          draftText: text,
+          challengeType: 'image'
+        });
+      }
       setIsAutoSaving(false);
     }, 600);
   };
@@ -88,9 +93,14 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
       setErrorMessage("Reverse-engineering prompt must contain at least 50 characters.");
       return;
     }
+    if (!effectiveTeamId) {
+      setErrorMessage("Team ID not found. Please refresh and log in again.");
+      return;
+    }
     setIsSubmitting(true);
+    setErrorMessage(null);
     socket?.emit('team:round2_submit', { 
-      teamId: team.id, 
+      teamId: effectiveTeamId, 
       promptText: draftPrompt.trim(),
       studentPrompt: draftPrompt.trim(),
       challengeType: 'image' 
@@ -110,7 +120,7 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
     return new Promise((resolve, reject) => {
       if (!socket) return reject(new Error("Socket disconnected"));
       socket.emit('team:sandbox_run', {
-        teamId: team.id,
+        teamId: effectiveTeamId,
         round: 2,
         challengeType: 'image',
         promptText: draftPrompt,
@@ -353,7 +363,7 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
                   placeholder="Dissect and write the generative prompt: Specify camera perspective (e.g. cinematic low-angle, wide panoramic, macro lens), lighting conditions (golden hour, neon volumetric bloom), primary subjects, background environment, materials/textures, and rendering cues (Octane render, Unreal Engine 5, 8k resolution, photorealistic)..."
                   value={draftPrompt}
                   onChange={handlePromptChange}
-                  disabled={isSubmitted || isLocked}
+                  disabled={isSubmitted}
                   className={`w-full p-4 rounded-xl glass-input text-gray-100 font-mono text-sm leading-relaxed focus:outline-none resize-none transition-all ${
                     isSubmitted 
                       ? 'bg-black/50 border-emerald-500/40 text-gray-300 cursor-not-allowed'
@@ -411,7 +421,7 @@ export const StudentRound2 = ({ team, round2State, onSwitchRound }) => {
               <div className="w-full sm:w-auto flex items-center gap-2">
                 <button
                   onClick={handleSubmit}
-                  disabled={!isMinLengthMet || isSubmitted || isSubmitting || isLocked}
+                  disabled={!isMinLengthMet || isSubmitted || isSubmitting}
                   className={`w-full sm:w-auto cyber-btn px-6 py-3 rounded-xl font-display font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
                     isSubmitted
                       ? 'bg-emerald-950 border border-emerald-500/60 text-emerald-300 cursor-not-allowed shadow-[0_0_15px_rgba(0,255,136,0.3)]'

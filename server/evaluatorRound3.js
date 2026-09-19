@@ -1,11 +1,19 @@
 import { generateGeminiContent } from './geminiClient.js';
 
 export async function evaluateRound3Submission({ caseData, bombData, masterPrompt, adaptedPrompt, teamName }) {
+  if (process.env.GROQ_API_KEY) {
+    try {
+      return await evaluateRound3WithGroq({ caseData, bombData, masterPrompt, adaptedPrompt });
+    } catch (err) {
+      console.warn(`[Round3 Evaluator] Groq API failed (${err.message}). Trying Anthropic.`);
+    }
+  }
+
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       return await evaluateRound3WithAnthropic({ caseData, bombData, masterPrompt, adaptedPrompt });
     } catch (err) {
-      console.warn(`[Round3 Evaluator] Anthropic API failed (${err.message}). Falling back.`);
+      console.warn(`[Round3 Evaluator] Anthropic API failed (${err.message}). Falling back to Gemini.`);
     }
   }
 
@@ -13,11 +21,116 @@ export async function evaluateRound3Submission({ caseData, bombData, masterPromp
     try {
       return await evaluateRound3WithGemini({ caseData, bombData, masterPrompt, adaptedPrompt });
     } catch (err) {
-      console.warn(`[Round3 Evaluator] Gemini API failed (${err.message}). Falling back.`);
+      console.warn(`[Round3 Evaluator] Gemini API failed (${err.message}). Falling back to heuristics.`);
     }
   }
 
   return evaluateRound3WithHeuristics({ caseData, bombData, masterPrompt, adaptedPrompt });
+}
+
+// --- Groq Evaluator (Primary - Free Tier with resilient model fallback) ---
+async function evaluateRound3WithGroq({ caseData, bombData, masterPrompt, adaptedPrompt }) {
+  const prompt = `You are the Supreme AI Adjudicator for PROMPT WARS ROUND 3: GRAND FINALE.
+
+CASE STUDY:
+Title: ${caseData.title}
+Context: ${caseData.scenario?.context}
+Metrics: ${JSON.stringify(caseData.scenario?.metrics || {})}
+Required Strategic Pillars: ${JSON.stringify(caseData.scenario?.requiredPillars || [])}
+
+INJECTED FINAL BOMB:
+Headline: ${bombData.headline}
+Description: ${bombData.description}
+Directive: ${bombData.directive}
+
+TEAM RESPONSES:
+Phase 1 Master Prompt:
+"""${masterPrompt || ""}"""
+
+Phase 2 Adapted Prompt (Post-Bomb):
+"""${adaptedPrompt || masterPrompt || ""}"""
+
+EVALUATE ON 50-POINT RUBRIC:
+Part 1: Master Prompt (30 pts):
+1. case_comprehension (0-5)
+2. role_persona (0-5)
+3. constraints_control (0-5)
+4. output_structuring (0-5)
+5. strategic_depth (0-5)
+6. prompt_technique (0-5)
+master_subtotal (0-30)
+
+Part 2: Final Bomb Adaptation (20 pts):
+7. condition_adaptation (0-5)
+8. surgical_precision (0-5)
+9. objective_preservation (0-5)
+10. adapted_execution_quality (0-5)
+bomb_subtotal (0-20)
+
+total_score (0-50), key_strengths, areas_for_improvement, verdict_summary.
+
+Respond ONLY with valid JSON matching this schema:
+{
+  "master_scores": {
+    "case_comprehension": 4.8,
+    "role_persona": 4.5,
+    "constraints_control": 4.5,
+    "output_structuring": 4.7,
+    "strategic_depth": 4.6,
+    "prompt_technique": 4.4
+  },
+  "master_subtotal": 27.5,
+  "bomb_scores": {
+    "condition_adaptation": 4.7,
+    "surgical_precision": 4.5,
+    "objective_preservation": 4.6,
+    "adapted_execution_quality": 4.7
+  },
+  "bomb_subtotal": 18.5,
+  "total_score": 46.0,
+  "key_strengths": "<string>",
+  "areas_for_improvement": "<string>",
+  "verdict_summary": "<string>"
+}`;
+
+  const candidateModels = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
+  let lastError = null;
+
+  for (const model of candidateModels) {
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+          max_tokens: 1500,
+          messages: [
+            { role: "system", content: "You are the Supreme AI Adjudicator for PROMPT WARS. Output valid JSON only." },
+            { role: "user", content: prompt }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Groq model ${model} HTTP ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content || "{}";
+      return JSON.parse(content);
+    } catch (err) {
+      lastError = err;
+      console.warn(`[Round3 Evaluator] Groq model ${model} failed (${err.message}), trying next candidate...`);
+    }
+  }
+
+  throw lastError || new Error("All Groq candidate models failed for Round 3.");
 }
 
 // --- Anthropic Claude Evaluator ---

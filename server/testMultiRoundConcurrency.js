@@ -315,6 +315,10 @@ async function runMultiRoundTournamentTest() {
   console.log(`   Zero Dropped Sockets:           ✅ 100% Sockets Intact`);
   console.log(`========================================================================\n`);
 
+  // Clean up state
+  adminSocket.emit('admin:reset_event');
+  await sleep(300);
+
   // Disconnect all
   clients.forEach(c => c.socket.disconnect());
   adminSocket.disconnect();

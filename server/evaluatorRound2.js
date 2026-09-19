@@ -3,6 +3,7 @@ import { generateGeminiContent } from './geminiClient.js';
 /**
  * Evaluates a student's reverse-engineered image prompt against their assigned competition image challenge.
  * Total points: 20 across 4 standard criteria (Composition 5, Colors 5, Subject 5, Style 5).
+ * Provider priority: Groq (free tier) → Anthropic → Gemini → Heuristics
  */
 export async function evaluateRound2Prompt({ assignedChallenge, studentPrompt, teamName }) {
   const challenge = assignedChallenge || {
@@ -12,11 +13,20 @@ export async function evaluateRound2Prompt({ assignedChallenge, studentPrompt, t
     targetVisualPrompt: "Photorealistic 8k render with cinematic lighting"
   };
 
+  // 1. Groq (free tier - fastest)
+  if (process.env.GROQ_API_KEY) {
+    try {
+      return await evaluateImageWithGroq({ targetImage: challenge, studentPrompt });
+    } catch (err) {
+      console.warn(`[Round2 Evaluator] Groq API failed (${err.message}). Trying Anthropic.`);
+    }
+  }
+
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       return await evaluateImageWithAnthropic({ targetImage: challenge, studentPrompt });
     } catch (err) {
-      console.warn(`[Round2 Evaluator] Anthropic API failed (${err.message}). Falling back.`);
+      console.warn(`[Round2 Evaluator] Anthropic API failed (${err.message}). Trying Gemini.`);
     }
   }
 
@@ -24,12 +34,13 @@ export async function evaluateRound2Prompt({ assignedChallenge, studentPrompt, t
     try {
       return await evaluateImageWithGemini({ targetImage: challenge, studentPrompt });
     } catch (err) {
-      console.warn(`[Round2 Evaluator] Gemini API failed (${err.message}). Falling back.`);
+      console.warn(`[Round2 Evaluator] Gemini API failed (${err.message}). Falling back to heuristics.`);
     }
   }
 
   return evaluateImageWithHeuristics({ targetImage: challenge, studentPrompt });
 }
+
 
 // Backward-compatible alias
 export async function evaluateRound2Challenge1({ targetImage, studentPrompt, teamName }) {
@@ -39,6 +50,87 @@ export async function evaluateRound2Challenge1({ targetImage, studentPrompt, tea
 export async function evaluateRound2Challenge2({ targetReport, studentPrompt, teamName }) {
   return evaluateRound2Prompt({ assignedChallenge: targetReport, studentPrompt, teamName });
 }
+
+// --- Groq Image Evaluator (Primary - Free Tier with resilient model fallback) ---
+async function evaluateImageWithGroq({ targetImage, studentPrompt }) {
+  const prompt = `You are an authoritative AI judge for PROMPT WARS Round 2: Prompt Reverse Engineering.
+A student team was shown a specific target image and tasked with writing a prompt that would regenerate/recreate that exact visual output.
+
+TARGET IMAGE DETAILS:
+- Title: ${targetImage.title}
+- Description: ${targetImage.description}
+- Key Visual Elements: ${JSON.stringify(targetImage.keyElements || [])}
+- Reference Prompt: "${targetImage.targetVisualPrompt || ''}"
+
+STUDENT'S REVERSE-ENGINEERED PROMPT:
+"${studentPrompt}"
+
+Evaluate how accurately this student prompt captures the target image across 4 criteria (Total 20 pts):
+1. composition_score (0-5): Camera angle, framing, depth of field, perspective, aspect ratio.
+2. colors_score (0-5): Color palette accuracy, lighting sources, shadows, ambient glow, atmospheric reflections.
+3. subject_score (0-5): Primary subjects, secondary details, environment accuracy, architecture/textures.
+4. style_score (0-5): Art style, render engine tokens (Octane, Unreal, Studio photo, 8k, lens focal length), medium fidelity.
+
+Respond ONLY with valid JSON (no markdown):
+{"composition_score":<number 0-5>,"colors_score":<number 0-5>,"subject_score":<number 0-5>,"style_score":<number 0-5>,"total_score":<number 0-20>,"reasoning":"<constructive feedback on prompt accuracy>","matched_elements":["<element>"],"missed_elements":["<element>"]}`;
+
+  const candidateModels = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
+  let lastError = null;
+
+  for (const model of candidateModels) {
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+          max_tokens: 1200,
+          messages: [
+            { role: "system", content: "You are an expert AI art and prompt judge. Output valid JSON only." },
+            { role: "user", content: prompt }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Groq model ${model} HTTP ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content || "{}";
+      const res = JSON.parse(content);
+
+      const composition = Math.min(5, Math.max(0, Number(res.composition_score) || 0));
+      const colors = Math.min(5, Math.max(0, Number(res.colors_score) || 0));
+      const subject = Math.min(5, Math.max(0, Number(res.subject_score) || 0));
+      const style = Math.min(5, Math.max(0, Number(res.style_score) || 0));
+      const total = composition + colors + subject + style;
+
+      return {
+        composition_score: composition,
+        colors_score: colors,
+        subject_score: subject,
+        style_score: style,
+        total_score: total,
+        reasoning: res.reasoning || `Scored ${total}/20 across composition, colors, subject, and style.`,
+        matched_elements: Array.isArray(res.matched_elements) ? res.matched_elements : ["Target visual alignment"],
+        missed_elements: Array.isArray(res.missed_elements) ? res.missed_elements : ["Specific lighting or lens parameters"]
+      };
+    } catch (err) {
+      lastError = err;
+      console.warn(`[Round2 Evaluator] Groq model ${model} failed (${err.message}), trying next candidate...`);
+    }
+  }
+
+  throw lastError || new Error("All Groq candidate models failed.");
+}
+
 
 // --- Anthropic Image Evaluator ---
 async function evaluateImageWithAnthropic({ targetImage, studentPrompt }) {

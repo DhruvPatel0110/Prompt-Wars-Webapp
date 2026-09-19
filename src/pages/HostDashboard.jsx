@@ -19,11 +19,13 @@ export const HostDashboard = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [showAdvanceConfirm, setShowAdvanceConfirm] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showClearTeamsConfirm, setShowClearTeamsConfirm] = useState(false);
 
   const state = hostState?.roundState || {};
   const teams = hostState?.teams || [];
   const stats = hostState?.stats || {
-    totalTeams: teams.length || 70,
+    totalTeams: teams.length,
     connectedCount: teams.filter(t => t.connected).length,
     r1Submitted: teams.filter(t => t.submissionStatus === 'submitted' || t.submissionStatus === 'evaluated').length,
     r2Submitted: teams.filter(t => t.round2?.status === 'submitted' || t.round2?.status === 'evaluated' || t.round2?.submittedPrompt || t.round2?.c1_submittedPrompt).length,
@@ -38,6 +40,19 @@ export const HostDashboard = () => {
     const m = Math.floor(Math.max(0, secs) / 60);
     const s = Math.max(0, secs) % 60;
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
+
+  // Tournament Master Controls
+  const handleResetTournament = () => {
+    setShowResetConfirm(false);
+    socket?.emit('admin:reset_event');
+    setActiveMainTab('round1');
+    setActiveR1SubTab('radar');
+  };
+
+  const handleClearAllTeams = () => {
+    setShowClearTeamsConfirm(false);
+    socket?.emit('admin:clear_all_teams');
   };
 
   // Timer & Round Controls for Round 1
@@ -107,53 +122,64 @@ export const HostDashboard = () => {
             </h1>
           </div>
 
-          {/* Quick Round Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-2 bg-[#070a13] p-1.5 rounded-2xl border border-[#1f2b48]">
-            <button
-              onClick={() => setActiveMainTab('round1')}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
-                activeMainTab === 'round1'
-                  ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              ROUND 1 : MAKEOVER
-            </button>
-
-            <button
-              onClick={() => setActiveMainTab('round2')}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
-                activeMainTab === 'round2'
-                  ? 'bg-purple-500 text-white shadow-[0_0_15px_rgba(138,43,226,0.4)]'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              ROUND 2 : REVERSE ENG
-            </button>
-
-            <button
-              onClick={() => setActiveMainTab('round3')}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
-                activeMainTab === 'round3'
-                  ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              ROUND 3 : GRAND FINALE
-            </button>
-
-            {hostState?.podiumWinners && (
+          {/* Quick Round Navigation Tabs & Reset Action */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 bg-[#070a13] p-1.5 rounded-2xl border border-[#1f2b48]">
               <button
-                onClick={() => setActiveMainTab('podium')}
+                onClick={() => setActiveMainTab('round1')}
                 className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
-                  activeMainTab === 'podium'
-                    ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black shadow-[0_0_20px_rgba(255,215,0,0.5)]'
-                    : 'text-amber-400 hover:text-amber-300'
+                  activeMainTab === 'round1'
+                    ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                    : 'text-gray-400 hover:text-white'
                 }`}
               >
-                🏆 PODIUM
+                ROUND 1 : MAKEOVER
               </button>
-            )}
+
+              <button
+                onClick={() => setActiveMainTab('round2')}
+                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
+                  activeMainTab === 'round2'
+                    ? 'bg-purple-500 text-white shadow-[0_0_15px_rgba(138,43,226,0.4)]'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                ROUND 2 : REVERSE ENG
+              </button>
+
+              <button
+                onClick={() => setActiveMainTab('round3')}
+                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
+                  activeMainTab === 'round3'
+                    ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                ROUND 3 : GRAND FINALE
+              </button>
+
+              {hostState?.podiumWinners && (
+                <button
+                  onClick={() => setActiveMainTab('podium')}
+                  className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider transition-all ${
+                    activeMainTab === 'podium'
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black shadow-[0_0_20px_rgba(255,215,0,0.5)]'
+                      : 'text-amber-400 hover:text-amber-300'
+                  }`}
+                >
+                  🏆 PODIUM
+                </button>
+              )}
+            </div>
+
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              className="px-3.5 py-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/40 text-red-300 hover:text-red-100 font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(255,0,0,0.2)]"
+              title="Reset tournament and return all devices to Round 1 Lobby"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>RESET TOURNAMENT</span>
+            </button>
           </div>
         </div>
 
@@ -328,30 +354,41 @@ export const HostDashboard = () => {
           )}
 
           {/* Sub-nav Tab Selector */}
-          <div className="flex items-center gap-2 border-b border-[#1f2b48] pb-3">
-            <button
-              onClick={() => setActiveR1SubTab('radar')}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
-                activeR1SubTab === 'radar'
-                  ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                  : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
-              }`}
-            >
-              <Users className="w-4 h-4" />
-              <span>LIVE TEAMS MATRIX ({teams.length})</span>
-            </button>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#1f2b48] pb-3">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveR1SubTab('radar')}
+                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
+                  activeR1SubTab === 'radar'
+                    ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                    : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
+                }`}
+              >
+                <Users className="w-4 h-4" />
+                <span>LIVE TEAMS MATRIX ({teams.length})</span>
+              </button>
 
-            <button
-              onClick={() => setActiveR1SubTab('leaderboard')}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
-                activeR1SubTab === 'leaderboard'
-                  ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
-                  : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
-              }`}
-            >
-              <Trophy className="w-4 h-4" />
-              <span>ROUND 1 LEADERBOARD</span>
-            </button>
+              <button
+                onClick={() => setActiveR1SubTab('leaderboard')}
+                className={`px-4 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
+                  activeR1SubTab === 'leaderboard'
+                    ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(255,184,0,0.4)]'
+                    : 'bg-[#0d1424] text-gray-400 hover:text-white border border-[#1f2b48]'
+                }`}
+              >
+                <Trophy className="w-4 h-4" />
+                <span>ROUND 1 LEADERBOARD</span>
+              </button>
+            </div>
+
+            {teams.length > 0 && activeR1SubTab === 'radar' && (
+              <button
+                onClick={() => setShowClearTeamsConfirm(true)}
+                className="px-3 py-1.5 rounded-lg bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-400 hover:text-red-200 text-xs font-mono font-semibold transition-colors flex items-center gap-1.5"
+              >
+                <span>Clear All Registered Teams</span>
+              </button>
+            )}
           </div>
 
           {/* Radar View */}
@@ -544,6 +581,64 @@ export const HostDashboard = () => {
                   <p className="text-xs text-gray-300 italic">"{selectedTeam.evaluation.reasoning}"</p>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Tournament Confirmation Modal */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in">
+          <div className="cyber-card w-full max-w-lg rounded-2xl p-6 border-red-500/50 bg-gradient-to-b from-[#160b12] to-[#070a13]">
+            <div className="flex items-center gap-3 text-red-400 mb-3">
+              <AlertTriangle className="w-6 h-6" />
+              <h3 className="font-display font-bold text-xl text-white">RESET ENTIRE TOURNAMENT?</h3>
+            </div>
+            <p className="text-sm text-gray-300 mb-6 font-sans leading-relaxed">
+              This will clear all tournament progress, reset all timers, remove all registered teams, and return all devices back to the <strong className="text-white">Round 1 Arena Lobby</strong>.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-gray-300 text-sm font-semibold hover:text-white transition-colors"
+              >
+                CANCEL
+              </button>
+              <button
+                onClick={handleResetTournament}
+                className="py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-sm uppercase tracking-wider hover:from-red-500 hover:to-rose-600 transition-all shadow-[0_0_20px_rgba(255,0,0,0.4)]"
+              >
+                CONFIRM RESET
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Clear All Teams Confirmation Modal */}
+      {showClearTeamsConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in">
+          <div className="cyber-card w-full max-w-md rounded-2xl p-6 border-red-500/50 bg-gradient-to-b from-[#160b12] to-[#070a13]">
+            <div className="flex items-center gap-3 text-red-400 mb-3">
+              <Users className="w-6 h-6" />
+              <h3 className="font-display font-bold text-lg text-white">CLEAR ALL REGISTERED TEAMS?</h3>
+            </div>
+            <p className="text-xs text-gray-300 mb-6 font-sans leading-relaxed">
+              This will delete all currently registered teams from the matrix and allow participants to register afresh.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setShowClearTeamsConfirm(false)}
+                className="py-2.5 rounded-xl bg-[#070a13] border border-[#1f2b48] text-gray-300 text-sm font-semibold hover:text-white transition-colors"
+              >
+                CANCEL
+              </button>
+              <button
+                onClick={handleClearAllTeams}
+                className="py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-display font-bold text-sm uppercase tracking-wider hover:from-red-500 hover:to-rose-600 transition-all shadow-[0_0_20px_rgba(255,0,0,0.4)]"
+              >
+                CLEAR TEAMS
+              </button>
             </div>
           </div>
         </div>

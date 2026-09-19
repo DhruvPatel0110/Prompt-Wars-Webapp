@@ -25,6 +25,21 @@ export async function runPromptSandbox({
   }
 
   // 1. Check live LLM keys for actual generation if configured
+  if (process.env.GROQ_API_KEY) {
+    try {
+      const liveResult = await runGroqSandbox({ round, challengeType, prompt, testInput, contextData });
+      if (liveResult) {
+        return {
+          ...liveResult,
+          latencyMs: Date.now() - startTime,
+          mode: 'LIVE_GROQ_AI'
+        };
+      }
+    } catch (err) {
+      console.warn(`[Sandbox] Live Groq failed: ${err.message}. Trying next provider...`);
+    }
+  }
+
   if (process.env.GEMINI_API_KEY) {
     try {
       const liveResult = await runGeminiSandbox({ round, challengeType, prompt, testInput, contextData });
@@ -75,6 +90,69 @@ export async function runPromptSandbox({
 // -------------------------------------------------------------
 // LIVE LLM EXECUTIONS
 // -------------------------------------------------------------
+
+async function runGroqSandbox({ round, challengeType, prompt, testInput, contextData }) {
+  let systemDirective = "You are an AI model responding to the following system/user prompt crafted in a prompt engineering tournament.";
+  let userQuery = testInput || "Execute the instructions in the prompt directly and provide high quality sample output.";
+
+  if (round === 1) {
+    systemDirective = `Execute this prompt accurately as designed:\nPROMPT:\n${prompt}\n\nProduce high-quality, structured output adhering to all constraints.`;
+  } else if (round === 2 && challengeType === 'image') {
+    systemDirective = `Analyze this image generation prompt:\n"${prompt}"\nProvide a vivid descriptive scene preview, photography breakdown, rendering engine parameters, and lighting profile.`;
+  } else if (round === 2 && challengeType === 'report') {
+    systemDirective = `Execute this structured report prompt:\n"${prompt}"\nProduce the complete markdown report with tables, headers, and metrics.`;
+  } else if (round === 3) {
+    systemDirective = `You are executing a Master Strategy Prompt:\n"${prompt}"\nContext: ${contextData?.title || 'Crisis Strategy'}.\nGenerate the structured multi-pillar plan.`;
+  }
+
+  const candidateModels = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
+  let lastError = null;
+
+  for (const model of candidateModels) {
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: systemDirective },
+            { role: "user", content: userQuery }
+          ],
+          max_tokens: 1200,
+          temperature: 0.4
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Groq model ${model} HTTP ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      const outputText = data.choices?.[0]?.message?.content || "";
+      const diagnostics = analyzePromptDiagnostics(prompt, round, challengeType);
+
+      return {
+        success: true,
+        outputText,
+        diagnostics,
+        tokens: {
+          inputEstimated: Math.round(prompt.length / 4),
+          outputEstimated: Math.round(outputText.length / 4),
+          totalEstimated: Math.round((prompt.length + outputText.length) / 4)
+        }
+      };
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw lastError || new Error("Groq sandbox execution failed.");
+}
 
 async function runGeminiSandbox({ round, challengeType, prompt, testInput, contextData }) {
   let systemDirective = "You are an AI model responding to the following system/user prompt crafted in a prompt engineering tournament.";

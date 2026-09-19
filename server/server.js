@@ -131,6 +131,7 @@ function broadcastToAll(event, payload) {
 }
 
 function broadcastToAdmins(event, payload) {
+  io.to('admin_room').emit(event, payload);
   for (const socketId of stateManager.adminSockets) {
     io.to(socketId).emit(event, payload);
   }
@@ -144,15 +145,29 @@ function broadcastToProjectors(event, payload) {
 
 function syncTeamClient(teamId) {
   const team = stateManager.teams.get(teamId);
-  if (team && team.socketId) {
-    io.to(team.socketId).emit('team:state_sync', stateManager.getTeamView(teamId));
+  if (!team) return;
+  const payload = stateManager.getTeamView(teamId);
+  // Broadcast to ALL sockets for this team (multi-tab support)
+  if (team.socketIds?.size > 0) {
+    for (const sid of team.socketIds) {
+      io.to(sid).emit('team:state_sync', payload);
+    }
+  } else if (team.socketId) {
+    io.to(team.socketId).emit('team:state_sync', payload);
   }
 }
 
 function syncAllTeamClients() {
   for (const [teamId, team] of stateManager.teams.entries()) {
-    if (team.connected && team.socketId) {
-      io.to(team.socketId).emit('team:state_sync', stateManager.getTeamView(teamId));
+    if (!team.connected) continue;
+    const payload = stateManager.getTeamView(teamId);
+    // Broadcast to ALL sockets for this team (multi-tab support)
+    if (team.socketIds?.size > 0) {
+      for (const sid of team.socketIds) {
+        io.to(sid).emit('team:state_sync', payload);
+      }
+    } else if (team.socketId) {
+      io.to(team.socketId).emit('team:state_sync', payload);
     }
   }
 }
@@ -278,7 +293,7 @@ io.on('connection', (socket) => {
     try {
       const text = promptText !== undefined ? promptText : studentPrompt;
       const team = stateManager.submitRound2(teamId, text, challengeType);
-      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
+      syncTeamClient(teamId);
       syncAdminClients();
       syncProjectorClients();
       callback?.({ success: true, status: team.round2.status });
@@ -292,7 +307,7 @@ io.on('connection', (socket) => {
     try {
       const text = studentPrompt !== undefined ? studentPrompt : promptText;
       const team = stateManager.submitRound2(teamId, text, 'image');
-      socket.emit('team:state_sync', stateManager.getTeamView(teamId));
+      syncTeamClient(teamId);
       syncAdminClients();
       syncProjectorClients();
       callback?.({ success: true, status: team.round2.status });
@@ -511,27 +526,42 @@ io.on('connection', (socket) => {
   socket.on('admin:unlock_round2', () => {
     stateManager.unlockRound2();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
     broadcastToAll('round2:unlocked', { round: 2, duration: stateManager.round2State.timerDuration });
   });
 
   socket.on('admin:lock_round2', () => {
     stateManager.lockRound2();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:start_round2_timer', () => {
     stateManager.startRound2Timer();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:pause_round2_timer', () => {
     stateManager.pauseRound2Timer();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:reset_round2_timer', ({ durationSeconds }) => {
     stateManager.resetRound2Timer(durationSeconds || 900);
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:evaluate_round2', async (data, callback) => {
@@ -542,29 +572,36 @@ io.on('connection', (socket) => {
     }
 
     stateManager.round2State.status = 'EVALUATING';
+    broadcastTimerState();
     syncAdminClients();
     syncProjectorClients();
     callback?.({ success: true, total: targetTeams.length });
 
-    const evaluations = {};
-    let completed = 0;
+    const items = targetTeams.map(team => ({
+      id: team.id,
+      name: team.name,
+      assignedChallenge: team.round2?.assignedChallenge || stateManager.round2Challenges[0],
+      studentPrompt: team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || "High detail render of target competition asset"
+    }));
 
-    for (const team of targetTeams) {
-      const assignedChallenge = team.round2?.assignedChallenge || stateManager.round2Challenges[0];
-      const studentPrompt = team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || "Photorealistic render of target image";
-
-      const evalResult = await evaluateRound2Prompt({
-        assignedChallenge,
-        studentPrompt,
-        teamName: team.name
-      });
-
-      evaluations[team.id] = { evaluation: evalResult, totalScore: evalResult.total_score };
-      completed++;
-      broadcastToAdmins('admin:r2_eval_progress', { completed, total: targetTeams.length, currentTeam: team.name });
-    }
+    const evaluations = await evaluateBatchWithConcurrency(
+      items,
+      async (item) => {
+        const evalResult = await evaluateRound2Prompt({
+          assignedChallenge: item.assignedChallenge,
+          studentPrompt: item.studentPrompt,
+          teamName: item.name
+        });
+        return { evaluation: evalResult, totalScore: evalResult.total_score };
+      },
+      2,
+      ({ completed, total, currentTeam }) => {
+        broadcastToAdmins('admin:r2_eval_progress', { completed, total, currentTeam });
+      }
+    );
 
     stateManager.setRound2EvaluationResults(evaluations);
+    broadcastTimerState();
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
@@ -580,6 +617,7 @@ io.on('connection', (socket) => {
 
   socket.on('admin:advance_round2', () => {
     stateManager.advanceRound2();
+    broadcastTimerState();
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
@@ -601,32 +639,50 @@ io.on('connection', (socket) => {
   socket.on('admin:unlock_round3', () => {
     stateManager.unlockRound3();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
     broadcastToAll('round3:unlocked', { round: 3, duration: stateManager.round3State.timerDuration });
   });
 
   socket.on('admin:lock_round3', () => {
     stateManager.lockRound3();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:start_round3_timer', () => {
     stateManager.startRound3Timer();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:pause_round3_timer', () => {
     stateManager.pauseRound3Timer();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:reset_round3_timer', ({ durationSeconds }) => {
     stateManager.resetRound3Timer(durationSeconds || 900);
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
   });
 
   socket.on('admin:detonate_bomb', () => {
     stateManager.detonateFinalBomb();
     broadcastTimerState();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
     broadcastToAll('round3:bomb_detonated', {
       durationSeconds: 30,
       detonatedAt: Date.now()
@@ -682,9 +738,20 @@ io.on('connection', (socket) => {
 
   socket.on('admin:reset_event', () => {
     stateManager.resetAll();
+    broadcastTimerState();
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
+    broadcastToAll('tournament:reset', { activeRound: 1 });
+  });
+
+  socket.on('admin:clear_all_teams', () => {
+    stateManager.teams.clear();
+    stateManager.saveSnapshot();
+    syncAllTeamClients();
+    syncAdminClients();
+    syncProjectorClients();
+    broadcastToAll('tournament:reset', { activeRound: 1 });
   });
 
   // Projector Connect
@@ -701,6 +768,15 @@ io.on('connection', (socket) => {
       syncAdminClients();
     }
   });
+});
+
+httpServer.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use by another process. Please close existing instances or run via 'npm run dev:all'.`);
+    process.exit(1);
+  } else {
+    console.error('Server error:', err);
+  }
 });
 
 httpServer.listen(PORT, '0.0.0.0', () => {

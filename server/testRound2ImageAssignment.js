@@ -27,6 +27,7 @@ async function runTest() {
   // Test 1: Verify StateManager loads all 19 image challenges
   console.log('1️⃣ Checking StateManager & Challenge Catalog...');
   const sm = new StateManager();
+  sm.saveSnapshot = () => {}; // Prevent test runs from writing dummy teams to snapshot on disk
   const challenges = sm.round2Challenges;
   console.log(`✅ Loaded ${challenges.length} image challenges from round2_challenges.json`);
   if (challenges.length !== 19) {
@@ -113,10 +114,15 @@ async function runTest() {
   // Test 5: Leaderboard & Cutoff Calculation
   console.log('5️⃣ Testing Leaderboard & Qualification Cutoff...');
   const evaluations = {};
+  sm.teams.forEach(t => {
+    t.isQualified = true;
+    if (t.round2) t.round2.isQualified = true;
+  });
   for (let i = 1; i <= 20; i++) {
     const tid = `team_${String(i).padStart(2, '0')}`;
-    const score = i <= 10 ? 12 + (i % 8) : 5 + (i % 3); // Top 10 score >= 12, bottom 10 score <= 7
+    const score = Number((20 - (i * 0.5)).toFixed(1));
     evaluations[tid] = {
+      totalScore: score,
       evaluation: {
         composition_score: score / 4,
         colors_score: score / 4,
@@ -140,8 +146,9 @@ async function runTest() {
   console.log(`✅ Rank #1: ${r2Leaderboard[0].name} (Score: ${r2Leaderboard[0].round2.totalScore}p, Qualified: ${r2Leaderboard[0].round2.isQualified})`);
   console.log(`✅ Rank #20: ${r2Leaderboard[19].name} (Score: ${r2Leaderboard[19].round2.totalScore}p, Qualified: ${r2Leaderboard[19].round2.isQualified})`);
 
-  if (qualified.length !== 10) {
-    throw new Error(`Expected 10 qualifying teams (top 50%), got ${qualified.length}`);
+  const expectedQualify = Math.ceil(r2Leaderboard.length * 0.5);
+  if (qualified.length !== expectedQualify) {
+    throw new Error(`Expected ${expectedQualify} qualifying teams (top 50%), got ${qualified.length}`);
   }
 
   // Test 6: Advance to Round 3
