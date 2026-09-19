@@ -4,10 +4,9 @@ import {
   Flame, Zap, AlertTriangle, Clock, Send, Sparkles, Trophy,
   CheckCircle2, FileText, Check, Copy, ArrowRight, ShieldAlert,
   Sliders, Award, RefreshCw, Layers, CheckSquare, Square,
-  HelpCircle, Compass, Target, Activity, Wand2, FlaskConical
+  HelpCircle, Compass, Target, Activity, Wand2
 } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
-import { PromptSandboxModal } from './PromptSandboxModal';
 import { soundEngine } from '../utils/audio';
 
 export const StudentRound3 = ({ team, round3State }) => {
@@ -19,28 +18,7 @@ export const StudentRound3 = ({ team, round3State }) => {
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDetonationModal, setShowDetonationModal] = useState(false);
-  const [showSandbox, setShowSandbox] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const sandboxRunsLeft = team?.sandbox?.r3RunsLeft ?? 4;
-
-  const handleRunSandbox = ({ round, challengeType, promptText, testInput }) => {
-    return new Promise((resolve, reject) => {
-      if (!socket) return reject(new Error("Socket disconnected"));
-      const isBomb = round3State?.phase === 'bomb_detonated' || team?.round3?.status === 'bomb_active';
-      const promptToTest = isBomb ? (adaptedDraft || masterDraft) : masterDraft;
-      socket.emit('team:sandbox_run', {
-        teamId: team.id,
-        round: 3,
-        challengeType: isBomb ? 'bomb' : 'master',
-        promptText: promptToTest,
-        testInput
-      }, (res) => {
-        if (res?.success) resolve(res);
-        else reject(new Error(res?.error || "Sandbox execution failed."));
-      });
-    });
-  };
 
   const masterAutosaveRef = useRef(null);
   const adaptedAutosaveRef = useRef(null);
@@ -393,21 +371,7 @@ export const StudentRound3 = ({ team, round3State }) => {
             </div>
 
             {/* Bottom Actions */}
-            <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowSandbox(true)}
-                  className="px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-amber-300 bg-amber-950/40 hover:bg-amber-500/20 border border-amber-500/40 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(255,184,0,0.15)]"
-                >
-                  <FlaskConical className="w-4 h-4 text-amber-400" />
-                  <span>Test Blueprint Simulation ({sandboxRunsLeft} left)</span>
-                </button>
-                <span className="hidden sm:inline text-xs text-gray-400 font-mono">
-                  {isSubmitted ? '✓ Submission Sealed' : 'Grand Finale Battle'}
-                </span>
-              </div>
-
+            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-end">
               <button
                 onClick={handleSubmitFinal}
                 disabled={isSubmitting || isSubmitted || round3State?.isLocked}
@@ -425,18 +389,6 @@ export const StudentRound3 = ({ team, round3State }) => {
           </div>
         </div>
       </div>
-
-      {/* Interactive Prompt Sandbox Modal */}
-      <PromptSandboxModal
-        isOpen={showSandbox}
-        onClose={() => setShowSandbox(false)}
-        round={3}
-        challengeType={isBombPhase ? "bomb" : "master"}
-        promptText={isBombPhase ? (adaptedDraft || masterDraft) : masterDraft}
-        runsRemaining={sandboxRunsLeft}
-        onRunSandbox={handleRunSandbox}
-        title={isBombPhase ? "Round 3: Emergency Crisis Adaptation Sandbox" : "Round 3: Master Strategy Blueprint Sandbox"}
-      />
     </div>
   );
 };

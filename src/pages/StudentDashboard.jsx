@@ -3,7 +3,7 @@ import {
   Lock, Sparkles, AlertCircle, CheckCircle2, ArrowRight, 
   Send, RefreshCw, Trophy, XCircle, FileText, HelpCircle, 
   Check, Info, ShieldCheck, Flame, Award, Layers, Lightbulb,
-  PlusCircle, Wand2, Eye, Compass, FlaskConical
+  PlusCircle, Wand2, Eye, Compass
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
@@ -11,7 +11,6 @@ import { WheelSpinner } from '../components/WheelSpinner';
 import { StudentRound2 } from '../components/StudentRound2';
 import { StudentRound3 } from '../components/StudentRound3';
 import { GrandFinalePodium } from '../components/GrandFinalePodium';
-import { PromptSandboxModal } from '../components/PromptSandboxModal';
 import { soundEngine } from '../utils/audio';
 
 export const StudentDashboard = () => {
@@ -21,7 +20,6 @@ export const StudentDashboard = () => {
   const [localDraft, setLocalDraft] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showSandbox, setShowSandbox] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [hasRevealedGenre, setHasRevealedGenre] = useState(false);
@@ -32,23 +30,6 @@ export const StudentDashboard = () => {
   const team = teamState?.team || {};
   const activeRound = serverTimer?.activeRound || teamState?.activeRound || 1;
   const currentViewRound = selectedRoundTab || activeRound;
-  const sandboxRunsLeft = team?.sandbox?.r1RunsLeft ?? 5;
-
-  const handleRunSandbox = ({ round, challengeType, promptText, testInput }) => {
-    return new Promise((resolve, reject) => {
-      if (!socket) return reject(new Error("Socket disconnected"));
-      socket.emit('team:sandbox_run', {
-        teamId: user?.teamId,
-        round: 1,
-        challengeType: 'prompt',
-        promptText,
-        testInput
-      }, (res) => {
-        if (res?.success) resolve(res);
-        else reject(new Error(res?.error || "Sandbox execution failed."));
-      });
-    });
-  };
 
   // Sync draft from server state
   useEffect(() => {
@@ -547,17 +528,8 @@ export const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* Action Buttons: Test in Sandbox & Lock and Submit */}
-          <div className="mt-6 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <button
-              type="button"
-              onClick={() => setShowSandbox(true)}
-              className="w-full sm:w-auto px-5 py-3 rounded-2xl font-mono text-xs font-bold text-cyan-300 bg-cyan-950/40 hover:bg-cyan-500/20 border border-cyan-500/40 transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
-            >
-              <FlaskConical className="w-4 h-4 text-cyan-400" />
-              <span>Test in Sandbox ({sandboxRunsLeft} runs left)</span>
-            </button>
-
+          {/* Action Buttons: Lock and Submit */}
+          <div className="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-end">
             <button
               type="button"
               onClick={() => setShowConfirmModal(true)}
@@ -573,18 +545,6 @@ export const StudentDashboard = () => {
             </button>
           </div>
         </div>
-
-        {/* Interactive Prompt Testing Sandbox Modal */}
-        <PromptSandboxModal
-          isOpen={showSandbox}
-          onClose={() => setShowSandbox(false)}
-          round={1}
-          challengeType="prompt"
-          promptText={localDraft}
-          runsRemaining={sandboxRunsLeft}
-          onRunSandbox={handleRunSandbox}
-          title="Round 1: Prompt Makeover Live Sandbox"
-        />
 
         {/* Confirmation Modal */}
         {showConfirmModal && (

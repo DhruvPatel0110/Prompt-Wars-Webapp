@@ -1,16 +1,16 @@
 {
-  "activeRound": 3,
+  "activeRound": 2,
   "roundState": {
     "round": 1,
     "roundName": "PROMPT MAKEOVER",
     "tagline": "SPIN. UNLOCK. REWRITE.",
-    "isLocked": true,
+    "isLocked": false,
     "status": "ADVANCED",
-    "timerDuration": 1200,
-    "timerRemaining": 1148,
-    "timerRunning": false,
-    "timerStartedAt": null,
-    "timerEndsAt": null,
+    "timerDuration": 600,
+    "timerRemaining": 409,
+    "timerRunning": true,
+    "timerStartedAt": 1789801912123,
+    "timerEndsAt": 1789802512123,
     "eliminationPercentage": 50,
     "advanceTriggered": true
   },
@@ -19,16 +19,14 @@
     "roundName": "PROMPT REVERSE ENGINEERING",
     "tagline": "SEE THE OUTPUT. BUILD THE PROMPT.",
     "isLocked": true,
-    "status": "ADVANCED",
+    "status": "EVALUATED",
     "timerDuration": 900,
     "timerRemaining": 900,
     "timerRunning": false,
     "timerStartedAt": null,
     "timerEndsAt": null,
     "eliminationPercentage": 50,
-    "advanceTriggered": true,
-    "activeImageChallenge": null,
-    "activeReportChallenge": null
+    "advanceTriggered": false
   },
   "round3State": {
     "round": 3,
@@ -51,56 +49,22 @@
   },
   "teams": [
     {
-      "id": "team_promptwars",
-      "name": "PromptWars",
-      "pin": "1234",
+      "id": "team_37",
+      "name": "37",
+      "pin": "1037",
       "connected": true,
-      "socketId": "04UhLOyLnw7rpqXaAAAF",
-      "lastSeen": 1789799509622,
-      "spinResult": "C",
-      "assignedGenre": {
-        "name": "DATA / ANALYSIS",
-        "description": "Reports, Tables, Financial summaries, Data interpretation, Comparison and insights",
-        "badge": "ANALYTICS",
-        "color": "#8a2be2"
-      },
-      "assignedQuestion": {
-        "id": "r1_c_015",
-        "genre": "C",
-        "genreName": "DATA / ANALYSIS",
-        "badPrompt": "Interpret our server crash logs and latency spikes.",
-        "context": "API gateway error logs and database query latency metrics during a flash sale peak.",
-        "missingElements": [
-          "Error status code distribution breakdown (HTTP 500, 502, 504 timeouts)",
-          "Database slow query identification (Unindexed table scans, connection pool exhaustion)",
-          "Infrastructure resource saturation timeline (CPU %, RAM memory leak, IOPS ceiling)",
-          "Step-by-step auto-scaling and Redis caching architecture fix recommendations"
-        ],
-        "difficulty": 1
-      },
-      "draftPrompt": "opemompowemqpfmwekmormnoigergibm kmrnoiv nrmkmveojn mniqemkpemwiofmwek mfewko ",
-      "submittedPrompt": "opemompowemqpfmwekmormnoigergibm kmrnoiv nrmkmveojn mniqemkpemwiofmwek mfewko",
-      "submittedAt": 1789798991962,
-      "timerUsedSeconds": 28,
-      "editCount": 1,
-      "submissionStatus": "evaluated",
-      "evaluation": {
-        "clarity_score": 0,
-        "context_score": 0,
-        "constraints_score": 0,
-        "format_score": 0,
-        "creativity_score": 0,
-        "total_score": 0,
-        "reasoning": "The submitted prompt is nonsensical gibberish and fails to convey any clear request, context, constraints, or output format, offering no usable instruction for analysis.",
-        "strengths": [
-          "Attempted to rewrite the original prompt",
-          "Used a different phrasing"
-        ],
-        "improvements": [
-          "Replace gibberish with clear, specific language describing the task",
-          "Define the analyst role, relevant context, constraints, and desired output structure"
-        ]
-      },
+      "socketId": "GcleCmdxcP4ZGkQGAAAD",
+      "lastSeen": 1789801892365,
+      "spinResult": null,
+      "assignedGenre": null,
+      "assignedQuestion": null,
+      "draftPrompt": "",
+      "submittedPrompt": null,
+      "submittedAt": null,
+      "timerUsedSeconds": null,
+      "editCount": 0,
+      "submissionStatus": "idle",
+      "evaluation": null,
       "isEliminated": true,
       "isQualified": false,
       "rank": 2,
@@ -128,46 +92,48 @@
             "style": "Cinematic sci-fi digital concept art, raytraced reflections, volumetric rain"
           }
         },
-        "draftPrompt": "kmckwemlkwe vlmk wlj nwnv nnonc woiudnoiewn kencionweon coewncojnweojnc owencoewcnec",
-        "submittedPrompt": "kmckwemlkwe vlmk wlj nwnv nnonc woiudnoiewn kencionweon coewncojnweojnc owencoewcnec",
-        "submittedAt": 1789799504247,
+        "draftPrompt": "",
+        "submittedPrompt": null,
+        "submittedAt": null,
         "evaluation": {
-          "composition_score": 0,
-          "colors_score": 0,
-          "subject_score": 0,
-          "style_score": 0,
-          "total_score": 0,
-          "reasoning": "The provided prompt is nonsensical gibberish and does not describe any visual content. It fails to convey camera angle, composition, color palette, subject details, or stylistic cues required to recreate the target image.",
-          "matched_elements": [],
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 2.5,
+          "style_score": 2.5,
+          "total_score": 8,
+          "reasoning": "Reverse engineering accuracy: 8/20. Basic recreation. Enhance camera perspective, lighting nuance, and render style cues.",
+          "matched_elements": [
+            "General subject identified"
+          ],
           "missed_elements": [
-            "Cyberpunk warrior with glowing cybernetic implants and visor",
-            "Rain-slicked asphalt with vivid neon pink and cyan reflections",
-            "Dense vertical holographic kanji billboards and neon signs",
-            "Cinematic low-angle perspective with anamorphic lens flare",
-            "Atmospheric volumetric rain particles and rising steam"
+            "Specify camera angle (e.g. low-angle, wide-shot, macro)",
+            "Add specific lighting conditions (e.g. volumetric god-rays, neon glow)",
+            "Include more granular physical scene objects and environment details",
+            "Add rendering engine parameters or photographic lens specifications"
           ]
         },
-        "totalScore": 0,
+        "totalScore": 8,
         "isQualified": false,
         "isEliminated": true,
-        "rank": 1,
-        "c1_draft": "kmckwemlkwe vlmk wlj nwnv nnonc woiudnoiewn kencionweon coewncojnweojnc owencoewcnec",
-        "c1_submittedPrompt": "kmckwemlkwe vlmk wlj nwnv nnonc woiudnoiewn kencionweon coewncojnweojnc owencoewcnec",
-        "c1_submittedAt": 1789799504247,
+        "rank": 2,
+        "c1_draft": "",
+        "c1_submittedPrompt": null,
+        "c1_submittedAt": null,
         "c1_evaluation": {
-          "composition_score": 0,
-          "colors_score": 0,
-          "subject_score": 0,
-          "style_score": 0,
-          "total_score": 0,
-          "reasoning": "The provided prompt is nonsensical gibberish and does not describe any visual content. It fails to convey camera angle, composition, color palette, subject details, or stylistic cues required to recreate the target image.",
-          "matched_elements": [],
+          "composition_score": 1.5,
+          "colors_score": 1.5,
+          "subject_score": 2.5,
+          "style_score": 2.5,
+          "total_score": 8,
+          "reasoning": "Reverse engineering accuracy: 8/20. Basic recreation. Enhance camera perspective, lighting nuance, and render style cues.",
+          "matched_elements": [
+            "General subject identified"
+          ],
           "missed_elements": [
-            "Cyberpunk warrior with glowing cybernetic implants and visor",
-            "Rain-slicked asphalt with vivid neon pink and cyan reflections",
-            "Dense vertical holographic kanji billboards and neon signs",
-            "Cinematic low-angle perspective with anamorphic lens flare",
-            "Atmospheric volumetric rain particles and rising steam"
+            "Specify camera angle (e.g. low-angle, wide-shot, macro)",
+            "Add specific lighting conditions (e.g. volumetric god-rays, neon glow)",
+            "Include more granular physical scene objects and environment details",
+            "Add rendering engine parameters or photographic lens specifications"
           ]
         }
       },
@@ -184,62 +150,58 @@
         "evaluation": null,
         "finalRank": null,
         "isWinner": false
-      },
-      "sandbox": {
-        "r1RunsLeft": 5,
-        "r2RunsLeft": 4,
-        "r3RunsLeft": 4,
-        "totalRunsUsed": 0
       }
     },
     {
-      "id": "team_neurals",
-      "name": "neurals",
+      "id": "team_106",
+      "name": "106",
       "pin": "1234",
       "connected": true,
-      "socketId": "2E0tUhDBwfxAvYOnAAAD",
-      "lastSeen": 1789799477263,
-      "spinResult": "A",
+      "socketId": "GcleCmdxcP4ZGkQGAAAD",
+      "lastSeen": 1789801901423,
+      "spinResult": "B",
       "assignedGenre": {
-        "name": "CREATIVE",
-        "description": "Storytelling, Advertisement, Social media viral content, Video scripts, Poster/campaign concepts",
-        "badge": "CREATIVE ARTS",
-        "color": "#ff007f"
+        "name": "BUSINESS",
+        "description": "Marketing, Product launch, Business strategy, Customer communication, Brand promotion",
+        "badge": "COMMERCIAL",
+        "color": "#00f0ff"
       },
       "assignedQuestion": {
-        "id": "r1_a_012",
-        "genre": "A",
-        "genreName": "CREATIVE",
-        "badPrompt": "Write a comic book scene where two superheroes argue.",
-        "context": "A 4-page comic script depicting ideological conflict between a vigilante tech-detective and a cosmic protector.",
+        "id": "r1_b_020",
+        "genre": "B",
+        "genreName": "BUSINESS",
+        "badPrompt": "Write an RFP for selecting a new cloud vendor.",
+        "context": "An enterprise financial institution seeking Request For Proposal bids for multi-cloud infrastructure migration.",
         "missingElements": [
-          "Page-by-page and panel-by-panel script breakdown (Panel 1, Panel 2...)",
-          "Visual descriptions for artist (angles, lighting, facial expressions)",
-          "Dialogue bubbles, captions, and SFX lettering instructions",
-          "Escalating philosophical tension before a plot-interrupting crisis"
+          "Technical scope of work (compute workloads, latency SLAs, zero-trust security standards, DR redundancy)",
+          "Vendor qualification criteria and compliance mandates (SOC2 Type II, ISO 27001, GDPR)",
+          "Pricing model breakdown (reserved instances, egress cost caps, support tiers)",
+          "Submission timeline, scoring rubric, and procurement evaluation phases"
         ],
         "difficulty": 1
       },
-      "draftPrompt": "inewiojfiowfoweofnwoefowemgomweogmnoimgikowrmogmwrogmnrngn",
-      "submittedPrompt": "inewiojfiowfoweofnwoefowemgomweogmnoimgikowrmogmwrogmnrngn",
-      "submittedAt": 1789798981289,
-      "timerUsedSeconds": 17,
+      "draftPrompt": "aaaaaaaaaaa cloud aaaaaaaaaaaaaaaaaaaaaaaaa asadjaj ashdaj asihdaj dsj ha",
+      "submittedPrompt": "aaaaaaaaaaa cloud aaaaaaaaaaaaaaaaaaaaaaaaa asadjaj ashdaj asihdaj dsj ha",
+      "submittedAt": 1789801995444,
+      "timerUsedSeconds": 82,
       "editCount": 1,
       "submissionStatus": "evaluated",
       "evaluation": {
-        "clarity_score": 0,
-        "context_score": 0,
-        "constraints_score": 0,
-        "format_score": 0,
-        "creativity_score": 0,
-        "total_score": 0,
-        "reasoning": "The submitted prompt is nonsensical gibberish, providing no clear instruction, context, constraints, or output format, and demonstrates no creative prompt engineering techniques.",
+        "clarity_score": 1,
+        "context_score": 1,
+        "constraints_score": 1,
+        "format_score": 1,
+        "creativity_score": 1,
+        "total_score": 5,
+        "reasoning": "Awarded 5/20 on the official championship rubric. Basic prompt makeover in BUSINESS. Needs more comprehensive persona definition, explicit negative guardrails, and output schemas.",
         "strengths": [
-          "Structured prompt makeover"
+          "Improved length and structure over defective baseline"
         ],
         "improvements": [
-          "Replace the gibberish with a clear, specific instruction describing the desired comic scene.",
-          "Define a persona (e.g., seasoned comic writer), include constraints (tone, length, character details), and specify the output structure (e.g., panel descriptions, dialogue)."
+          "Incorporate quantifiable targets, exact audience segments, or explicit scope boundaries.",
+          "Specify an expert persona (e.g. 'Act as a Senior AI Architect' or 'Act as a Brand Strategist').",
+          "Add negative exclusions (e.g. 'Avoid generic clichés' or 'Do not use technical jargon') to prevent hallucination.",
+          "Clearly state the required presentation format (tables, headers, or bullet points)."
         ]
       },
       "isEliminated": true,
@@ -269,46 +231,46 @@
             "style": "High-fantasy utopian architectural concept art, volumetric god rays"
           }
         },
-        "draftPrompt": "mwenjiwebncjwbinewjo bnweinjoweihwebj weh bwen jowbeh inweocjoewncemoimakamcneouianuicnbeu njn jn n j",
-        "submittedPrompt": "mwenjiwebncjwbinewjo bnweinjoweihwebj weh bwen jowbeh inweocjoewncemoimakamcneouianuicnbeu njn jn n j",
-        "submittedAt": 1789799500268,
+        "draftPrompt": "goated , pink colour , neon , cyperpunk , prompt wars ",
+        "submittedPrompt": "goated , pink colour , neon , cyperpunk , prompt wars",
+        "submittedAt": 1789802040131,
         "evaluation": {
-          "composition_score": 0,
-          "colors_score": 0,
-          "subject_score": 0,
-          "style_score": 0,
-          "total_score": 0,
-          "reasoning": "The submitted prompt is nonsensical gibberish and does not convey any meaningful description of the target image. It lacks any reference to camera angle, composition, color palette, lighting, subjects, or stylistic cues such as render engine or resolution. Consequently, it fails to capture any of the required visual elements.",
-          "matched_elements": [],
+          "composition_score": 1.5,
+          "colors_score": 3.5,
+          "subject_score": 2.5,
+          "style_score": 2.5,
+          "total_score": 10,
+          "reasoning": "Reverse engineering accuracy: 10/20. Basic recreation. Enhance camera perspective, lighting nuance, and render style cues.",
+          "matched_elements": [
+            "Atmospheric lighting & color palette identified"
+          ],
           "missed_elements": [
-            "Massive anti-gravity floating islands with futuristic architecture",
-            "Cascading waterfalls pouring into golden fluffy cloudscapes",
-            "Lush rooftop eco-gardens, vertical forests, and solar-glass domes",
-            "Sleek aerodynamic airships and solar gliders sailing between islands",
-            "Warm golden hour sunset lighting with volumetric sun rays"
+            "Specify camera angle (e.g. low-angle, wide-shot, macro)",
+            "Include more granular physical scene objects and environment details",
+            "Add rendering engine parameters or photographic lens specifications"
           ]
         },
-        "totalScore": 0,
-        "isQualified": false,
-        "isEliminated": true,
-        "rank": 2,
-        "c1_draft": "mwenjiwebncjwbinewjo bnweinjoweihwebj weh bwen jowbeh inweocjoewncemoimakamcneouianuicnbeu njn jn n j",
-        "c1_submittedPrompt": "mwenjiwebncjwbinewjo bnweinjoweihwebj weh bwen jowbeh inweocjoewncemoimakamcneouianuicnbeu njn jn n j",
-        "c1_submittedAt": 1789799500268,
+        "totalScore": 10,
+        "isQualified": true,
+        "isEliminated": false,
+        "rank": 1,
+        "c1_draft": "goated , pink colour , neon , cyperpunk , prompt wars ",
+        "c1_submittedPrompt": "goated , pink colour , neon , cyperpunk , prompt wars",
+        "c1_submittedAt": 1789802040131,
         "c1_evaluation": {
-          "composition_score": 0,
-          "colors_score": 0,
-          "subject_score": 0,
-          "style_score": 0,
-          "total_score": 0,
-          "reasoning": "The submitted prompt is nonsensical gibberish and does not convey any meaningful description of the target image. It lacks any reference to camera angle, composition, color palette, lighting, subjects, or stylistic cues such as render engine or resolution. Consequently, it fails to capture any of the required visual elements.",
-          "matched_elements": [],
+          "composition_score": 1.5,
+          "colors_score": 3.5,
+          "subject_score": 2.5,
+          "style_score": 2.5,
+          "total_score": 10,
+          "reasoning": "Reverse engineering accuracy: 10/20. Basic recreation. Enhance camera perspective, lighting nuance, and render style cues.",
+          "matched_elements": [
+            "Atmospheric lighting & color palette identified"
+          ],
           "missed_elements": [
-            "Massive anti-gravity floating islands with futuristic architecture",
-            "Cascading waterfalls pouring into golden fluffy cloudscapes",
-            "Lush rooftop eco-gardens, vertical forests, and solar-glass domes",
-            "Sleek aerodynamic airships and solar gliders sailing between islands",
-            "Warm golden hour sunset lighting with volumetric sun rays"
+            "Specify camera angle (e.g. low-angle, wide-shot, macro)",
+            "Include more granular physical scene objects and environment details",
+            "Add rendering engine parameters or photographic lens specifications"
           ]
         }
       },
@@ -325,12 +287,6 @@
         "evaluation": null,
         "finalRank": null,
         "isWinner": false
-      },
-      "sandbox": {
-        "r1RunsLeft": 5,
-        "r2RunsLeft": 4,
-        "r3RunsLeft": 4,
-        "totalRunsUsed": 0
       }
     }
   ]
