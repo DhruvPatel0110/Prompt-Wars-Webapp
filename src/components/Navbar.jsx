@@ -7,7 +7,7 @@ import { soundEngine } from '../utils/audio';
 
 export const Navbar = ({ isAdminRoute, onNavigate }) => {
   const { teamUser, adminUser, logoutTeam, logoutAdmin } = useAuth();
-  const { isConnected, latency, serverTimer } = useSocket();
+  const { isConnected, latency, serverTimer, teamState } = useSocket();
   const [audioEnabled, setAudioEnabled] = useState(true);
 
   const toggleSound = () => {
@@ -23,6 +23,26 @@ export const Navbar = ({ isAdminRoute, onNavigate }) => {
       logoutTeam();
     }
   };
+
+  // Determine if tournament has started
+  const activeRound = serverTimer?.activeRound || teamState?.activeRound || 1;
+  const isRound1Active = serverTimer?.status === 'ACTIVE' || 
+                         serverTimer?.timerRunning || 
+                         teamState?.roundState?.status === 'ACTIVE' || 
+                         teamState?.roundState?.timerRunning ||
+                         (!serverTimer?.isLocked && serverTimer?.isLocked !== undefined && !teamState?.roundState?.isLocked);
+
+  const hasTeamStarted = Boolean(
+    teamState?.team?.spinResult ||
+    (teamState?.team?.submissionStatus && teamState?.team?.submissionStatus !== 'idle') ||
+    teamState?.team?.submittedPrompt
+  );
+
+  const isGameStarted = activeRound > 1 || isRound1Active || hasTeamStarted || teamState?.roundState?.advanceTriggered;
+  const isLobby = !isGameStarted;
+
+  // Allow switch/change team ONLY for host (Exit) OR students in the pre-game lobby
+  const canSwitchTeam = isAdminRoute || isLobby;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#1f2b48]/80 bg-[#070a13]/85 backdrop-blur-xl">
@@ -129,14 +149,16 @@ export const Navbar = ({ isAdminRoute, onNavigate }) => {
                 )}
               </div>
 
-              <button
-                onClick={handleLogout}
-                title={isAdminRoute ? "Exit Host Portal" : "Switch / Change Team"}
-                className="px-2.5 py-1.5 rounded-lg bg-[#0d1424] border border-[#1f2b48] hover:border-red-500/40 text-gray-300 hover:text-red-300 text-xs font-mono flex items-center gap-1.5 transition-colors"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">{isAdminRoute ? 'Exit' : 'Switch Team'}</span>
-              </button>
+              {canSwitchTeam && (
+                <button
+                  onClick={handleLogout}
+                  title={isAdminRoute ? "Exit Host Portal" : "Switch / Change Team"}
+                  className="px-2.5 py-1.5 rounded-lg bg-[#0d1424] border border-[#1f2b48] hover:border-red-500/40 text-gray-300 hover:text-red-300 text-xs font-mono flex items-center gap-1.5 transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">{isAdminRoute ? 'Exit' : 'Switch Team'}</span>
+                </button>
+              )}
             </div>
           )}
         </div>

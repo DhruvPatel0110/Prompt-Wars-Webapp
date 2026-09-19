@@ -18,6 +18,13 @@ Key Metrics & Constraints:
 - Team: 25 active student volunteers
 - Constraint: 2 rival college fests on the exact same weekend
 
+Required Strategic Pillars (5 Max):
+1. Target Audience Personas & Unique Fest Positioning vs Rivals
+2. Zero-Cost Guerrilla Marketing & Viral Reels Campaign Plan
+3. Campus Ambassador Network & Squad Referral Incentive Mechanics
+4. Granular ₹20,000 Budget Allocation Table (Line Item | Cost | ROI)
+5. 30-Day Phased Execution Timeline (Tease -> Blitz -> Ticket Rush)
+
 30-Second Sabotage ("The Bomb"):
 🚨 BUDGET EMERGENCY: ₹20,000 SLASHED TO ₹4,000!
 The college finance committee froze funds! Your marketing budget is slashed from ₹20,000 down to ₹4,000. All paid flyers, posters, and paid influencer promotions are immediately revoked.
@@ -41,6 +48,13 @@ Key Metrics & Constraints:
 - Budget: ₹35,000 marketing & ops reserve
 - Timeline: 3 weeks to launch
 - Constraint: Hostel curfews (9:30 PM) and battery range anxiety
+
+Required Strategic Pillars (5 Max):
+1. Brand Positioning & Overcoming Student Range Anxiety
+2. Campus Launch Blitz & Subscription Pass Tiers (Daily / Weekly)
+3. Battery Swapping SLA & Fleet Rebalancing Logistics Protocol
+4. Granular ₹35,000 Budget Allocation & Unit Economics Table
+5. 3-Week Phased Rollout Roadmap & Safety Geofencing Rules
 
 30-Second Sabotage ("The Bomb"):
 🚨 INFRASTRUCTURE HALT: 4 OUT OF 6 HUBS DENIED PERMITS!
@@ -66,6 +80,13 @@ Key Metrics & Constraints:
 - Average Order Value: ₹150 (Snacks, noodles, energy drinks, stationery)
 - Constraint: Hostel warden restrictions on external deliveries after 10 PM
 
+Required Strategic Pillars (5 Max):
+1. High-Demand Late-Night Snack Catalog & Pricing Structure
+2. 15-Minute Fast Order Packing & Bicycle Routing Blueprint
+3. Hostel Launch Campaign & Midnight Study Squad Combo Deals
+4. Granular ₹25,000 Budget & Courier Shift Incentive Matrix
+5. Hostel Gate Handover Protocols & Out-of-Stock Contingency Plan
+
 30-Second Sabotage ("The Bomb"):
 🚨 ENTRY CRACKDOWN: HOSTELS BAN GATE DELIVERIES AFTER 11 PM!
 Hostel administration strictly bans delivery couriers from approaching hostel gates past 11:00 PM to curb late-night noise!
@@ -89,6 +110,13 @@ Key Metrics & Constraints:
 - Timeline: 6 weeks
 - Core Feature: Round-up savings on UPI spends + visual spending limits
 - Constraint: Trust barrier regarding banking data safety
+
+Required Strategic Pillars (5 Max):
+1. Relatable Brand Persona & Student Financial Literacy Framing
+2. Viral TikTok/Reels Campaign on 'Month-End Broke Student Struggles'
+3. Gamified Savings Streaks, Round-Ups & Peer Accountability Groups
+4. Granular ₹30,000 User Acquisition & Cashback Incentive Budget
+5. 6-Week Launch Roadmap (Campus Closed Beta -> Public Rollout)
 
 30-Second Sabotage ("The Bomb"):
 🚨 VIRAL RUMOR SCARE: FAKE DATA PRIVACY CONCERNS ON CAMPUS!
@@ -114,6 +142,13 @@ Key Metrics & Constraints:
 - Average Bill: ₹120 (Coffee + snack combo)
 - Constraint: Students occupying tables for 4+ hours with a single ₹50 order
 
+Required Strategic Pillars (5 Max):
+1. Unique Café Value Proposition & Aesthetic Workspace Ambience
+2. Grand Opening Campaign (Free-Coffee Hour & Student Artist Buzz)
+3. Fair Workspace Table-Use Pass System & Student-Friendly Menu Combos
+4. Granular ₹40,000 Opening Decor, Marketing & Promo Budget Table
+5. 14-Day Launch Countdown Checklist & Community Coding/Art Meetups
+
 30-Second Sabotage ("The Bomb"):
 🚨 FIBER OUTAGE: MAIN COMMERCIAL BROADBAND LINE CUT!
 Road construction severed the main optical fiber line 48 hours before opening! High-speed internet will be down for the entire first week.
@@ -138,6 +173,13 @@ Key Metrics & Constraints:
 - Timeline: 4 weeks
 - Constraint: Perception that healthy food is bland, boring, and expensive
 
+Required Strategic Pillars (5 Max):
+1. Flavor-First Indian Healthy Menu Positioning & Value Proposition
+2. 7-Day Free AI WhatsApp Fitness Coach Lead Generation Funnel
+3. Tiered Meal Subscription Plans (Lunch-only, 30-Day Fitness Pack)
+4. Granular ₹30,000 Sampling, Marketing & Referral Budget Matrix
+5. Kitchen Packaging, Daily Delivery Routes & Freshness SLA
+
 30-Second Sabotage ("The Bomb"):
 🚨 INGREDIENT INFLATION: PANEER & CHICKEN COSTS SURGE 50%!
 Wholesale market supply disruptions caused the price of core proteins (paneer, chicken, soy) to spike by 50%, threatening your ₹79 price cap!
@@ -160,6 +202,13 @@ Key Metrics & Constraints:
 - Monetization: Rewarded video ads + ₹99 ad-free cosmetic skins
 - Retention Target: 45% Day-1 player retention
 - Constraint: Competing against giant gaming studios with massive ad budgets
+
+Required Strategic Pillars (5 Max):
+1. Game Hook & App Store Optimization (Title, Icon, Video Trailer)
+2. Short-Form Video Strategy (TikTok/Reels 'Impossible Level' Clips)
+3. Micro-Streamer & Gaming Creator Outreach Campaign
+4. Granular ₹25,000 Creator Gifting & Tournament Prize Budget
+5. In-Game Social Share Triggers & Daily Login Retention Mechanics
 
 30-Second Sabotage ("The Bomb"):
 🚨 STORE DELAY: IOS APP STORE APPROVAL STUCK IN REVIEW!
@@ -185,6 +234,13 @@ Key Metrics & Constraints:
 - Timeline: 3 weeks to launch
 - Constraint: Buyer concerns over clothing hygiene, fabric quality, and sizing
 
+Required Strategic Pillars (5 Max):
+1. Brand Identity & Eco-Friendly Streetwear Aesthetic
+2. Seller Acquisition Blitz (Hostel Room-Wardrobe Cleanout Drive)
+3. Hygiene & Quality Verification Standard (Clean-Wash Badge System)
+4. Seamless Campus Pickup, Drop-off Kiosks & Delivery Logistics
+5. Granular ₹20,000 Packaging, Photography & Pop-Up Promo Budget
+
 30-Second Sabotage ("The Bomb"):
 🚨 VENUE SHUTDOWN: CAMPUS FASHION POP-UP PERMIT REVOKED!
 College administrators suddenly canceled your weekend flea market stall permit due to lawn maintenance!
@@ -209,6 +265,13 @@ Key Metrics & Constraints:
 - Mentors: 4 senior tech mentors & open-source contributors
 - Constraint: High dropout rates typical in online courses
 
+Required Strategic Pillars (5 Max):
+1. Practical Project-First Curriculum Positioning (5 Ship-Ready Projects)
+2. Free 2-Hour 'Build Your First AI App' Lead Magnet Workshop Funnel
+3. Discord Pair-Programming Accountability Squads & Peer Reviews
+4. Granular ₹25,000 Ads, Club Sponsorships & Refund Bounty Budget
+5. 14-Day Admissions Roadmap & Recruiter Demo Day Showcase
+
 30-Second Sabotage ("The Bomb"):
 🚨 LEAD MENTOR EMERGENCY: 2 OUT OF 4 MENTORS DROP OUT!
 Two key mentors experienced sudden work travel and had to drop out 48 hours before the cohort kick-off!
@@ -231,7 +294,14 @@ Key Metrics & Constraints:
 - Doctors: 20 verified licensed veterinarians on rotational shifts
 - Budget: ₹35,000
 - Timeline: 3 weeks to launch
-- Constraint: Building deep medical credibility and overcoming app adoption hesitation
+- Constraint: Building medical trust and emergency video triage reliability
+
+Required Strategic Pillars (5 Max):
+1. Empathetic Brand Messaging & 24/7 Emergency Care Value Proposition
+2. Late-Night 'Vet on Call' Digital Awareness & Search Ad Campaign
+3. 60-Second Video Triage & Doctor Matching Technical SLA Protocol
+4. Granular ₹35,000 Marketing, Vet Incentives & Promo Budget Table
+5. 3-Week Phased Launch Roadmap & Hospital Transfer Contingency
 
 30-Second Sabotage ("The Bomb"):
 🚨 TRAFFIC SURGE: VIDEO SERVER BOTTLENECK!

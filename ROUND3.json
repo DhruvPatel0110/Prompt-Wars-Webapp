@@ -18,20 +18,14 @@
           "marketingBudget": "₹20,000 Total",
           "promotionPeriod": "30 Days",
           "volunteerTeam": "25 Active College Volunteers",
-          "currentEngagement": "Low (< 2% Social Media Engagement)",
           "keyConstraint": "Overlapping dates with 2 major rival campus festivals"
         },
         "requiredPillars": [
-          "1. Target Audience Segmentation (Engineering, Arts, Management students)",
-          "2. Zero-Cost Guerrilla Marketing & Campus Buzz Strategy",
-          "3. High-Engagement Instagram Reels & Viral TikTok/Shorts Plan",
-          "4. Campus Ambassador Network & Squad Referral Incentives",
-          "5. Granular ₹20,000 Budget Allocation Breakdown",
-          "6. 30-Day Phased Execution Timeline (Tease -> Blitz -> Ticket Rush -> Event Days)",
-          "7. Unique Festival USPs & Headliner Competition Hooks to beat rival fests",
-          "8. Measurable Conversion KPIs & Daily Registration Benchmarks",
-          "9. Risk Management & Low-Turnout Contingency Safeguards",
-          "10. Post-Event Feedback & Community Retention Strategy"
+          "1. Target Audience Personas & Unique Fest Positioning vs Rivals",
+          "2. Zero-Cost Guerrilla Marketing & Viral Reels Campaign Plan",
+          "3. Campus Ambassador Network & Squad Referral Incentive Mechanics",
+          "4. Granular ₹20,000 Budget Allocation Table (Line Item | Cost | ROI)",
+          "5. 30-Day Phased Execution Timeline (Tease -> Blitz -> Ticket Rush)"
         ]
       },
       "bombs": [
@@ -57,20 +51,14 @@
           "targetSubscribers": "500 Daily Active Riders in Month 1",
           "launchBudget": "₹35,000 Marketing & Ops Reserve",
           "timeline": "3 Weeks to Launch",
-          "rentalPricing": "₹10 Base Fare + ₹2 per Minute",
           "keyConstraint": "Hostel curfews (9:30 PM) and battery range anxiety"
         },
         "requiredPillars": [
-          "1. Brand Positioning & Solving Student Commute Bottlenecks",
-          "2. Campus Launch Blitz & Free First-Ride Activation Campaign",
-          "3. Subscription Pass Tiers (Daily, Weekly, Monthly Hostel Pass)",
-          "4. Battery Swapping & Maintenance Logistics Protocol",
-          "5. Granular ₹35,000 Budget Allocation Table",
-          "6. 3-Week Phased Rollout Roadmap (Beta Testers -> Full Fleet)",
-          "7. Gamified Clean-Riding Rewards & Peer Referral Program",
-          "8. Safety Guidelines, Speed Zones, & Geofencing Rules",
-          "9. Breakdown Assistance & Nighttime Scooter Relocation Protocol",
-          "10. Key Performance Metrics (Trips per scooter/day, Fleet Uptime)"
+          "1. Brand Positioning & Overcoming Student Range Anxiety",
+          "2. Campus Launch Blitz & Subscription Pass Tiers (Daily / Weekly)",
+          "3. Battery Swapping SLA & Fleet Rebalancing Logistics Protocol",
+          "4. Granular ₹35,000 Budget Allocation & Unit Economics Table",
+          "5. 3-Week Phased Rollout Roadmap & Safety Geofencing Rules"
         ]
       },
       "bombs": [
@@ -96,20 +84,14 @@
           "studentCouriers": "15 Part-Time Student Couriers with Bicycles",
           "launchBudget": "₹25,000",
           "averageOrderValue": "₹150 (Snacks, Maggi, Energy Drinks, Stationery)",
-          "targetDeliveryTime": "Under 15 Minutes Guaranteed",
           "keyConstraint": "Hostel warden restrictions on external deliveries after 10 PM"
         },
         "requiredPillars": [
-          "1. Product Catalog Selection (High-demand late-night impulse items)",
-          "2. Fast 15-Minute Packing & Delivery Routing Blueprint",
-          "3. Midnight Launch Campaign & Hostel Room Teaser Activation",
-          "4. Courier Incentive Structure & Student Delivery Shift Mechanics",
-          "5. ₹25,000 Marketing, Inventory & Tech Budget Allocation",
-          "6. 4-Week Step-by-Step Launch Gantt Roadmap",
-          "7. 'Midnight Study Squad' Combo Discounts & Social Referral Loops",
-          "8. Quality Assurance & Handling Out-of-Stock Situations",
-          "9. Hostel Delivery Drop-Box & Gate Handover Protocols",
-          "10. Target Economics (Cost per delivery, Daily Breakeven Volume)"
+          "1. High-Demand Late-Night Snack Catalog & Pricing Structure",
+          "2. 15-Minute Fast Order Packing & Bicycle Routing Blueprint",
+          "3. Hostel Launch Campaign & Midnight Study Squad Combo Deals",
+          "4. Granular ₹25,000 Budget & Courier Shift Incentive Matrix",
+          "5. Hostel Gate Handover Protocols & Out-of-Stock Contingency Plan"
         ]
       },
       "bombs": [
@@ -134,21 +116,14 @@
           "targetAverageSavings": "₹500 Saved per Student Monthly",
           "launchBudget": "₹30,000",
           "timeline": "6 Weeks",
-          "keyFeature": "Round-up savings on UPI spends + visual spending limits",
-          "studentPainPoint": "Zero financial discipline & running out of pocket money by week 2",
-          "keyConstraint": "Trust barrier regarding banking data and app safety"
+          "keyConstraint": "Trust barrier regarding banking data safety & financial skepticism"
         },
         "requiredPillars": [
-          "1. Relatable Brand Persona (Friendly financial mentor, not boring bank)",
-          "2. Viral TikTok/Reels Campaign on 'End-of-Month Broke Student Struggles'",
-          "3. Gamified Savings Streaks & Daily Expense Tracking Challenges",
-          "4. Campus Influencer & Student Club Partnership Mechanics",
-          "5. Granular ₹30,000 Acquisition & Reward Budget Matrix",
-          "6. 6-Week Launch Roadmap (Campus Closed Beta -> Public Rollout)",
-          "7. Trust & Security Messaging (Explaining 256-bit encryption & RBI compliance)",
-          "8. 'Save Together' Group Budgeting for Flatmates & Travel Trips",
-          "9. Risk Management for Inactive Users & Dropout Prevention",
-          "10. Growth Metrics (Daily Active Users, Average Monthly Savings Rate)"
+          "1. Relatable Brand Persona & Student Financial Literacy Framing",
+          "2. Viral TikTok/Reels Campaign on 'Month-End Broke Student Struggles'",
+          "3. Gamified Savings Streaks, Round-Ups & Peer Accountability Groups",
+          "4. Granular ₹30,000 User Acquisition & Cashback Incentive Budget",
+          "5. 6-Week Launch Roadmap (Campus Closed Beta -> Public Rollout)"
         ]
       },
       "bombs": [
@@ -167,27 +142,20 @@
       "category": "Hospitality & Community Space",
       "difficulty": "Medium",
       "scenario": {
-        "context": "An entrepreneur is opening a vibrant, budget-friendly specialty coffee shop and study café right outside a university district. The space offers high-speed Wi-Fi, silent study pods, and affordable quality coffee. The goal is to build a thriving daily community of coders, artists, and study groups.",
+        "context": "An entrepreneur is opening a vibrant, budget-friendly specialty coffee shop and study café right outside a university district. The space offers high-speed Wi-Fi, silent study pods, and affordable quality coffee to build a daily community of coders, artists, and study groups.",
         "metrics": {
           "seatingCapacity": "60 Seats (Including 15 Quiet Work Pods)",
           "targetDailyFootfall": "180 Customers per Day",
           "launchBudget": "₹40,000",
           "timeline": "2 Weeks to Grand Opening",
-          "averageBill": "₹120 (Coffee + Snack Combo)",
-          "competitors": "Noisy fast-food chains and overpriced commercial cafes",
-          "keyConstraint": "Students taking tables for 4+ hours with a single ₹50 order"
+          "keyConstraint": "Students occupying tables for 4+ hours with a single ₹50 order"
         },
         "requiredPillars": [
           "1. Unique Café Value Proposition & Aesthetic Workspace Ambience",
-          "2. Grand Opening Buzz (Opening Day Free-Coffee Hour & Live Music)",
-          "3. Fair Table-Use & Workspace Pass System (Study Pass vs Casual Seating)",
-          "4. Student-Friendly Menu Matrix (Affordable combos, healthy study bites)",
-          "5. Granular ₹40,000 Marketing, Opening Decor & Promo Budget",
-          "6. 14-Day Day-by-Day Launch Countdown Checklist",
-          "7. Loyalty Punch-Card System & 'Study Marathon' Stamper Perks",
-          "8. Community Events (Coding meetups, open-mic nights, board game Sundays)",
-          "9. Peak-Hour Seating Management & Overflow Contingency Protocols",
-          "10. Monthly Revenue & Daily Footfall Break-Even Projections"
+          "2. Grand Opening Campaign (Free-Coffee Hour & Student Artist Buzz)",
+          "3. Fair Workspace Table-Use Pass System & Student-Friendly Menu Combos",
+          "4. Granular ₹40,000 Opening Decor, Marketing & Promo Budget Table",
+          "5. 14-Day Launch Countdown Checklist & Community Coding/Art Meetups"
         ]
       },
       "bombs": [
@@ -212,21 +180,14 @@
           "mealPrice": "₹79 per balanced meal (Protein-rich, fresh)",
           "kitchenCapacity": "500 Meals Prepared Daily",
           "launchBudget": "₹30,000",
-          "timeline": "4 Weeks",
-          "primaryCompetitors": "Oily hostel mess food and expensive fitness cafes",
           "keyConstraint": "Perception that healthy food is bland, boring, and expensive"
         },
         "requiredPillars": [
-          "1. Flavor-First Healthy Menu Positioning (Tasty Indian bowls, not raw salads)",
-          "2. 7-Day Free AI WhatsApp Diet Coach Lead Generation Funnel",
+          "1. Flavor-First Indian Healthy Menu Positioning & Value Proposition",
+          "2. 7-Day Free AI WhatsApp Fitness Coach Lead Generation Funnel",
           "3. Tiered Meal Subscription Plans (Lunch-only, 30-Day Fitness Pack)",
-          "4. Kitchen Sourcing, Packaging & Daily Delivery Route Blueprint",
-          "5. Granular ₹30,000 Digital Ads, Sampling & Referral Budget Matrix",
-          "6. 4-Week Launch Roadmap (Free Tasting Booths -> Paid Subscriptions)",
-          "7. 'Hostel Transformation' Fitness Challenge with Cash & Merch Prizes",
-          "8. Quality Assurance, Freshness Guarantees & Meal Customization Rules",
-          "9. Subscription Pause/Cancellation Flexibility Policy for Vacations",
-          "10. Unit Economics (Cost per meal, Packaging cost, Customer Lifetime Value)"
+          "4. Granular ₹30,000 Sampling, Marketing & Referral Budget Matrix",
+          "5. Kitchen Packaging, Daily Delivery Routes & Freshness SLA"
         ]
       },
       "bombs": [
@@ -245,26 +206,20 @@
       "category": "Gaming, Entertainment & Digital Media",
       "difficulty": "Medium",
       "scenario": {
-        "context": "A 4-person indie gaming studio developed an addictive, physics-based mobile puzzle game with vibrant pixel art. The game is polished and bug-free, but with zero publisher backing, they must generate 50,000 organic downloads in the first month on Google Play and App Store.",
+        "context": "A 4-person indie gaming studio developed an addictive, physics-based mobile puzzle game with vibrant pixel art. With zero publisher backing, they must generate 50,000 organic downloads in the first month on Google Play and App Store.",
         "metrics": {
           "downloadTarget": "50,000 Downloads in Month 1",
           "marketingBudget": "₹25,000 Total",
           "monetization": "Rewarded video ads + ₹99 Ad-free cosmetic skins",
-          "targetD1Retention": "45% Day-1 Player Retention Target",
-          "gameStyle": "One-tap addictive physics mechanics (Easy to learn, hard to master)",
-          "keyConstraint": "Competing against giant game studios with million-dollar ad budgets"
+          "targetRetention": "45% Day-1 Player Retention Target",
+          "keyConstraint": "Competing against giant game studios with massive ad budgets"
         },
         "requiredPillars": [
-          "1. Game Hook & App Store Optimization (ASO title, icon, trailer design)",
-          "2. Short-Form Video Strategy (TikTok/Reels/Shorts 'Impossible Level' clips)",
+          "1. Game Hook & App Store Optimization (Title, Icon, Video Trailer)",
+          "2. Short-Form Video Strategy (TikTok/Reels 'Impossible Level' Clips)",
           "3. Micro-Streamer & Gaming Creator Outreach Campaign",
-          "4. In-Game Social Share Triggers (Funny loss animations, brag screens)",
-          "5. Granular ₹25,000 Creator Gifting & Community Tournaments Budget",
-          "6. 30-Day Pre-Registration & Launch Schedule Roadmap",
-          "7. Daily Login Rewards & Level-Editor Community Creation Contests",
-          "8. Retention Funnel (Push notification timing, difficulty balancing)",
-          "9. Handling Negative Reviews & Rapid Community Feedback Loops",
-          "10. Monetization Balance (Ensuring ads don't ruin gameplay flow)"
+          "4. Granular ₹25,000 Creator Gifting & Tournament Prize Budget",
+          "5. In-Game Social Share Triggers & Daily Login Retention Mechanics"
         ]
       },
       "bombs": [
@@ -283,27 +238,20 @@
       "category": "E-Commerce, Sustainability & Creator Economy",
       "difficulty": "Medium",
       "scenario": {
-        "context": "A student-run sustainable fashion platform allows university students to buy, sell, and upcycle pre-loved clothing, streetwear, and sneakers. The goal is to reduce fast-fashion waste, make trendy clothing affordable, and let students earn extra cash from their closets.",
+        "context": "A student-run sustainable fashion platform allows university students to buy, sell, and upcycle pre-loved clothing, streetwear, and sneakers to make trendy fashion affordable and let students earn extra cash from their closets.",
         "metrics": {
           "targetListings": "1,500 Curated Clothing Items in Month 1",
           "targetTransactions": "600 Completed Orders in 30 Days",
           "commissionRate": "10% Platform Fee on Successful Sales",
           "launchBudget": "₹20,000",
-          "timeline": "3 Weeks to Launch",
-          "sellerBase": "Hostel students clearing wardrobes + student fashion designers",
           "keyConstraint": "Buyer concerns over clothing hygiene, fabric quality, and sizing"
         },
         "requiredPillars": [
           "1. Brand Identity & Eco-Friendly Streetwear Aesthetic",
-          "2. Seller Acquisition Blitz (Hostel room-wardrobe cleanout drive)",
+          "2. Seller Acquisition Blitz (Hostel Room-Wardrobe Cleanout Drive)",
           "3. Hygiene & Quality Verification Standard (Clean-Wash Badge System)",
-          "4. Seamless Campus Pickup, Drop-off & Try-on Kiosk Logistics",
-          "5. Granular ₹20,000 Photography, Packaging & Promo Budget Table",
-          "6. 3-Week Phased Launch Timeline (Seller Onboarding -> Fashion Pop-Up)",
-          "7. Live 'Campus Runway' Thrift Fashion Show & Influencer Styling Challenge",
-          "8. Buyer Protection & No-Hassle Instant Exchange Guarantee",
-          "9. Fraud Prevention (Preventing damaged or counterfeit clothing items)",
-          "10. Marketplace Health KPIs (Listing-to-sale velocity, Repeat buyer rate)"
+          "4. Seamless Campus Pickup, Drop-off Kiosks & Delivery Logistics",
+          "5. Granular ₹20,000 Packaging, Photography & Pop-Up Promo Budget"
         ]
       },
       "bombs": [
@@ -328,21 +276,14 @@
           "courseFee": "₹499 (Accessible pricing for college students)",
           "marketingBudget": "₹25,000",
           "promotionPeriod": "2 Weeks",
-          "mentorTeam": "4 Senior Tech Mentors & Open-Source Contributors",
-          "studentPainPoint": "Boring college syllabus with zero industry-ready project experience",
-          "keyConstraint": "High dropout rates typical in online courses"
+          "keyConstraint": "High dropout rates typical in online cohort courses"
         },
         "requiredPillars": [
           "1. Practical Project-First Curriculum Positioning (5 Ship-Ready Projects)",
-          "2. Free 2-Hour 'Build Your First AI App' Workshop Lead Magnet Funnel",
-          "3. Discord/Slack Community Accountability Squads (Pair-Programming)",
-          "4. Campus Tech Society & Coding Club Partnership Program",
-          "5. Granular ₹25,000 Budget Allocation Breakdown",
-          "6. 14-Day Cohort Admissions Countdown Roadmap",
-          "7. 100% Course Fee Refund Bounty for Top 10 Project Builders",
-          "8. Recruiter Demo Day & Portfolio Showcase Integration",
-          "9. Anti-Drop-Out Mechanics (Daily milestone check-ins, mentor office hours)",
-          "10. Enrollment Conversion & Post-Cohort Placement Success KPIs"
+          "2. Free 2-Hour 'Build Your First AI App' Lead Magnet Workshop Funnel",
+          "3. Discord Pair-Programming Accountability Squads & Peer Reviews",
+          "4. Granular ₹25,000 Ads, Club Sponsorships & Refund Bounty Budget",
+          "5. 14-Day Admissions Roadmap & Recruiter Demo Day Showcase"
         ]
       },
       "bombs": [
@@ -367,21 +308,14 @@
           "consultationFee": "₹199 per 15-Minute Video Call (First call 50% off)",
           "onboardedVets": "20 Verified Licensed Veterinarians on Rotational Shifts",
           "launchBudget": "₹35,000",
-          "timeline": "3 Weeks to Launch",
-          "keyUserNeed": "Instant 60-second connection during nighttime pet emergencies",
-          "keyConstraint": "Building deep medical credibility and overcoming app adoption hesitation"
+          "keyConstraint": "Building medical trust and emergency video triage reliability"
         },
         "requiredPillars": [
-          "1. Empathetic Brand Messaging & Immediate Emergency Value Proposition",
+          "1. Empathetic Brand Messaging & 24/7 Emergency Care Value Proposition",
           "2. Late-Night 'Vet on Call' Digital Awareness & Search Ad Campaign",
-          "3. Pet Parent Community Outreach (Dog parks, pet cafes, animal shelters)",
-          "4. 60-Second Video Triage & Doctor Matching Technical SLA",
-          "5. Granular ₹35,000 Marketing, Vet Incentives & Promo Budget Table",
-          "6. 3-Week Phased Launch Roadmap (Doctor Testing -> Public Launch)",
-          "7. Free Digital Pet Health Record & Vaccination Reminder Tool as Hook",
-          "8. Tiered Monthly Unlimited Pet-Care Subscription Pass (₹399/month)",
-          "9. Emergency Escalation Protocol for In-Person Hospital Transfer",
-          "10. Key Metrics (Response time under 90s, Customer Satisfaction Rating)"
+          "3. 60-Second Video Triage & Doctor Matching Technical SLA Protocol",
+          "4. Granular ₹35,000 Marketing, Vet Incentives & Promo Budget Table",
+          "5. 3-Week Phased Launch Roadmap & Hospital Transfer Contingency"
         ]
       },
       "bombs": [

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Play, Pause, RotateCcw, Lock, Unlock, Zap, Flame, Trophy, 
-  Sparkles, CheckCircle2, AlertTriangle, FileText, Search, Eye, Sliders, ShieldAlert 
+  Sparkles, CheckCircle2, AlertTriangle, FileText, Search, Eye, Sliders, ShieldAlert, RefreshCw 
 } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
 
@@ -9,11 +9,13 @@ export const HostRound3Control = () => {
   const { socket, hostState, serverTimer } = useSocket();
 
   const [isEvaluating, setIsEvaluating] = useState(false);
+  const [evalProgress, setEvalProgress] = useState(null);
   const [showBombConfirm, setShowBombConfirm] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   const round3State = hostState?.round3State || {};
-  const teams = (hostState?.teams || []).filter(t => t.round2?.isQualified || t.isQualified);
+  const qualifiedTeams = (hostState?.teams || []).filter(t => (t.round2?.isQualified && !t.round2?.isEliminated) || (t.isQualified && !t.isEliminated));
+  const teams = qualifiedTeams.length > 0 ? qualifiedTeams : (hostState?.teams || []);
   const phase = round3State.phase || 'master_draft';
   const isR3Running = serverTimer?.round3?.timerRunning ?? round3State.timerRunning ?? false;
   const isLocked = serverTimer?.round3?.isLocked ?? round3State.isLocked ?? true;
@@ -24,6 +26,25 @@ export const HostRound3Control = () => {
     const s = Math.max(0, secs) % 60;
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
+
+  // Evaluation Socket Progress Listeners
+  useEffect(() => {
+    if (!socket) return;
+    const onProgress = (data) => {
+      setIsEvaluating(true);
+      setEvalProgress(data);
+    };
+    const onComplete = () => {
+      setIsEvaluating(false);
+      setEvalProgress(null);
+    };
+    socket.on('admin:r3_eval_progress', onProgress);
+    socket.on('admin:r3_eval_complete', onComplete);
+    return () => {
+      socket.off('admin:r3_eval_progress', onProgress);
+      socket.off('admin:r3_eval_complete', onComplete);
+    };
+  }, [socket]);
 
   // Controls
   const handleUnlock = () => socket?.emit('admin:unlock_round3');
@@ -42,9 +63,13 @@ export const HostRound3Control = () => {
   // Evaluate All
   const handleEvaluateAll = () => {
     setIsEvaluating(true);
+    setEvalProgress({ completed: 0, total: teams.length });
     socket?.emit('admin:evaluate_round3', {}, (res) => {
-      setIsEvaluating(false);
-      if (!res?.success) alert(res?.error || 'Evaluation failed.');
+      if (!res?.success) {
+        setIsEvaluating(false);
+        setEvalProgress(null);
+        alert(res?.error || 'Evaluation failed.');
+      }
     });
   };
 
@@ -152,10 +177,44 @@ export const HostRound3Control = () => {
               className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-display font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_25px_rgba(255,0,0,0.6)] animate-pulse"
             >
               <Flame className="w-4 h-4" />
-              <span>💣 DETONATE BOMB</span>
+              <span>⚠️ RELEASE SABOTAGE (30s)</span>
+            </button>
+
+            {/* Top Batch Evaluate Action */}
+            <button
+              onClick={handleEvaluateAll}
+              disabled={isEvaluating}
+              className="cyber-btn px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-display font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(138,43,226,0.5)]"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{isEvaluating ? 'EVALUATING...' : 'BATCH EVALUATE'}</span>
             </button>
           </div>
         </div>
+
+        {/* Warning Hold Alert Banner when timer pauses at 01:00 */}
+        {(phase === 'warning_hold' || round3State.status === 'WARNING_HOLD') && (
+          <div className="mt-4 p-4 rounded-xl bg-amber-500/15 border-2 border-amber-500/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-pulse shadow-[0_0_30px_rgba(245,158,11,0.3)]">
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">⚠️</span>
+              <div>
+                <h4 className="font-display font-black text-amber-300 text-base">
+                  1-MINUTE WARNING HOLD ACTIVE — ALL STUDENT SCREENS ARE LOCKED WITH '⚠️'
+                </h4>
+                <p className="text-xs text-amber-200/80 mt-0.5">
+                  The timer is paused at 01:00. The sabotage challenge has NOT been revealed to students yet. Click below when ready to authorize the sabotage and begin the 30-second final countdown!
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowBombConfirm(true)}
+              className="cyber-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-600 to-red-600 text-black font-display font-black text-xs uppercase tracking-wider flex items-center gap-2 shrink-0 shadow-[0_0_25px_rgba(245,158,11,0.6)]"
+            >
+              <Flame className="w-4 h-4 text-black" />
+              <span>RELEASE SABOTAGE NOW</span>
+            </button>
+          </div>
+        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-[#1f2b48]">
@@ -194,15 +253,30 @@ export const HostRound3Control = () => {
           <button
             onClick={handleEvaluateAll}
             disabled={isEvaluating}
-            className="cyber-btn flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(138,43,226,0.4)]"
+            className={`cyber-btn flex-1 sm:flex-initial px-6 py-3 rounded-xl font-display font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(138,43,226,0.5)] ${
+              isEvaluating
+                ? 'bg-purple-900 text-purple-200 cursor-wait animate-pulse'
+                : 'bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 text-white hover:brightness-110'
+            }`}
           >
-            <Sparkles className="w-4 h-4" />
-            <span>{isEvaluating ? 'EVALUATING...' : 'BATCH EVALUATE ROUND 3 (50 PTS)'}</span>
+            {isEvaluating ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                <span>
+                  {evalProgress ? `EVALUATING AI PROMPTS (${evalProgress.completed}/${evalProgress.total})...` : 'EVALUATING ROUND 3 BLUEPRINTS...'}
+                </span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4" />
+                <span>BATCH EVALUATE ROUND 3 (50 PTS)</span>
+              </>
+            )}
           </button>
 
           <button
             onClick={handleRevealPodium}
-            className="cyber-btn flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-display font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,215,0,0.5)] active:scale-95"
+            className="cyber-btn flex-1 sm:flex-initial px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-display font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,215,0,0.5)] active:scale-95"
           >
             <Trophy className="w-4 h-4" />
             <span>🏆 REVEAL GRAND FINALE PODIUM</span>

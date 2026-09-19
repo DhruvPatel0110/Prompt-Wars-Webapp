@@ -86,10 +86,25 @@ export const HostDashboard = () => {
   }, [socket]);
 
   React.useEffect(() => {
-    if (state?.status === 'EVALUATED') {
-      setIsEvaluating(false);
+    if (hostState?.activeRound) {
+      if (hostState.activeRound === 3 && activeMainTab !== 'round3' && activeMainTab !== 'podium') {
+        setActiveMainTab('round3');
+      } else if (hostState.activeRound === 2 && activeMainTab === 'round1') {
+        setActiveMainTab('round2');
+      }
     }
-  }, [state?.status]);
+  }, [hostState?.activeRound]);
+
+  React.useEffect(() => {
+    if (!socket) return;
+    const onR2Verdict = () => {
+      setActiveMainTab('round3');
+    };
+    socket.on('round2:verdict', onR2Verdict);
+    return () => {
+      socket.off('round2:verdict', onR2Verdict);
+    };
+  }, [socket]);
 
   // Advance Round 1 to Round 2
   const handleAdvanceRound = () => {

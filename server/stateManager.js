@@ -17,7 +17,7 @@ export class StateManager {
     this.questionsData = this.loadQuestionsData();
     this.round2Challenges = this.loadRound2Data();
     this.round2Data = { challenges: this.round2Challenges };
-    this.round3Data = this.loadJSON(ROUND3_FILE, { cases: [] });
+    this.round3Data = this.loadRound3Data();
     this.teamsRoster = this.loadJSON(TEAMS_FILE, []);
 
     this.activeRound = 1;
@@ -163,6 +163,33 @@ export class StateManager {
     } catch (err) {
       console.error(`[StateManager] Failed to load Round 2 challenges:`, err.message);
       return [];
+    }
+  }
+
+  loadRound3Data() {
+    try {
+      const rootPath = path.join(__dirname, '..', 'ROUND3.json');
+      if (fs.existsSync(rootPath)) {
+        const raw = fs.readFileSync(rootPath, 'utf8');
+        const data = JSON.parse(raw);
+        let list = [];
+        if (Array.isArray(data.cases)) list = data.cases;
+        else if (Array.isArray(data)) list = data;
+        if (list.length > 0) {
+          console.log(`[StateManager] Loaded ${list.length} unique Round 3 Case Studies from root ROUND3.json`);
+          try {
+            if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+            fs.writeFileSync(ROUND3_FILE, JSON.stringify({ cases: list }, null, 2), 'utf8');
+          } catch (e) {}
+          return { cases: list };
+        }
+      }
+      const fileData = this.loadJSON(ROUND3_FILE, { cases: [] });
+      console.log(`[StateManager] Loaded ${fileData.cases?.length || 0} Round 3 Case Studies from data/round3_cases.json`);
+      return fileData;
+    } catch (err) {
+      console.error(`[StateManager] Failed to load Round 3 data:`, err.message);
+      return { cases: [] };
     }
   }
 
@@ -691,6 +718,7 @@ export class StateManager {
   saveRound2Draft(teamId, draftText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (team.isEliminated || team.isQualified === false) return team;
     const text = (draftText || "").slice(0, 3500);
     team.round2.draftPrompt = text;
     team.round2.c1_draft = text;
@@ -701,6 +729,9 @@ export class StateManager {
   submitRound2(teamId, promptText, challengeType) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+    if (team.isEliminated || (team.isQualified === false && this.roundState.advanceTriggered)) {
+      throw new Error("Your team was eliminated after Round 1 and cannot submit in Round 2.");
+    }
     if (this.round2State.isLocked && this.round2State.status === 'LOCKED' && this.activeRound !== 2) {
       throw new Error("Round 2 is currently locked.");
     }
@@ -815,17 +846,31 @@ export class StateManager {
   // ==========================================
 
   allotRound3Cases() {
-    const r3Teams = Array.from(this.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
-    const availableCases = this.round3Data.cases || [];
+    const r3Data = this.loadRound3Data();
+    this.round3Data = r3Data;
+    const availableCases = r3Data.cases || [];
+    if (availableCases.length === 0) return;
 
-    r3Teams.forEach((team, idx) => {
-      const caseItem = availableCases[idx % availableCases.length] || availableCases[0];
+    // Filter qualified teams from Round 2
+    const qualifiedTeams = Array.from(this.teams.values()).filter(t => t.round2?.isQualified && !t.round2?.isEliminated);
+    const targetTeams = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(this.teams.values()).filter(t => t.isQualified && !t.isEliminated);
+    const finalTeams = targetTeams.length > 0 ? targetTeams : Array.from(this.teams.values());
+
+    finalTeams.forEach((team, idx) => {
+      // 1-to-1 guaranteed distinct case assignment
+      const caseItem = availableCases[idx % availableCases.length];
       const bombs = caseItem?.bombs || [];
-      const bombItem = bombs[idx % bombs.length] || bombs[0];
+      const bombItem = bombs[0] || {
+        headline: "🚨 CRITICAL BUDGET SLASH: ₹15,000 ➔ ₹3,000!",
+        description: "Marketing budget slashed to ₹3,000. All paid ads and print banners are immediately revoked.",
+        directive: "Pivot immediately to zero-cost growth hacking, viral WhatsApp squad tickets, and peer-to-peer Discord bounties."
+      };
 
       team.round3.assignedCase = caseItem;
       team.round3.assignedBomb = bombItem;
-      team.round3.status = 'drafting';
+      if (!team.round3.status || team.round3.status === 'idle') {
+        team.round3.status = 'drafting';
+      }
     });
 
     this.saveSnapshot();
@@ -885,6 +930,9 @@ export class StateManager {
   saveRound3MasterDraft(teamId, draftText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      return team;
+    }
     team.round3.masterDraft = (draftText || "").slice(0, 4500);
     return team;
   }
@@ -898,7 +946,7 @@ export class StateManager {
 
     // Initialize adapted drafts with current master draft for all teams
     for (const team of this.teams.values()) {
-      if (team.round3.assignedCase) {
+      if (team.round3.assignedCase && !team.isEliminated && !team.round2?.isEliminated) {
         team.round3.masterPrompt = team.round3.masterDraft || "Master Strategy Draft";
         team.round3.adaptedDraft = team.round3.masterPrompt;
         team.round3.status = 'bomb_active';
@@ -912,6 +960,9 @@ export class StateManager {
   saveRound3BombDraft(teamId, adaptedText) {
     const team = this.teams.get(teamId);
     if (!team) return null;
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      return team;
+    }
     team.round3.adaptedDraft = (adaptedText || "").slice(0, 4500);
     return team;
   }
@@ -919,6 +970,9 @@ export class StateManager {
   submitRound3(teamId, adaptedPrompt) {
     const team = this.teams.get(teamId);
     if (!team) throw new Error("Team not found");
+    if (team.isEliminated || team.round2?.isEliminated || (team.round2?.isQualified === false && this.round2State.advanceTriggered)) {
+      throw new Error("Your team was eliminated and cannot submit in Round 3.");
+    }
 
     const text = (adaptedPrompt || team.round3.adaptedDraft || team.round3.masterDraft || "").trim();
     team.round3.adaptedPrompt = text;
@@ -1012,18 +1066,23 @@ export class StateManager {
     // Round 3 Main Timer
     if (this.round3State.timerRunning && this.round3State.timerRemaining > 0) {
       this.round3State.timerRemaining -= 1;
-      // Auto trigger bomb at 30 seconds if not already detonated
-      if (this.round3State.timerRemaining === 30 && this.round3State.phase === 'master_draft') {
-        this.detonateFinalBomb();
-      }
-      if (this.round3State.timerRemaining <= 0) {
+      // Stop timer & block user screen as last minute approaches (pause at 1 min / 60s left)
+      if (this.round3State.phase === 'master_draft' && this.round3State.timerRemaining <= 60) {
+        this.round3State.timerRemaining = 60;
+        this.round3State.timerRunning = false;
+        this.round3State.timerStartedAt = null;
+        this.round3State.timerEndsAt = null;
+        this.round3State.phase = 'warning_hold';
+        this.round3State.status = 'WARNING_HOLD';
+        this.saveSnapshot();
+      } else if (this.round3State.timerRemaining <= 0) {
         this.round3State.timerRemaining = 0;
         this.round3State.timerRunning = false;
       }
       didChange = true;
     }
 
-    // Round 3 Bomb 30-Second Countdown
+    // Round 3 Bomb 30-Second Countdown (Starts ONLY after host authorizes detonation)
     if (this.round3State.bombRunning && this.round3State.bombTimerRemaining > 0) {
       this.round3State.bombTimerRemaining -= 1;
       if (this.round3State.bombTimerRemaining <= 0) {
@@ -1054,6 +1113,15 @@ export class StateManager {
       const teamsList = Array.from(this.teams.values());
       const idx = Math.max(0, teamsList.findIndex(t => t.id === teamId));
       team.round2.assignedChallenge = this.round2Challenges[idx % this.round2Challenges.length];
+    }
+
+    // Ensure Round 3 case is assigned uniquely
+    if (!team.round3.assignedCase && this.round3Data.cases?.length > 0) {
+      const teamsList = Array.from(this.teams.values());
+      const idx = Math.max(0, teamsList.findIndex(t => t.id === teamId));
+      const caseItem = this.round3Data.cases[idx % this.round3Data.cases.length];
+      team.round3.assignedCase = caseItem;
+      team.round3.assignedBomb = caseItem?.bombs?.[0] || null;
     }
 
     return {

@@ -491,7 +491,7 @@ io.on('connection', (socket) => {
       id: team.id,
       name: team.name,
       assignedChallenge: team.round2?.assignedChallenge || stateManager.round2Challenges[0],
-      studentPrompt: team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || "High detail render of target competition asset"
+      studentPrompt: team.round2?.submittedPrompt || team.round2?.draftPrompt || team.round2?.c1_submittedPrompt || team.round2?.c1_draft || ""
     }));
 
     const evaluations = await evaluateBatchWithConcurrency(
@@ -587,7 +587,7 @@ io.on('connection', (socket) => {
     syncProjectorClients();
   });
 
-  socket.on('admin:detonate_bomb', () => {
+  const handleSabotageRelease = () => {
     stateManager.detonateFinalBomb();
     broadcastTimerState();
     syncAllTeamClients();
@@ -597,15 +597,21 @@ io.on('connection', (socket) => {
       durationSeconds: 30,
       detonatedAt: Date.now()
     });
-  });
+  };
+
+  socket.on('admin:detonate_bomb', handleSabotageRelease);
+  socket.on('admin:release_sabotage', handleSabotageRelease);
 
   socket.on('admin:evaluate_round3', async (data, callback) => {
-    const teamsInR3 = Array.from(stateManager.teams.values()).filter(t => t.round2.isQualified || t.isQualified);
+    const qualifiedTeams = Array.from(stateManager.teams.values()).filter(t => (t.round2?.isQualified && !t.round2?.isEliminated) || (t.isQualified && !t.isEliminated));
+    const teamsInR3 = qualifiedTeams.length > 0 ? qualifiedTeams : Array.from(stateManager.teams.values());
+
     if (teamsInR3.length === 0) {
-      return callback?.({ success: false, error: 'No qualified teams for Round 3.' });
+      return callback?.({ success: false, error: 'No teams registered for Round 3.' });
     }
 
     stateManager.round3State.status = 'EVALUATING';
+    broadcastTimerState();
     syncAdminClients();
     syncProjectorClients();
     callback?.({ success: true, total: teamsInR3.length });
@@ -614,9 +620,17 @@ io.on('connection', (socket) => {
     let completed = 0;
 
     for (const team of teamsInR3) {
-      const caseItem = team.round3.assignedCase || stateManager.round3Data.cases[0];
-      const bombItem = team.round3.assignedBomb || caseItem.bombs[0];
-      const mPrompt = team.round3.masterPrompt || team.round3.masterDraft || "Master Strategic Blueprint";
+      const caseItem = team.round3.assignedCase || stateManager.round3Data.cases[0] || {
+        title: "National Tech Fest Growth Crisis",
+        category: "Growth & Event Operations",
+        scenario: { context: "Flagship 3-day tech symposium in 30 days.", metrics: {}, requiredPillars: [] }
+      };
+      const bombItem = team.round3.assignedBomb || caseItem.bombs?.[0] || {
+        headline: "🚨 CRITICAL CRISIS INJECTION",
+        description: "Emergency adaptation required.",
+        directive: "Pivot strategy immediately."
+      };
+      const mPrompt = team.round3.masterPrompt || team.round3.masterDraft || "";
       const aPrompt = team.round3.adaptedPrompt || team.round3.adaptedDraft || mPrompt;
 
       const evalRes = await evaluateRound3Submission({
@@ -633,9 +647,11 @@ io.on('connection', (socket) => {
     }
 
     stateManager.setRound3EvaluationResults(evaluations);
+    broadcastTimerState();
     syncAllTeamClients();
     syncAdminClients();
     syncProjectorClients();
+    broadcastToAdmins('admin:r3_eval_complete', { total: teamsInR3.length });
   });
 
   socket.on('admin:reveal_podium', () => {

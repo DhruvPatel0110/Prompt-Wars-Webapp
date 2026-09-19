@@ -133,6 +133,21 @@ export const StudentDashboard = () => {
   }
 
   // ----------------------------------------------------
+  // ELIMINATION DETECTION & SPECTATOR ROUTING
+  // ----------------------------------------------------
+  const isEliminatedInR1 = Boolean(
+    (team.isEliminated || team.isQualified === false) &&
+    (teamState?.roundState?.advanceTriggered || activeRound >= 2 || teamState?.roundState?.status === 'ADVANCED')
+  );
+
+  const isEliminatedInR2 = Boolean(
+    (team.round2?.isEliminated || team.round2?.isQualified === false) &&
+    (teamState?.round2State?.advanceTriggered || activeRound >= 3 || teamState?.round2State?.status === 'ADVANCED')
+  );
+
+  const isEliminated = isEliminatedInR1 || isEliminatedInR2;
+
+  // ----------------------------------------------------
   // TOURNAMENT ROUND ROUTER & NAVIGATION
   // ----------------------------------------------------
   const renderRoundSwitcher = () => {
@@ -158,7 +173,8 @@ export const StudentDashboard = () => {
               )}
             </button>
 
-            {(team.isQualified || activeRound >= 2) && (
+            {/* Round 2 Tab ONLY for teams qualified from Round 1 */}
+            {team.isQualified && (
               <button
                 onClick={() => setSelectedRoundTab(2)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -176,7 +192,8 @@ export const StudentDashboard = () => {
               </button>
             )}
 
-            {(team.round2?.isQualified || activeRound >= 3) && (
+            {/* Round 3 Tab ONLY for teams qualified from Round 2 */}
+            {team.round2?.isQualified && !team.round2?.isEliminated && (
               <button
                 onClick={() => setSelectedRoundTab(3)}
                 className={`px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all flex items-center gap-2 ${
@@ -205,6 +222,84 @@ export const StudentDashboard = () => {
   };
 
   // ----------------------------------------------------
+  // ELIMINATION SCREEN RENDER
+  // ----------------------------------------------------
+  const renderEliminationScreen = () => {
+    return (
+      <div>
+        {renderRoundSwitcher()}
+        <div className="min-h-[calc(100vh-8rem)] max-w-3xl mx-auto px-4 py-12 flex flex-col items-center justify-center text-center animate-fade-in">
+          {/* Elimination Icon */}
+          <div className="relative mb-6">
+            <div className="w-24 h-24 rounded-3xl bg-red-950/40 border-2 border-red-500 flex items-center justify-center shadow-[0_0_50px_rgba(255,0,0,0.4)] animate-pulse">
+              <XCircle className="w-12 h-12 text-red-500" />
+            </div>
+          </div>
+
+          <span className="px-4 py-1.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/30 font-mono text-xs uppercase tracking-widest font-bold">
+            {isEliminatedInR2 ? "ROUND 2 50% CUTOFF • ELIMINATED" : "ROUND 1 50% CUTOFF • ELIMINATED"}
+          </span>
+
+          <h1 className="font-display font-black text-3xl sm:text-5xl text-white mt-4 tracking-wider">
+            BETTER LUCK NEXT TIME, <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-rose-400">{team.name || user?.teamName || 'WARRIOR'}</span>!
+          </h1>
+          
+          <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-lg font-sans">
+            {isEliminatedInR2 
+              ? "Your tournament journey ends in Round 2. You did not meet the top 50% qualifying score to advance to the Grand Finale." 
+              : "Your tournament journey ends in Round 1. You did not meet the qualifying score to advance to Round 2."}
+          </p>
+
+          {/* Scorecard Summary Panel */}
+          <div className="glass-panel w-full mt-8 p-6 sm:p-8 rounded-3xl border-red-500/30 bg-gradient-to-b from-[#1a0808]/90 to-[#070a13]/90 shadow-[0_0_40px_rgba(255,0,0,0.15)] text-left space-y-4">
+            <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+              <div className="flex items-center gap-2 text-xs font-mono">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                <span className="text-red-400 font-bold uppercase tracking-wider">Tournament Record Sealed</span>
+              </div>
+              <div className="text-xs font-mono text-gray-400">
+                Team: <strong className="text-white">{team.name || user?.teamName}</strong>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-2xl bg-black/50 border border-white/[0.08]">
+                <span className="text-xs font-mono text-gray-400 uppercase">Round 1 Score:</span>
+                <div className="font-display font-bold text-2xl text-cyan-300 mt-1">
+                  {team.evaluation?.total_score ?? '-'} / 20 pts
+                </div>
+                <div className="text-[11px] font-mono text-gray-500 mt-0.5">
+                  Rank #{team.rank || '-'}
+                </div>
+              </div>
+
+              {isEliminatedInR2 && (
+                <div className="p-4 rounded-2xl bg-black/50 border border-white/[0.08]">
+                  <span className="text-xs font-mono text-gray-400 uppercase">Round 2 Score:</span>
+                  <div className="font-display font-bold text-2xl text-purple-300 mt-1">
+                    {team.round2?.totalScore ?? team.round2?.evaluation?.total_score ?? '-'} / 20 pts
+                  </div>
+                  <div className="text-[11px] font-mono text-gray-500 mt-0.5">
+                    Round 2 Rank #{team.round2?.rank || '-'}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-4 rounded-2xl bg-black/40 border border-red-500/20 text-xs text-gray-300 leading-relaxed font-sans flex items-start gap-3">
+              <Info className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white block mb-0.5">🎮 Spectator Mode Active</strong>
+                The remaining qualified finalist teams are competing live on stage. You can follow the live Prompt Battle and Grand Finale on the host projector screen!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ----------------------------------------------------
   // ROUND STATE RESOLUTION (Must run before any screen render)
   // ----------------------------------------------------
   const isRound1Active = (serverTimer?.timerRunning || serverTimer?.status === 'ACTIVE' || teamState?.roundState?.status === 'ACTIVE' || (!serverTimer?.isLocked && serverTimer?.isLocked !== undefined && !teamState?.roundState?.isLocked));
@@ -218,8 +313,26 @@ export const StudentDashboard = () => {
   const wordCount = localDraft.trim().split(/\s+/).filter(Boolean).length;
   const canSubmit = charCount >= 50 && !isSubmitted && !isLocked;
 
-  // View Round 3 Workspace
-  if (currentViewRound === 3) {
+  // If team is eliminated after Round 1 and on advanced round, show elimination screen
+  if (isEliminatedInR1 && (activeRound >= 2 || currentViewRound >= 2)) {
+    if (selectedRoundTab === 1) {
+      // Let them view sealed Round 1 submission
+    } else {
+      return renderEliminationScreen();
+    }
+  }
+
+  // If team is eliminated after Round 2 and on Round 3, show elimination screen
+  if (isEliminatedInR2 && (activeRound >= 3 || currentViewRound >= 3)) {
+    if (selectedRoundTab === 1 || selectedRoundTab === 2) {
+      // Let them view past submissions
+    } else {
+      return renderEliminationScreen();
+    }
+  }
+
+  // View Round 3 Workspace (Qualified only)
+  if (currentViewRound === 3 && !isEliminated) {
     return (
       <div>
         {renderRoundSwitcher()}
@@ -228,8 +341,8 @@ export const StudentDashboard = () => {
     );
   }
 
-  // View Round 2 Workspace
-  if (currentViewRound === 2) {
+  // View Round 2 Workspace (Qualified only)
+  if (currentViewRound === 2 && !isEliminatedInR1) {
     return (
       <div>
         {renderRoundSwitcher()}
@@ -287,8 +400,15 @@ export const StudentDashboard = () => {
               Please keep this tab open and stand by. As soon as the host starts Round 1 from the host control dashboard, this screen will automatically activate the <strong>Genre Sector Wheel</strong> and start the timer.
             </div>
 
-            <div className="pt-2 flex items-center text-xs font-mono text-gray-400">
+            <div className="pt-2 flex items-center justify-between text-xs font-mono text-gray-400">
               <span>Team: <strong className="text-cyan-300">{team.name || user?.teamName}</strong></span>
+              <button
+                onClick={logoutTeam}
+                className="text-xs text-cyan-400 hover:text-cyan-300 underline font-mono flex items-center gap-1 transition-colors"
+                title="Change team before the round starts"
+              >
+                <span>Change Team</span>
+              </button>
             </div>
           </div>
         </div>
